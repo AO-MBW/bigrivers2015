@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Genres";
+    
+}
+
+<h2>Genres</h2>
+<ul>
+    @foreach (Genre genre in ViewBag.GenresList)
+    {
+        <li>@Html.ActionLink(genre.Name, "Genres", new{id = genre.Id})</li>
+    }
+</ul>

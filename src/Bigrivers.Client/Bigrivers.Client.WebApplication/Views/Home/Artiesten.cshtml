@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Artiesten";
+    List<Artist> artistList = ViewBag.ArtistsList; 
+}
+
+<h2>Artiesten</h2>
+<div class="row">
+    @foreach (Artist artist in artistList)
+    {
+        <div class="col-xs-3">
+            @Html.ActionLink(artist.Name, "Artiesten", new { Id = artist.Id })
+        </div>
+    }
+</div>
+

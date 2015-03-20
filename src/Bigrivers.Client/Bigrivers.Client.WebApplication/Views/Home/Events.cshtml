@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Events";
+}
+
+<h1>Events</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Event</th>
+            <th>Locatie</th>
+            <th>Start datum</th>
+            <th>Eind Datum</th>
+        </tr>
+    </thead>
+    @foreach (Event e in ViewBag.EventList)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(e.Title, "Events", new { Id = e.Id })
+            </td>
+            <td>
+                @if (e.Location != null)
+                {
+                    @e.Location.Street
+                }
+            </td>
+            <td>
+                @e.Start
+            </td>
+            <td>
+                @e.End
+            </td>
+        </tr>
+    }
+</table>

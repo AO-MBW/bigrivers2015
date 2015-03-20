@@ -1,0 +1,10 @@
+﻿
+@{
+    Artist currentArtist = ViewBag.CurrentArtist;
+    
+    ViewBag.Title = currentArtist.Name;
+}
+
+<h2>@currentArtist.Name</h2>
+<p>@currentArtist.Description</p>
+
