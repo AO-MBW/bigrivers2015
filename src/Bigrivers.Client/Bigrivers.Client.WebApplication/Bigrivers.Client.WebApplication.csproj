@@ -260,10 +260,6 @@
       <Project>{6cf12e3b-53d8-46e9-8fc6-b241a645877c}</Project>
       <Name>Bigrivers.Server.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bigrivers.Client.DAL\Bigrivers.Client.DAL.csproj">
-      <Project>{d7872806-7847-4f24-947e-86cf5fa9298a}</Project>
-      <Name>Bigrivers.Client.DAL</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
