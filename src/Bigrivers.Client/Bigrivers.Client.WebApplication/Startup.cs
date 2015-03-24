@@ -8,7 +8,7 @@ namespace Bigrivers.Client.WebApplication
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+
         }
     }
 }

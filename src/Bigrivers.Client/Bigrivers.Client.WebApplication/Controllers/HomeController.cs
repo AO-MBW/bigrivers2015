@@ -16,13 +16,19 @@ using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.WebApplication.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+        public HomeController() : base()
+        {
+            // when homecontroller is instantiated, call BaseController constructor which will fill ViewBag.MenuItemsHTML
+        }
+
+
         //Create AccessLayer with OData Uri from the App.Config
         //static readonly Container AccessLayer = new Container(new Uri(ConfigurationManager.AppSettings["WebserviceUri"]));
 
         //Create AccessLayer with direct reference to Server.Data
-        static readonly BigriversDb AccessLayer = new BigriversDb();
+        //static readonly BigriversDb AccessLayer = new BigriversDb();
 
         public ActionResult Index()
         {

@@ -20,6 +20,7 @@ namespace Bigrivers.Server.Data.Migrations
             context.Artists.RemoveRange(context.Artists);
             context.Events.RemoveRange(context.Events);
             context.Performances.RemoveRange(context.Performances);
+            context.MenuItems.RemoveRange(context.MenuItems);
 
             // Create Genres
             Genre rock = new Genre
@@ -458,6 +459,27 @@ namespace Bigrivers.Server.Data.Migrations
                 Artist = ArmVBuu,
                 Event = liveDanceEvent
             };
+
+            MenuItem menu1 = new MenuItem
+            {
+                URL = "/Home/Events/31",
+                DisplayName = "Event31",
+                Order = 0,
+                Parent = 0,
+                Status = true
+            };
+            MenuItem menu2 = new MenuItem
+            {
+                URL = "http://www.youtube.com/",
+                DisplayName = "Youtube",
+                Order = 0,
+                Parent = 0,
+                Status = true
+            };
+            
+            // Add menu to database
+            context.MenuItems.AddOrUpdate(menu1);
+            context.MenuItems.AddOrUpdate(menu2);
 
             // Add genres to artists
             Queen.Genres.Add(rock);
