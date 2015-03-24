@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Bigrivers.Server.Data;
 using Bigrivers.Server.Model;
+using Bigrivers.Client.Backend.ViewModels;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
@@ -28,18 +29,11 @@ namespace Bigrivers.Client.Backend.Controllers
             if (id != null) return Details(id.Value);
 
             // List all artists and return view
-            try
-            {
-                ViewBag.ListArtists = db.Artists
-                    .Where(a => a.Status)
-                    .ToList();
-            }
-            catch (Exception e)
-            {
-                ViewBag.errormsg = e.Message;
-            }
+            ViewBag.ListArtists = db.Artists
+                .Where(a => a.Status)
+                .ToList();
 
-            return View();
+            return View("Manage");
         }
 
         // GET: Artist/Details/5
@@ -47,14 +41,17 @@ namespace Bigrivers.Client.Backend.Controllers
         private ActionResult Details(int id)
         {
             // Find single artist
-            ViewBag.SingleArtist = db.Artists
+            var SingleArtist = db.Artists
                 .Where(a => a.Id == id)
                 .SingleOrDefault();
 
-            // Send to Manage view if artist is not found
-            if (ViewBag.SingleArtist == null) return RedirectToAction("Manage");
 
-            return View();
+            // Send to Manage view if artist is not found
+            if (SingleArtist == null) return RedirectToAction("Manage");
+
+            ViewBag.SingleArtist = SingleArtist;
+
+            return View("Details");
         }
 
         // GET: Artist/Create
@@ -65,40 +62,59 @@ namespace Bigrivers.Client.Backend.Controllers
 
         // POST: Artist/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(ArtistViewModel viewModel)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                return View(viewModel);
             }
-            catch
+            else
             {
-                return View();
+                //ViewBag.Title = "Resultaat - Example";
+                var a = new Artist
+                {
+                    Name = viewModel.Name,
+                    Description = viewModel.Description,
+                    Avatar = viewModel.Avatar,
+                    Website = viewModel.Website,
+                    YoutubeChannel = viewModel.YoutubeChannel,
+                    Facebook = viewModel.Facebook,
+                    Twitter = viewModel.Twitter,
+                    Status = true
+                };
+
+                db.Artists.Add(a);
+                db.SaveChanges();
+
+                ViewBag.ObjectAdded = viewModel;
+
+                return RedirectToAction("Manage");
             }
         }
 
         // GET: Artist/Edit/5
         public ActionResult Edit(int id)
         {
+            // Find single artist
+            var SingleArtist = db.Artists
+                .Where(a => a.Id == id)
+                .SingleOrDefault();
+
+
+            // Send to Manage view if artist is not found
+            if (SingleArtist == null) return RedirectToAction("Manage");
+
+            ViewBag.SingleArtist = SingleArtist;
+
             return View();
         }
 
         // POST: Artist/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, ArtistViewModel viewModel)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: Artist/Delete/5

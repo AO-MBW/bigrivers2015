@@ -20,10 +20,11 @@
                 @foreach (Artist artist in listArtists)
                 {
                     <tr>
-                        <td>@Html.ActionLink(artist.Name, "Manage", "Artist", artist.Id, null)</td>
+                        <td>@Html.ActionLink(artist.Name, "Manage", "Artist", new { artist.Id }, null)</td>
+                        
                         <td>Auteur</td>
                         <td>Datum gewijzigd</td>
-                        <td>@Html.ActionLink("Wijzig", "Edit", "Artist") | @Html.ActionLink("Verwijder", "Delete", "Artist")</td>
+                        <td>@Html.ActionLink("Wijzig", "Edit", "Artist", new { artist.Id}, null) | @Html.ActionLink("Verwijder", "Delete", "Artist")</td>
                     </tr>
                 }
             </tbody>
