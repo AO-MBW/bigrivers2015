@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bigrivers.Server", "Bigrivers.Server", "{37D499AD-72F7-4E37-ACDE-49FB449EA93C}"
 EndProject
@@ -19,6 +19,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bigrivers.Client", "Bigrivers.Client", "{FA59E915-5D6D-446B-B80F-B1CE7F5A1FF3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bigrivers.Client.WebApplication", "Bigrivers.Client\Bigrivers.Client.WebApplication\Bigrivers.Client.WebApplication.csproj", "{4EB545E1-49D0-4AFF-9EAF-982F237DAE24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bigrivers.Client.Backend", "Bigrivers.Client\Bigrivers.Client.Backend\Bigrivers.Client.Backend.csproj", "{A76651F3-5B4E-4231-8EAC-92F33212A73D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{4EB545E1-49D0-4AFF-9EAF-982F237DAE24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EB545E1-49D0-4AFF-9EAF-982F237DAE24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EB545E1-49D0-4AFF-9EAF-982F237DAE24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A76651F3-5B4E-4231-8EAC-92F33212A73D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A76651F3-5B4E-4231-8EAC-92F33212A73D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A76651F3-5B4E-4231-8EAC-92F33212A73D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A76651F3-5B4E-4231-8EAC-92F33212A73D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,5 +52,6 @@ Global
 		{60736E2E-C3AC-4BE6-AC19-EC11DC6B9F0D} = {37D499AD-72F7-4E37-ACDE-49FB449EA93C}
 		{26178F23-AB38-4B96-89F9-04B580C660DB} = {37D499AD-72F7-4E37-ACDE-49FB449EA93C}
 		{4EB545E1-49D0-4AFF-9EAF-982F237DAE24} = {FA59E915-5D6D-446B-B80F-B1CE7F5A1FF3}
+		{A76651F3-5B4E-4231-8EAC-92F33212A73D} = {FA59E915-5D6D-446B-B80F-B1CE7F5A1FF3}
 	EndGlobalSection
 EndGlobal

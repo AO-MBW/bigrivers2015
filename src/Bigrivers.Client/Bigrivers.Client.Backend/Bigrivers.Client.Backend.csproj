@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A76651F3-5B4E-4231-8EAC-92F33212A73D}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Bigrivers.Client.Backend</RootNamespace>
+    <AssemblyName>Bigrivers.Client.Backend</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=__MvcPagesVersion__, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ArtistController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MenuItemController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\admin.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="img\artist.png" />
+    <Content Include="img\artisthover.png" />
+    <Content Include="img\dropdown.png" />
+    <Content Include="img\event.png" />
+    <Content Include="img\eventhover.png" />
+    <Content Include="img\home.png" />
+    <Content Include="img\homehover.png" />
+    <Content Include="img\logo.png" />
+    <Content Include="img\news.png" />
+    <Content Include="img\newshover.png" />
+    <Content Include="img\settings.png" />
+    <Content Include="img\settingshover.png" />
+    <Content Include="img\thumbnail_unknown.png" />
+    <Content Include="Scripts\Admin\ckeditor\CHANGES.md" />
+    <Content Include="Scripts\Admin\ckeditor\LICENSE.md" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\oembed\README.md" />
+    <Content Include="Scripts\Admin\ckeditor\README.md" />
+    <Content Include="Scripts\Admin\ckeditor\samples\assets\posteddata.php" />
+    <Content Include="Scripts\Admin\ckeditor\samples\sample_posteddata.php" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\readme.md" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\browser-specific\gecko\editor_gecko.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\browser-specific\ie7\dialog_ie7.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\browser-specific\ie7\editor_ie7.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\browser-specific\ie8\dialog_ie8.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\browser-specific\ie8\editor_ie8.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\browser-specific\iequirks\dialog_iequirks.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\browser-specific\iequirks\editor_iequirks.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\browser-specific\ie\dialog_ie.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\browser-specific\ie\editor_ie.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\browser-specific\opera\dialog_opera.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\components\editor.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\components\_colorpanel.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\components\_elementspath.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\components\_mainui.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\components\_menu.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\components\_panel.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\components\_presets.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\components\_reset.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\components\_richcombo.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\components\_toolbar.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\config\_colors.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\config\_config.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\config\_defaults.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\readme.md" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\readme.md" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Admin\ckeditor\adapters\jquery.js" />
+    <Content Include="Scripts\Admin\ckeditor\build-config.js" />
+    <Content Include="Scripts\Admin\ckeditor\ckeditor.js" />
+    <Content Include="Scripts\Admin\ckeditor\config.js" />
+    <Content Include="Scripts\Admin\ckeditor\contents.css" />
+    <Content Include="Scripts\Admin\ckeditor\lang\en.js" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\about\dialogs\about.js" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\about\dialogs\logo_ckeditor.png" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\clipboard\dialogs\paste.js" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\dialog\dialogDefinition.js" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\fakeobjects\images\spacer.gif" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\icons.png" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\icons_hidpi.png" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\link\dialogs\anchor.js" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\link\dialogs\link.js" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\link\images\anchor.png" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\link\images\hidpi\anchor.png" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\oembed\libs\jquery.oembed.js" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\oembed\libs\jquery.oembed.min.js" />
+    <Content Include="Scripts\Admin\ckeditor\plugins\widget\images\handle.png" />
+    <Content Include="Scripts\Admin\ckeditor\samples\ajax.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\api.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\appendto.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\assets\inlineall\logo.png" />
+    <Content Include="Scripts\Admin\ckeditor\samples\assets\outputxhtml\outputxhtml.css" />
+    <Content Include="Scripts\Admin\ckeditor\samples\assets\sample.css" />
+    <Content Include="Scripts\Admin\ckeditor\samples\assets\sample.jpg" />
+    <Content Include="Scripts\Admin\ckeditor\samples\assets\uilanguages\languages.js" />
+    <Content Include="Scripts\Admin\ckeditor\samples\datafiltering.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\divreplace.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\index.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\inlineall.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\inlinebycode.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\inlinetextarea.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\jquery.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\plugins\dialog\assets\my_dialog.js" />
+    <Content Include="Scripts\Admin\ckeditor\samples\plugins\dialog\dialog.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\plugins\enterkey\enterkey.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\plugins\toolbar\toolbar.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\plugins\wysiwygarea\fullpage.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\readonly.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\replacebyclass.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\replacebycode.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\sample.css" />
+    <Content Include="Scripts\Admin\ckeditor\samples\sample.js" />
+    <Content Include="Scripts\Admin\ckeditor\samples\tabindex.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\uicolor.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\uilanguages.html" />
+    <Content Include="Scripts\Admin\ckeditor\samples\xhtmlstyle.html" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\.temp\css\dialog.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\.temp\css\dialog_ie.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\.temp\css\dialog_ie7.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\.temp\css\dialog_ie8.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\.temp\css\dialog_iequirks.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\.temp\css\dialog_opera.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\.temp\css\editor.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\.temp\css\editor_gecko.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\.temp\css\editor_ie.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\.temp\css\editor_ie7.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\.temp\css\editor_ie8.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\.temp\css\editor_iequirks.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\dialog.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\dialog_ie.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\dialog_ie7.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\dialog_ie8.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\dialog_iequirks.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\dialog_opera.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\editor.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\editor_gecko.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\editor_ie.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\editor_ie7.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\editor_ie8.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\editor_iequirks.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\icons.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\icons_hidpi.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\images\arrow.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\images\close.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\images\hidpi\close.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\images\hidpi\lock-open.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\images\hidpi\lock.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\images\hidpi\refresh.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\images\lock-open.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\images\lock.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\images\refresh.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\sample\bootstrapck-sample.html" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\sample\css\bootstrapck-sample.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\sample\js\analytics.js" />
+    <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\sample\js\jquery-1.11.0.min.js" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\dialog.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\dialog_ie.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\dialog_ie7.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\dialog_ie8.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\dialog_iequirks.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\dialog_opera.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\editor.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\editor_gecko.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\editor_ie.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\editor_ie7.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\editor_ie8.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\editor_iequirks.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\icons.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\icons_hidpi.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\images\arrow.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\images\close.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\images\hidpi\close.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\images\hidpi\lock-open.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\images\hidpi\lock.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\images\hidpi\refresh.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\images\lock-open.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\images\lock.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\images\refresh.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\dialog.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\dialog_ie.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\dialog_ie7.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\dialog_ie8.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\dialog_iequirks.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\editor.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\editor_gecko.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\editor_ie.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\editor_ie7.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\editor_ie8.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\editor_iequirks.css" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\icons.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\icons_hidpi.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\images\arrow.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\images\close.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\images\hidpi\close.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\images\hidpi\lock-open.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\images\hidpi\lock.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\images\hidpi\refresh.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\images\lock-open.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\images\lock.png" />
+    <Content Include="Scripts\Admin\ckeditor\skins\moono\images\refresh.png" />
+    <Content Include="Scripts\Admin\ckeditor\styles.js" />
+    <Content Include="Scripts\Admin\functions.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Artist\Details.cshtml" />
+    <Content Include="Views\Artist\Manage.cshtml" />
+    <Content Include="Views\Artist\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\MenuItem\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Bigrivers.Server\Bigrivers.Server.Data\Bigrivers.Server.Data.csproj">
+      <Project>{26178f23-ab38-4b96-89f9-04b580c660db}</Project>
+      <Name>Bigrivers.Server.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Bigrivers.Server\Bigrivers.Server.Model\Bigrivers.Server.Model.csproj">
+      <Project>{60736e2e-c3ac-4be6-ac19-ec11dc6b9f0d}</Project>
+      <Name>Bigrivers.Server.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>16349</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:16349/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

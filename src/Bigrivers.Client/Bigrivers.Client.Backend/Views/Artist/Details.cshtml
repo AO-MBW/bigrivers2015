@@ -1,0 +1,32 @@
+﻿@using Bigrivers.Server.Model
+@{
+    ViewBag.Title = "Artiesten";
+    List<Artist> listArtists = ViewBag.ListArtists;
+}
+<div id="wrapper">
+    @ViewBag.errormsg;
+    <h1>Beheer</h1>
+    <div id="content">
+        <table>
+            <thead>
+                <tr>
+                    <th>Artiest</th>
+                    <th>Auteur</th>
+                    <th>Updated</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Artist artist in listArtists)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(artist.Name, "Manage", "Artist", artist.Id)</td>
+                        <td>Auteur</td>
+                        <td>Datum gewijzigd</td>
+                        <td>@Html.ActionLink("Wijzig", "Edit", "Artist") | @Html.ActionLink("Verwijder", "Delete", "Artist")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

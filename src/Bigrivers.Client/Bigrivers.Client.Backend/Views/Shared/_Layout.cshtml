@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="/Content/admin.css" type="text/css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/Scripts/Admin/functions.js"></script>
+    <script src="/Scripts/Admin/ckeditor/ckeditor.js"></script>
+</head>
+<body>
+    <div id="account-menu">
+        <ul id="accountContainer">
+            <li class="dropdown">
+                Gebruikersnaam<img class="icon" src="img/dropdown.png" width="15" height="15" />
+                <ul class="sub_navigation">
+                    <li>@Html.ActionLink("Log uit", "Logout", "Home")</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div id="sidebar">
+        <div class="home">
+            @Html.ActionLink(" ", "Index", "Home")
+        </div>
+        <div class="news">
+            @Html.ActionLink(" ", "Index", "News")
+        </div>
+        <div class="artist">
+            @Html.ActionLink(" ", "Index", "Artist")
+        </div>
+        <div class="event">
+            @Html.ActionLink(" ", "Index", "Events")
+        </div>
+
+        <div class="settings">
+            @Html.ActionLink(" ", "Settings", "Home")
+        </div>
+    </div>
+
+    @RenderBody()
+</body>
+</html>
