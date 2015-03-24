@@ -167,6 +167,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MenuItemsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -244,6 +245,11 @@
     <Content Include="Views\Home\Genres.cshtml" />
     <Content Include="Views\Home\Genre.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\MenuItems\Create.cshtml" />
+    <Content Include="Views\MenuItems\Delete.cshtml" />
+    <Content Include="Views\MenuItems\Details.cshtml" />
+    <Content Include="Views\MenuItems\Edit.cshtml" />
+    <Content Include="Views\MenuItems\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

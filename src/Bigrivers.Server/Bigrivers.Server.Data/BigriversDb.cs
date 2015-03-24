@@ -28,5 +28,7 @@ namespace Bigrivers.Server.Data
         public virtual DbSet<Performance> Performances { get; set; }
         public virtual DbSet<Page> Pages { get; set; }
         public virtual DbSet<Sponsor> Sponsors { get; set; }
+        public virtual DbSet<MenuItem> MenuItems { get; set; }
+        public virtual DbSet<Link> Links { get; set; }
     }
 }

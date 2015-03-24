@@ -37,7 +37,9 @@
     <Compile Include="Artist.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="Genre.cs" />
+    <Compile Include="Link.cs" />
     <Compile Include="Location.cs" />
+    <Compile Include="MenuItem.cs" />
     <Compile Include="NewsItem.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Performance.cs" />
