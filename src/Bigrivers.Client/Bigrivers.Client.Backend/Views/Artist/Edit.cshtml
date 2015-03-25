@@ -18,7 +18,7 @@
             @Html.LabelFor(a => a.Name)
             @Html.TextBoxFor(a => a.Name, new { @Value = artist.Name })
             @Html.LabelFor(a => a.Description)
-            @Html.TextAreaFor(a => a.Description, new { @Value = artist.Description, @Id = "description" })
+            @Html.TextAreaFor(a => a.Description, new { @DefaultValue = artist.Description, @Id = "description" })
             @*<script>
                     // Replace the <textarea id="description"> with a CKEditor
                     // instance, using default configuration.

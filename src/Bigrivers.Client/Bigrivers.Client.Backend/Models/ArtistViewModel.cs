@@ -13,7 +13,7 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Display(Name = "Naam")]
         public string Name { get; set; }
 
-        [Display(Name = "Bescrhijving")]
+        [Display(Name = "Beschrijving")]
         public string Description { get; set; }
 
         [Display(Name = "Afbeelding")]

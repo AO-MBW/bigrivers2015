@@ -97,9 +97,10 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Edit(int id)
         {
             // Find single artist
-            var SingleArtist = db.Artists
-                .Where(a => a.Id == id)
-                .SingleOrDefault();
+            var SingleArtist =
+                (from c in db.Artists
+                 where c.Id == id
+                 select c).First();
 
 
             // Send to Manage view if artist is not found
@@ -114,7 +115,21 @@ namespace Bigrivers.Client.Backend.Controllers
         [HttpPost]
         public ActionResult Edit(int id, ArtistViewModel viewModel)
         {
-            return View();
+            var SingleArtist =
+                (from c in db.Artists
+                 where c.Id == id
+                 select c).First();
+
+            SingleArtist.Name = viewModel.Name;
+            SingleArtist.Description = viewModel.Description;
+            SingleArtist.Avatar = viewModel.Avatar;
+            SingleArtist.Website = viewModel.Website;
+            SingleArtist.YoutubeChannel = viewModel.YoutubeChannel;
+            SingleArtist.Facebook = viewModel.Facebook;
+            SingleArtist.Twitter = viewModel.Twitter;
+            db.SaveChanges();
+
+            return RedirectToAction("Manage");
         }
 
         // GET: Artist/Delete/5
