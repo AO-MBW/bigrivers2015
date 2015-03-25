@@ -16,46 +16,25 @@ namespace Bigrivers.Client.Backend.Controllers
         // TODO: Create BaseController class for BigRiversDb
         private readonly BigriversDb db = new BigriversDb();
 
-        // GET: Artist
+        // GET: Artist/Index
         public ActionResult Index()
         {
             return RedirectToAction("Manage");
         }
 
-        // GET: Artist/Manage/5
-        public ActionResult Manage(int? id)
+        // GET: Artist/
+        public ActionResult Manage()
         {
-            // If artist id is specified, return artist details view
-            if (id != null) return Details(id.Value);
-
             // List all artists and return view
-            ViewBag.ListArtists = db.Artists
-                .Where(a => a.Status)
-                .ToList();
+            ViewBag.listArtists =
+                (from c in db.Artists
+                 select c).ToList();
 
             return View("Manage");
         }
 
-        // GET: Artist/Details/5
-        // TODO: Doesn't work
-        private ActionResult Details(int id)
-        {
-            // Find single artist
-            var SingleArtist = db.Artists
-                .Where(a => a.Id == id)
-                .SingleOrDefault();
-
-
-            // Send to Manage view if artist is not found
-            if (SingleArtist == null) return RedirectToAction("Manage");
-
-            ViewBag.SingleArtist = SingleArtist;
-
-            return View("Details");
-        }
-
         // GET: Artist/Create
-        public ActionResult Create()
+        public ActionResult New()
         {
             return View();
         }
@@ -63,7 +42,7 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Artist/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ArtistViewModel viewModel)
+        public ActionResult New(ArtistViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -97,18 +76,27 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Edit(int id)
         {
             // Find single artist
-            var SingleArtist =
+            var a =
                 (from c in db.Artists
                  where c.Id == id
                  select c).First();
 
 
             // Send to Manage view if artist is not found
-            if (SingleArtist == null) return RedirectToAction("Manage");
+            if (a == null) return RedirectToAction("Manage");
 
-            ViewBag.SingleArtist = SingleArtist;
+            var m = new ArtistViewModel
+            {
+                Name = a.Name,
+                Description = a.Description,
+                Avatar = a.Avatar,
+                Website = a.Website,
+                YoutubeChannel = a.YoutubeChannel,
+                Facebook = a.Facebook,
+                Twitter = a.Twitter
+            };
 
-            return View();
+            return View(m);
         }
 
         // POST: Artist/Edit/5
@@ -152,6 +140,29 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 return View();
             }
+        }
+
+        // GET: Artist/Action/5/Status
+        public ActionResult Modify(int id, string action)
+        {
+            switch (action)
+            {
+                case "Status":
+                    var a =
+                    (from c in db.Artists
+                        where c.Id == id
+                        select c).First();
+                    if (a.Status)
+                    {
+                        a.Status = false;
+                    }
+                    else
+                    {
+                        a.Status = true;
+                    }
+                    return RedirectToAction("Manage");
+            }
+            return RedirectToAction("Manage");
         }
     }
 }

@@ -25,8 +25,9 @@ namespace Bigrivers.Client.Backend
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/site.css",
-                      "~/Content/admin.css"));
+                      //"~/Content/site.css",
+                      "~/Content/admin.css",
+                      "~/Content/Sidebar.css"));
         }
     }
 }

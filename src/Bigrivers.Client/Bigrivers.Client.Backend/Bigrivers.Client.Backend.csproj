@@ -127,27 +127,29 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HtmlHelperExtensionMethods.cs" />
     <Compile Include="Models\ArtistViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\admin.css" />
+    <Content Include="Content\Sidebar.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="img\artist.png" />
-    <Content Include="img\artisthover.png" />
-    <Content Include="img\dropdown.png" />
-    <Content Include="img\event.png" />
-    <Content Include="img\eventhover.png" />
-    <Content Include="img\home.png" />
-    <Content Include="img\homehover.png" />
-    <Content Include="img\logo.png" />
-    <Content Include="img\news.png" />
-    <Content Include="img\newshover.png" />
-    <Content Include="img\settings.png" />
-    <Content Include="img\settingshover.png" />
-    <Content Include="img\thumbnail_unknown.png" />
+    <Content Include="Img\artist.png" />
+    <Content Include="Img\artisthover.png" />
+    <Content Include="Img\dropdown.png" />
+    <Content Include="Img\event.png" />
+    <Content Include="Img\eventhover.png" />
+    <Content Include="Img\home.png" />
+    <Content Include="Img\homehover.png" />
+    <Content Include="Img\logo.png" />
+    <Content Include="Img\news.png" />
+    <Content Include="Img\newshover.png" />
+    <Content Include="Img\settings.png" />
+    <Content Include="Img\settingshover.png" />
+    <Content Include="Img\thumbnail_unknown.png" />
     <Content Include="Scripts\Admin\ckeditor\CHANGES.md" />
     <Content Include="Scripts\Admin\ckeditor\LICENSE.md" />
     <Content Include="Scripts\Admin\ckeditor\plugins\oembed\README.md" />
@@ -344,10 +346,10 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Artist\Details.cshtml" />
     <Content Include="Views\Artist\Manage.cshtml" />
     <Content Include="Views\Artist\Edit.cshtml" />
-    <Content Include="Views\Artist\Create.cshtml" />
+    <Content Include="Views\Artist\New.cshtml" />
+    <Content Include="Views\Shared\_Sidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

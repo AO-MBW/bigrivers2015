@@ -1,9 +1,6 @@
-﻿@using Bigrivers.Server.Model
-@model Bigrivers.Client.Backend.ViewModels.ArtistViewModel
+﻿@model Bigrivers.Client.Backend.ViewModels.ArtistViewModel
 @ViewBag.Title = "Create";
-@{
-    Artist artist = ViewBag.SingleArtist;
-}
+
 <div id="wrapper">
     <div class="page-title">
         <h1>Artiest toevoegen</h1>
@@ -15,30 +12,30 @@
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
             <h2>Artiest</h2>
-            @Html.LabelFor(a => a.Name)
-            @Html.TextBoxFor(a => a.Name, new { @Value = artist.Name })
-            @Html.LabelFor(a => a.Description)
-            @Html.TextAreaFor(a => a.Description, new { @DefaultValue = artist.Description, @Id = "description" })
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name)
+            @Html.LabelFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Description, new { @Id = "description" })
             @*<script>
                     // Replace the <textarea id="description"> with a CKEditor
                     // instance, using default configuration.
                     CKEDITOR.replace("description");
                 </script>*@
             <div class="imageUpload">
-                @Html.LabelFor(a => a.Avatar)
+                @Html.LabelFor(m => m.Avatar)
                 <span>Upload een foto voor de artiest</span><br />
                 <input type="file" name="pic">
             </div>
             <hr />
             <div class="url">
-                @Html.LabelFor(a => a.Website)
-                @Html.TextBoxFor(a => a.Website, new { @Value = artist.Website })
-                @Html.LabelFor(a => a.YoutubeChannel)
-                @Html.TextBoxFor(a => a.YoutubeChannel, new { @Value = artist.YoutubeChannel })
-                @Html.LabelFor(a => a.Facebook)
-                @Html.TextBoxFor(a => a.Facebook, new { @Value = artist.Facebook })
-                @Html.LabelFor(a => a.Twitter)
-                @Html.TextBoxFor(a => a.Twitter, new { @Value = artist.Twitter })
+                @Html.LabelFor(m => m.Website)
+                @Html.TextBoxFor(m => m.Website)
+                @Html.LabelFor(m => m.YoutubeChannel)
+                @Html.TextBoxFor(m => m.YoutubeChannel)
+                @Html.LabelFor(m => m.Facebook)
+                @Html.TextBoxFor(m => m.Facebook)
+                @Html.LabelFor(m => m.Twitter)
+                @Html.TextBoxFor(m => m.Twitter)
             </div>
             <div class="footer">
                 <hr />
