@@ -182,6 +182,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\background.jpg" />
+    <Content Include="Images\br15.jpg" />
+    <Content Include="Images\fb_icon.png" />
+    <Content Include="Images\tw_icon.png" />
+    <Content Include="Images\yt_icon.png" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -214,8 +219,6 @@
     <Content Include="Views\Home\Events.cshtml" />
     <Content Include="Views\Home\Optredens.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Event.cshtml" />
     <Content Include="Views\Home\Artiesten.cshtml" />
     <Content Include="Views\Home\Artiest.cshtml" />
@@ -223,6 +226,7 @@
     <Content Include="Views\Home\Genres.cshtml" />
     <Content Include="Views\Home\Genre.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Home\Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,22 +3,88 @@
     padding-bottom: 20px;
 }
 
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    padding-top: 20px;
+}
+.body-contact {
+      background-color:rgba(0, 0, 0, 0.5);
+      padding-left: 15px;
+      padding-right: 15px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      height: 950px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+address{
+    color: #FFFFFF;
 }
 
+div.location-canvas{
+    padding-top: 200px;
+}
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
     max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+p.bottomyear{
+    color: white;
+}
+
+.twitterfeed{
+    position: absolute;
+    width: 100%;
+    max-width: 80%;   
+
+}
+
+.menuimg{
+      width: 100px;
+      height: 75px;
+      margin-left: 15px;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.social{
+    display:inline;
+}
+
+@media(min-width: 768px ){
+.menuimg{
+    height: 50%;
+    max-height: 50%;
+    width: 50%;
+    max-width: 50%;
+    margin-left: 0px;   
+  }
 }

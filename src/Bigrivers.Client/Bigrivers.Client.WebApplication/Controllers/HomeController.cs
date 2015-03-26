@@ -129,5 +129,10 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
             return View("Artiest");
         }
+
+        public ActionResult Contact()
+        {
+            return View();
+        }
     }
 }
