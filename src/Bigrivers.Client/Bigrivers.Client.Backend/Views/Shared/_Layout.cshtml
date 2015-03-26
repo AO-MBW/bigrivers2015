@@ -9,7 +9,7 @@
     <div id="account-menu">
         <ul id="accountContainer">
             <li class="dropdown">
-                Gebruikersnaam<img class="icon" src="img/dropdown.png" width="15" height="15" />
+                Gebruikersnaam<img class="icon" src="/img/dropdown.png" width="15" height="15" />
                 <ul class="sub_navigation">
                     <li>@Html.ActionLink("Log uit", "Logout", "Home")</li>
                 </ul>
@@ -17,25 +17,7 @@
         </ul>
     </div>
 
-    <div id="sidebar">
-        <div class="home">
-            @Html.ActionLink(" ", "Index", "Home")
-        </div>
-        <div class="news">
-            @Html.ActionLink(" ", "Index", "News")
-        </div>
-        <div class="artist">
-            @Html.ActionLink(" ", "Index", "Artist")
-        </div>
-        <div class="event">
-            @Html.ActionLink(" ", "Index", "Events")
-        </div>
-
-        <div class="settings">
-            @Html.ActionLink(" ", "Settings", "Home")
-        </div>
-    </div>
-
+    @Html.Partial("_Sidebar")
     @RenderBody()
 </body>
 </html>

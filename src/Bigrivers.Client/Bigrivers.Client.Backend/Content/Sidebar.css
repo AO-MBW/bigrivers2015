@@ -1,0 +1,84 @@
+﻿#sidebar {
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 90px;
+	height: 100%;
+	background-color: #21293d;
+}
+
+#sidebar .home a {
+	display: block;
+	position: absolute;
+	top: 80px;
+	width: 40px;
+	height: 40px;
+	margin-left: 25px;
+	background: url(/img/home.png);
+}
+
+#sidebar .home a:hover {
+	background: url(/img/homehover.png);
+}
+
+#sidebar .news a {
+	display: block;
+	position: absolute;
+	top: 180px;
+	width: 40px;
+	height: 40px;
+	margin-left: 25px;
+	background: url(/img/news.png);
+}
+
+#sidebar .news a:hover {
+	background: url(/img/newshover.png);
+}
+
+#sidebar .artist a {
+	display: block;
+	position: absolute;
+	top: 280px;
+	width: 40px;
+	height: 40px;
+	margin-left: 25px;
+	background: url(/img/artist.png);
+}
+
+#sidebar .artist a:hover {
+	background: url(/img/artisthover.png);
+}
+
+#sidebar .event a {
+	display: block;
+	position: absolute;
+	top: 380px;
+	width: 40px;
+	height: 40px;
+	margin-left: 25px;
+	background: url(/img/event.png);
+}
+
+#sidebar .event a:hover {
+	background: url(/img/eventhover.png);
+}
+
+#sidebar .settings a {
+	display: block;
+	position: absolute;
+	top: 480px;
+	width: 40px;
+	height: 40px;
+	margin-left: 25px;
+	background: url(/img/settings.png);
+}
+
+#sidebar .settings a:hover {
+	background: url(/img/settingshover.png);
+}
+
+#sidebar .home .news .artist .event .settings a img {
+	width: 40px;
+	height: 40px;
+}

@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Bigrivers.Server.Data;
 using Bigrivers.Server.Model;
+using Bigrivers.Client.Backend.ViewModels;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
@@ -15,112 +16,144 @@ namespace Bigrivers.Client.Backend.Controllers
         // TODO: Create BaseController class for BigRiversDb
         private readonly BigriversDb db = new BigriversDb();
 
-        // GET: Artist
+        // GET: Artist/Index
         public ActionResult Index()
         {
             return RedirectToAction("Manage");
         }
 
-        // GET: Artist/Manage/5
-        public ActionResult Manage(int? id)
+        // GET: Artist/
+        public ActionResult Manage()
         {
-            // If artist id is specified, return artist details view
-            if (id != null) return Details(id.Value);
-
             // List all artists and return view
-            try
-            {
-                ViewBag.ListArtists = db.Artists
-                    .Where(a => a.Status)
-                    .ToList();
-            }
-            catch (Exception e)
-            {
-                ViewBag.errormsg = e.Message;
-            }
+            ViewBag.listArtists =
+                (from a in db.Artists
+                 select a).ToList();
 
-            return View();
-        }
-
-        // GET: Artist/Details/5
-        // TODO: Doesn't work
-        private ActionResult Details(int id)
-        {
-            // Find single artist
-            ViewBag.SingleArtist = db.Artists
-                .Where(a => a.Id == id)
-                .SingleOrDefault();
-
-            // Send to Manage view if artist is not found
-            if (ViewBag.SingleArtist == null) return RedirectToAction("Manage");
-
-            return View();
+            return View("Manage");
         }
 
         // GET: Artist/Create
-        public ActionResult Create()
+        public ActionResult New()
         {
             return View();
         }
 
         // POST: Artist/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult New(ArtistViewModel viewModel)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                return View(viewModel);
             }
-            catch
+            else
             {
-                return View();
+                //ViewBag.Title = "Resultaat - Example";
+                var a = new Artist
+                {
+                    Name = viewModel.Name,
+                    Description = viewModel.Description,
+                    Avatar = viewModel.Avatar,
+                    Website = viewModel.Website,
+                    YoutubeChannel = viewModel.YoutubeChannel,
+                    Facebook = viewModel.Facebook,
+                    Twitter = viewModel.Twitter,
+                    Status = true
+                };
+
+                db.Artists.Add(a);
+                db.SaveChanges();
+
+                ViewBag.ObjectAdded = viewModel;
+
+                return RedirectToAction("Manage");
             }
         }
 
         // GET: Artist/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            // Find single artist
+            var artist =
+                (from a in db.Artists
+                 where a.Id == id
+                 select a).First();
+
+
+            // Send to Manage view if artist is not found
+            if (artist == null) return RedirectToAction("Manage");
+
+            var m = new ArtistViewModel
+            {
+                Name = artist.Name,
+                Description = artist.Description,
+                Avatar = artist.Avatar,
+                Website = artist.Website,
+                YoutubeChannel = artist.YoutubeChannel,
+                Facebook = artist.Facebook,
+                Twitter = artist.Twitter
+            };
+
+            return View(m);
         }
 
         // POST: Artist/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, ArtistViewModel viewModel)
         {
-            try
-            {
-                // TODO: Add update logic here
+            var SingleArtist =
+                (from c in db.Artists
+                 where c.Id == id
+                 select c).First();
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            SingleArtist.Name = viewModel.Name;
+            SingleArtist.Description = viewModel.Description;
+            SingleArtist.Avatar = viewModel.Avatar;
+            SingleArtist.Website = viewModel.Website;
+            SingleArtist.YoutubeChannel = viewModel.YoutubeChannel;
+            SingleArtist.Facebook = viewModel.Facebook;
+            SingleArtist.Twitter = viewModel.Twitter;
+            db.SaveChanges();
 
-        // GET: Artist/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+            return RedirectToAction("Manage");
         }
 
         // POST: Artist/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            // TODO: Add delete logic here
+            var SingleArtist =
+                (from c in db.Artists
+                 where c.Id == id
+                 select c).First();
 
-                return RedirectToAction("Index");
-            }
-            catch
+            db.Artists.Remove(SingleArtist);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        // GET: Artist/Action/5/Status
+        public ActionResult SwitchStatus(int id)
+        {
+            var artist =
+            (from a in db.Artists
+                where a.Id == id
+                select a).First();
+
+            if (artist.Status)
             {
-                return View();
+                artist.Status = false;
             }
+            else
+            {
+                artist.Status = true;
+            }
+
+            db.SaveChanges();
+            return RedirectToAction("Manage");
         }
     }
 }
