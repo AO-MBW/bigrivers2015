@@ -1,6 +1,4 @@
-﻿@using Bigrivers.Client.Backend.Helpers
-@using Bigrivers.Server.Model
-
+﻿@using Bigrivers.Server.Model
 @{
     ViewBag.Title = "Artiesten";
     List<Artist> listArtists = ViewBag.ListArtists;
@@ -41,13 +39,13 @@
                         <td>Datum gewijzigd</td>
                         @if (a.Status)
                         {
-                            <td>Actief</td>
+                            <td>@Html.ActionLink("Actief", "SwitchStatus", "Artist", new { @Id = a.Id }, null)</td>
                         }
                         else
                         {
-                            <td>Inactief</td>
+                            <td>@Html.ActionLink("Inactief", "SwitchStatus", "Artist", new { @Id = a.Id }, null)</td>
                         }
-                        <td>@Html.ActionLink("Wijzig", "Edit", "Artist", new { a.Id }, null)@Html.ActionLink("Verwijder", "Delete", "Artist")</td>
+                        <td>@Html.ActionLink("Wijzig", "Edit", "Artist", new { @Id = a.Id}, null)@Html.ActionLink("Verwijder", "Delete", "Artist", new { @Id = a.Id }, new { @onclick = "return confirm('Je staat op het punt om "+a.Name+" te verwijderen. Weet je dit zeker?');" })</td>
                     </tr>
                 }
             </tbody>

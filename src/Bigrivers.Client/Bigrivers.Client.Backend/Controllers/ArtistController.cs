@@ -27,8 +27,8 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             // List all artists and return view
             ViewBag.listArtists =
-                (from c in db.Artists
-                 select c).ToList();
+                (from a in db.Artists
+                 select a).ToList();
 
             return View("Manage");
         }
@@ -76,24 +76,24 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Edit(int id)
         {
             // Find single artist
-            var a =
-                (from c in db.Artists
-                 where c.Id == id
-                 select c).First();
+            var artist =
+                (from a in db.Artists
+                 where a.Id == id
+                 select a).First();
 
 
             // Send to Manage view if artist is not found
-            if (a == null) return RedirectToAction("Manage");
+            if (artist == null) return RedirectToAction("Manage");
 
             var m = new ArtistViewModel
             {
-                Name = a.Name,
-                Description = a.Description,
-                Avatar = a.Avatar,
-                Website = a.Website,
-                YoutubeChannel = a.YoutubeChannel,
-                Facebook = a.Facebook,
-                Twitter = a.Twitter
+                Name = artist.Name,
+                Description = artist.Description,
+                Avatar = artist.Avatar,
+                Website = artist.Website,
+                YoutubeChannel = artist.YoutubeChannel,
+                Facebook = artist.Facebook,
+                Twitter = artist.Twitter
             };
 
             return View(m);
@@ -120,48 +120,39 @@ namespace Bigrivers.Client.Backend.Controllers
             return RedirectToAction("Manage");
         }
 
-        // GET: Artist/Delete/5
+        // POST: Artist/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
-        }
+            // TODO: Add delete logic here
+            var SingleArtist =
+                (from c in db.Artists
+                 where c.Id == id
+                 select c).First();
 
-        // POST: Artist/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
+            db.Artists.Remove(SingleArtist);
+            db.SaveChanges();
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
 
         // GET: Artist/Action/5/Status
-        public ActionResult Modify(int id, string action)
+        public ActionResult SwitchStatus(int id)
         {
-            switch (action)
+            var artist =
+            (from a in db.Artists
+                where a.Id == id
+                select a).First();
+
+            if (artist.Status)
             {
-                case "Status":
-                    var a =
-                    (from c in db.Artists
-                        where c.Id == id
-                        select c).First();
-                    if (a.Status)
-                    {
-                        a.Status = false;
-                    }
-                    else
-                    {
-                        a.Status = true;
-                    }
-                    return RedirectToAction("Manage");
+                artist.Status = false;
             }
+            else
+            {
+                artist.Status = true;
+            }
+
+            db.SaveChanges();
             return RedirectToAction("Manage");
         }
     }
