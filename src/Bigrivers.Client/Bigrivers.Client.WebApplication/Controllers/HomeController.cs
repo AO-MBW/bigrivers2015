@@ -33,7 +33,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
         public ActionResult Index()
         {
             return RedirectToAction("Events");
-            return View();
+            //return View();
         }
 
         public ActionResult Events(int? id)
@@ -66,27 +66,27 @@ namespace Bigrivers.Client.WebApplication.Controllers
             return View("Event");
         }
 
-        public ActionResult Optredens(int? id)
+        public ActionResult Performances(int? id)
         {
-            if (id != null) return Optreden(id.Value);
+            if (id != null) return Performance(id.Value);
 
             ViewBag.PerformancesList = AccessLayer.Performances
                 .Where(p => p.Status)
                 .OrderBy(p => p.Start)
                 .ToList();
 
-            return View("Optredens");
+            return View("Performances");
         }
 
-        private ActionResult Optreden(int id)
+        private ActionResult Performance(int id)
         {
             ViewBag.CurrentPerformance = AccessLayer.Performances
                 .Where(p => p.Id == id && p.Status)
                 .SingleOrDefault();
 
-            if (ViewBag.CurrentPerformance == null) return RedirectToAction("Optredens");
-            
-            return View("Optreden");
+            if (ViewBag.CurrentPerformance == null) return RedirectToAction("Performances");
+
+            return View("Performance");
         }
 
         public ActionResult Genres(int? id)
@@ -108,26 +108,26 @@ namespace Bigrivers.Client.WebApplication.Controllers
             return View("Genre");
         }
 
-        public ActionResult Artiesten(int? id)
+        public ActionResult Artists(int? id)
         {
-            if (id != null) return Artiest(id.Value);
+            if (id != null) return Artist(id.Value);
 
             ViewBag.ArtistsList = AccessLayer.Artists
                 .Where(a => a.Status)
                 .ToList();
 
-            return View("Artiesten");
+            return View("Artists");
         }
 
-        private ActionResult Artiest(int id)
+        private ActionResult Artist(int id)
         {
             ViewBag.CurrentArtist = AccessLayer.Artists
                 .Where(a => a.Id == id)
                 .SingleOrDefault();
 
-            if (ViewBag.CurrentArtist == null) return RedirectToAction("Artiesten");
+            if (ViewBag.CurrentArtist == null) return RedirectToAction("Artists");
 
-            return View("Artiest");
+            return View("Artist");
         }
 
         public ActionResult Contact()

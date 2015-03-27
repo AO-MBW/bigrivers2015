@@ -462,16 +462,56 @@ namespace Bigrivers.Server.Data.Migrations
 
             MenuItem menu1 = new MenuItem
             {
-                URL = "/Home/Events/31",
-                DisplayName = "Event31",
+                URL = "http://www.crowdfunding.nl/",
+                DisplayName = "Crowdfunding",
                 Order = 0,
                 Parent = 0,
                 Status = true
             };
             MenuItem menu2 = new MenuItem
             {
-                URL = "http://www.youtube.com/",
-                DisplayName = "Youtube",
+                URL = "/Home/Events",
+                DisplayName = "Evenementen",
+                Order = 0,
+                Parent = 0,
+                Status = true
+            };
+            MenuItem menu3 = new MenuItem
+            {
+                URL = "/Home/Artists",
+                DisplayName = "Artiesten",
+                Order = 0,
+                Parent = 0,
+                Status = true
+            };
+            MenuItem menu4 = new MenuItem
+            {
+                URL = "/Home/Performances",
+                DisplayName = "Optredens",
+                Order = 0,
+                Parent = 0,
+                Status = true
+            };
+            MenuItem menu5 = new MenuItem
+            {
+                URL = "/Home/Genres",
+                DisplayName = "Genres",
+                Order = 0,
+                Parent = 0,
+                Status = true
+            };
+            MenuItem menu6 = new MenuItem
+            {
+                URL = "/Home/Contact",
+                DisplayName = "Contact",
+                Order = 0,
+                Parent = 0,
+                Status = true
+            };
+            MenuItem menu7 = new MenuItem
+            {
+                URL = "/Images/br15.jpg",
+                DisplayName = "Logo",
                 Order = 0,
                 Parent = 0,
                 Status = true
@@ -480,6 +520,11 @@ namespace Bigrivers.Server.Data.Migrations
             // Add menu to database
             context.MenuItems.AddOrUpdate(menu1);
             context.MenuItems.AddOrUpdate(menu2);
+            context.MenuItems.AddOrUpdate(menu3);
+            context.MenuItems.AddOrUpdate(menu4);
+            context.MenuItems.AddOrUpdate(menu5);
+            context.MenuItems.AddOrUpdate(menu6);
+            context.MenuItems.AddOrUpdate(menu7);
 
             // Add genres to artists
             Queen.Genres.Add(rock);

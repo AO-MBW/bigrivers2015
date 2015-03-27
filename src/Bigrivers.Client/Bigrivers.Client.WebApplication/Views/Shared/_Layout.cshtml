@@ -19,9 +19,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div>
-                    <img class="menuimg" src="../Images/br15.jpg" />
+                    <a href="/home/index"><img class='menuimg' src='../Images/br15.jpg' /></a>
                 </div>
-            </div>
+            </div>  
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
 
@@ -30,10 +30,6 @@
                         <li><a href="@item.URL">@item.DisplayName</a></li>
 
                     }
-                    <li>@Html.ActionLink("Events", "Events", "Home", new { id = string.Empty }, null)</li>
-                    <!--<li>@Html.ActionLink("Optredens", "Optredens", "Home", new { id = string.Empty }, null)</li>-->
-                    <li>@Html.ActionLink("Artiesten", "Artiesten", "Home", new { id = string.Empty }, null)</li>
-                    <li>@Html.ActionLink("Genres", "Genres", "Home", new { id = string.Empty }, null)</li>
                 </ul>
             </div>
         </div>
