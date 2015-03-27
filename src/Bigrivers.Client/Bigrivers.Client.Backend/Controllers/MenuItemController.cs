@@ -1,89 +1,140 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Bigrivers.Server.Data;
+using Bigrivers.Server.Model;
+using Bigrivers.Client.Backend.ViewModels;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
     public class MenuItemController : Controller
     {
-        // GET: MenuItem
+        // TODO: Create BaseController class for BigRiversDb
+        private readonly BigriversDb db = new BigriversDb();
+
+        // GET: MenuItem/Index
         public ActionResult Index()
         {
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Manage");
         }
 
-        // GET: MenuItem/Details/5
-        public ActionResult Details(int id)
+        // GET: MenuItem/
+        public ActionResult Manage()
         {
-            return View();
+            // List all artists and return view
+            ViewBag.listMenuItems =
+                (from m in db.MenuItems
+                 select m).ToList();
+
+            return View("Manage");
         }
 
         // GET: MenuItem/Create
-        public ActionResult Create()
+        public ActionResult New()
         {
             return View();
         }
 
-        // POST: MenuItem/Create
+        // POST: MenuItem/New
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult New(MenuItemViewModel viewModel)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                return View(viewModel);
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
+            //ViewBag.Title = "Resultaat - Example";
+            var m = new MenuItem
             {
-                return View();
-            }
+                URL = viewModel.URL,
+                DisplayName = viewModel.DisplayName,
+                Order = viewModel.Order,
+                Parent = viewModel.Parent,
+                Status = true
+            };
+
+            db.MenuItems.Add(m);
+            db.SaveChanges();
+
+            ViewBag.ObjectAdded = viewModel;
+
+            return RedirectToAction("Manage");
         }
 
         // GET: MenuItem/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            // Find single menuitem
+            var menuItem =
+                (from m in db.MenuItems
+                 where m.Id == id
+                 select m).First();
+
+            // Send to Manage view if menuitem is not found
+            if (menuItem == null) return RedirectToAction("Manage");
+
+            var model = new MenuItemViewModel
+            {
+                URL = menuItem.URL,
+                DisplayName = menuItem.DisplayName,
+                Order = menuItem.Order,
+                Parent = menuItem.Parent,
+                Status = true
+            };
+
+            return View(model);
         }
 
         // POST: MenuItem/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, MenuItemViewModel viewModel)
         {
-            try
-            {
-                // TODO: Add update logic here
+            var menuItem =
+                (from m in db.MenuItems
+                 where m.Id == id
+                 select m).First();
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            menuItem.URL = viewModel.URL;
+            menuItem.DisplayName = viewModel.DisplayName;
+            menuItem.Order = viewModel.Order;
+            menuItem.Parent = viewModel.Parent;
+            db.SaveChanges();
 
-        // GET: MenuItem/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+            return RedirectToAction("Manage");
         }
 
         // POST: MenuItem/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            // TODO: Add delete logic here
+            var menuItem =
+                (from m in db.MenuItems
+                 where m.Id == id
+                 select m).First();
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            db.MenuItems.Remove(menuItem);
+            db.SaveChanges();
+
+            return RedirectToAction("Manage");
+        }
+
+        // GET: MenuItem/SwitchStatus/5
+        public ActionResult SwitchStatus(int id)
+        {
+            var menuItem =
+            (from m in db.MenuItems
+             where m.Id == id
+             select m).First();
+
+            menuItem.Status = !menuItem.Status;
+            db.SaveChanges();
+            return RedirectToAction("Manage");
         }
     }
 }

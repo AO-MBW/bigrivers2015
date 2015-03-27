@@ -1,0 +1,23 @@
+﻿@model Bigrivers.Client.Backend.ViewModels.MenuItemViewModel
+@ViewBag.Title = "Nieuw";
+
+<div id="wrapper">
+    <div class="page-title">
+        <h1>Menuitem toevoegen</h1>
+    </div>
+
+    <div id="content">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <h2>Artiest</h2>
+            @Html.LabelFor(m => m.DisplayName)
+            @Html.TextBoxFor(m => m.URL)
+            <div class="footer">
+                <hr />
+                <input type="submit" name="save" value="Menuitem opslaan">
+            </div>
+        }
+    </div>
+</div>

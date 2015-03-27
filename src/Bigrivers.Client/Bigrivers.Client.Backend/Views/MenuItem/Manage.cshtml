@@ -1,0 +1,44 @@
+﻿@using Bigrivers.Server.Model
+@{
+    ViewBag.Title = "Menuitems";
+    List<MenuItem> listMenuItems = ViewBag.listMenuItems;
+}
+<div id="wrapper">
+    @ViewBag.errormsg
+    @Html.Header("1", "Beheer")
+    <div id="actionbar">
+        <div class="action-block">
+            @Html.ActionLink("Item Toevoegen", "New", "MenuItem")
+        </div>
+    </div>
+    <div id="content">
+        <table>
+            <thead>
+                <tr>
+                    <th>Weergavenaam</th>
+                    <th>URL</th>
+                    <th>Status</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var m in listMenuItems)
+                {
+                    <tr>
+                        <td>@m.DisplayName</td>
+                        <td>@m.URL</td>
+                        @if (m.Status)
+                        {
+                            <td>@Html.ActionLink("Actief", "SwitchStatus", "MenuItem", new { m.Id }, null)</td>
+                        }
+                        else
+                        {
+                            <td>@Html.ActionLink("Inactief", "SwitchStatus", "MenuItem", new { m.Id }, null)</td>
+                        }
+                        <td>@Html.ActionLink("Wijzig", "Edit", "MenuItem", new { m.Id}, null)@Html.ActionLink("Verwijder", "Delete", "MenuItem", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om "+m.DisplayName+" te verwijderen. Weet je dit zeker?');"})</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

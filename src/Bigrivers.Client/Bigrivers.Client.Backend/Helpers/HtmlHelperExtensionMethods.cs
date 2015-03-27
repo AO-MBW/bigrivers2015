@@ -10,7 +10,7 @@ namespace Bigrivers.Client.Backend.Helpers
 {
     public static class HtmlHelperExtensionMethods
     {
-        public static MvcHtmlString HyperLink(this HtmlHelper helper, string href, string text)
+        public static MvcHtmlString HyperLink(this HtmlHelper helper, string text, string href)
         {
             var builder = new TagBuilder("a");
 
@@ -23,7 +23,7 @@ namespace Bigrivers.Client.Backend.Helpers
             return MvcHtmlString.Create(builder.ToString());
         }
 
-        public static MvcHtmlString HyperLink(this HtmlHelper helper, string href, string text, bool openInNewWindow)
+        public static MvcHtmlString HyperLink(this HtmlHelper helper, string text, string href, bool openInNewWindow)
         {
             var builder = new TagBuilder("a");
 
@@ -37,7 +37,7 @@ namespace Bigrivers.Client.Backend.Helpers
             return MvcHtmlString.Create(builder.ToString(TagRenderMode.Normal));
         }
 
-        public static MvcHtmlString HyperLink(this HtmlHelper helper, string href, string text, bool openInNewWindow, object htmlAttributes)
+        public static MvcHtmlString HyperLink(this HtmlHelper helper, string text, string href, bool openInNewWindow, object htmlAttributes)
         {
             var builder = new TagBuilder("a");
             builder.MergeAttributes(new RouteValueDictionary(htmlAttributes), true);
@@ -52,7 +52,7 @@ namespace Bigrivers.Client.Backend.Helpers
             return MvcHtmlString.Create(builder.ToString(TagRenderMode.Normal));
         }
 
-        public static MvcHtmlString HyperLink(this HtmlHelper helper, string href, string text, bool openInNewWindow, object htmlAttributes, object dataAttributes)
+        public static MvcHtmlString HyperLink(this HtmlHelper helper, string text, string href, bool openInNewWindow, object htmlAttributes, object dataAttributes)
         {
             var builder = new TagBuilder("a");
             builder.MergeAttributes(new RouteValueDictionary(htmlAttributes), true);
