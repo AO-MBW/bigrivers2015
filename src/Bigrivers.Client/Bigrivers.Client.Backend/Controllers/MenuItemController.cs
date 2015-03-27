@@ -54,8 +54,8 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 URL = viewModel.URL,
                 DisplayName = viewModel.DisplayName,
-                Order = viewModel.Order,
-                Parent = viewModel.Parent,
+                Order = 0,
+                Parent = 0,
                 Status = true
             };
 
@@ -85,7 +85,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 DisplayName = menuItem.DisplayName,
                 Order = menuItem.Order,
                 Parent = menuItem.Parent,
-                Status = true
+                Status = menuItem.Status
             };
 
             return View(model);
@@ -104,6 +104,7 @@ namespace Bigrivers.Client.Backend.Controllers
             menuItem.DisplayName = viewModel.DisplayName;
             menuItem.Order = viewModel.Order;
             menuItem.Parent = viewModel.Parent;
+            menuItem.Status = viewModel.Status;
             db.SaveChanges();
 
             return RedirectToAction("Manage");

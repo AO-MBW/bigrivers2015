@@ -1,5 +1,4 @@
 ﻿@model Bigrivers.Client.Backend.ViewModels.MenuItemViewModel
-@ViewBag.Title = "Nieuw";
 
 <div id="wrapper">
     <div class="page-title">
@@ -10,12 +9,21 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
-            <h2>Artiest</h2>
-            @Html.LabelFor(m => m.DisplayName)
-            @Html.TextBoxFor(m => m.URL)
+            @Html.ValidationSummary()
+            <h2>MenuItem</h2>
+            <fieldset>
+                @Html.LabelFor(m => m.DisplayName)
+                @Html.TextBoxFor(m => m.DisplayName)
+                @Html.LabelFor(m => m.URL)
+                @Html.TextBoxFor(m => m.URL)
+            </fieldset>
+            <fieldset>
+                @Html.LabelFor(m => m.Status)
+                <label class="radio">@Html.RadioButtonFor(m => m.Status, true) Actief</label>
+                <label class="radio">@Html.RadioButtonFor(m => m.Status, false) Inactief</label>
+            </fieldset>
+            <hr />
             <div class="footer">
-                <hr />
                 <input type="submit" name="save" value="Menuitem opslaan">
             </div>
         }

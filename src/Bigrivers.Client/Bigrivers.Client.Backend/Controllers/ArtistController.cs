@@ -59,7 +59,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 YoutubeChannel = viewModel.YoutubeChannel,
                 Facebook = viewModel.Facebook,
                 Twitter = viewModel.Twitter,
-                Status = true
+                Status = viewModel.Status
             };
 
             db.Artists.Add(a);
@@ -91,7 +91,8 @@ namespace Bigrivers.Client.Backend.Controllers
                 Website = artist.Website,
                 YoutubeChannel = artist.YoutubeChannel,
                 Facebook = artist.Facebook,
-                Twitter = artist.Twitter
+                Twitter = artist.Twitter,
+                Status = artist.Status
             };
 
             return View(model);
@@ -113,6 +114,7 @@ namespace Bigrivers.Client.Backend.Controllers
             artist.YoutubeChannel = viewModel.YoutubeChannel;
             artist.Facebook = viewModel.Facebook;
             artist.Twitter = viewModel.Twitter;
+            artist.Status = viewModel.Status;
             db.SaveChanges();
 
             return RedirectToAction("Manage");

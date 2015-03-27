@@ -255,7 +255,7 @@ ul#accountContainer a {
 	font-size: 1em;
 }
 
-.block .item {
+.block .itemblock {
 	margin: 5px 5px;
 }
 
@@ -265,7 +265,7 @@ ul#accountContainer a {
 	font-weight: 300;
 }
 
-.block .item .additem {
+.block .itemblock .item {
 	width: 100%;
 	height: 60px;
 	margin: 0 5px 5px 0;
@@ -274,7 +274,7 @@ ul#accountContainer a {
 	background-color: #d7d7d7;
 }
 
-.block .item .additem a {
+.block .itemblock .item a {
 	display: block;
 	width: 100%;
 	height: 100%;
@@ -283,29 +283,7 @@ ul#accountContainer a {
 	font-size: 1.4em;
 }
 
-.block .item .additem a:hover {
-	background-color: #bababa;
-}
-
-.block .item .manageitem {
-	width: 100%;
-	height: 60px;
-	margin: 0 5px 5px 0;
-	line-height: 60px;
-	text-align: center;
-	background-color: #d7d7d7;
-}
-
-.block .item .manageitem  a {
-	display: block;
-	width: 100%;
-	height: 100%;
-	text-decoration: none;
-	color: #616161;
-	font-size: 1.4em;
-}
-
-.block .item .manageitem  a:hover {
+.block .itemblock .item a:hover {
 	background-color: #bababa;
 }
 
@@ -555,7 +533,7 @@ label.check {
 	position: relative;
 	margin: 0 auto;
 	margin-left: 125px;
-	z-index: 1;
+	z-index: 0;
 }
 
 .page-title h1 {
@@ -639,127 +617,4 @@ h2 {
 
 #content table a:hover {
 	text-decoration: underline;
-}	
-
-/*//--- Content Forms ---//*/
-
-#content form {
-	width: 700px;
-	padding: 10px 15px 10px 15px;
-	background-color: #fefefe;
-}
-
-#content fieldset {
-	padding: 5px 10px 5px 10px;
-	background-color: #fefefe;
-	border: 1px solid #ccc;
-}
-
-#content form label {
-	display: block;
-	margin: 15px 0 5px;
-	font-weight: bold;
-	color: #3c3c3e;
-}
-
-#content form textarea {
-	width: 100%;
-	min-height: 300px;
-}
-
-#content form select {
-	width: 200px;
-	height: 30px;
-	line-height: 30px;
-	border: 1px solid #ccc;
-}
-
-#content form .description {
-	margin: 10px 0 0 0;
-	font-size: 1em;
-	color: #3c3c3e;
-}
-
-#content form #cke_description, .cke_contents {
-	min-height: 400px;
-}
-
-#content form input[type="text"] {
-	width: 100%;
-	height: 35px;
-	margin: 0 0 15px;
-	padding: 5px 10px 5px 10px;
-	border: 1px solid #c5c5c5;
-}
-
-#content form input[type="text"].time {
-	width: 100px;
-}
-
-#content form input[type="email"] {
-	width: 100%;
-	height: 35px;
-	margin: 0 0 15px;
-	padding: 5px 10px 5px 10px;
-	border: 1px solid #c5c5c5;
-}
-
-#content form input[type="url"] {
-	width: 100%;
-	height: 35px;
-	margin: 0 0 15px;
-	padding: 5px 10px 5px 10px;
-	border: 1px solid #c5c5c5;
-}
-
-#content form input[type="password"] {
-	width: 400px;
-	height: 35px;
-	margin: 0 0 15px;
-	padding: 5px 10px 5px 10px;
-	border: 1px solid #c5c5c5;
-}
-
-#content form input[type="submit"] {
-	min-width: 100px;
-	height: 30px;
-	margin: 0 0 15px;
-	padding: 5px 10px 5px 10px;
-	color: #fff;
-	background-color: #5b83dd;
-	border: none;
-}
-
-#content .form-item {
-	margin: 10px 0 10px 0;
-}
-
-#content .form-radio {
-	vertical-align: middle;
-}
-
-#content .form-item-radius {
-	padding: 6px 0;
-}
-
-#content .option {
-	display: inline;
-	font-size: 0.9em;
-	font-weight: normal;
-	text-transform: none;
-}
-
-/*//--- Form Errors ---//*/
-
-.error {
-	display: block;
-	width: 730px;
-	color: #fff;
-	background-color: #c84040;
-}
-
-.error label {
-	display: block;
-	width: 100%;
-	padding: 10px;
 }

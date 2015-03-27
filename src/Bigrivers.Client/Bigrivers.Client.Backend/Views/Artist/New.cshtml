@@ -1,5 +1,4 @@
 ﻿@model Bigrivers.Client.Backend.ViewModels.ArtistViewModel
-@ViewBag.Title = "Create";
 
 <div id="wrapper">
     <div class="page-title">
@@ -10,35 +9,43 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
+            @Html.ValidationSummary()
             <h2>Artiest</h2>
-            @Html.LabelFor(a => a.Name)
-            @Html.TextBoxFor(a => a.Name)
-            @Html.LabelFor(a => a.Description)
-            @Html.TextAreaFor(a => a.Description)
-            @*<script>
-                    // Replace the <textarea id="description"> with a CKEditor
-                    // instance, using default configuration.
-                    CKEDITOR.replace("description");
-                </script>*@
-            <div class="imageUpload">
-                @Html.LabelFor(a => a.Avatar)
+            <fieldset>
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name)
+                @Html.LabelFor(m => m.Description)
+                @Html.TextAreaFor(m => m.Description, new { @Id = "description" })
+                @*<script>
+                        // Replace the <textarea id="description"> with a CKEditor
+                        // instance, using default configuration.
+                        CKEDITOR.replace("description");
+                    </script>*@
+            </fieldset>
+            <hr />
+            <fieldset>
+                @Html.LabelFor(m => m.Avatar)
                 <span>Upload een foto voor de artiest</span><br />
                 <input type="file" name="pic">
-            </div>
+            </fieldset>
             <hr />
-            <div class="url">
-                @Html.LabelFor(a => a.Website)
-                @Html.TextBoxFor(a => a.Website)
-                @Html.LabelFor(a => a.YoutubeChannel)
-                @Html.TextBoxFor(a => a.YoutubeChannel)
-                @Html.LabelFor(a => a.Facebook)
-                @Html.TextBoxFor(a => a.Facebook)
-                @Html.LabelFor(a => a.Twitter)
-                @Html.TextBoxFor(a => a.Twitter)
-            </div>
+            <fieldset>
+                @Html.LabelFor(m => m.Website)
+                @Html.TextBoxFor(m => m.Website)
+                @Html.LabelFor(m => m.YoutubeChannel)
+                @Html.TextBoxFor(m => m.YoutubeChannel)
+                @Html.LabelFor(m => m.Facebook)
+                @Html.TextBoxFor(m => m.Facebook)
+                @Html.LabelFor(m => m.Twitter)
+                @Html.TextBoxFor(m => m.Twitter)
+            </fieldset>
+            <fieldset>
+                @Html.LabelFor(m => m.Status)
+                <label class="radio">@Html.RadioButtonFor(m => m.Status, true) Actief</label>
+                <label class="radio">@Html.RadioButtonFor(m => m.Status, false) Inactief</label>
+            </fieldset>
+            <hr />
             <div class="footer">
-                <hr />
                 <input type="submit" name="save" value="Artiest opslaan">
             </div>
         }
