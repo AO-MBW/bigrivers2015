@@ -122,12 +122,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ArtistController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuItemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HtmlHelperExtensionMethods.cs" />
+    <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\ArtistViewModel.cs" />
     <Compile Include="Models\MenuItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -322,6 +324,7 @@
     <Content Include="Scripts\Admin\ckeditor\skins\moono\images\refresh.png" />
     <Content Include="Scripts\Admin\ckeditor\styles.js" />
     <Content Include="Scripts\Admin\functions.js" />
+    <Content Include="Scripts\Edit.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -351,6 +354,8 @@
     <Content Include="Views\Shared\_Sidebar.cshtml" />
     <Content Include="Views\Artist\Edit.cshtml" />
     <Content Include="Views\Artist\Manage.cshtml" />
+    <Content Include="Views\Event\Edit.cshtml" />
+    <Content Include="Views\Event\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

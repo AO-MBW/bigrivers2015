@@ -1,0 +1,59 @@
+﻿@model Bigrivers.Client.Backend.ViewModels.EventViewModel
+
+<div id="wrapper">
+    <div class="page-title">
+        <h1>Artiest toevoegen</h1>
+    </div>
+
+    <div id="content">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+            <h2>Artiest</h2>
+            <fieldset>
+                @Html.LabelFor(m => m.Title)
+                @Html.TextBoxFor(m => m.Title)
+                @Html.LabelFor(m => m.Description)
+                @Html.TextAreaFor(m => m.Description, new {@Id = "description"})
+                @Html.TextAreaFor(m => m.ShortDescription, new { @Id = "description" })
+                @*<script>
+                        // Replace the <textarea id="description"> with a CKEditor
+                        // instance, using default configuration.
+                        CKEDITOR.replace("description");
+                    </script>*@
+            </fieldset>
+            <hr />
+            <fieldset>
+                @Html.LabelFor(m => m.FrontpageLogo)
+                <span>Upload een logo voor op de frontpage</span><br/>
+                <input type="file" name="pic">
+                @Html.LabelFor(m => m.BackgroundImage)
+                <span>Upload een achtergrond voor de event pagina</span><br />
+                <input type="file" name="pic">
+            </fieldset>
+            <hr />
+            @*<fieldset>
+                @Html.LabelFor(m => m.Start)
+                @Html.TextBoxFor(m => m.Start)
+                @Html.LabelFor(m => m.End)
+                @Html.TextBoxFor(m => m.End)
+            </fieldset>*@
+            <fieldset>
+                @Html.LabelFor(m => m.TicketRequired)
+                @Html.CheckBoxFor(m => m.TicketRequired, new { id = "TicketRequired"})
+                @Html.LabelFor(m => m.Price)
+                @Html.TextBoxFor(m => m.Price, new { id = "Price"})
+            </fieldset>
+            <fieldset>
+                @Html.LabelFor(m => m.Status)
+                <label class="radio">@Html.RadioButtonFor(m => m.Status, true) Actief</label>
+                <label class="radio">@Html.RadioButtonFor(m => m.Status, false) Inactief</label>
+            </fieldset>
+            <hr />
+            <div class="footer">
+                <input type="submit" name="save" value="Artiest opslaan">
+            </div>
+        }
+    </div>
+</div>

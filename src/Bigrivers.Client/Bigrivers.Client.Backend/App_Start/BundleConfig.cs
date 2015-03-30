@@ -20,6 +20,7 @@ namespace Bigrivers.Client.Backend
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/backend").Include(
+                      "~/Scripts/Edit.js",
                       "~/Scripts/Admin/functions.js",
                       "~/Scripts/Admin/ckeditor/ckeditor.js"));
 
