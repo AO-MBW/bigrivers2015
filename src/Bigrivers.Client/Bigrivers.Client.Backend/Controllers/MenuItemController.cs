@@ -14,7 +14,7 @@ namespace Bigrivers.Client.Backend.Controllers
     public class MenuItemController : Controller
     {
         // TODO: Create BaseController class for BigRiversDb
-        private readonly BigriversDb db = new BigriversDb();
+        private readonly BigriversDb _db = new BigriversDb();
 
         // GET: MenuItem/Index
         public ActionResult Index()
@@ -26,17 +26,22 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Manage()
         {
             // List all artists and return view
-            ViewBag.listMenuItems =
-                (from m in db.MenuItems
-                 select m).ToList();
+            ViewBag.listMenuItems = _db.MenuItems.ToList();
 
+            ViewBag.Title = "MenuItems";
             return View("Manage");
         }
 
         // GET: MenuItem/Create
         public ActionResult New()
         {
-            return View();
+            var viewModel = new MenuItemViewModel
+            {
+                Status = true
+            };
+
+            ViewBag.Title = "Nieuw MenuItem";
+            return View("Edit", viewModel);
         }
 
         // POST: MenuItem/New
@@ -46,23 +51,22 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(viewModel);
+                ViewBag.Title = "Nieuw MenuItem";
+                return View("Edit", viewModel);
             }
 
             //ViewBag.Title = "Resultaat - Example";
-            var m = new MenuItem
+            var singleMenuItem = new MenuItem
             {
                 URL = viewModel.URL,
                 DisplayName = viewModel.DisplayName,
                 Order = 0,
                 Parent = 0,
-                Status = true
+                Status = viewModel.Status
             };
 
-            db.MenuItems.Add(m);
-            db.SaveChanges();
-
-            ViewBag.ObjectAdded = viewModel;
+            _db.MenuItems.Add(singleMenuItem);
+            _db.SaveChanges();
 
             return RedirectToAction("Manage");
         }
@@ -71,23 +75,20 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Edit(int id)
         {
             // Find single menuitem
-            var menuItem =
-                (from m in db.MenuItems
-                 where m.Id == id
-                 select m).First();
+            var singleMenuItem = _db.MenuItems.Find(id);
 
             // Send to Manage view if menuitem is not found
-            if (menuItem == null) return RedirectToAction("Manage");
+            if (singleMenuItem == null) return RedirectToAction("Manage");
 
             var model = new MenuItemViewModel
             {
-                URL = menuItem.URL,
-                DisplayName = menuItem.DisplayName,
-                Order = menuItem.Order,
-                Parent = menuItem.Parent,
-                Status = menuItem.Status
+                URL = singleMenuItem.URL,
+                DisplayName = singleMenuItem.DisplayName,
+                Order = singleMenuItem.Order,
+                Parent = singleMenuItem.Parent,
+                Status = singleMenuItem.Status
             };
-
+            ViewBag.Title = "Bewerk MenuItem";
             return View(model);
         }
 
@@ -95,17 +96,14 @@ namespace Bigrivers.Client.Backend.Controllers
         [HttpPost]
         public ActionResult Edit(int id, MenuItemViewModel viewModel)
         {
-            var menuItem =
-                (from m in db.MenuItems
-                 where m.Id == id
-                 select m).First();
+            var singleMenuItem = _db.MenuItems.Find(id);
 
-            menuItem.URL = viewModel.URL;
-            menuItem.DisplayName = viewModel.DisplayName;
-            menuItem.Order = viewModel.Order;
-            menuItem.Parent = viewModel.Parent;
-            menuItem.Status = viewModel.Status;
-            db.SaveChanges();
+            singleMenuItem.URL = viewModel.URL;
+            singleMenuItem.DisplayName = viewModel.DisplayName;
+            singleMenuItem.Order = viewModel.Order;
+            singleMenuItem.Parent = viewModel.Parent;
+            singleMenuItem.Status = viewModel.Status;
+            _db.SaveChanges();
 
             return RedirectToAction("Manage");
         }
@@ -114,13 +112,10 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Delete(int id)
         {
             // TODO: Add delete logic here
-            var menuItem =
-                (from m in db.MenuItems
-                 where m.Id == id
-                 select m).First();
+            var singleMenuItem = _db.MenuItems.Find(id);
 
-            db.MenuItems.Remove(menuItem);
-            db.SaveChanges();
+            _db.MenuItems.Remove(singleMenuItem);
+            _db.SaveChanges();
 
             return RedirectToAction("Manage");
         }
@@ -128,13 +123,10 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: MenuItem/SwitchStatus/5
         public ActionResult SwitchStatus(int id)
         {
-            var menuItem =
-            (from m in db.MenuItems
-             where m.Id == id
-             select m).First();
+            var singleMenuItem = _db.MenuItems.Find(id);
 
-            menuItem.Status = !menuItem.Status;
-            db.SaveChanges();
+            singleMenuItem.Status = !singleMenuItem.Status;
+            _db.SaveChanges();
             return RedirectToAction("Manage");
         }
     }

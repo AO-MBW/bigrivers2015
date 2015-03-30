@@ -348,11 +348,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\MenuItem\Manage.cshtml" />
     <Content Include="Views\MenuItem\Edit.cshtml" />
-    <Content Include="Views\MenuItem\New.cshtml" />
     <Content Include="Views\Shared\_Sidebar.cshtml" />
     <Content Include="Views\Artist\Edit.cshtml" />
     <Content Include="Views\Artist\Manage.cshtml" />
-    <Content Include="Views\Artist\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

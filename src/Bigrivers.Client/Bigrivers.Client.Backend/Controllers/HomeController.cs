@@ -10,6 +10,7 @@ namespace Bigrivers.Client.Backend.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.Title = "Home";
             return View();
         }
 
