@@ -16,7 +16,7 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Display(Name = "Beschrijving")]
         public string Description { get; set; }
 
-        [Display(Name = "Beschrijving")]
+        [Display(Name = "Korte beschrijving")]
         public string ShortDescription { get; set; }
 
         [Display(Name = "Afbeelding")]
@@ -29,11 +29,11 @@ namespace Bigrivers.Client.Backend.ViewModels
 
         [Display(Name = "Starttijd")]
         [DataType(DataType.DateTime)]
-        public DateTimeOffset Start { get; set; }
+        public DateTime Start { get; set; }
 
         [Display(Name = "Eindtijd")]
         [DataType(DataType.DateTime)]
-        public DateTimeOffset End { get; set; }
+        public DateTime End { get; set; }
 
         public decimal? Price { get; set; }
         [Display(Name = "Zijn tickets verplicht?")]

@@ -37,6 +37,8 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             var viewModel = new EventViewModel
             {
+                Start = DateTime.Now,
+                End = DateTime.Now.AddHours(1),
                 TicketRequired = false,
                 Price = 0.00m,
                 Status = true
@@ -63,6 +65,8 @@ namespace Bigrivers.Client.Backend.Controllers
                 ShortDescription = viewModel.ShortDescription,
                 FrontpageLogo = viewModel.FrontpageLogo,
                 BackgroundImage = viewModel.BackgroundImage,
+                Start = viewModel.Start,
+                End = viewModel.End,
                 TicketRequired = viewModel.TicketRequired,
                 Price = viewModel.Price ?? 0.00m,
                 Status = viewModel.Status
@@ -90,6 +94,8 @@ namespace Bigrivers.Client.Backend.Controllers
                 ShortDescription = singleEvent.ShortDescription,
                 FrontpageLogo = singleEvent.FrontpageLogo,
                 BackgroundImage = singleEvent.BackgroundImage,
+                Start = singleEvent.Start.DateTime,
+                End = singleEvent.End.DateTime,
                 TicketRequired = singleEvent.TicketRequired,
                 Price = singleEvent.Price,
                 Status = singleEvent.Status
@@ -109,6 +115,8 @@ namespace Bigrivers.Client.Backend.Controllers
             singleEvent.ShortDescription = viewModel.ShortDescription;
             singleEvent.FrontpageLogo = viewModel.FrontpageLogo;
             singleEvent.BackgroundImage = viewModel.BackgroundImage;
+            singleEvent.Start = viewModel.Start;
+            singleEvent.End = viewModel.End;
             singleEvent.TicketRequired = viewModel.TicketRequired;
             singleEvent.Price = viewModel.Price ?? singleEvent.Price;
             singleEvent.Status = viewModel.Status;

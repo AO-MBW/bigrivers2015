@@ -16,6 +16,8 @@
                 <tr>
                     <th>Evenement</th>
                     <th>Auteur</th>
+                    <th>Starttijd</th>
+                    <th>Eindtijd</th>
                     <th>Updated</th>
                     <th>Status</th>
                     <th>Acties</th>
@@ -27,7 +29,8 @@
                     <tr>
                         <td>@e.Title</td>
                         <td>Auteurnaam</td>
-                        
+                        <td>@e.Start.DateTime</td>
+                        <td>@e.End.DateTime</td>
                         <td>Datum gewijzigd</td>
                         @if (e.Status)
                         {

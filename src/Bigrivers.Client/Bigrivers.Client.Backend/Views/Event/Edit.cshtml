@@ -16,29 +16,25 @@
                 @Html.TextBoxFor(m => m.Title)
                 @Html.LabelFor(m => m.Description)
                 @Html.TextAreaFor(m => m.Description, new {@Id = "description"})
+                @Html.LabelFor(m => m.ShortDescription)
                 @Html.TextAreaFor(m => m.ShortDescription, new { @Id = "description" })
-                @*<script>
-                        // Replace the <textarea id="description"> with a CKEditor
-                        // instance, using default configuration.
-                        CKEDITOR.replace("description");
-                    </script>*@
             </fieldset>
             <hr />
             <fieldset>
                 @Html.LabelFor(m => m.FrontpageLogo)
                 <span>Upload een logo voor op de frontpage</span><br/>
-                <input type="file" name="pic">
-                @Html.LabelFor(m => m.BackgroundImage)
+                <input type="file" name="">
+                @*@Html.LabelFor(m => m.BackgroundImage)
                 <span>Upload een achtergrond voor de event pagina</span><br />
-                <input type="file" name="pic">
+                <input type="file" name="pic">*@
             </fieldset>
             <hr />
-            @*<fieldset>
+            <fieldset>
                 @Html.LabelFor(m => m.Start)
-                @Html.TextBoxFor(m => m.Start)
+                @Html.TextBoxFor(m => m.Start, new {@id = "datepicker1"})
                 @Html.LabelFor(m => m.End)
-                @Html.TextBoxFor(m => m.End)
-            </fieldset>*@
+                @Html.TextBoxFor(m => m.End, new {@id = "datepicker2"})
+            </fieldset>
             <fieldset>
                 @Html.LabelFor(m => m.TicketRequired)
                 @Html.CheckBoxFor(m => m.TicketRequired, new { id = "TicketRequired"})
@@ -55,5 +51,20 @@
                 <input type="submit" name="save" value="Artiest opslaan">
             </div>
         }
+        @*<script>
+            // Replace the <textarea id="description"> with a CKEditor
+            // instance, using default configuration.
+            CKEDITOR.replace("description");
+        </script>*@
+        <script>
+            $("#datepicker1").datetimepicker({
+                dateFormat: "d-m-yy",
+                timeFormat: "h:m:s"
+            });
+            $("#datepicker2").datetimepicker({
+                dateFormat: "d-m-yy",
+                timeFormat: "H:mm:ss"
+            });
+        </script>
     </div>
 </div>
