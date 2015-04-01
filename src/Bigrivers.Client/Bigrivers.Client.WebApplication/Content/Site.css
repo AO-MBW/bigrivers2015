@@ -9,9 +9,9 @@
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 20px;
+    background-color:rgba(0, 0, 0, 0.5);
 }
 .body-contact {
-      background-color:rgba(0, 0, 0, 0.5);
       padding-left: 15px;
       padding-right: 15px;
       padding-top: 15px;
@@ -87,4 +87,11 @@ p.bottomyear{
     max-width: 50%;
     margin-left: 0px;   
   }
+}
+
+table.table{
+    color: white;
+}
+.head-h1{
+    color: white;
 }
