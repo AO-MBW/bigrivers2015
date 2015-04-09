@@ -218,12 +218,12 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Events.cshtml" />
-    <Content Include="Views\Home\Optredens.cshtml" />
+    <Content Include="Views\Home\Performances.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Event.cshtml" />
-    <Content Include="Views\Home\Artiesten.cshtml" />
-    <Content Include="Views\Home\Artiest.cshtml" />
-    <Content Include="Views\Home\Optreden.cshtml" />
+    <Content Include="Views\Home\Artists.cshtml" />
+    <Content Include="Views\Home\Artist.cshtml" />
+    <Content Include="Views\Home\Performance.cshtml" />
     <Content Include="Views\Home\Genres.cshtml" />
     <Content Include="Views\Home\Genre.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />

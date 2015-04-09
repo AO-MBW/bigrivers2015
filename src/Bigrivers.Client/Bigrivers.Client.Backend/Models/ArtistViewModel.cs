@@ -35,5 +35,7 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Display(Name = "Twitterpagina")]
         [DataType(DataType.Url)]
         public string Twitter { get; set; }
+
+        public bool Status { get; set; }
     }
 }

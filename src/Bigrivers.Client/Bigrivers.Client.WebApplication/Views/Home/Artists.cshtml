@@ -9,7 +9,7 @@
     @foreach (Artist artist in artistList)
     {
         <div class="col-xs-3">
-            @Html.ActionLink(artist.Name, "Artiesten", new { Id = artist.Id })
+            @Html.ActionLink(artist.Name, "Artist", new { Id = artist.Id })
         </div>
     }
 </div>

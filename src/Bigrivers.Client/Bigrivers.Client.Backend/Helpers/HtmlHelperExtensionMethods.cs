@@ -10,49 +10,22 @@ namespace Bigrivers.Client.Backend.Helpers
 {
     public static class HtmlHelperExtensionMethods
     {
-        public static MvcHtmlString HyperLink(this HtmlHelper helper, string href, string text)
+        public static MvcHtmlString HyperLink(this HtmlHelper helper, string text, string href)
         {
-            var builder = new TagBuilder("a");
-
-            // Returns proper link to itself if link left empty
-            if (href == null) href = "#";
-
-            builder.MergeAttribute("href", href);
-            
-            builder.SetInnerText(text);
-            return MvcHtmlString.Create(builder.ToString());
+            return HyperLink(helper, text, href, false);
         }
 
-        public static MvcHtmlString HyperLink(this HtmlHelper helper, string href, string text, bool openInNewWindow)
+        public static MvcHtmlString HyperLink(this HtmlHelper helper, string text, string href, bool openInNewWindow)
         {
-            var builder = new TagBuilder("a");
-
-            // Returns proper link to itself if link left empty
-            if (href == null) href = "#";
-
-            builder.MergeAttribute("href", href);
-            if (openInNewWindow) builder.MergeAttribute("target", "_blank");
-
-            builder.SetInnerText(text);
-            return MvcHtmlString.Create(builder.ToString(TagRenderMode.Normal));
+            return HyperLink(helper, text, href, openInNewWindow, null);
         }
 
-        public static MvcHtmlString HyperLink(this HtmlHelper helper, string href, string text, bool openInNewWindow, object htmlAttributes)
+        public static MvcHtmlString HyperLink(this HtmlHelper helper, string text, string href, bool openInNewWindow, object htmlAttributes)
         {
-            var builder = new TagBuilder("a");
-            builder.MergeAttributes(new RouteValueDictionary(htmlAttributes), true);
-
-            // Returns proper link to itself if link left empty
-            if (href == null) href = "#";
-
-            builder.MergeAttribute("href", href);
-            if (openInNewWindow) builder.MergeAttribute("target", "_blank");
-
-            builder.SetInnerText(text);
-            return MvcHtmlString.Create(builder.ToString(TagRenderMode.Normal));
+            return HyperLink(helper, text, href, openInNewWindow, htmlAttributes, null);
         }
 
-        public static MvcHtmlString HyperLink(this HtmlHelper helper, string href, string text, bool openInNewWindow, object htmlAttributes, object dataAttributes)
+        public static MvcHtmlString HyperLink(this HtmlHelper helper, string text, string href, bool openInNewWindow, object htmlAttributes, object dataAttributes)
         {
             var builder = new TagBuilder("a");
             builder.MergeAttributes(new RouteValueDictionary(htmlAttributes), true);

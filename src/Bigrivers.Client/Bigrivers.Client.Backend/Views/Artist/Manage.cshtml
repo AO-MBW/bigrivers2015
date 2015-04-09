@@ -1,6 +1,5 @@
 ﻿@using Bigrivers.Server.Model
 @{
-    ViewBag.Title = "Artiesten";
     List<Artist> listArtists = ViewBag.ListArtists;
 }
 <div id="wrapper">
@@ -35,17 +34,17 @@
                     <tr>
                         <td>@a.Name</td>
                         <td>Auteurnaam</td>
-                        <td>@Html.HyperLink(a.Website, "W", true)@Html.HyperLink(a.YoutubeChannel, "Y", true)@Html.HyperLink(a.Facebook, "F", true)@Html.HyperLink(a.Twitter, "T", true)</td>
+                        <td>@Html.HyperLink("W", a.Website, true)@Html.HyperLink("Y", a.YoutubeChannel, true)@Html.HyperLink("F", a.Facebook, true)@Html.HyperLink("T", a.Twitter, true)</td>
                         <td>Datum gewijzigd</td>
                         @if (a.Status)
                         {
-                            <td>@Html.ActionLink("Actief", "SwitchStatus", "Artist", new { @Id = a.Id }, null)</td>
+                            <td>@Html.ActionLink("Actief", "SwitchStatus", "Artist", new { a.Id }, null)</td>
                         }
                         else
                         {
-                            <td>@Html.ActionLink("Inactief", "SwitchStatus", "Artist", new { @Id = a.Id }, null)</td>
+                            <td>@Html.ActionLink("Inactief", "SwitchStatus", "Artist", new { a.Id }, null)</td>
                         }
-                        <td>@Html.ActionLink("Wijzig", "Edit", "Artist", new { @Id = a.Id}, null)@Html.ActionLink("Verwijder", "Delete", "Artist", new { @Id = a.Id }, new { @onclick = "return confirm('Je staat op het punt om "+a.Name+" te verwijderen. Weet je dit zeker?');" })</td>
+                        <td>@Html.ActionLink("Wijzig", "Edit", "Artist", new { a.Id}, null)@Html.ActionLink("Verwijder", "Delete", "Artist", new { a.Id }, new { @onclick = "return confirm('Je staat op het punt om "+a.Name+" te verwijderen. Weet je dit zeker?');"})</td>
                     </tr>
                 }
             </tbody>

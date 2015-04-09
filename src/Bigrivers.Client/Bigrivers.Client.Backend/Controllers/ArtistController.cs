@@ -14,7 +14,7 @@ namespace Bigrivers.Client.Backend.Controllers
     public class ArtistController : Controller
     {
         // TODO: Create BaseController class for BigRiversDb
-        private readonly BigriversDb db = new BigriversDb();
+        private readonly BigriversDb _db = new BigriversDb();
 
         // GET: Artist/Index
         public ActionResult Index()
@@ -26,96 +26,95 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Manage()
         {
             // List all artists and return view
-            ViewBag.listArtists =
-                (from a in db.Artists
-                 select a).ToList();
+            ViewBag.listArtists = _db.Artists.ToList();
 
+            ViewBag.Title = "Artiesten";
             return View("Manage");
         }
 
-        // GET: Artist/Create
+        // GET: Artist/New
         public ActionResult New()
         {
-            return View();
+            var viewModel = new ArtistViewModel
+            {
+                Status = true
+            };
+
+            ViewBag.Title = "Nieuwe Artiest";
+            return View("Edit", viewModel);
         }
 
-        // POST: Artist/Create
+        // POST: Artist/New
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult New(ArtistViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(viewModel);
+                ViewBag.Title = "Nieuwe Artiest";
+                return View("Edit", viewModel);
             }
-            else
+
+            //ViewBag.Title = "Resultaat - Example";
+            var singleArtist = new Artist
             {
-                //ViewBag.Title = "Resultaat - Example";
-                var a = new Artist
-                {
-                    Name = viewModel.Name,
-                    Description = viewModel.Description,
-                    Avatar = viewModel.Avatar,
-                    Website = viewModel.Website,
-                    YoutubeChannel = viewModel.YoutubeChannel,
-                    Facebook = viewModel.Facebook,
-                    Twitter = viewModel.Twitter,
-                    Status = true
-                };
+                Name = viewModel.Name,
+                Description = viewModel.Description,
+                Avatar = viewModel.Avatar,
+                Website = viewModel.Website,
+                YoutubeChannel = viewModel.YoutubeChannel,
+                Facebook = viewModel.Facebook,
+                Twitter = viewModel.Twitter,
+                Status = viewModel.Status
+            };
 
-                db.Artists.Add(a);
-                db.SaveChanges();
+            _db.Artists.Add(singleArtist);
+            _db.SaveChanges();
 
-                ViewBag.ObjectAdded = viewModel;
-
-                return RedirectToAction("Manage");
-            }
+            return RedirectToAction("Manage");
         }
 
         // GET: Artist/Edit/5
         public ActionResult Edit(int id)
         {
             // Find single artist
-            var artist =
-                (from a in db.Artists
-                 where a.Id == id
-                 select a).First();
+            var singleArtist = _db.Artists.Find(id);
 
 
             // Send to Manage view if artist is not found
-            if (artist == null) return RedirectToAction("Manage");
+            if (singleArtist == null) return RedirectToAction("Manage");
 
-            var m = new ArtistViewModel
+            var model = new ArtistViewModel
             {
-                Name = artist.Name,
-                Description = artist.Description,
-                Avatar = artist.Avatar,
-                Website = artist.Website,
-                YoutubeChannel = artist.YoutubeChannel,
-                Facebook = artist.Facebook,
-                Twitter = artist.Twitter
+                Name = singleArtist.Name,
+                Description = singleArtist.Description,
+                Avatar = singleArtist.Avatar,
+                Website = singleArtist.Website,
+                YoutubeChannel = singleArtist.YoutubeChannel,
+                Facebook = singleArtist.Facebook,
+                Twitter = singleArtist.Twitter,
+                Status = singleArtist.Status
             };
 
-            return View(m);
+            ViewBag.Title = "Bewerk Artiest";
+            return View(model);
         }
 
         // POST: Artist/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, ArtistViewModel viewModel)
         {
-            var SingleArtist =
-                (from c in db.Artists
-                 where c.Id == id
-                 select c).First();
+            var singleArtist = _db.Artists.Find(id);
 
-            SingleArtist.Name = viewModel.Name;
-            SingleArtist.Description = viewModel.Description;
-            SingleArtist.Avatar = viewModel.Avatar;
-            SingleArtist.Website = viewModel.Website;
-            SingleArtist.YoutubeChannel = viewModel.YoutubeChannel;
-            SingleArtist.Facebook = viewModel.Facebook;
-            SingleArtist.Twitter = viewModel.Twitter;
-            db.SaveChanges();
+            singleArtist.Name = viewModel.Name;
+            singleArtist.Description = viewModel.Description;
+            singleArtist.Avatar = viewModel.Avatar;
+            singleArtist.Website = viewModel.Website;
+            singleArtist.YoutubeChannel = viewModel.YoutubeChannel;
+            singleArtist.Facebook = viewModel.Facebook;
+            singleArtist.Twitter = viewModel.Twitter;
+            singleArtist.Status = viewModel.Status;
+            _db.SaveChanges();
 
             return RedirectToAction("Manage");
         }
@@ -123,36 +122,21 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Artist/Delete/5
         public ActionResult Delete(int id)
         {
-            // TODO: Add delete logic here
-            var SingleArtist =
-                (from c in db.Artists
-                 where c.Id == id
-                 select c).First();
+            var singleArtist = _db.Artists.Find(id);
 
-            db.Artists.Remove(SingleArtist);
-            db.SaveChanges();
+            _db.Artists.Remove(singleArtist);
+            _db.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Manage");
         }
 
-        // GET: Artist/Action/5/Status
+        // GET: Artist/SwitchStatus/5
         public ActionResult SwitchStatus(int id)
         {
-            var artist =
-            (from a in db.Artists
-                where a.Id == id
-                select a).First();
+            var singleArtist = _db.Artists.Find(id);
 
-            if (artist.Status)
-            {
-                artist.Status = false;
-            }
-            else
-            {
-                artist.Status = true;
-            }
-
-            db.SaveChanges();
+            singleArtist.Status = !singleArtist.Status;
+            _db.SaveChanges();
             return RedirectToAction("Manage");
         }
     }
