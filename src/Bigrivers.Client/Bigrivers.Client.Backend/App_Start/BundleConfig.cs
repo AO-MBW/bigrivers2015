@@ -20,15 +20,20 @@ namespace Bigrivers.Client.Backend
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/backend").Include(
+                      "~/Scripts/Edit.js",
                       "~/Scripts/Admin/functions.js",
-                      "~/Scripts/Admin/ckeditor/ckeditor.js"));
+                      "~/Scripts/Admin/ckeditor/ckeditor.js",
+                      "~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.js",
+                      "~/Scripts/jquery-ui-1.11.4.custom/external/addon/jquery-ui-timepicker-addon.js"));
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       //"~/Content/site.css",
                       "~/Content/admin.css",
                       "~/Content/Sidebar.css",
-                      "~/Content/Form.css"));
+                      "~/Content/Form.css",
+                      "~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.css",
+                      "~/Scripts/jquery-ui-1.11.4.custom/external/addon/jquery-ui-timepicker-addon.css"));
         }
     }
 }

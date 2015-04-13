@@ -1,0 +1,73 @@
+﻿@model Bigrivers.Client.Backend.ViewModels.EventViewModel
+
+<div id="wrapper">
+    <div class="page-title">
+        <h1>Artiest toevoegen</h1>
+    </div>
+
+    <div id="content">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+            <h2>Artiest</h2>
+            <fieldset>
+                @Html.LabelFor(m => m.Title)
+                @Html.TextBoxFor(m => m.Title)
+                @Html.LabelFor(m => m.Description)
+                @Html.TextAreaFor(m => m.Description, new {@Id = "description"})
+                @Html.LabelFor(m => m.ShortDescription)
+                @Html.TextAreaFor(m => m.ShortDescription, new { @Id = "description" })
+            </fieldset>
+            <hr />
+            <fieldset>
+                @Html.LabelFor(m => m.FrontpageLogo)
+                <span>Upload een logo voor op de frontpage</span><br/>
+                <input type="file" name="">
+                @*@Html.LabelFor(m => m.BackgroundImage)
+                <span>Upload een achtergrond voor de event pagina</span><br />
+                <input type="file" name="pic">*@
+            </fieldset>
+            <fieldset>
+                <label>@Html.CheckBoxFor(m => m.WebsiteStatus) Geef link naar website weer</label>
+                <label>@Html.CheckBoxFor(m => m.YoutubeChannelStatus) Geef link naar Youtubekanaal weer</label>
+                <label>@Html.CheckBoxFor(m => m.FacebookStatus) Geef link naar Facebookpagina weer</label>
+                <label>@Html.CheckBoxFor(m => m.TwitterStatus) Geef link naar Twitterpagina weer</label>
+            </fieldset>
+            <hr />
+            <fieldset>
+                @Html.LabelFor(m => m.Start)
+                @Html.TextBoxFor(m => m.Start, new {@id = "datepicker1"})
+                @Html.LabelFor(m => m.End)
+                @Html.TextBoxFor(m => m.End, new {@id = "datepicker2"})
+            </fieldset>
+            <fieldset>
+                <label>@Html.CheckBoxFor(m => m.TicketRequired, new { id = "TicketRequired" }) Tickets Verplicht</label>
+                @Html.LabelFor(m => m.Price)
+                @Html.TextBoxFor(m => m.Price, new { id = "Price"})
+            </fieldset>
+            <fieldset>
+                <label>@Html.CheckBoxFor(m => m.Status) Actief</label>
+            </fieldset>
+            <hr />
+            <div class="footer">
+                <input type="submit" name="save" value="Artiest opslaan">
+            </div>
+        }
+        @*<script>
+            // Replace the <textarea id="description"> with a CKEditor
+            // instance, using default configuration.
+            CKEDITOR.replace("description");
+        </script>*@
+        <script>
+            $("#datepicker1").datetimepicker({
+                dateFormat: "d-m-yy",
+                timeFormat: "h:m:s"
+            });
+            $("#datepicker2").datetimepicker({
+                dateFormat: "d-m-yy",
+                timeFormat: "H:mm:ss"
+            });
+        </script>
+    </div>
+</div>

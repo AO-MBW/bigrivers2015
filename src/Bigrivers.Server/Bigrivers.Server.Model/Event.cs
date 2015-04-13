@@ -12,6 +12,16 @@ namespace Bigrivers.Server.Model
         public string Description { get; set; }
         public string FrontpageLogo { get; set; }
         public string BackgroundImage { get; set; }
+
+        [DefaultValue(true)]
+        public bool WebsiteStatus { get; set; }
+        [DefaultValue(true)]
+        public bool YoutubeChannelStatus { get; set; }
+        [DefaultValue(true)]
+        public bool FacebookStatus { get; set; }
+        [DefaultValue(true)]
+        public bool TwitterStatus { get; set; }
+
         public DateTimeOffset Start { get; set; }
         public DateTimeOffset End { get; set; }
         public decimal Price { get; set; }

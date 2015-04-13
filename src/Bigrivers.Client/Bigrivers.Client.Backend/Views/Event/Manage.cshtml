@@ -1,0 +1,72 @@
+﻿@using Bigrivers.Server.Model
+@{
+    List<Event> listEvents = ViewBag.listEvents;
+}
+<div id="wrapper">
+    @ViewBag.errormsg
+    @Html.Header("1", "Beheer")
+    <div id="actionbar">
+        <div class="action-block">
+            @Html.ActionLink("Evenement Toevoegen", "New", "Event")
+        </div>
+    </div>
+    <div id="content">
+        <table>
+            <thead>
+                <tr>
+                    <th>Evenement</th>
+                    <th>Auteur</th>
+                    <th>Starttijd</th>
+                    <th>Eindtijd</th>
+                    <th>Updated</th>
+                    <th>Social Media</th>
+                    <th>Status</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var e in listEvents)
+                {
+                    <tr>
+                        <td>@e.Title</td>
+                        <td>Auteurnaam</td>
+                        <td>@e.Start.DateTime</td>
+                        <td>@e.End.DateTime</td>
+                        <td>Datum gewijzigd</td>
+                        <td>
+                            @if (e.WebsiteStatus)
+                            {<span>W</span>}
+                            else
+                            {<s>W</s>}
+                            &nbsp;
+                            @if (e.YoutubeChannelStatus)
+                            {<span>Y</span>}
+                            else
+                            {<s>Y</s>}
+                            &nbsp;
+                            @if (e.FacebookStatus)
+                            {<span>F</span>}
+                            else
+                            {<s>F</s>}
+                            &nbsp;
+                            @if (e.TwitterStatus)
+                            {<span>T</span>}
+                            else
+                            {<s>T</s>}
+                            &nbsp;
+                        </td>
+                        @if (e.Status)
+                        {
+                            <td>@Html.ActionLink("Actief", "SwitchStatus", "Event", new { e.Id }, null)</td>
+                        }
+                        else
+                        {
+                            <td>@Html.ActionLink("Inactief", "SwitchStatus", "Event", new { e.Id }, null)</td>
+                        }
+                        <td>@Html.ActionLink("Wijzig", "Edit", "Event", new { e.Id}, null)@Html.ActionLink("Verwijder", "Delete", "Event", new { e.Id }, new { @onclick = "return confirm('Je staat op het punt om "+e.Title+" te verwijderen. Weet je dit zeker?');"})</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
