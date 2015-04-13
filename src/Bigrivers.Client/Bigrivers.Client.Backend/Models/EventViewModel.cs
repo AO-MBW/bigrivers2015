@@ -27,6 +27,11 @@ namespace Bigrivers.Client.Backend.ViewModels
         [DataType(DataType.Upload)]
         public string BackgroundImage { get; set; }
 
+        public bool WebsiteStatus { get; set; }
+        public bool YoutubeChannelStatus { get; set; }
+        public bool FacebookStatus { get; set; }
+        public bool TwitterStatus { get; set; }
+
         [Display(Name = "Starttijd")]
         [DataType(DataType.DateTime)]
         public DateTime Start { get; set; }
@@ -36,7 +41,6 @@ namespace Bigrivers.Client.Backend.ViewModels
         public DateTime End { get; set; }
 
         public decimal? Price { get; set; }
-        [Display(Name = "Zijn tickets verplicht?")]
         public bool TicketRequired { get; set; }
 
         public bool Status { get; set; }

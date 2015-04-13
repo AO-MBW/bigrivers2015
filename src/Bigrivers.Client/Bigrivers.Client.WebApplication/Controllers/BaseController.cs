@@ -34,7 +34,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
             //mi2.MenuItemType = MenuItemType.Page;
             //menuItems.Add(mi2);
 
-            ViewBag.MenuItems = AccessLayer.MenuItems.ToList();
+            ViewBag.MenuItems = AccessLayer.MenuItems.Where(m => m.Status).ToList();
         }
 
     }

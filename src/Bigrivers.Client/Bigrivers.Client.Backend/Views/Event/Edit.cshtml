@@ -28,6 +28,12 @@
                 <span>Upload een achtergrond voor de event pagina</span><br />
                 <input type="file" name="pic">*@
             </fieldset>
+            <fieldset>
+                <label>@Html.CheckBoxFor(m => m.WebsiteStatus) Geef link naar website weer</label>
+                <label>@Html.CheckBoxFor(m => m.YoutubeChannelStatus) Geef link naar Youtubekanaal weer</label>
+                <label>@Html.CheckBoxFor(m => m.FacebookStatus) Geef link naar Facebookpagina weer</label>
+                <label>@Html.CheckBoxFor(m => m.TwitterStatus) Geef link naar Twitterpagina weer</label>
+            </fieldset>
             <hr />
             <fieldset>
                 @Html.LabelFor(m => m.Start)
@@ -36,15 +42,12 @@
                 @Html.TextBoxFor(m => m.End, new {@id = "datepicker2"})
             </fieldset>
             <fieldset>
-                @Html.LabelFor(m => m.TicketRequired)
-                @Html.CheckBoxFor(m => m.TicketRequired, new { id = "TicketRequired"})
+                <label>@Html.CheckBoxFor(m => m.TicketRequired, new { id = "TicketRequired" }) Tickets Verplicht</label>
                 @Html.LabelFor(m => m.Price)
                 @Html.TextBoxFor(m => m.Price, new { id = "Price"})
             </fieldset>
             <fieldset>
-                @Html.LabelFor(m => m.Status)
-                <label class="radio">@Html.RadioButtonFor(m => m.Status, true) Actief</label>
-                <label class="radio">@Html.RadioButtonFor(m => m.Status, false) Inactief</label>
+                <label>@Html.CheckBoxFor(m => m.Status) Actief</label>
             </fieldset>
             <hr />
             <div class="footer">

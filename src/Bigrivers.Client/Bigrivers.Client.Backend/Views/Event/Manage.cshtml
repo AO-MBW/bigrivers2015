@@ -19,6 +19,7 @@
                     <th>Starttijd</th>
                     <th>Eindtijd</th>
                     <th>Updated</th>
+                    <th>Social Media</th>
                     <th>Status</th>
                     <th>Acties</th>
                 </tr>
@@ -32,6 +33,28 @@
                         <td>@e.Start.DateTime</td>
                         <td>@e.End.DateTime</td>
                         <td>Datum gewijzigd</td>
+                        <td>
+                            @if (e.WebsiteStatus)
+                            {<span>W</span>}
+                            else
+                            {<s>W</s>}
+                            &nbsp;
+                            @if (e.YoutubeChannelStatus)
+                            {<span>Y</span>}
+                            else
+                            {<s>Y</s>}
+                            &nbsp;
+                            @if (e.FacebookStatus)
+                            {<span>F</span>}
+                            else
+                            {<s>F</s>}
+                            &nbsp;
+                            @if (e.TwitterStatus)
+                            {<span>T</span>}
+                            else
+                            {<s>T</s>}
+                            &nbsp;
+                        </td>
                         @if (e.Status)
                         {
                             <td>@Html.ActionLink("Actief", "SwitchStatus", "Event", new { e.Id }, null)</td>

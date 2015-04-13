@@ -14,12 +14,25 @@
                 };
 
                 var map = new google.maps.Map(document.getElementById('location-canvas'),
-           mapOptions);
+                mapOptions);
+
+                var contentstring = 'Festivalbureau Big Rivers<br/> Slikveld 1 <br/> 3311 VT Dordrecht';
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentstring,
+                    maxWidth: 200
+                });
 
                 var marker = new google.maps.Marker({
                     map: map,
                     draggable: false,
-                    position: new google.maps.LatLng(51.8127673, 4.659293599999955)
+                    animation: google.maps.Animation.DROP,
+                    position: new google.maps.LatLng(51.8127673, 4.659293599999955),
+                    title: "Bigrivers kantoor"
+                });
+
+                google.maps.event.addListener(marker, 'click', function () {
+                    infowindow.open(map, marker);
                 });
             }
 
@@ -33,18 +46,15 @@
     <div class="body-contact">
        
             <address>
-            <p><strong>(Postadres)</strong> Stichting Big Rivers</p>
+            <p><strong>(Postadres)</strong> Stichting Big Rivers
             Postbus 1060</br>
             3300 BB Dordrecht</br>
+            </br>
             <strong>(Bezoekadres)</strong> Festivalbureau Big Rivers</br>
             Slikveld 1</br>
             3311 VT Dordrecht</br>
-            Tel: (078-) 614 41 82</br>
-            E-mail: info@bigrivers.nl
-            </address>
-
-
-            <address>
+            E-mail: info@bigrivers.nl</br>
+            </br>
                 <strong>Tel:</strong> (078-) 614 41 82</abbr></br>
                 <strong>E-mail:</strong>   <a href="mailto:info@bigrivers.nl">info@bigrivers.nl</a><br />
             </address>

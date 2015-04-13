@@ -37,6 +37,10 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             var viewModel = new EventViewModel
             {
+                WebsiteStatus = true,
+                YoutubeChannelStatus = true,
+                FacebookStatus = true,
+                TwitterStatus = true,
                 Start = DateTime.Now,
                 End = DateTime.Now.AddHours(1),
                 TicketRequired = false,
@@ -65,6 +69,10 @@ namespace Bigrivers.Client.Backend.Controllers
                 ShortDescription = viewModel.ShortDescription,
                 FrontpageLogo = viewModel.FrontpageLogo,
                 BackgroundImage = viewModel.BackgroundImage,
+                WebsiteStatus = viewModel.WebsiteStatus,
+                YoutubeChannelStatus = viewModel.YoutubeChannelStatus,
+                FacebookStatus = viewModel.FacebookStatus,
+                TwitterStatus = viewModel.TwitterStatus,
                 Start = viewModel.Start,
                 End = viewModel.End,
                 TicketRequired = viewModel.TicketRequired,
@@ -79,8 +87,10 @@ namespace Bigrivers.Client.Backend.Controllers
         }
 
         // GET: Event/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
+            if (id == null) return RedirectToAction("New");
+
             // Find single artist
             var singleEvent = _db.Events.Find(id);
 
@@ -94,6 +104,10 @@ namespace Bigrivers.Client.Backend.Controllers
                 ShortDescription = singleEvent.ShortDescription,
                 FrontpageLogo = singleEvent.FrontpageLogo,
                 BackgroundImage = singleEvent.BackgroundImage,
+                WebsiteStatus = singleEvent.WebsiteStatus,
+                YoutubeChannelStatus = singleEvent.YoutubeChannelStatus,
+                FacebookStatus = singleEvent.FacebookStatus,
+                TwitterStatus = singleEvent.TwitterStatus,
                 Start = singleEvent.Start.DateTime,
                 End = singleEvent.End.DateTime,
                 TicketRequired = singleEvent.TicketRequired,
@@ -115,6 +129,10 @@ namespace Bigrivers.Client.Backend.Controllers
             singleEvent.ShortDescription = viewModel.ShortDescription;
             singleEvent.FrontpageLogo = viewModel.FrontpageLogo;
             singleEvent.BackgroundImage = viewModel.BackgroundImage;
+            singleEvent.WebsiteStatus = viewModel.WebsiteStatus;
+            singleEvent.YoutubeChannelStatus = viewModel.YoutubeChannelStatus;
+            singleEvent.FacebookStatus = viewModel.FacebookStatus;
+            singleEvent.TwitterStatus = viewModel.TwitterStatus;
             singleEvent.Start = viewModel.Start;
             singleEvent.End = viewModel.End;
             singleEvent.TicketRequired = viewModel.TicketRequired;
@@ -126,8 +144,10 @@ namespace Bigrivers.Client.Backend.Controllers
         }
 
         // POST: Event/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
+            if (id == null) return RedirectToAction("Manage");
+
             // TODO: Add delete logic here
             var singleEvent = _db.Events.Find(id);
 
@@ -138,8 +158,10 @@ namespace Bigrivers.Client.Backend.Controllers
         }
 
         // GET: Event/SwitchStatus/5
-        public ActionResult SwitchStatus(int id)
+        public ActionResult SwitchStatus(int? id)
         {
+            if (id == null) return RedirectToAction("Manage");
+
             var singleEvent = _db.Events.Find(id);
 
             singleEvent.Status = !singleEvent.Status;
