@@ -26,7 +26,7 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Manage()
         {
             // List all artists and return view
-            ViewBag.listArtists = _db.Artists.ToList();
+            ViewBag.listArtists = _db.Artists.Where(m => !m.Deleted).ToList();
 
             ViewBag.Title = "Artiesten";
             return View("Manage");
@@ -75,14 +75,16 @@ namespace Bigrivers.Client.Backend.Controllers
         }
 
         // GET: Artist/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
+            if (id == null) return RedirectToAction("New");
+
             // Find single artist
             var singleArtist = _db.Artists.Find(id);
 
 
             // Send to Manage view if artist is not found
-            if (singleArtist == null) return RedirectToAction("Manage");
+            if (singleArtist == null || singleArtist.Deleted) return RedirectToAction("Manage");
 
             var model = new ArtistViewModel
             {
@@ -120,20 +122,28 @@ namespace Bigrivers.Client.Backend.Controllers
         }
 
         // POST: Artist/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
+            if (id == null) return RedirectToAction("Manage");
+
             var singleArtist = _db.Artists.Find(id);
 
-            _db.Artists.Remove(singleArtist);
+            if (singleArtist == null || singleArtist.Deleted) return RedirectToAction("Manage");
+
+            singleArtist.Deleted = true;
             _db.SaveChanges();
 
             return RedirectToAction("Manage");
         }
 
         // GET: Artist/SwitchStatus/5
-        public ActionResult SwitchStatus(int id)
+        public ActionResult SwitchStatus(int? id)
         {
+            if (id == null) return RedirectToAction("Manage");
+
             var singleArtist = _db.Artists.Find(id);
+
+            if (singleArtist == null || singleArtist.Deleted) return RedirectToAction("Manage");
 
             singleArtist.Status = !singleArtist.Status;
             _db.SaveChanges();
