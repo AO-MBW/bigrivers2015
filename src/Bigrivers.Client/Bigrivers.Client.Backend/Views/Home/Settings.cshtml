@@ -1,0 +1,28 @@
+﻿@model Bigrivers.Client.Backend.ViewModels.SettingsViewModel
+
+<div id="wrapper">
+    <div class="page-title">
+        <h1>Artiest toevoegen</h1>
+    </div>
+
+    <div id="content">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+            <h2>Instellingen</h2>
+            <fieldset>
+                @Html.LabelFor(m => m.YoutubeChannel)
+                @Html.TextBoxFor(m => m.YoutubeChannel)
+                @Html.LabelFor(m => m.Facebook)
+                @Html.TextBoxFor(m => m.Facebook)
+                @Html.LabelFor(m => m.Twitter)
+                @Html.TextBoxFor(m => m.Twitter)
+            </fieldset>
+            <hr />
+            <div class="footer">
+                <input type="submit" name="save" value="Instellingen opslaan">
+            </div>
+        }
+    </div>
+</div>
