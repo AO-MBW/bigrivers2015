@@ -132,13 +132,14 @@
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\ArtistViewModel.cs" />
     <Compile Include="Models\MenuItemViewModel.cs" />
+    <Compile Include="Models\SettingsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\admin.css" />
     <Content Include="Content\Form.css" />
     <Content Include="Content\Sidebar.css" />
-    <Content Include="favicon.ico" />
+    <Content Include="Views\favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Img\artist.png" />
@@ -381,6 +382,7 @@
     <Content Include="Views\Artist\Manage.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />
     <Content Include="Views\Event\Manage.cshtml" />
+    <Content Include="Views\Home\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
