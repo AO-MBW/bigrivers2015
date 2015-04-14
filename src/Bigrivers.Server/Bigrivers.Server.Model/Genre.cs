@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Bigrivers.Server.Model
 {
@@ -7,5 +8,8 @@ namespace Bigrivers.Server.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public virtual List<Artist> Artists { get; set; }
+
+        [DefaultValue(true)]
+        public bool Deleted { get; set; }
     }
 }
