@@ -26,7 +26,7 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Manage()
         {
             // List all events and return view
-            ViewBag.listEvents = _db.Events.ToList();
+            ViewBag.listEvents = _db.Events.Where(m => !m.Deleted).ToList();
 
             ViewBag.Title = "Evenementen";
             return View("Manage");
@@ -94,8 +94,8 @@ namespace Bigrivers.Client.Backend.Controllers
             // Find single artist
             var singleEvent = _db.Events.Find(id);
 
-            // Send to Manage view if artist is not found
-            if (singleEvent == null) return RedirectToAction("Manage");
+            // Send to Manage view if event is not found
+            if (singleEvent == null || singleEvent.Deleted) return RedirectToAction("Manage");
 
             var model = new EventViewModel
             {
@@ -151,7 +151,10 @@ namespace Bigrivers.Client.Backend.Controllers
             // TODO: Add delete logic here
             var singleEvent = _db.Events.Find(id);
 
-            _db.Events.Remove(singleEvent);
+            // Send to Manage view if event is not found
+            if (singleEvent == null || singleEvent.Deleted) return RedirectToAction("Manage");
+
+            singleEvent.Deleted = true;
             _db.SaveChanges();
 
             return RedirectToAction("Manage");
@@ -163,6 +166,9 @@ namespace Bigrivers.Client.Backend.Controllers
             if (id == null) return RedirectToAction("Manage");
 
             var singleEvent = _db.Events.Find(id);
+
+            // Send to Manage view if event is not found
+            if (singleEvent == null || singleEvent.Deleted) return RedirectToAction("Manage");
 
             singleEvent.Status = !singleEvent.Status;
             _db.SaveChanges();

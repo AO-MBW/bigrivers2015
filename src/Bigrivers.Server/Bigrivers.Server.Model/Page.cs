@@ -10,5 +10,8 @@ namespace Bigrivers.Server.Model
 
         [DefaultValue(true)]
         public bool Status { get; set; }
+
+        [DefaultValue(true)]
+        public bool Deleted { get; set; }
     }
 }

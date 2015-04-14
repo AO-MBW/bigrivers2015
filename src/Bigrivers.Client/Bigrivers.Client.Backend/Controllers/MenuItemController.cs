@@ -26,7 +26,7 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Manage()
         {
             // List all artists and return view
-            ViewBag.listMenuItems = _db.MenuItems.ToList();
+            ViewBag.listMenuItems = _db.MenuItems.Where(m => !m.Deleted).ToList();
 
             ViewBag.Title = "MenuItems";
             return View("Manage");
@@ -72,13 +72,15 @@ namespace Bigrivers.Client.Backend.Controllers
         }
 
         // GET: MenuItem/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
+            if (id == null) return RedirectToAction("New");
+
             // Find single menuitem
             var singleMenuItem = _db.MenuItems.Find(id);
 
             // Send to Manage view if menuitem is not found
-            if (singleMenuItem == null) return RedirectToAction("Manage");
+            if (singleMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
 
             var model = new MenuItemViewModel
             {
@@ -109,21 +111,30 @@ namespace Bigrivers.Client.Backend.Controllers
         }
 
         // POST: MenuItem/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            // TODO: Add delete logic here
+            if (id == null) return RedirectToAction("Manage");
+
             var singleMenuItem = _db.MenuItems.Find(id);
 
-            _db.MenuItems.Remove(singleMenuItem);
+            // Send to Manage view if menuitem is not found
+            if (singleMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
+
+            singleMenuItem.Deleted = true;
             _db.SaveChanges();
 
             return RedirectToAction("Manage");
         }
 
         // GET: MenuItem/SwitchStatus/5
-        public ActionResult SwitchStatus(int id)
+        public ActionResult SwitchStatus(int? id)
         {
+            if (id == null) return RedirectToAction("Manage");
+
             var singleMenuItem = _db.MenuItems.Find(id);
+
+            // Send to Manage view if menuitem is not found
+            if (singleMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
 
             singleMenuItem.Status = !singleMenuItem.Status;
             _db.SaveChanges();
