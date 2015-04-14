@@ -32,8 +32,10 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
         public ActionResult Index()
         {
-            return RedirectToAction("Events");
-            //return View();
+            ViewBag.EventList = AccessLayer.Events
+                .Where(e => e.Status)
+                .ToList();
+            return View("Index");
         }
 
         public ActionResult Events(int? id)
