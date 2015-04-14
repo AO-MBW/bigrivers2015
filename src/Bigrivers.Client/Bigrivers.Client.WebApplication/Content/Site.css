@@ -95,3 +95,41 @@ table.table{
 .head-h1{
     color: white;
 }
+
+/* Frontpage Buttons*/
+.Button {
+    float:left;
+    background-image:url(../Images/Div_Background.png);
+    background-size: 100%;
+    height: 250px;
+    width: 333px;
+    margin-top: 10px;
+}
+
+.ButtonDiv {
+    height: 250px;
+    width: 333px;
+}
+
+.ButtonImg {
+    width: 35%;
+    height: 35%;
+    margin-left: 100px;
+    margin-top: 55px;
+}
+
+.ButtonTitle {
+    height: 60px;
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 15pt;
+    color: black;
+    text-decoration: none;
+    text-align: center;
+    font-family: Jokerman;
+}
+
+.ButtonLink:hover {
+    text-decoration: none;
+}

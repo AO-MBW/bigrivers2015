@@ -301,7 +301,7 @@ namespace Bigrivers.Server.Data.Migrations
                 Status = true,
                 Performances = new List<Performance>(),
                 Location = Sterrenburg,
-                FrontpageLogo = "/Images/br15.jpg"
+                FrontpageLogo = "/Images/Event_logo.png"
             };
             Event bigEverythingEvent = new Event
             {
@@ -314,7 +314,7 @@ namespace Bigrivers.Server.Data.Migrations
                 TicketRequired = true,
                 Status = true,
                 Performances = new List<Performance>(),
-                FrontpageLogo = "/Images/br15.jpg"
+                FrontpageLogo = "/Images/Event_logo.png"
             };
             Event breakingFreeEvent = new Event
             {
@@ -327,7 +327,7 @@ namespace Bigrivers.Server.Data.Migrations
                 TicketRequired = true,
                 Status = true,
                 Performances = new List<Performance>(),
-                FrontpageLogo = "/Images/br15.jpg"
+                FrontpageLogo = "/Images/Event_logo.png"
             };
             Event dutchPartyEvent = new Event
             {
@@ -340,7 +340,7 @@ namespace Bigrivers.Server.Data.Migrations
                 TicketRequired = true,
                 Status = true,
                 Performances = new List<Performance>(),
-                FrontpageLogo = "/Images/br15.jpg"
+                FrontpageLogo = "/Images/Event_logo.png"
             };
 
             Event liveDanceEvent = new Event
@@ -354,7 +354,7 @@ namespace Bigrivers.Server.Data.Migrations
                 TicketRequired = true,
                 Status = true,
                 Performances = new List<Performance>(),
-                FrontpageLogo = "/Images/br15.jpg"
+                FrontpageLogo = "/Images/Event_logo.png"
             };
 
 

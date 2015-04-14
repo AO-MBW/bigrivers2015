@@ -184,6 +184,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\background.jpg" />
     <Content Include="Images\br15.jpg" />
+    <Content Include="Images\Div_Background.png" />
+    <Content Include="Images\Event_logo.png" />
     <Content Include="Images\fb_icon.png" />
     <Content Include="Images\tw_icon.png" />
     <Content Include="Images\yt_icon.png" />
