@@ -69,6 +69,10 @@
     <Compile Include="Migrations\201412161053190_Seed.Designer.cs">
       <DependentUpon>201412161053190_Seed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504141218144_DataLossPreventionMigration.cs" />
+    <Compile Include="Migrations\201504141218144_DataLossPreventionMigration.Designer.cs">
+      <DependentUpon>201504141218144_DataLossPreventionMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -96,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412161053190_Seed.resx">
       <DependentUpon>201412161053190_Seed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504141218144_DataLossPreventionMigration.resx">
+      <DependentUpon>201504141218144_DataLossPreventionMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
