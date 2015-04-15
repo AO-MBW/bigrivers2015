@@ -139,7 +139,7 @@
     <Content Include="Content\admin.css" />
     <Content Include="Content\Form.css" />
     <Content Include="Content\Sidebar.css" />
-    <Content Include="Views\favicon.ico" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Img\artist.png" />
@@ -188,6 +188,8 @@
     <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
     <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\readme.md" />
     <Content Include="Scripts\Admin\ckeditor\skins\moono\readme.md" />
+    <None Include="Properties\PublishProfiles\brmanage %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\brmanage %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\brmanage.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Admin\ckeditor\adapters\jquery.js" />
