@@ -188,6 +188,7 @@
     <Content Include="Scripts\Admin\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
     <Content Include="Scripts\Admin\ckeditor\skins\moonocolor\readme.md" />
     <Content Include="Scripts\Admin\ckeditor\skins\moono\readme.md" />
+    <None Include="Properties\PublishProfiles\brmanage.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Admin\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\Admin\ckeditor\build-config.js" />
