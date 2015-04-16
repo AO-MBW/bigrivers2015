@@ -4,16 +4,16 @@
 }
 <div id="wrapper">
     @ViewBag.errormsg
-    @Html.Header("1", "Beheer")
+    <h1>@ViewBag.Title</h1>
     <div id="actionbar">
         <div class="action-block">
-            @Html.ActionLink("Artiest Toevoegen", "New", "Artist")
+            @Html.ActionLink("Artiest Toevoegen", "New", "Artists")
         </div>
         <div class="action-block">
-            @Html.ActionLink("Optreden Toevoegen", "New", "Performance")
+            @Html.ActionLink("Optreden Toevoegen", "New", "Performances")
         </div>
         <div class="action-block">
-            @Html.ActionLink("Optredens Beheren", "Manage", "Performance")
+            @Html.ActionLink("Optredens Beheren", "Manage", "Performances")
         </div>
     </div>
     <div id="content">
@@ -38,13 +38,13 @@
                         <td>Datum gewijzigd</td>
                         @if (a.Status)
                         {
-                            <td>@Html.ActionLink("Actief", "SwitchStatus", "Artist", new { a.Id }, null)</td>
+                            <td>@Html.ActionLink("Actief", "SwitchStatus", "Artists", new { a.Id }, null)</td>
                         }
                         else
                         {
-                            <td>@Html.ActionLink("Inactief", "SwitchStatus", "Artist", new { a.Id }, null)</td>
+                            <td>@Html.ActionLink("Inactief", "SwitchStatus", "Artists", new { a.Id }, null)</td>
                         }
-                        <td>@Html.ActionLink("Wijzig", "Edit", "Artist", new { a.Id}, null)@Html.ActionLink("Verwijder", "Delete", "Artist", new { a.Id }, new { @onclick = "return confirm('Je staat op het punt om "+a.Name+" te verwijderen. Weet je dit zeker?');"})</td>
+                        <td>@Html.ActionLink("Wijzig", "Edit", "Artists", new { a.Id}, null)@Html.ActionLink("Verwijder", "Delete", "Artists", new { a.Id }, new { @onclick = "return confirm('Je staat op het punt om "+a.Name+" te verwijderen. Weet je dit zeker?');"})</td>
                     </tr>
                 }
             </tbody>

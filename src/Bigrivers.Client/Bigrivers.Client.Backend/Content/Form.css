@@ -17,6 +17,9 @@
 	font-weight: bold;
 	color: #3c3c3e;
 }
+#content form .label-selectable {
+	font-weight: normal;
+}
 
 #content form label.radio {
 	margin: 1px;

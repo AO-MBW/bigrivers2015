@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Bigrivers.Client.WebApplication.ViewModels;
 
 // Via OData
 //using Bigrivers.Client.DAL.Bigrivers.Server.Model;
@@ -18,12 +19,6 @@ namespace Bigrivers.Client.WebApplication.Controllers
 {
     public class HomeController : BaseController
     {
-        public HomeController() : base()
-        {
-            // when homecontroller is instantiated, call BaseController constructor which will fill ViewBag.MenuItemsHTML
-        }
-
-
         //Create AccessLayer with OData Uri from the App.Config
         //static readonly Container AccessLayer = new Container(new Uri(ConfigurationManager.AppSettings["WebserviceUri"]));
 
@@ -134,7 +129,24 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
         public ActionResult Contact()
         {
-            return View();
+            var socialMedia = AccessLayer.Links.FirstOrDefault();
+
+            var model = new SettingsViewModel
+            {
+                YoutubeChannel = "#",
+                Facebook = "#",
+                Twitter = "#"
+            };
+            char[] split = {'/'};
+            if (socialMedia != null)
+            {
+                model.YoutubeChannel = socialMedia.YoutubeChannel;
+                model.Facebook = socialMedia.Facebook;
+                model.Twitter = socialMedia.Twitter;
+                model.Hashtag = socialMedia.Twitter.Split(split).Last();
+            }
+
+            return View(model);
         }
     }
 }

@@ -1,0 +1,42 @@
+﻿@model Bigrivers.Client.Backend.ViewModels.PerformanceViewModel
+
+<div id="wrapper">
+    <div class="page-title">
+        <h1>@ViewBag.Title</h1>
+    </div>
+
+    <div id="content">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+            <fieldset>
+                @Html.LabelFor(m => m.Description)
+                @Html.TextAreaFor(m => m.Description, new { @Id = "description" })
+            </fieldset>
+            <fieldset>
+                @Html.LabelFor(m => m.Start)
+                @Html.TextBoxFor(m => m.Start, new { @id = "datepicker1" })
+                @Html.LabelFor(m => m.End)
+                @Html.TextBoxFor(m => m.End, new { @id = "datepicker2" })
+            </fieldset>
+            <fieldset>
+                <label class="label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
+            </fieldset>
+            <hr />
+            <div class="footer">
+                <input type="submit" name="save" value="Optreden opslaan">
+            </div>
+        }
+        <script>
+            $("#datepicker1").datetimepicker({
+                dateFormat: "d-m-yy",
+                timeFormat: "h:mm:s"
+            });
+            $("#datepicker2").datetimepicker({
+                dateFormat: "d-m-yy",
+                timeFormat: "H:mm:ss"
+            });
+        </script>
+    </div>
+</div>

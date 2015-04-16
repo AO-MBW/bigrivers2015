@@ -11,7 +11,7 @@ using Bigrivers.Client.Backend.ViewModels;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
-    public class EventController : Controller
+    public class EventsController : Controller
     {
         // TODO: Create BaseController class for BigRiversDb
         private readonly BigriversDb _db = new BigriversDb();

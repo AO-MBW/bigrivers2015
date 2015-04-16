@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "Contact";
 }
+@model Bigrivers.Client.WebApplication.ViewModels.SettingsViewModel
+
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,32 +44,31 @@
     </head>
 
 <body>
-    <div id='location-canvas' style='width:100%;height:300px;'></div>
+<div id="location-canvas" style="width: 100%; height: 300px;"></div>
+
     <div class="body-contact">
-       
             <address>
-            <p><strong>(Postadres)</strong> Stichting Big Rivers
-            Postbus 1060</br>
-            3300 BB Dordrecht</br>
-            </br>
-            <strong>(Bezoekadres)</strong> Festivalbureau Big Rivers</br>
-            Slikveld 1</br>
-            3311 VT Dordrecht</br>
-            E-mail: info@bigrivers.nl</br>
-            </br>
-                <strong>Tel:</strong> (078-) 614 41 82</abbr></br>
-                <strong>E-mail:</strong>   <a href="mailto:info@bigrivers.nl">info@bigrivers.nl</a><br />
+                <p><strong>(Postadres)</strong> Stichting Big Rivers<br />
+                    Postbus 1060<br/>
+                    3300 BB Dordrecht<br/>
+                    <strong>(Bezoekadres)</strong> Festivalbureau Big Rivers<br/>
+                    Slikveld 1<br/>
+                    3311 VT Dordrecht
+                </p>
+                <p>
+                    <strong>Tel:</strong> (078-) 614 41 82<br />
+                    <strong>E-mail:</strong> <a href="mailto:info@bigrivers.nl">info@bigrivers.nl</a><br /> 
+                </p>
             </address>
-            
             <div>
                 <ul>
-                    <li class="social"><a href="https://www.facebook.com/bigriversdordrecht" target="_blank"><img src="../Images/fb_icon.png" width="30" height="30"></a></li>
-                    <li class="social"><a href="https://twitter.com/BigRivers15" target="_blank"><img src="../Images/tw_icon.png" width="30" height="30"></a></li>
-                    <li class ="social"><a href="http://www.youtube.com/BigRiversDordrecht" target="_blank"><img src="../Images/yt_icon.png" width="30" height="30"></a></liclass>
+                    <li class="social"><a href="@Html.DisplayTextFor(m => m.Facebook)" target="_blank"><img src="../Images/fb_icon.png" width="30" height="30"></a></li>
+                    <li class="social"><a href="@Html.DisplayTextFor(m => m.Twitter)" target="_blank"><img src="../Images/tw_icon.png" width="30" height="30"></a></li>
+                    <li class ="social"><a href="@Html.DisplayTextFor(m => m.YoutubeChannel)" target="_blank"><img src="../Images/yt_icon.png" width="30" height="30"></a></li>
                 </ul>
             </div>
             <div class="twitterfeed">
-                <a class="twitter-timeline" href="https://twitter.com/hashtag/bigrivers14" data-widget-id="568717642673188864">Tweets over #bigrivers14</a>
+                <a class="twitter-timeline" href="https://twitter.com/hashtag/@Html.DisplayTextFor(m => m.Hashtag)" data-widget-id="568717642673188864">Tweets over @Html.DisplayTextFor(m => m.Hashtag)</a>
                 <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
             </div>
         </div>

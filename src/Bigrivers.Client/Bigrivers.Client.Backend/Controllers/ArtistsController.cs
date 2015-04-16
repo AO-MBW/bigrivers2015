@@ -11,7 +11,7 @@ using Bigrivers.Client.Backend.ViewModels;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
-    public class ArtistController : Controller
+    public class ArtistsController : Controller
     {
         // TODO: Create BaseController class for BigRiversDb
         private readonly BigriversDb _db = new BigriversDb();

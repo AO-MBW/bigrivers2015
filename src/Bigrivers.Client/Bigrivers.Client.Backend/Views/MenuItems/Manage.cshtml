@@ -4,10 +4,10 @@
 }
 <div id="wrapper">
     @ViewBag.errormsg
-    @Html.Header("1", "Beheer")
+    <h1>@ViewBag.Title</h1>
     <div id="actionbar">
         <div class="action-block">
-            @Html.ActionLink("Item Toevoegen", "New", "MenuItem")
+            @Html.ActionLink("Item Toevoegen", "New", "MenuItems")
         </div>
     </div>
     <div id="content">
@@ -28,13 +28,13 @@
                         <td>@m.URL</td>
                         @if (m.Status)
                         {
-                            <td>@Html.ActionLink("Actief", "SwitchStatus", "MenuItem", new { m.Id }, null)</td>
+                            <td>@Html.ActionLink("Actief", "SwitchStatus", "MenuItems", new { m.Id }, null)</td>
                         }
                         else
                         {
-                            <td>@Html.ActionLink("Inactief", "SwitchStatus", "MenuItem", new { m.Id }, null)</td>
+                            <td>@Html.ActionLink("Inactief", "SwitchStatus", "MenuItems", new { m.Id }, null)</td>
                         }
-                        <td>@Html.ActionLink("Wijzig", "Edit", "MenuItem", new { m.Id}, null)@Html.ActionLink("Verwijder", "Delete", "MenuItem", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om "+m.DisplayName+" te verwijderen. Weet je dit zeker?');"})</td>
+                        <td>@Html.ActionLink("Wijzig", "Edit", "MenuItems", new { m.Id}, null)@Html.ActionLink("Verwijder", "Delete", "MenuItems", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om "+m.DisplayName+" te verwijderen. Weet je dit zeker?');"})</td>
                     </tr>
                 }
             </tbody>
