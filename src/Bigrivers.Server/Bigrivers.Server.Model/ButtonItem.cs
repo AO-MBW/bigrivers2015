@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bigrivers.Server.Model
 {
-    class ButtonItem
+    public class ButtonItem
     {
         public int Id { get; set; }
         public string DisplayName { get; set; }
