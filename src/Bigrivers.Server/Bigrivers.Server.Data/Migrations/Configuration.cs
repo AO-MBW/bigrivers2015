@@ -21,6 +21,7 @@ namespace Bigrivers.Server.Data.Migrations
             context.Events.RemoveRange(context.Events);
             context.Performances.RemoveRange(context.Performances);
             context.MenuItems.RemoveRange(context.MenuItems);
+            context.ButtonItems.RemoveRange(context.ButtonItems);
 
             // Create Genres
             Genre rock = new Genre
@@ -465,6 +466,7 @@ namespace Bigrivers.Server.Data.Migrations
                 Event = liveDanceEvent
             };
 
+            //Create Menu Items
             MenuItem menu1 = new MenuItem
             {
                 URL = "http://www.crowdfunding.nl/",
@@ -521,7 +523,35 @@ namespace Bigrivers.Server.Data.Migrations
                 Parent = 0,
                 Status = true
             };
-            
+
+            //Create Button Item
+            ButtonItem button1 = new ButtonItem
+            {
+                URL = "/Home/Events.jpg",
+                DisplayName = "Events",
+                Logo = "/Images/Event_logo.png",
+                Order = 0,
+                Status = true
+            };
+
+            ButtonItem button2 = new ButtonItem
+            {
+                URL = "/Home/Events.jpg",
+                DisplayName = "Events",
+                Logo = "/Images/Event_logo.png",
+                Order = 0,
+                Status = true
+            };
+
+            ButtonItem button3 = new ButtonItem
+            {
+                URL = "/Home/Events.jpg",
+                DisplayName = "Events",
+                Logo = "/Images/Event_logo.png",
+                Order = 0,
+                Status = true
+            };
+
             // Add menu to database
             context.MenuItems.AddOrUpdate(menu1);
             context.MenuItems.AddOrUpdate(menu2);
@@ -530,6 +560,11 @@ namespace Bigrivers.Server.Data.Migrations
             context.MenuItems.AddOrUpdate(menu5);
             context.MenuItems.AddOrUpdate(menu6);
             context.MenuItems.AddOrUpdate(menu7);
+
+            // Add button to database
+            context.ButtonItems.AddOrUpdate(button1);
+            context.ButtonItems.AddOrUpdate(button2);
+            context.ButtonItems.AddOrUpdate(button3);
 
             // Add genres to artists
             Queen.Genres.Add(rock);

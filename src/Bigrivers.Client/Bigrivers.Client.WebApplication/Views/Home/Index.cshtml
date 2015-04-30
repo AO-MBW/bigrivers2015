@@ -1,13 +1,13 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-@foreach (Event item in ViewBag.EventList)
+@foreach (ButtonItem item in ViewBag.ButtonItems)
 {
     <div class="Button">
-        <a class="ButtonLink" href="/Home/Events/@item.Id">
+        <a class="ButtonLink" href="@item.URL">
             <div class="ButtonDiv">
-                <img src="@item.FrontpageLogo" class="ButtonImg" />
-                <p class="ButtonTitle">@item.Title</p>
+                <img src="@item.Logo" class="ButtonImg" />
+                <p class="ButtonTitle">@item.DisplayName</p>
             </div>
         </a>
     </div>

@@ -27,9 +27,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.EventList = AccessLayer.Events
-                .Where(e => e.Status)
-                .ToList();
+            ViewBag.ButtonItems = AccessLayer.ButtonItems.Where(m => m.Status).ToList();
             return View("Index");
         }
 
