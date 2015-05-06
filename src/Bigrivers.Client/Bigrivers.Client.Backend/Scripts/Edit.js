@@ -4,9 +4,5 @@
 });
 
 var toggleInput = function() {
-    if ($("#TicketRequired").is(":checked")) {
-        $("#Price").attr("disabled", false);
-    } else {
-        $("#Price").attr("disabled", true);            
-    }
+    $("#Price").attr("disabled", !$("#TicketRequired").is(":checked"));
 }

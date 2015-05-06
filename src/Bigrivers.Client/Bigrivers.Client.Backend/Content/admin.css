@@ -594,14 +594,20 @@ h2 {
 	border: 1px solid #ccc;
 }
 
-#content table tr.inactive {
-	background-color: #ccc;
-}
-
 #content table td {
 	padding: 8px 5px;
 	vertical-align: middle;
 	color: #1d1e1b;
+}
+
+#content table tr.child td {
+	padding-left: 50px;
+	background-color: #ccc;
+}
+
+#content table tr.inactive td {
+	background-color: #b9b9b9;
+    color: #444;
 }
 
 #content table a {

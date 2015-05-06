@@ -15,7 +15,7 @@ namespace Bigrivers.Server.Model
         public string DisplayName { get; set; }
         public string URL { get; set; }
         public int? Order { get; set; }
-        public int Parent { get; set; }
+        public int? Parent { get; set; }
 
         [DefaultValue(true)]
         public bool Status { get; set; }

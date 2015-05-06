@@ -11,28 +11,34 @@ using Bigrivers.Client.Backend.ViewModels;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
-    public class EventsController : Controller
+    public class EventsController : BaseController
     {
-        // TODO: Create BaseController class for BigRiversDb
-        private readonly BigriversDb _db = new BigriversDb();
-
-        // GET: Event/Index
+        // GET: Events/Index
         public ActionResult Index()
         {
             return RedirectToAction("Manage");
         }
 
-        // GET: Event/
+        // GET: Events/
         public ActionResult Manage()
         {
             // List all events and return view
-            ViewBag.listEvents = _db.Events.Where(m => !m.Deleted).ToList();
+            ViewBag.listEvents = Db.Events.Where(m => !m.Deleted).ToList();
 
             ViewBag.Title = "Evenementen";
             return View("Manage");
         }
 
-        // GET: Event/New
+        public ActionResult Search(string id)
+        {
+            var search = id;
+            ViewBag.listEvents = Db.Events.Where(m => !m.Deleted && m.Title.Contains(search)).ToList();
+
+            ViewBag.Title = "Zoek Evenementen";
+            return View("Manage");
+        }
+
+        // GET: Events/New
         public ActionResult New()
         {
             var viewModel = new EventViewModel
@@ -51,7 +57,7 @@ namespace Bigrivers.Client.Backend.Controllers
             return View("Edit", viewModel);
         }
 
-        // POST: Event/New
+        // POST: Events/New
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult New(EventViewModel viewModel)
@@ -80,21 +86,17 @@ namespace Bigrivers.Client.Backend.Controllers
                 Status = viewModel.Status
             };
 
-            _db.Events.Add(singleEvent);
-            _db.SaveChanges();
+            Db.Events.Add(singleEvent);
+            Db.SaveChanges();
 
             return RedirectToAction("Manage");
         }
 
-        // GET: Event/Edit/5
+        // GET: Events/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null) return RedirectToAction("New");
-
-            // Find single artist
-            var singleEvent = _db.Events.Find(id);
-
-            // Send to Manage view if event is not found
+            var singleEvent = Db.Events.Find(id);
             if (singleEvent == null || singleEvent.Deleted) return RedirectToAction("Manage");
 
             var model = new EventViewModel
@@ -119,11 +121,11 @@ namespace Bigrivers.Client.Backend.Controllers
             return View(model);
         }
 
-        // POST: Event/Edit/5
+        // POST: Events/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, EventViewModel viewModel)
         {
-            var singleEvent = _db.Events.Find(id);
+            var singleEvent = Db.Events.Find(id);
             singleEvent.Title = viewModel.Title;
             singleEvent.Description = viewModel.Description;
             singleEvent.ShortDescription = viewModel.ShortDescription;
@@ -138,40 +140,38 @@ namespace Bigrivers.Client.Backend.Controllers
             singleEvent.TicketRequired = viewModel.TicketRequired;
             singleEvent.Price = viewModel.Price ?? singleEvent.Price;
             singleEvent.Status = viewModel.Status;
-            _db.SaveChanges();
+            Db.SaveChanges();
 
             return RedirectToAction("Manage");
         }
 
-        // POST: Event/Delete/5
+        // POST: Events/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null) return RedirectToAction("Manage");
-
-            // TODO: Add delete logic here
-            var singleEvent = _db.Events.Find(id);
-
-            // Send to Manage view if event is not found
+            var singleEvent = Db.Events.Find(id);
             if (singleEvent == null || singleEvent.Deleted) return RedirectToAction("Manage");
 
+            foreach (var p in singleEvent.Performances)
+            {
+                p.Event = null;
+            }
+            singleEvent.Status = false;
             singleEvent.Deleted = true;
-            _db.SaveChanges();
+            Db.SaveChanges();
 
             return RedirectToAction("Manage");
         }
 
-        // GET: Event/SwitchStatus/5
+        // GET: Events/SwitchStatus/5
         public ActionResult SwitchStatus(int? id)
         {
             if (id == null) return RedirectToAction("Manage");
-
-            var singleEvent = _db.Events.Find(id);
-
-            // Send to Manage view if event is not found
+            var singleEvent = Db.Events.Find(id);
             if (singleEvent == null || singleEvent.Deleted) return RedirectToAction("Manage");
 
             singleEvent.Status = !singleEvent.Status;
-            _db.SaveChanges();
+            Db.SaveChanges();
             return RedirectToAction("Manage");
         }
     }

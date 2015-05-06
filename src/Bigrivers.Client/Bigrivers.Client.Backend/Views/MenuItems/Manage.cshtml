@@ -16,41 +16,82 @@
     <div id="content">
         <table>
             <thead>
-                <tr>
-                    <th>Weergavenaam</th>
-                    <th>URL</th>
-                    <th>Status</th>
-                    <th>Acties</th>
-                </tr>
+            <tr>
+                <th>Weergavenaam</th>
+                <th>URL</th>
+                <th>Status</th>
+                <th>Acties</th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var m in listMenuItems.Where(m => m.Status))
+            @foreach (var m in listMenuItems.Where(m => m.Status && m.Parent == null))
+            {
+                <tr data-id="@m.Id">
+                    <td>@m.DisplayName</td>
+                    <td>@m.URL</td>
+                    <td>@Html.ActionLink("Actief", "SwitchStatus", "MenuItems", new {m.Id}, new {@onclick = "return confirm('Als je dit menuitem uitschakelt, is het niet meer zichtbaar in de menubalk en wordt het uit de volgorde gehaalt. Weet je dit zeker?');"})</td>
+                    <td>
+                        @Html.ActionLink("Wijzig", "Edit", "MenuItems", new {m.Id}, null)
+                        @Html.ActionLink("Verwijder", "Delete", "MenuItems", new {m.Id}, new {@onclick = String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Weet je dit zeker?');", m.DisplayName)})
+                        @Html.ActionLink("Up", "ShiftOrder", "MenuItems", new {id = m.Id, param = up}, null)
+                        @Html.ActionLink("Down", "ShiftOrder", "MenuItems", new {id = m.Id, param = down}, null)
+                        @{
+                            var list = ((List<SelectListItem>) ViewBag.menuparents)
+                                .Where(l => l.Text != m.DisplayName);
+                        }
+                        @Html.DropDownList("Parent", list)
+                    </td>
+                </tr>
+                foreach (var c in listMenuItems.Where(n => n.Status && n.Parent == m.Id))
                 {
-                    <tr>
-                        <td>@m.DisplayName</td>
-                        <td>@m.URL</td>
-                        <td>@Html.ActionLink("Actief", "SwitchStatus", "MenuItems", new { m.Id }, new { @onclick = "return confirm('Als je dit menuitem uitschakelt, is het niet meer zichtbaar in de menubalk en wordt het uit de volgorde gehaalt. Weet je dit zeker?');" })</td>
+                    <tr class="child" data-id="@c.Id">
+                        <td>@c.DisplayName</td>
+                        <td>@c.URL</td>
+                        <td>@Html.ActionLink("Actief", "SwitchStatus", "MenuItems", new { c.Id }, new { @onclick = "return confirm('Als je dit menuitem uitschakelt, is het niet meer zichtbaar in de menubalk en wordt het uit de volgorde gehaalt. Weet je dit zeker?');" })</td>
                         <td>
-                            @Html.ActionLink("Wijzig", "Edit", "MenuItems", new { m.Id }, null)
-                            @Html.ActionLink("Verwijder", "Delete", "MenuItems", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');" })
-                            @Html.ActionLink("Up", "ShiftOrder", "MenuItems", new { id = m.Id, param = up }, null)
-                            @Html.ActionLink("Down", "ShiftOrder", "MenuItems", new { id = m.Id, param = down }, null)
+                            @Html.ActionLink("Wijzig", "Edit", "MenuItems", new { c.Id }, null)
+                            @Html.ActionLink("Verwijder", "Delete", "MenuItems", new { c.Id }, new { @onclick = String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Weet je dit zeker?');", c.DisplayName) })
+                            @Html.ActionLink("Up", "ShiftOrder", "MenuItems", new { id = c.Id, param = up }, null)
+                            @Html.ActionLink("Down", "ShiftOrder", "MenuItems", new { id = c.Id, param = down }, null)
+                            @{
+                                var childlist = ((List<SelectListItem>)ViewBag.menuparents);
+                            }
+                            @Html.DropDownList("Parent", childlist, new { data_selected = m.Id})
                         </td>
                     </tr>
                 }
-                @foreach (var m in listMenuItems.Where(m => !m.Status))
-                {
-                    <tr class="inactive">
-                        <td>@m.DisplayName</td>
-                        <td>@m.URL</td>
-                        <td>@Html.ActionLink("Inactief", "SwitchStatus", "MenuItems", new { m.Id }, null)</td>
-                        <td>
-                            @Html.ActionLink("Wijzig", "Edit", "MenuItems", new { m.Id }, null)
-                            @Html.ActionLink("Verwijder", "Delete", "MenuItems", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');" })
-                        </td>
-                    </tr>
-                }
+            }
+            @foreach (var m in listMenuItems.Where(m => !m.Status))
+            {
+                <tr class="inactive">
+                    <td>@m.DisplayName</td>
+                    <td>@m.URL</td>
+                    <td>@Html.ActionLink("Inactief", "SwitchStatus", "MenuItems", new {m.Id}, null)</td>
+                    <td>
+                        @Html.ActionLink("Wijzig", "Edit", "MenuItems", new {m.Id}, null)
+                        @Html.ActionLink("Verwijder", "Delete", "MenuItems", new {m.Id}, new {@onclick = String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Weet je dit zeker?');", m.DisplayName)})
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
+        <script>
+            $("select[name=Parent]").on("change", function () {
+                var parentId = this.value;
+                var itemId = $(this).parents("tr").data("id");
+                window.location = "/MenuItems/AddToParent/"+itemId+"/"+parentId;
+            });
+
+            var selects = $("select");
+
+            $.each(selects, function() {
+                var selected = $(this).data("selected");
+
+                if (typeof (selected) != "undefined") {
+                    $(this).val(selected);
+                }
+            });
+            
+        </script>
     </div>
 </div>

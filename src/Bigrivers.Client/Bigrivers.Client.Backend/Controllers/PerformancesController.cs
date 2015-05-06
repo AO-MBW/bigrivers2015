@@ -11,28 +11,24 @@ using Bigrivers.Client.Backend.ViewModels;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
-    public class PerformancesController : Controller
+    public class PerformancesController : BaseController
     {
-        // TODO: Create BaseController class for BigRiversDb
-        private readonly BigriversDb _db = new BigriversDb();
-
-        // GET: MenuItem/Index
+        // GET: Performances/Index
         public ActionResult Index()
         {
             return RedirectToAction("Manage");
         }
 
-        // GET: MenuItem/
+        // GET: Performances/
         public ActionResult Manage()
         {
-            // List all artists and return view
-            ViewBag.listPerformances = _db.Performances.Where(m => !m.Deleted).ToList();
+            ViewBag.listPerformances = Db.Performances.Where(m => !m.Deleted).ToList();
 
             ViewBag.Title = "Optredens";
             return View("Manage");
         }
 
-        // GET: MenuItem/Create
+        // GET: Performances/Create
         public ActionResult New()
         {
             var viewModel = new PerformanceViewModel
@@ -46,7 +42,7 @@ namespace Bigrivers.Client.Backend.Controllers
             return View("Edit", viewModel);
         }
 
-        // POST: MenuItem/New
+        // POST: Performances/New
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult New(PerformanceViewModel viewModel)
@@ -57,7 +53,6 @@ namespace Bigrivers.Client.Backend.Controllers
                 return View("Edit", viewModel);
             }
 
-            //ViewBag.Title = "Resultaat - Example";
             var singlePerformance = new Performance
             {
                 Description = viewModel.Description,
@@ -66,21 +61,17 @@ namespace Bigrivers.Client.Backend.Controllers
                 Status = viewModel.Status
             };
 
-            _db.Performances.Add(singlePerformance);
-            _db.SaveChanges();
+            Db.Performances.Add(singlePerformance);
+            Db.SaveChanges();
 
             return RedirectToAction("Manage");
         }
 
-        // GET: MenuItem/Edit/5
+        // GET: Performances/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null) return RedirectToAction("New");
-
-            // Find single menuitem
-            var singlePerformance = _db.Performances.Find(id);
-
-            // Send to Manage view if menuitem is not found
+            var singlePerformance = Db.Performances.Find(id);
             if (singlePerformance == null || singlePerformance.Deleted) return RedirectToAction("Manage");
 
             var model = new PerformanceViewModel
@@ -95,49 +86,45 @@ namespace Bigrivers.Client.Backend.Controllers
             return View(model);
         }
 
-        // POST: MenuItem/Edit/5
+        // POST: Performances/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, PerformanceViewModel viewModel)
         {
-            var singlePerformance = _db.Performances.Find(id);
+            var singlePerformance = Db.Performances.Find(id);
 
             singlePerformance.Description = viewModel.Description;
             singlePerformance.Start = viewModel.Start;
             singlePerformance.End = viewModel.End;
             singlePerformance.Status = viewModel.Status;
-            _db.SaveChanges();
+            Db.SaveChanges();
 
             return RedirectToAction("Manage");
         }
 
-        // POST: MenuItem/Delete/5
+        // POST: Performances/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null) return RedirectToAction("Manage");
-
-            var singlePerformance = _db.Performances.Find(id);
-
-            // Send to Manage view if menuitem is not found
+            var singlePerformance = Db.Performances.Find(id);
             if (singlePerformance == null || singlePerformance.Deleted) return RedirectToAction("Manage");
 
+            singlePerformance.Artist.Performances.Remove(singlePerformance);
+            singlePerformance.Status = false;
             singlePerformance.Deleted = true;
-            _db.SaveChanges();
+            Db.SaveChanges();
 
             return RedirectToAction("Manage");
         }
 
-        // GET: MenuItem/SwitchStatus/5
+        // GET: Performances/SwitchStatus/5
         public ActionResult SwitchStatus(int? id)
         {
             if (id == null) return RedirectToAction("Manage");
-
-            var singlePerformance = _db.Performances.Find(id);
-
-            // Send to Manage view if menuitem is not found
+            var singlePerformance = Db.Performances.Find(id);
             if (singlePerformance == null || singlePerformance.Deleted) return RedirectToAction("Manage");
 
             singlePerformance.Status = !singlePerformance.Status;
-            _db.SaveChanges();
+            Db.SaveChanges();
             return RedirectToAction("Manage");
         }
     }
