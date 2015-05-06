@@ -122,6 +122,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ArtistsController.cs" />
+    <Compile Include="Controllers\ButtonItemsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuItemsController.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Helpers\HtmlHelperExtensionMethods.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\ArtistViewModel.cs" />
+    <Compile Include="Models\ButtonItemViewModel.cs" />
     <Compile Include="Models\MenuItemViewModel.cs" />
     <Compile Include="Models\PerformanceViewModel.cs" />
     <Compile Include="Models\SettingsViewModel.cs" />
@@ -390,6 +392,8 @@
     <Content Include="Views\Home\Settings.cshtml" />
     <Content Include="Views\Performances\Manage.cshtml" />
     <Content Include="Views\Performances\Edit.cshtml" />
+    <Content Include="Views\ButtonItems\Edit.cshtml" />
+    <Content Include="Views\ButtonItems\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

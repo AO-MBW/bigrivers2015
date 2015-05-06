@@ -9,11 +9,10 @@ using System.Web.Mvc;
 using Bigrivers.Server.Data;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
-using Microsoft.Ajax.Utilities;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
-    public class MenuItemsController : Controller
+    public class ButtonItemsController : Controller
     {
         // TODO: Create BaseController class for BigRiversDb
         private readonly BigriversDb _db = new BigriversDb();
@@ -28,18 +27,9 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Manage()
         {
             // List all artists and return view
-            ViewBag.listMenuItems = _db.MenuItems.Where(m => !m.Deleted).OrderBy(m => m.Order).ToList();
+            ViewBag.listButtonItems = _db.ButtonItems.Where(m => !m.Deleted).OrderBy(m => m.Order).ToList();
 
-            ViewBag.Title = "MenuItems";
-            return View();
-        }
-
-        public ActionResult Search(string id)
-        {
-            var search = id;
-            ViewBag.listMenuItems = _db.MenuItems.Where(m => !m.Deleted && m.DisplayName.Contains(search)).OrderBy(m => m.Order).ToList();
-
-            ViewBag.Title = "Zoek MenuItems";
+            ViewBag.Title = "ButtonItems";
             return View("Manage");
         }
 
@@ -51,7 +41,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 Status = true
             };
 
-            ViewBag.Title = "Nieuw MenuItem";
+            ViewBag.Title = "Nieuw ButtonItem";
             return View("Edit", viewModel);
         }
 
@@ -62,21 +52,20 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Title = "Nieuw MenuItem";
+                ViewBag.Title = "Nieuw ButtonItem";
                 return View("Edit", viewModel);
             }
 
             //ViewBag.Title = "Resultaat - Example";
-            var singleMenuItem = new MenuItem
+            var singleButtonItem = new ButtonItem
             {
                 URL = viewModel.URL,
                 DisplayName = viewModel.DisplayName,
-                Order = _db.MenuItems.OrderByDescending(m => m.Order).First().Order+1,
-                Parent = 0,
+                Order = _db.ButtonItems.OrderByDescending(m => m.Order).First().Order + 1,
                 Status = viewModel.Status
             };
 
-            _db.MenuItems.Add(singleMenuItem);
+            _db.ButtonItems.Add(singleButtonItem);
             _db.SaveChanges();
 
             return RedirectToAction("Manage");
@@ -88,19 +77,18 @@ namespace Bigrivers.Client.Backend.Controllers
             if (id == null) return RedirectToAction("New");
 
             // Find single menuitem
-            var singleMenuItem = _db.MenuItems.Find(id);
+            var singleButtonItem = _db.ButtonItems.Find(id);
 
             // Send to Manage view if menuitem is not found
-            if (singleMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
+            if (singleButtonItem == null || singleButtonItem.Deleted) return RedirectToAction("Manage");
 
             var model = new ButtonItemViewModel
             {
-                URL = singleMenuItem.URL,
-                DisplayName = singleMenuItem.DisplayName,
-                Parent = singleMenuItem.Parent,
-                Status = singleMenuItem.Status
+                URL = singleButtonItem.URL,
+                DisplayName = singleButtonItem.DisplayName,
+                Status = singleButtonItem.Status
             };
-            ViewBag.Title = "Bewerk MenuItem";
+            ViewBag.Title = "Bewerk ButtonItem";
             return View(model);
         }
 
@@ -108,12 +96,11 @@ namespace Bigrivers.Client.Backend.Controllers
         [HttpPost]
         public ActionResult Edit(int id, ButtonItemViewModel viewModel)
         {
-            var singleMenuItem = _db.MenuItems.Find(id);
+            var singleButtonItem = _db.ButtonItems.Find(id);
 
-            singleMenuItem.URL = viewModel.URL;
-            singleMenuItem.DisplayName = viewModel.DisplayName;
-            singleMenuItem.Parent = viewModel.Parent;
-            singleMenuItem.Status = viewModel.Status;
+            singleButtonItem.URL = viewModel.URL;
+            singleButtonItem.DisplayName = viewModel.DisplayName;
+            singleButtonItem.Status = viewModel.Status;
             _db.SaveChanges();
 
             return RedirectToAction("Manage");
@@ -124,13 +111,13 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             if (id == null) return RedirectToAction("Manage");
 
-            var singleMenuItem = _db.MenuItems.Find(id);
+            var singleButtonItem = _db.ButtonItems.Find(id);
 
             // Send to Manage view if menuitem is not found
-            if (singleMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
+            if (singleButtonItem == null || singleButtonItem.Deleted) return RedirectToAction("Manage");
 
-            singleMenuItem.Order = null;
-            singleMenuItem.Deleted = true;
+            singleButtonItem.Order = null;
+            singleButtonItem.Deleted = true;
             _db.SaveChanges();
 
             return RedirectToAction("Manage");
@@ -142,20 +129,19 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             if (id == null) return RedirectToAction("Manage");
 
-            var singleMenuItem = _db.MenuItems.Find(id);
+            var singleButtonItem = _db.ButtonItems.Find(id);
 
             // Send to Manage view if menuitem is not found
-            if (singleMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
+            if (singleButtonItem == null || singleButtonItem.Deleted) return RedirectToAction("Manage");
 
-            singleMenuItem.Status = !singleMenuItem.Status;
-            switch (singleMenuItem.Status)
+            singleButtonItem.Status = !singleButtonItem.Status;
+            switch (singleButtonItem.Status)
             {
                 case true:
-                    singleMenuItem.Order = _db.MenuItems.OrderByDescending(m => m.Order).First().Order + 1;
-                    if (singleMenuItem.Order == null) singleMenuItem.Order = 1;
+                    singleButtonItem.Order = _db.MenuItems.OrderByDescending(m => m.Order).First().Order + 1;
                     break;
                 case false:
-                    singleMenuItem.Order = null;
+                    singleButtonItem.Order = null;
                     break;
             }
             _db.SaveChanges();
@@ -166,31 +152,31 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             if (id == null) return RedirectToAction("Manage");
 
-            var singleMenuItem = _db.MenuItems.Find(id);
+            var singleButtonItem = _db.ButtonItems.Find(id);
 
             // Send to Manage view if menuitem is not found
-            if (singleMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
+            if (singleButtonItem == null || singleButtonItem.Deleted) return RedirectToAction("Manage");
 
             switch (param)
             {
                 case "up":
                     // Go to Manage if singleMenuItem already is the first item
-                    if (_db.MenuItems.OrderBy(m => m.Order).First() == singleMenuItem) return RedirectToAction("Manage");
+                    if (_db.ButtonItems.OrderBy(m => m.Order).First() == singleButtonItem) return RedirectToAction("Manage");
 
-                    var nextMenuItem = _db.MenuItems.Single(m => m.Order == (singleMenuItem.Order - 1));
-                    if (nextMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
+                    var nextMenuItem = _db.ButtonItems.Single(m => m.Order == (singleButtonItem.Order - 1));
+                    if (nextMenuItem == null || singleButtonItem.Deleted) return RedirectToAction("Manage");
                     nextMenuItem.Order++;
-                    singleMenuItem.Order--;
+                    singleButtonItem.Order--;
                     break;
                 case "down":
                     // Go to Manage if singleMenuItem already is the last item
                     // OrderDescending.First() is used because of issues from SQL limitations with the Last() method being used without setting the result to a list first
-                    if (_db.MenuItems.OrderByDescending(m => m.Order).First() == singleMenuItem) return RedirectToAction("Manage");
+                    if (_db.ButtonItems.OrderByDescending(m => m.Order).First() == singleButtonItem) return RedirectToAction("Manage");
 
-                    var previousMenuItem = _db.MenuItems.Single(m => m.Order == (singleMenuItem.Order + 1));
-                    if (previousMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
+                    var previousMenuItem = _db.ButtonItems.Single(m => m.Order == (singleButtonItem.Order + 1));
+                    if (previousMenuItem == null || singleButtonItem.Deleted) return RedirectToAction("Manage");
                     previousMenuItem.Order--;
-                    singleMenuItem.Order++;
+                    singleButtonItem.Order++;
                     break;
             }
 

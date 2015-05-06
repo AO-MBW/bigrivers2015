@@ -1,7 +1,10 @@
 ﻿@using Bigrivers.Server.Model
 @{
     List<MenuItem> listMenuItems = ViewBag.listMenuItems;
+    var up = "up";
+    var down = "down";
 }
+
 <div id="wrapper">
     @ViewBag.errormsg
     <h1>@ViewBag.Title</h1>
@@ -30,8 +33,8 @@
                         <td>
                             @Html.ActionLink("Wijzig", "Edit", "MenuItems", new { m.Id }, null)
                             @Html.ActionLink("Verwijder", "Delete", "MenuItems", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');" })
-                            @Html.ActionLink("Up", "OrderUp", "MenuItems", new { m.Id }, null)
-                            @Html.ActionLink("Down", "OrderDown", "MenuItems", new { m.Id }, null)
+                            @Html.ActionLink("Up", "ShiftOrder", "MenuItems", new { id = m.Id, param = up }, null)
+                            @Html.ActionLink("Down", "ShiftOrder", "MenuItems", new { id = m.Id, param = down }, null)
                         </td>
                     </tr>
                 }
