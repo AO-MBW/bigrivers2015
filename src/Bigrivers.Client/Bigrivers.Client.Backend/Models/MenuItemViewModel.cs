@@ -17,10 +17,7 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Display(Name = "Weergavenaam")]
         public string DisplayName { get; set; }
 
-        [Display(Name = "Volgorde")]
-        public int Order { get; set; }
-
-        [Display(Name = "Parent")]
+        public int? Order { get; set; }
         public int Parent { get; set; }
 
         public bool Status { get; set; }

@@ -126,16 +126,7 @@ section#wrapper {
 	font-weight: bold;
 }
 
-.xdebug-error {
-	margin-left: 125px;
-}
-
 /*/// --- Account menu Styling --- ///*/
-
-#account-menu {
-	
-}
-
 ul#accountContainer {
 	position: absolute;
 	top: 40px;
@@ -601,6 +592,10 @@ h2 {
 	background-color: #858991;
 	color: #fff;
 	border: 1px solid #ccc;
+}
+
+#content table tr.inactive {
+	background-color: #ccc;
 }
 
 #content table td {
