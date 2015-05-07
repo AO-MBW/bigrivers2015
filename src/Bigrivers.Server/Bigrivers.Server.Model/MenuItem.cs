@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace Bigrivers.Server.Model
         public string URL { get; set; }
         public int? Order { get; set; }
         public int? Parent { get; set; }
+        public bool IsParent { get; set; }
 
         [DefaultValue(true)]
         public bool Status { get; set; }

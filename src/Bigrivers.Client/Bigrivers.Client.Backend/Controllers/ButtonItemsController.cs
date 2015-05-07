@@ -23,8 +23,15 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: ButtonItems/
         public ActionResult Manage()
         {
-            // List all artists and return view
-            ViewBag.listButtonItems = Db.ButtonItems.Where(m => !m.Deleted).OrderBy(m => m.Order).ToList();
+            // All menu items to unsorted list
+            var buttonItems = Db.ButtonItems.Where(m => !m.Deleted).ToList();
+
+            // Set all active items into new list first
+            var listButtonItems = buttonItems.Where(m => m.Status).OrderBy(m => m.Order).ToList();
+            // Finally, add all inactive parents to the end of the list
+            listButtonItems.AddRange(buttonItems.Where(m => !m.Status).ToList());
+
+            ViewBag.listButtonItems = listButtonItems;
 
             ViewBag.Title = "ButtonItems";
             return View("Manage");
@@ -159,33 +166,42 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             if (id == null || param == null) return RedirectToAction("Manage");
             if (param != "up" && param != "down") return RedirectToAction("Manage");
-
             var singleButtonItem = Db.ButtonItems.Find(id);
-
-            // Send to Manage view if buttonitem is not found
             if (singleButtonItem == null || singleButtonItem.Deleted) return RedirectToAction("Manage");
 
             switch (param)
             {
                 case "up":
-                    // Go to Manage if singleMenuItem already is the first item
+                {
+                    // Go to Manage if singleButtonItem already is the first item
                     if (Db.ButtonItems.OrderBy(m => m.Order).First() == singleButtonItem) return RedirectToAction("Manage");
 
-                    var nextMenuItem = Db.ButtonItems.Single(m => m.Order == (singleButtonItem.Order - 1));
-                    if (nextMenuItem == null || singleButtonItem.Deleted) return RedirectToAction("Manage");
-                    nextMenuItem.Order++;
-                    singleButtonItem.Order--;
+                    var nextButtonItem = Db.ButtonItems
+                        .Where(m => m.Order < singleButtonItem.Order && m.Status)
+                        .OrderByDescending(m => m.Order)
+                        .FirstOrDefault();
+                    if (nextButtonItem == null || singleButtonItem.Deleted) return RedirectToAction("Manage");
+                    var neworder = nextButtonItem.Order;
+                    nextButtonItem.Order = singleButtonItem.Order;
+                    singleButtonItem.Order = neworder;
                     break;
+                }
                 case "down":
-                    // Go to Manage if singleMenuItem already is the last item
-                    // OrderDescending.First() is used because of issues from SQL limitations with the Last() method being used without setting the result to a list first
+                {
+                    // Go to Manage if singleButtonItem already is the last item
+                    // OrderDescending.First() is used because of issues from SQL limitations with the Last() method being used in this scenario
                     if (Db.ButtonItems.OrderByDescending(m => m.Order).First() == singleButtonItem) return RedirectToAction("Manage");
 
-                    var previousMenuItem = Db.ButtonItems.Single(m => m.Order == (singleButtonItem.Order + 1));
-                    if (previousMenuItem == null || singleButtonItem.Deleted) return RedirectToAction("Manage");
-                    previousMenuItem.Order--;
-                    singleButtonItem.Order++;
+                    var previousButtonItem = Db.ButtonItems
+                        .Where(m => m.Order > singleButtonItem.Order && m.Status)
+                        .OrderBy(m => m.Order)
+                        .FirstOrDefault();
+                    if (previousButtonItem == null || singleButtonItem.Deleted) return RedirectToAction("Manage");
+                    var neworder = previousButtonItem.Order;
+                    previousButtonItem.Order = singleButtonItem.Order;
+                    singleButtonItem.Order = neworder;
                     break;
+                }  
             }
 
             Db.SaveChanges();

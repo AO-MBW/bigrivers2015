@@ -1,11 +1,4 @@
-﻿@using Bigrivers.Server.Model
-@{
-    List<MenuItem> listMenuItems = ViewBag.listMenuItems;
-    var up = "up";
-    var down = "down";
-}
-
-<div id="wrapper">
+﻿<div id="wrapper">
     @ViewBag.errormsg
     <h1>@ViewBag.Title</h1>
     <div id="actionbar">
@@ -24,58 +17,79 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var m in listMenuItems.Where(m => m.Status && m.Parent == null))
-            {
-                <tr data-id="@m.Id">
-                    <td>@m.DisplayName</td>
-                    <td>@m.URL</td>
-                    <td>@Html.ActionLink("Actief", "SwitchStatus", "MenuItems", new {m.Id}, new {@onclick = "return confirm('Als je dit menuitem uitschakelt, is het niet meer zichtbaar in de menubalk en wordt het uit de volgorde gehaalt. Weet je dit zeker?');"})</td>
-                    <td>
-                        @Html.ActionLink("Wijzig", "Edit", "MenuItems", new {m.Id}, null)
-                        @Html.ActionLink("Verwijder", "Delete", "MenuItems", new {m.Id}, new {@onclick = String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Weet je dit zeker?');", m.DisplayName)})
-                        @Html.ActionLink("Up", "ShiftOrder", "MenuItems", new {id = m.Id, param = up}, null)
-                        @Html.ActionLink("Down", "ShiftOrder", "MenuItems", new {id = m.Id, param = down}, null)
-                        @{
-                            var list = ((List<SelectListItem>) ViewBag.menuparents)
-                                .Where(l => l.Text != m.DisplayName);
-                        }
-                        @Html.DropDownList("Parent", list)
-                    </td>
-                </tr>
-                foreach (var c in listMenuItems.Where(n => n.Status && n.Parent == m.Id))
+                @foreach (var m in ViewBag.listMenuItems)
                 {
-                    <tr class="child" data-id="@c.Id">
-                        <td>@c.DisplayName</td>
-                        <td>@c.URL</td>
-                        <td>@Html.ActionLink("Actief", "SwitchStatus", "MenuItems", new { c.Id }, new { @onclick = "return confirm('Als je dit menuitem uitschakelt, is het niet meer zichtbaar in de menubalk en wordt het uit de volgorde gehaalt. Weet je dit zeker?');" })</td>
-                        <td>
-                            @Html.ActionLink("Wijzig", "Edit", "MenuItems", new { c.Id }, null)
-                            @Html.ActionLink("Verwijder", "Delete", "MenuItems", new { c.Id }, new { @onclick = String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Weet je dit zeker?');", c.DisplayName) })
-                            @Html.ActionLink("Up", "ShiftOrder", "MenuItems", new { id = c.Id, param = up }, null)
-                            @Html.ActionLink("Down", "ShiftOrder", "MenuItems", new { id = c.Id, param = down }, null)
-                            @{
-                                var childlist = ((List<SelectListItem>)ViewBag.menuparents);
-                            }
-                            @Html.DropDownList("Parent", childlist, new { data_selected = m.Id})
-                        </td>
-                    </tr>
-                }
-            }
-            @foreach (var m in listMenuItems.Where(m => !m.Status))
-            {
-                <tr class="inactive">
+                    if (!m.Status)
+                    {
+                        @:<tr class="inactive">
+                    }
+                    else if (m.Parent != null)
+                    {
+                        @:<tr class="child" data-id="@m.Id">
+                    }
+                    else if (m.Parent == null)
+                    {
+                        @:<tr data-id="@m.Id">
+                    }
                     <td>@m.DisplayName</td>
-                    <td>@m.URL</td>
-                    <td>@Html.ActionLink("Inactief", "SwitchStatus", "MenuItems", new {m.Id}, null)</td>
                     <td>
-                        @Html.ActionLink("Wijzig", "Edit", "MenuItems", new {m.Id}, null)
-                        @Html.ActionLink("Verwijder", "Delete", "MenuItems", new {m.Id}, new {@onclick = String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Weet je dit zeker?');", m.DisplayName)})
+                        @if (!m.IsParent){
+                            @m.URL
+                        }
                     </td>
-                </tr>
-            }
+                    if (m.Status)
+                    {
+                        if (!m.IsParent)
+                        {
+                            <td>@Html.ActionLink("Actief", "SwitchStatus", "MenuItems", new { m.Id }, new { @onclick = "return confirm('Als je dit menuitem uitschakelt, is het niet meer zichtbaar in de menubalk en wordt het uit de volgorde gehaalt. Weet je dit zeker?');" })</td>
+                        }
+                        else
+                        {
+                            <td>@Html.ActionLink("Actief", "SwitchStatus", "MenuItems", new { m.Id }, new { @onclick = "return confirm('Als je dit menuitem uitschakelt, is het niet meer zichtbaar in de menubalk en wordt het samen met alle submenuitems uit de volgorde gehaalt. Weet je dit zeker?');" })</td>
+                        }
+
+                    }
+                    else if (!m.Status)
+                    {
+                        <td>@Html.ActionLink("Inactief", "SwitchStatus", "MenuItems", new { m.Id }, null)</td>
+                    }
+                    <td>
+                        @Html.ActionLink("Wijzig", "Edit", "MenuItems", new { m.Id }, null)
+                        @if (!m.IsParent)
+                        {
+                            @Html.ActionLink("Verwijder", "Delete", "MenuItems", new {m.Id}, new {@onclick = (string) String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Weet je dit zeker?');", m.DisplayName)})
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Verwijder", "Delete", "MenuItems", new { m.Id }, new { @onclick = (string)String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Dit zal alle submenuitems inactief zetten. Weet je dit zeker?');", m.DisplayName) })
+                        }
+
+                        @if (m.Status)
+                        {
+                            @Html.ActionLink("Up", "ShiftOrder", "MenuItems", new { id = m.Id, param = "up" }, null)
+                            @Html.ActionLink("Down", "ShiftOrder", "MenuItems", new { id = m.Id, param = "down" }, null)
+                            
+                            var list = ((List<SelectListItem>)ViewBag.menuParents)
+                            .Where(l => l.Text != m.DisplayName);
+                            
+                            if (m.Parent == null && !m.IsParent)
+                            {
+                                @Html.DropDownList("Parent", list)
+                            }
+                            else if (m.Parent != null)
+                            {
+                                @Html.DropDownList("Parent", list, new { data_selected = m.Parent })
+                            }
+                        }
+                    </td>
+                @:</tr>
+                }
             </tbody>
+
+
         </table>
         <script>
+            // Go to AddToParent action when item is chosen from selectlist
             $("select[name=Parent]").on("change", function () {
                 var parentId = this.value;
                 var itemId = $(this).parents("tr").data("id");
@@ -83,7 +97,7 @@
             });
 
             var selects = $("select");
-
+            // Set default item in selectlist
             $.each(selects, function() {
                 var selected = $(this).data("selected");
 
@@ -91,7 +105,7 @@
                     $(this).val(selected);
                 }
             });
-            
+
         </script>
     </div>
 </div>

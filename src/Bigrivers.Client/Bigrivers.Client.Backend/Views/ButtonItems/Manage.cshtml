@@ -30,8 +30,8 @@
                         <td>
                             @Html.ActionLink("Wijzig", "Edit", "ButtonItems", new { m.Id }, null)
                             @Html.ActionLink("Verwijder", "Delete", "ButtonItems", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');" })
-                            @Html.ActionLink("Up", "OrderUp", "ButtonItems", new { m.Id }, null)
-                            @Html.ActionLink("Down", "OrderDown", "ButtonItems", new { m.Id }, null)
+                            @Html.ActionLink("Up", "ShiftOrder", "ButtonItems", new { id = m.Id, param = "" }, null)
+                            @Html.ActionLink("Down", "ShiftOrder", "ButtonItems", new { id = m.Id, param = "down" }, null)
                         </td>
                     </tr>
                 }

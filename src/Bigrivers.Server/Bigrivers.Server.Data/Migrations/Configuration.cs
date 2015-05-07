@@ -473,6 +473,7 @@ namespace Bigrivers.Server.Data.Migrations
                 DisplayName = "Crowdfunding",
                 Order = 1,
                 Parent = 0,
+                IsParent = false,
                 Status = true
             };
             MenuItem menu2 = new MenuItem
@@ -481,6 +482,7 @@ namespace Bigrivers.Server.Data.Migrations
                 DisplayName = "Evenementen",
                 Order = 2,
                 Parent = 0,
+                IsParent = false,
                 Status = true
             };
             MenuItem menu3 = new MenuItem
@@ -489,6 +491,7 @@ namespace Bigrivers.Server.Data.Migrations
                 DisplayName = "Artiesten",
                 Order = 3,
                 Parent = 0,
+                IsParent = false,
                 Status = true
             };
             MenuItem menu4 = new MenuItem
@@ -497,6 +500,7 @@ namespace Bigrivers.Server.Data.Migrations
                 DisplayName = "Optredens",
                 Order = 4,
                 Parent = 0,
+                IsParent = false,
                 Status = true
             };
             MenuItem menu5 = new MenuItem
@@ -505,6 +509,7 @@ namespace Bigrivers.Server.Data.Migrations
                 DisplayName = "Genres",
                 Order = 5,
                 Parent = 0,
+                IsParent = false,
                 Status = true
             };
             MenuItem menu6 = new MenuItem
@@ -513,6 +518,7 @@ namespace Bigrivers.Server.Data.Migrations
                 DisplayName = "Contact",
                 Order = 6,
                 Parent = 0,
+                IsParent = false,
                 Status = true
             };
             MenuItem menu7 = new MenuItem
@@ -521,6 +527,7 @@ namespace Bigrivers.Server.Data.Migrations
                 DisplayName = "Logo",
                 Order = 7,
                 Parent = 0,
+                IsParent = false,
                 Status = true
             };
 
