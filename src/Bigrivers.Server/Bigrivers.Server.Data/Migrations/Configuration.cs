@@ -472,7 +472,7 @@ namespace Bigrivers.Server.Data.Migrations
                 URL = "http://www.crowdfunding.nl/",
                 DisplayName = "Crowdfunding",
                 Order = 1,
-                Parent = 0,
+                Parent = null,
                 IsParent = false,
                 Status = true
             };
@@ -481,7 +481,7 @@ namespace Bigrivers.Server.Data.Migrations
                 URL = "/Home/Events",
                 DisplayName = "Evenementen",
                 Order = 2,
-                Parent = 0,
+                Parent = null,
                 IsParent = false,
                 Status = true
             };
@@ -490,7 +490,7 @@ namespace Bigrivers.Server.Data.Migrations
                 URL = "/Home/Artists",
                 DisplayName = "Artiesten",
                 Order = 3,
-                Parent = 0,
+                Parent = null,
                 IsParent = false,
                 Status = true
             };
@@ -499,7 +499,7 @@ namespace Bigrivers.Server.Data.Migrations
                 URL = "/Home/Performances",
                 DisplayName = "Optredens",
                 Order = 4,
-                Parent = 0,
+                Parent = null,
                 IsParent = false,
                 Status = true
             };
@@ -508,7 +508,7 @@ namespace Bigrivers.Server.Data.Migrations
                 URL = "/Home/Genres",
                 DisplayName = "Genres",
                 Order = 5,
-                Parent = 0,
+                Parent = null,
                 IsParent = false,
                 Status = true
             };
@@ -517,7 +517,7 @@ namespace Bigrivers.Server.Data.Migrations
                 URL = "/Home/Contact",
                 DisplayName = "Contact",
                 Order = 6,
-                Parent = 0,
+                Parent = null,
                 IsParent = false,
                 Status = true
             };
@@ -526,7 +526,7 @@ namespace Bigrivers.Server.Data.Migrations
                 URL = "/Images/br15.jpg",
                 DisplayName = "Logo",
                 Order = 7,
-                Parent = 0,
+                Parent = null,
                 IsParent = false,
                 Status = true
             };
