@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using Bigrivers.Server.Data;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
 
@@ -22,7 +16,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Artist/
         public ActionResult Manage()
         {
-            ViewBag.listArtists = Db.Artists.Where(m => !m.Deleted).ToList();
+            ViewBag.listArtists = GetArtists()
+                .ToList();
 
             ViewBag.Title = "Artiesten";
             return View("Manage");
@@ -30,8 +25,9 @@ namespace Bigrivers.Client.Backend.Controllers
 
         public ActionResult Search(string id)
         {
-            var search = id;
-            ViewBag.listArtists = Db.Artists.Where(m => !m.Deleted && m.Name.Contains(search)).ToList();
+            ViewBag.listArtists = GetArtists()
+                .Where(m => m.Name.Contains(id))
+                .ToList();
 
             ViewBag.Title = "Zoek Artiesten";
             return View("Manage");
@@ -149,5 +145,11 @@ namespace Bigrivers.Client.Backend.Controllers
             Db.SaveChanges();
             return RedirectToAction("Manage");
         }
+
+        private IQueryable<Artist> GetArtists(bool includeDeleted = false)
+        {
+            return includeDeleted ? Db.Artists : Db.Artists.Where(a => !a.Deleted);
+        }
+        
     }
 }

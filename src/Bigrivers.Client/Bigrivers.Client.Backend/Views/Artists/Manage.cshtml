@@ -34,17 +34,18 @@
                     <tr>
                         <td>@a.Name</td>
                         <td>Auteurnaam</td>
-                        <td>@Html.HyperLink("W", a.Website, true)@Html.HyperLink("Y", a.YoutubeChannel, true)@Html.HyperLink("F", a.Facebook, true)@Html.HyperLink("T", a.Twitter, true)</td>
+                        <td>
+                            @Html.HyperLink("W", a.Website, true)
+                            @Html.HyperLink("Y", a.YoutubeChannel, true)
+                            @Html.HyperLink("F", a.Facebook, true)
+                            @Html.HyperLink("T", a.Twitter, true)
+                        </td>
                         <td>Datum gewijzigd</td>
-                        @if (a.Status)
-                        {
-                            <td>@Html.ActionLink("Actief", "SwitchStatus", "Artists", new { a.Id }, null)</td>
-                        }
-                        else
-                        {
-                            <td>@Html.ActionLink("Inactief", "SwitchStatus", "Artists", new { a.Id }, null)</td>
-                        }
-                        <td>@Html.ActionLink("Wijzig", "Edit", "Artists", new { a.Id}, null)@Html.ActionLink("Verwijder", "Delete", "Artists", new { a.Id }, new { @onclick = "return confirm('Je staat op het punt om "+a.Name+" te verwijderen. Weet je dit zeker?');"})</td>
+                        <td>@Html.ActionLink((a.Status ? "Actief" : "Inactief"), "SwitchStatus", "Artists", new { a.Id }, null)</td>
+                        <td>
+                            @Html.ActionLink("Wijzig", "Edit", "Artists", new { a.Id }, null)
+                            @Html.ActionLink("Verwijder", "Delete", "Artists", new { a.Id }, new { @onclick = "return confirm('Je staat op het punt om " + a.Name + " te verwijderen. Weet je dit zeker?');" })
+                        </td>
                     </tr>
                 }
             </tbody>
