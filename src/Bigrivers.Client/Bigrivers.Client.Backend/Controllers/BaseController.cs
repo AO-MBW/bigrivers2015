@@ -9,6 +9,6 @@ namespace Bigrivers.Client.Backend.Controllers
 {
     public class BaseController : Controller
     {
-        public readonly BigriversDb Db = new BigriversDb();
+        protected readonly BigriversDb Db = new BigriversDb();
     }
 }
