@@ -79,8 +79,28 @@ namespace Bigrivers.Client.Backend.Controllers
                 Description = singlePerformance.Description,
                 Start = singlePerformance.Start.DateTime,
                 End = singlePerformance.End.DateTime,
-                Status = singlePerformance.Status
+                Status = singlePerformance.Status,
+                Events = Db.Events
+                    .Where(m => !m.Deleted)
+                    .ToList()
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Title
+                    })
+                    .ToList(),
+                Artists = Db.Artists
+                    .Where(m => !m.Deleted)
+                    .ToList()
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Name
+                    })
+                    .ToList()
             };
+
+            // Set all active parents into new list first
 
             ViewBag.Title = "Bewerk Optreden";
             return View(model);
@@ -96,6 +116,8 @@ namespace Bigrivers.Client.Backend.Controllers
             singlePerformance.Start = viewModel.Start;
             singlePerformance.End = viewModel.End;
             singlePerformance.Status = viewModel.Status;
+            singlePerformance.Event = Db.Events.Single(m => m.Id == viewModel.Event);
+            singlePerformance.Artist = Db.Artists.Single(m => m.Id == viewModel.Artist);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

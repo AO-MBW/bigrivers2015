@@ -11,8 +11,10 @@
             @Html.AntiForgeryToken()
             @Html.ValidationSummary()
             <fieldset>
+                @Html.DropDownListFor(m => m.Event, Model.Events)
+                @Html.DropDownListFor(m => m.Artist, Model.Artists)
                 @Html.LabelFor(m => m.Description)
-                @Html.TextAreaFor(m => m.Description, new { @Id = "description" })
+                @Html.TextAreaFor(m => m.Description, new {@Id = "description"})
             </fieldset>
             <fieldset>
                 @Html.LabelFor(m => m.Start)
