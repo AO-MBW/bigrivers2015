@@ -24,7 +24,7 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Manage()
         {
             // All menu items to unsorted list
-            var buttonItems = Db.ButtonItems.Where(m => !m.Deleted).ToList();
+            var buttonItems = GetButtonItems().ToList();
 
             // Set all active items into new list first
             var listButtonItems = buttonItems.Where(m => m.Status).OrderBy(m => m.Order).ToList();
@@ -40,7 +40,7 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Search(string id)
         {
             var search = id;
-            ViewBag.listButtonItems = Db.ButtonItems.Where(m => !m.Deleted && m.DisplayName.Contains(search)).OrderBy(m => m.Order).ToList();
+            ViewBag.listButtonItems = GetButtonItems().Where(m => m.DisplayName.Contains(search)).OrderBy(m => m.Order).ToList();
 
             ViewBag.Title = "Zoek ButtonItems";
             return View("Manage");
@@ -206,6 +206,11 @@ namespace Bigrivers.Client.Backend.Controllers
 
             Db.SaveChanges();
             return RedirectToAction("Manage");
+        }
+
+        private IQueryable<ButtonItem> GetButtonItems(bool includeDeleted = false)
+        {
+            return includeDeleted ? Db.ButtonItems : Db.ButtonItems.Where(a => !a.Deleted);
         }
     }
 }

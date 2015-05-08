@@ -1,0 +1,50 @@
+﻿@using Bigrivers.Server.Model
+@{
+    List<Sponsor> listSponsors = ViewBag.ListSponsors;
+}
+<div id="wrapper">
+    @ViewBag.errormsg
+    <h1>@ViewBag.Title</h1>
+    <div id="actionbar">
+        <div class="action-block">
+            @Html.ActionLink("Sponsor Toevoegen", "New", "Sponsors")
+        </div>
+    </div>
+    <div id="content">
+        <table>
+            <thead>
+                <tr>
+                    <th>Naam</th>
+                    <th>URL</th>
+                    <th>Auteur</th>
+                    <th>Updated</th>
+                    <th>Status</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var m in listSponsors)
+                {
+                    if (!m.Status)
+                    {
+                        @:<tr class="inactive">
+                    }
+                    else
+                    {
+                        @:<tr>
+                    }
+                        <td>@m.Name</td>
+                        <td>@m.Url</td>
+                        <td>Auteurnaam</td>
+                        <td>Datum gewijzigd</td>
+                        <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "Sponsors", new { m.Id }, null)</td>
+                        <td>
+                            @Html.ActionLink("Wijzig", "Edit", "Sponsors", new { m.Id }, null)
+                            @Html.ActionLink("Verwijder", "Delete", "Sponsors", new { m.Id }, new { @onclick = (string) String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Weet je dit zeker?');", m.Name) })
+                        </td>
+                    @:</tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

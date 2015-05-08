@@ -16,9 +16,12 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Artist/
         public ActionResult Manage()
         {
-            ViewBag.listArtists = GetArtists()
+            var artists = GetArtists().ToList();
+            var listArtists = artists.Where(m => m.Status)
                 .ToList();
 
+            listArtists.AddRange(artists.Where(m => !m.Status).ToList());
+            ViewBag.listArtists = listArtists;
             ViewBag.Title = "Artiesten";
             return View("Manage");
         }

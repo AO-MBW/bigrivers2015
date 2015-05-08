@@ -22,7 +22,12 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Performances/
         public ActionResult Manage()
         {
-            ViewBag.listPerformances = Db.Performances.Where(m => !m.Deleted).ToList();
+            var performances = GetPerformances().ToList();
+            var listPerformances = performances.Where(m => m.Status)
+                .ToList();
+
+            listPerformances.AddRange(performances.Where(m => !m.Status).ToList());
+            ViewBag.listPerformances = listPerformances;
 
             ViewBag.Title = "Optredens";
             return View("Manage");
@@ -35,7 +40,27 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Start = DateTime.Now,
                 End = DateTime.Now.AddHours(1),
-                Status = true
+                Status = true,
+                Event = null,
+                Artist = null,
+                Events = Db.Events
+                    .Where(m => !m.Deleted)
+                    .ToList()
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Title
+                    })
+                    .ToList(),
+                Artists = Db.Artists
+                    .Where(m => !m.Deleted)
+                    .ToList()
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Name
+                    })
+                    .ToList()
             };
 
             ViewBag.Title = "Nieuw Optreden";
@@ -58,7 +83,9 @@ namespace Bigrivers.Client.Backend.Controllers
                 Description = viewModel.Description,
                 Start = viewModel.Start,
                 End = viewModel.End,
-                Status = viewModel.Status
+                Status = viewModel.Status,
+                Event = Db.Events.Single(m => m.Id == viewModel.Event),
+                Artist = Db.Artists.Single(m => m.Id == viewModel.Artist),
             };
 
             Db.Performances.Add(singlePerformance);
@@ -80,6 +107,8 @@ namespace Bigrivers.Client.Backend.Controllers
                 Start = singlePerformance.Start.DateTime,
                 End = singlePerformance.End.DateTime,
                 Status = singlePerformance.Status,
+                Event = singlePerformance.Event.Id,
+                Artist = singlePerformance.Artist.Id,
                 Events = Db.Events
                     .Where(m => !m.Deleted)
                     .ToList()
@@ -148,6 +177,11 @@ namespace Bigrivers.Client.Backend.Controllers
             singlePerformance.Status = !singlePerformance.Status;
             Db.SaveChanges();
             return RedirectToAction("Manage");
+        }
+
+        private IQueryable<Performance> GetPerformances(bool includeDeleted = false)
+        {
+            return includeDeleted ? Db.Performances : Db.Performances.Where(a => !a.Deleted);
         }
     }
 }

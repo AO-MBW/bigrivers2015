@@ -11,10 +11,26 @@
             @Html.AntiForgeryToken()
             @Html.ValidationSummary()
             <fieldset>
-                @Html.DropDownListFor(m => m.Event, Model.Events)
-                @Html.DropDownListFor(m => m.Artist, Model.Artists)
+                @if (Model.Event != null)
+                {
+                    @Html.DropDownListFor(m => m.Event, Model.Events, new { data_selected = Model.Event })
+                }
+                else
+                {
+                    @Html.DropDownListFor(m => m.Event, Model.Events)
+                }
+
+                @if (Model.Artist != null)
+                {
+                    @Html.DropDownListFor(m => m.Artist, Model.Artists, new { data_selected = Model.Artist })
+                }
+                else
+                {
+                    @Html.DropDownListFor(m => m.Artist, Model.Artists)
+                }
+
                 @Html.LabelFor(m => m.Description)
-                @Html.TextAreaFor(m => m.Description, new {@Id = "description"})
+                @Html.TextAreaFor(m => m.Description, new { @Id = "description" })
             </fieldset>
             <fieldset>
                 @Html.LabelFor(m => m.Start)
@@ -38,6 +54,16 @@
             $("#datepicker2").datetimepicker({
                 dateFormat: "d-m-yy",
                 timeFormat: "H:mm:ss"
+            });
+
+            var selects = $("select");
+            // Set default item in selectlist
+            $.each(selects, function () {
+                var selected = $(this).data("selected");
+
+                if (typeof (selected) != "undefined") {
+                    $(this).val(selected);
+                }
             });
         </script>
     </div>

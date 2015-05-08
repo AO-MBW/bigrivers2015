@@ -22,8 +22,12 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Events/
         public ActionResult Manage()
         {
-            // List all events and return view
-            ViewBag.listEvents = Db.Events.Where(m => !m.Deleted).ToList();
+            var events = GetEvents().ToList();
+            var listEvents = events.Where(m => m.Status)
+                .ToList();
+
+            listEvents.AddRange(events.Where(m => !m.Status).ToList());
+            ViewBag.listEvents = listEvents;
 
             ViewBag.Title = "Evenementen";
             return View("Manage");
@@ -32,7 +36,9 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Search(string id)
         {
             var search = id;
-            ViewBag.listEvents = Db.Events.Where(m => !m.Deleted && m.Title.Contains(search)).ToList();
+            ViewBag.listEvents = GetEvents()
+                .Where(m => m.Title.Contains(search))
+                .ToList();
 
             ViewBag.Title = "Zoek Evenementen";
             return View("Manage");
@@ -173,6 +179,11 @@ namespace Bigrivers.Client.Backend.Controllers
             singleEvent.Status = !singleEvent.Status;
             Db.SaveChanges();
             return RedirectToAction("Manage");
+        }
+
+        private IQueryable<Event> GetEvents(bool includeDeleted = false)
+        {
+            return includeDeleted ? Db.Events : Db.Events.Where(a => !a.Deleted);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Manage()
         {
             // All menu items to unsorted list
-            var menuItems = Db.MenuItems.Where(m => !m.Deleted).ToList();
+            var menuItems = GetMenuItems().ToList();
 
             // Set all active parents into new list first
             var listMenuItems = menuItems.Where(m => m.Status && m.Parent == null).OrderBy(m => m.Order).ToList();
@@ -65,7 +65,7 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Search(string id)
         {
             var search = id;
-            var menuItems = Db.MenuItems.Where(m => !m.Deleted && m.DisplayName.Contains(search)).ToList();
+            var menuItems = GetMenuItems().Where(m => m.DisplayName.Contains(search)).ToList();
 
             var listMenuItems = menuItems.Where(m => m.Status && m.Parent == null).OrderBy(m => m.Order).ToList();
 
@@ -298,6 +298,11 @@ namespace Bigrivers.Client.Backend.Controllers
 
             Db.SaveChanges();
             return RedirectToAction("Manage");
+        }
+
+        private IQueryable<MenuItem> GetMenuItems(bool includeDeleted = false)
+        {
+            return includeDeleted ? Db.MenuItems : Db.MenuItems.Where(a => !a.Deleted);
         }
     }
 }

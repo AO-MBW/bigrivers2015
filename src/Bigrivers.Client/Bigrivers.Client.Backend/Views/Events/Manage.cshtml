@@ -25,46 +25,46 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var e in listEvents)
+                @foreach (var m in listEvents)
                 {
-                    <tr>
-                        <td>@e.Title</td>
-                        <td>Auteurnaam</td>
-                        <td>@e.Start.DateTime</td>
-                        <td>@e.End.DateTime</td>
-                        <td>Datum gewijzigd</td>
-                        <td>
-                            @if (e.WebsiteStatus)
-                            {<span>W</span>}
-                            else
-                            {<s>W</s>}
-                            &nbsp;
-                            @if (e.YoutubeChannelStatus)
-                            {<span>Y</span>}
-                            else
-                            {<s>Y</s>}
-                            &nbsp;
-                            @if (e.FacebookStatus)
-                            {<span>F</span>}
-                            else
-                            {<s>F</s>}
-                            &nbsp;
-                            @if (e.TwitterStatus)
-                            {<span>T</span>}
-                            else
-                            {<s>T</s>}
-                            &nbsp;
-                        </td>
-                        @if (e.Status)
-                        {
-                            <td>@Html.ActionLink("Actief", "SwitchStatus", "Events", new { e.Id }, null)</td>
-                        }
+                    if (!m.Status)
+                    {
+                        @:<tr class="inactive">
+                    }
+                    else
+                    {
+                        @:<tr>
+                    }
+                    <td>@m.Title</td>
+                    <td>Auteurnaam</td>
+                    <td>@m.Start.DateTime</td>
+                    <td>@m.End.DateTime</td>
+                    <td>Datum gewijzigd</td>
+                    <td>
+                        @if (m.WebsiteStatus)
+                        {<span>W</span>}
                         else
-                        {
-                            <td>@Html.ActionLink("Inactief", "SwitchStatus", "Events", new { e.Id }, null)</td>
-                        }
-                        <td>@Html.ActionLink("Wijzig", "Edit", "Events", new { e.Id}, null)@Html.ActionLink("Verwijder", "Delete", "Events", new { e.Id }, new { @onclick = "return confirm('Je staat op het punt om "+e.Title+" te verwijderen. Weet je dit zeker?');"})</td>
-                    </tr>
+                        {<s>W</s>}
+                        &nbsp;
+                        @if (m.YoutubeChannelStatus)
+                        {<span>Y</span>}
+                        else
+                        {<s>Y</s>}
+                        &nbsp;
+                        @if (m.FacebookStatus)
+                        {<span>F</span>}
+                        else
+                        {<s>F</s>}
+                        &nbsp;
+                        @if (m.TwitterStatus)
+                        {<span>T</span>}
+                        else
+                        {<s>T</s>}
+                        &nbsp;
+                    </td>
+                    <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "Events", new { m.Id }, null)</td>
+                    <td>@Html.ActionLink("Wijzig", "Edit", "Events", new { m.Id }, null)@Html.ActionLink("Verwijder", "Delete", "Events", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om " + m.Title + " te verwijderen. Weet je dit zeker?');" })</td>
+                @:</tr>
                 }
             </tbody>
         </table>
