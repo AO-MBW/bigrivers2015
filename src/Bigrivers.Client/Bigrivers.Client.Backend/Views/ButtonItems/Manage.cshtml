@@ -15,7 +15,7 @@
             @foreach (var m in listButtonItems.Where(m => m.Status))
             {
                 <div>
-                    <img src="@m.Logo" />
+                    @Html.ShowImage(m.Logo)
                     <p>@m.DisplayName - @Html.ActionLink("Actief", "SwitchStatus", "ButtonItems", new {m.Id}, null)</p>
                     <p>
                         @Html.ActionLink("Wijzig", "Edit", "ButtonItems", new { m.Id }, null)
@@ -31,7 +31,7 @@
             @foreach (var m in listButtonItems.Where(m => !m.Status))
             {
                 <div class="inactive">
-                    <img src="@m.Logo"/>
+                    
                     <p>@m.DisplayName  - @Html.ActionLink("Inactief", "SwitchStatus", "ButtonItems", new { m.Id }, null)</p>
                     <p>
                         @Html.ActionLink("Wijzig", "Edit", "ButtonItems", new {m.Id}, null)

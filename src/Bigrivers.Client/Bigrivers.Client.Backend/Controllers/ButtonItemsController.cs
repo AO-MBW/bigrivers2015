@@ -1,19 +1,37 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Bigrivers.Server.Data;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
     public class ButtonItemsController : BaseController
     {
+        private CloudStorageAccount storageAccount;
+        private CloudBlobClient blobClient;
+        private CloudBlobContainer container;
+
+        public ButtonItemsController()
+        {
+            storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            blobClient = storageAccount.CreateCloudBlobClient();
+
+            container = blobClient.GetContainerReference("files");
+            container.CreateIfNotExists();
+            container.SetPermissions(
+                new BlobContainerPermissions
+                {
+                    PublicAccess = BlobContainerPublicAccessType.Blob
+                });
+        }
+
         // GET: ButtonItems/Index
         public ActionResult Index()
         {
@@ -32,7 +50,6 @@ namespace Bigrivers.Client.Backend.Controllers
             listButtonItems.AddRange(buttonItems.Where(m => !m.Status).ToList());
 
             ViewBag.listButtonItems = listButtonItems;
-
             ViewBag.Title = "ButtonItems";
             return View("Manage");
         }
@@ -61,7 +78,7 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: ButtonItems/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(ButtonItemViewModel viewModel)
+        public ActionResult New(ButtonItemViewModel viewModel, HttpPostedFileBase file)
         {
             if (!ModelState.IsValid)
             {
@@ -69,15 +86,42 @@ namespace Bigrivers.Client.Backend.Controllers
                 return View("Edit", viewModel);
             }
 
+            if (!file.ContentType.Contains("image"))
+            {
+                return RedirectToAction("Manage");
+            }
+
+            if (file.ContentLength > 2000000)
+            {
+                return RedirectToAction("Manage");
+            }
+
+            var extension = Path.GetExtension(file.FileName);
+            var key = string.Format("File-{0}{1}", Guid.NewGuid(), extension);
+
+            var photoEntity = new Server.Model.File
+            {
+                Name = file.FileName.Replace(extension, ""),
+                ContentLength = file.ContentLength,
+                ContentType = file.ContentType,
+                Key = key
+            };
+
+            CloudBlockBlob block = container.GetBlockBlobReference(key);
+            block.Properties.ContentType = file.ContentType;
+            block.UploadFromStream(file.InputStream);
+
             var singleButtonItem = new ButtonItem
             {
                 URL = viewModel.URL,
                 DisplayName = viewModel.DisplayName,
                 Order = Db.ButtonItems.OrderByDescending(m => m.Order).First().Order + 1,
-                Status = viewModel.Status
+                Status = viewModel.Status,
+                Logo = photoEntity.Key
             };
 
             Db.ButtonItems.Add(singleButtonItem);
+            Db.Files.Add(photoEntity);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

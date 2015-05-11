@@ -6,8 +6,7 @@
     </div>
 
     <div id="content">
-        @using (Html.BeginForm())
-        {
+        <form method="POST" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             @Html.ValidationSummary()
             <fieldset>
@@ -17,12 +16,15 @@
                 @Html.TextBoxFor(m => m.URL)
             </fieldset>
             <fieldset>
-                <label class="label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
+                <input type="file" name="file">
+            </fieldset>
+            <fieldset>
+                <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
             </fieldset>
             <hr />
             <div class="footer">
                 <input type="submit" name="save" value="Menuitem opslaan">
             </div>
-        }
+        </form>
     </div>
 </div>
