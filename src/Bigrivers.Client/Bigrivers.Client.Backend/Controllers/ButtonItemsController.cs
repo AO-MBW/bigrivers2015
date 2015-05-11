@@ -1,31 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Bigrivers.Client.Backend.Helpers;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
     public class ButtonItemsController : BaseController
     {
-        private CloudStorageAccount storageAccount;
-        private CloudBlobClient blobClient;
-        private CloudBlobContainer container;
-
         public ButtonItemsController()
         {
-            storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
-            blobClient = storageAccount.CreateCloudBlobClient();
-
-            container = blobClient.GetContainerReference("files");
-            container.CreateIfNotExists();
-            container.SetPermissions(
+            Container = BlobClient.GetContainerReference("files");
+            Container.CreateIfNotExists();
+            Container.SetPermissions(
                 new BlobContainerPermissions
                 {
                     PublicAccess = BlobContainerPublicAccessType.Blob
@@ -86,42 +76,31 @@ namespace Bigrivers.Client.Backend.Controllers
                 return View("Edit", viewModel);
             }
 
-            if (!file.ContentType.Contains("image"))
+            File photoEntity;
+            try
             {
-                return RedirectToAction("Manage");
+                photoEntity = ImageHelpers.UploadFile(file, 2000000, new[] {"image"});
+            }
+            catch
+            {
+                ViewBag.Title = "Nieuw ButtonItem";
+                return View("Edit", viewModel);
             }
 
-            if (file.ContentLength > 2000000)
-            {
-                return RedirectToAction("Manage");
-            }
-
-            var extension = Path.GetExtension(file.FileName);
-            var key = string.Format("File-{0}{1}", Guid.NewGuid(), extension);
-
-            var photoEntity = new Server.Model.File
-            {
-                Name = file.FileName.Replace(extension, ""),
-                ContentLength = file.ContentLength,
-                ContentType = file.ContentType,
-                Key = key
-            };
-
-            CloudBlockBlob block = container.GetBlockBlobReference(key);
-            block.Properties.ContentType = file.ContentType;
-            block.UploadFromStream(file.InputStream);
+            // Set item's order as last item in list
+            var order = Db.ButtonItems.Count(m => m.Status) > 0 ? Db.ButtonItems.OrderByDescending(m => m.Order).First().Order + 1 : 1;
 
             var singleButtonItem = new ButtonItem
             {
                 URL = viewModel.URL,
                 DisplayName = viewModel.DisplayName,
-                Order = Db.ButtonItems.OrderByDescending(m => m.Order).First().Order + 1,
+                Order = order,
                 Status = viewModel.Status,
                 Logo = photoEntity.Key
             };
 
-            Db.ButtonItems.Add(singleButtonItem);
             Db.Files.Add(photoEntity);
+            Db.ButtonItems.Add(singleButtonItem);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");
@@ -149,13 +128,28 @@ namespace Bigrivers.Client.Backend.Controllers
 
         // POST: ButtonItems/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, ButtonItemViewModel viewModel)
+        public ActionResult Edit(int id, ButtonItemViewModel viewModel, HttpPostedFileBase file)
         {
             var singleButtonItem = Db.ButtonItems.Find(id);
+
+            File photoEntity = null;
+            if (file != null)
+            {
+                try
+                {
+                    photoEntity = ImageHelpers.UploadFile(file, 2000000, new[] { "image" });
+                }
+                catch
+                {
+                    ViewBag.Title = "Nieuw ButtonItem";
+                    return View("Edit", viewModel);
+                } 
+            }
 
             singleButtonItem.URL = viewModel.URL;
             singleButtonItem.DisplayName = viewModel.DisplayName;
             singleButtonItem.Status = viewModel.Status;
+            if (photoEntity != null) singleButtonItem.Logo = photoEntity.Key;
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

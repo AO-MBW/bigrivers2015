@@ -156,6 +156,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HtmlHelperExtensionMethods.cs" />
+    <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\ArtistViewModel.cs" />
     <Compile Include="Models\ButtonItemViewModel.cs" />
