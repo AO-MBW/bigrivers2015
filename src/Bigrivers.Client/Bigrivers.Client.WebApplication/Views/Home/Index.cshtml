@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Bigrivers.Client.WebApplication.Helpers
+@{
     ViewBag.Title = "Home Page";
 }
 @foreach (ButtonItem item in ViewBag.ButtonItems)
@@ -6,7 +7,7 @@
     <div class="Button">
         <a class="ButtonLink" href="@item.URL">
             <div class="ButtonDiv">
-                <img src="@item.Logo" class="ButtonImg" />
+                <img src="@ImageHelpers.GetImageUrl(item.Logo)" class="ButtonImg" />
                 <p class="ButtonTitle">@item.DisplayName</p>
             </div>
         </a>
