@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using Bigrivers.Server.Data;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
-using Microsoft.Ajax.Utilities;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
@@ -76,19 +67,95 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: MenuItem/Create
         public ActionResult New()
         {
-            var viewModel = new ButtonItemViewModel
+            // Add an empty entry to lists to select a single object, e.g. /Artists/5, so there can exist a /Artists/
+            var model = new MenuItemViewModel
             {
-                Status = true
+                LinkType = "internal",
+                InternalType = "Events",
+                Status = true,
+                Events = Db.Events
+                    .Where(m => !m.Deleted)
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Title
+                    }).ToList(),
+                Artists = Db.Artists
+                    .Where(m => !m.Deleted)
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Name
+                    }).ToList(),
+                Performances = Db.Performances
+                    .Where(m => !m.Deleted)
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Artist.Name
+                    }).ToList(),
+                Sponsors = Db.Sponsors
+                    .Where(m => !m.Deleted)
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Name
+                    }).ToList(),
+                NewsItems = Db.NewsItems
+                    .Where(m => !m.Deleted)
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Title
+                    }).ToList(),
+                Genres = Db.Genres
+                    .Where(m => !m.Deleted)
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Name
+                    }).ToList()
             };
 
+            model.Events.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+            model.Artists.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+            model.Sponsors.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+            model.NewsItems.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+            model.Performances.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+            model.Genres.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+
             ViewBag.Title = "Nieuw MenuItem";
-            return View("Edit", viewModel);
+            return View("Edit", model);
         }
 
         // POST: MenuItem/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(ButtonItemViewModel viewModel)
+        public ActionResult New(MenuItemViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -96,12 +163,31 @@ namespace Bigrivers.Client.Backend.Controllers
                 return View("Edit", viewModel);
             }
 
+            string url;
+            // Set the url variable to a working url based on the link type
+            switch (viewModel.LinkType)
+            {
+                case "internal":
+                    url = "/Home/" + viewModel.InternalType + "/" + viewModel.InternalId;
+                    break;
+                case "external":
+                    url = viewModel.ExternalUrl;
+                    if (!url.StartsWith("http")) url = "http://" + url;
+                    break;
+                case "file":
+                    url = viewModel.ExternalUrl;
+                    break;
+                default:
+                    url = viewModel.ExternalUrl;
+                    break;
+            }
+
             var item = Db.MenuItems.OrderByDescending(m => m.Order).FirstOrDefault(m => !m.Status);
             var order = item != null ? item.Order + 1 : 1;
 
             var singleMenuItem = new MenuItem
             {
-                URL = viewModel.URL,
+                URL = url,
                 DisplayName = viewModel.DisplayName,
                 Order = order,
                 Status = viewModel.Status
@@ -120,23 +206,142 @@ namespace Bigrivers.Client.Backend.Controllers
             var singleMenuItem = Db.MenuItems.Find(id);
             if (singleMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
 
-            var model = new ButtonItemViewModel
+            // Find type of link (internal, external, file) through URL
+            // TODO: Set up RegEx-based system to find single object links (e.g. /Artists/5) and properly load the value to the page
+            string linkType;
+            var internalType = "Events";
+            var internalId = "";
+            var externalUrl = "";
+            if (singleMenuItem.URL.Contains("http"))
             {
-                URL = singleMenuItem.URL,
+                linkType = "external";
+                externalUrl = singleMenuItem.URL;
+            }
+            else if (singleMenuItem.URL.Contains("/Images/"))
+            {
+                linkType = "file";
+            }
+            else
+            {
+                linkType = "internal";
+                var arr = singleMenuItem.URL.Split(new []{'/'});
+                internalType = arr[2];
+                internalId = arr[3];
+            }
+
+            // Create the new model with everything in it.
+            var model = new MenuItemViewModel
+            {
+                ExternalUrl = externalUrl,
                 DisplayName = singleMenuItem.DisplayName,
-                Status = singleMenuItem.Status
+                Status = singleMenuItem.Status,
+                LinkType = linkType,
+                InternalType = internalType,
+                InternalId = internalId,
+                Events = Db.Events
+                    .Where(m => !m.Deleted)
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Title
+                    }).ToList(),
+                Artists = Db.Artists
+                    .Where(m => !m.Deleted)
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Name
+                    }).ToList(),
+                Performances = Db.Performances
+                    .Where(m => !m.Deleted)
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Artist.Name
+                    }).ToList(),
+                Sponsors = Db.Sponsors
+                    .Where(m => !m.Deleted)
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Name
+                    }).ToList(),
+                NewsItems = Db.NewsItems
+                    .Where(m => !m.Deleted)
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Title
+                    }).ToList(),
+                Genres = Db.Genres
+                    .Where(m => !m.Deleted)
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Name
+                    }).ToList()
             };
+
+            // Add an empty entry to lists to select a single object, e.g. /Artists/5, so there can exist a /Artists/
+            model.Events.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+            model.Artists.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+            model.Sponsors.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+            model.NewsItems.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+            model.Performances.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+            model.Genres.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
             ViewBag.Title = "Bewerk MenuItem";
             return View(model);
         }
 
         // POST: MenuItem/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, ButtonItemViewModel viewModel)
+        public ActionResult Edit(int id, MenuItemViewModel viewModel)
         {
             var singleMenuItem = Db.MenuItems.Find(id);
+            string url;
 
-            singleMenuItem.URL = viewModel.URL;
+            // Set the url variable to a working url based on the link type
+            switch (viewModel.LinkType)
+            {
+                case "internal":
+                    url = "/Home/" + viewModel.InternalType + "/" + viewModel.InternalId;
+                    break;
+                case "external":
+                    url = viewModel.ExternalUrl;
+                    break;
+                case "file":
+                    url = viewModel.ExternalUrl;
+                    break;
+                default:
+                    url = viewModel.ExternalUrl;
+                    break;
+            }
+
+            singleMenuItem.URL = url;
             singleMenuItem.DisplayName = viewModel.DisplayName;
             singleMenuItem.Status = viewModel.Status;
             Db.SaveChanges();

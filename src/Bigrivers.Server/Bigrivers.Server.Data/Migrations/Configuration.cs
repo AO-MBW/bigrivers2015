@@ -478,7 +478,7 @@ namespace Bigrivers.Server.Data.Migrations
             };
             MenuItem menu2 = new MenuItem
             {
-                URL = "/Home/Events",
+                URL = "/Home/Events/",
                 DisplayName = "Evenementen",
                 Order = 2,
                 Parent = null,
@@ -487,7 +487,7 @@ namespace Bigrivers.Server.Data.Migrations
             };
             MenuItem menu3 = new MenuItem
             {
-                URL = "/Home/Artists",
+                URL = "/Home/Artists/",
                 DisplayName = "Artiesten",
                 Order = 3,
                 Parent = null,
@@ -496,7 +496,7 @@ namespace Bigrivers.Server.Data.Migrations
             };
             MenuItem menu4 = new MenuItem
             {
-                URL = "/Home/Performances",
+                URL = "/Home/Performances/",
                 DisplayName = "Optredens",
                 Order = 4,
                 Parent = null,
@@ -505,7 +505,7 @@ namespace Bigrivers.Server.Data.Migrations
             };
             MenuItem menu5 = new MenuItem
             {
-                URL = "/Home/Genres",
+                URL = "/Home/Genres/",
                 DisplayName = "Genres",
                 Order = 5,
                 Parent = null,
@@ -514,7 +514,7 @@ namespace Bigrivers.Server.Data.Migrations
             };
             MenuItem menu6 = new MenuItem
             {
-                URL = "/Home/Contact",
+                URL = "/Home/Contact/",
                 DisplayName = "Contact",
                 Order = 6,
                 Parent = null,
