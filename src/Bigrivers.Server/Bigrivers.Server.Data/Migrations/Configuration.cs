@@ -18,6 +18,7 @@ namespace Bigrivers.Server.Data.Migrations
 
         protected override void Seed(BigriversDb context)
         {
+#if DEBUG
             context.Genres.RemoveRange(context.Genres);
             context.Locations.RemoveRange(context.Locations);
             context.Artists.RemoveRange(context.Artists);
@@ -155,6 +156,7 @@ namespace Bigrivers.Server.Data.Migrations
             context.Locations.Add(loc);
 
             context.SaveChanges();
+#endif
         }
     }
 }
