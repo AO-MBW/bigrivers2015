@@ -534,7 +534,7 @@ namespace Bigrivers.Server.Data.Migrations
             //Create Button Item
             ButtonItem button1 = new ButtonItem
             {
-                URL = "/Home/Events.jpg",
+                URL = "/Home/Events",
                 DisplayName = "Events",
                 Order = 1,
                 Status = true
@@ -542,7 +542,7 @@ namespace Bigrivers.Server.Data.Migrations
 
             ButtonItem button2 = new ButtonItem
             {
-                URL = "/Home/Events.jpg",
+                URL = "/Home/Events",
                 DisplayName = "Events",
                 Order = 2,
                 Status = true
@@ -550,7 +550,7 @@ namespace Bigrivers.Server.Data.Migrations
 
             ButtonItem button3 = new ButtonItem
             {
-                URL = "/Home/Events.jpg",
+                URL = "/Home/Events",
                 DisplayName = "Events",
                 Order = 3,
                 Status = true
