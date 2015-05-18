@@ -155,8 +155,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\HtmlHelperExtensionMethods.cs" />
-    <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\ArtistViewModel.cs" />
     <Compile Include="Models\ButtonItemViewModel.cs" />
@@ -445,6 +443,10 @@
     <ProjectReference Include="..\..\Bigrivers.Server\Bigrivers.Server.Model\Bigrivers.Server.Model.csproj">
       <Project>{60736e2e-c3ac-4be6-ac19-ec11dc6b9f0d}</Project>
       <Name>Bigrivers.Server.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bigrivers.Client.Helpers\Bigrivers.Client.Helpers.csproj">
+      <Project>{96a7fac0-a146-40fb-b26f-a1bf01db6bdc}</Project>
+      <Name>Bigrivers.Client.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

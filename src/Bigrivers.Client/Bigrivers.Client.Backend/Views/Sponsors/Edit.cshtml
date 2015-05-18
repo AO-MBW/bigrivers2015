@@ -6,8 +6,7 @@
     </div>
 
     <div id="content">
-        @using (Html.BeginForm())
-        {
+        <form method="POST" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             @Html.ValidationSummary()
             <fieldset>
@@ -15,12 +14,12 @@
                 @Html.TextBoxFor(m => m.Name)
                 @Html.LabelFor(m => m.Url)
                 @Html.TextBoxFor(m => m.Url)
-                
+
             </fieldset>
             <hr />
             <fieldset>
                 @Html.LabelFor(m => m.Image)
-                <span>Upload het logo van deze sponsor</span><br/>
+                <span>Upload het logo van deze sponsor</span><br />
                 <input type="file" name="pic">
             </fieldset>
             <fieldset>
@@ -30,6 +29,6 @@
             <div class="footer">
                 <input type="submit" name="save" value="Sponsor opslaan">
             </div>
-        }
+        </form>
     </div>
 </div>

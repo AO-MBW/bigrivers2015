@@ -536,7 +536,6 @@ namespace Bigrivers.Server.Data.Migrations
             {
                 URL = "/Home/Events.jpg",
                 DisplayName = "Events",
-                Logo = "/Images/Event_logo.png",
                 Order = 1,
                 Status = true
             };
@@ -545,7 +544,6 @@ namespace Bigrivers.Server.Data.Migrations
             {
                 URL = "/Home/Events.jpg",
                 DisplayName = "Events",
-                Logo = "/Images/Event_logo.png",
                 Order = 2,
                 Status = true
             };
@@ -554,7 +552,6 @@ namespace Bigrivers.Server.Data.Migrations
             {
                 URL = "/Home/Events.jpg",
                 DisplayName = "Events",
-                Logo = "/Images/Event_logo.png",
                 Order = 3,
                 Status = true
             };

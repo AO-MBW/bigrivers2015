@@ -1,7 +1,9 @@
 ﻿using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
+using Bigrivers.Client.Helpers;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
@@ -51,7 +53,7 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Artist/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(ArtistViewModel viewModel)
+        public ActionResult New(ArtistViewModel viewModel, HttpPostedFileBase file)
         {
             if (!ModelState.IsValid)
             {
@@ -59,11 +61,21 @@ namespace Bigrivers.Client.Backend.Controllers
                 return View("Edit", viewModel);
             }
 
+            File photoEntity;
+            if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] { "image" }))
+            {
+                photoEntity = ImageHelper.UploadFile(file, "artist");
+            }
+            else
+            {
+                return RedirectToAction("Manage");
+            }
+
             var singleArtist = new Artist
             {
                 Name = viewModel.Name,
                 Description = viewModel.Description,
-                Avatar = viewModel.Avatar,
+                Avatar = photoEntity.Key,
                 Website = viewModel.Website,
                 YoutubeChannel = viewModel.YoutubeChannel,
                 Facebook = viewModel.Facebook,
@@ -71,6 +83,8 @@ namespace Bigrivers.Client.Backend.Controllers
                 Status = viewModel.Status
             };
 
+            // Only add file to DB if it hasn't been uploaded before
+            if (!Db.Files.Any(m => m.Md5 == photoEntity.Md5)) Db.Files.Add(photoEntity);
             Db.Artists.Add(singleArtist);
             Db.SaveChanges();
 
@@ -88,7 +102,6 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Name = singleArtist.Name,
                 Description = singleArtist.Description,
-                Avatar = singleArtist.Avatar,
                 Website = singleArtist.Website,
                 YoutubeChannel = singleArtist.YoutubeChannel,
                 Facebook = singleArtist.Facebook,
@@ -102,18 +115,27 @@ namespace Bigrivers.Client.Backend.Controllers
 
         // POST: Artist/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, ArtistViewModel viewModel)
+        public ActionResult Edit(int id, ArtistViewModel viewModel, HttpPostedFileBase file)
         {
             var singleArtist = Db.Artists.Find(id);
 
+            File photoEntity = null;
+            if (file != null)
+            {
+                if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] { "image" }))
+                {
+                    photoEntity = ImageHelper.UploadFile(file, "artist");
+                }
+            }
+
             singleArtist.Name = viewModel.Name;
             singleArtist.Description = viewModel.Description;
-            singleArtist.Avatar = viewModel.Avatar;
             singleArtist.Website = viewModel.Website;
             singleArtist.YoutubeChannel = viewModel.YoutubeChannel;
             singleArtist.Facebook = viewModel.Facebook;
             singleArtist.Twitter = viewModel.Twitter;
             singleArtist.Status = viewModel.Status;
+            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleArtist.Avatar = photoEntity.Key;
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

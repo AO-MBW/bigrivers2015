@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bigrivers.Client.WebApplica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bigrivers.Client.Backend", "Bigrivers.Client\Bigrivers.Client.Backend\Bigrivers.Client.Backend.csproj", "{A76651F3-5B4E-4231-8EAC-92F33212A73D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bigrivers.Client.Helpers", "Bigrivers.Client\Bigrivers.Client.Helpers\Bigrivers.Client.Helpers.csproj", "{96A7FAC0-A146-40FB-B26F-A1BF01DB6BDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{A76651F3-5B4E-4231-8EAC-92F33212A73D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A76651F3-5B4E-4231-8EAC-92F33212A73D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A76651F3-5B4E-4231-8EAC-92F33212A73D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96A7FAC0-A146-40FB-B26F-A1BF01DB6BDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96A7FAC0-A146-40FB-B26F-A1BF01DB6BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96A7FAC0-A146-40FB-B26F-A1BF01DB6BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96A7FAC0-A146-40FB-B26F-A1BF01DB6BDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,5 +59,6 @@ Global
 		{26178F23-AB38-4B96-89F9-04B580C660DB} = {37D499AD-72F7-4E37-ACDE-49FB449EA93C}
 		{4EB545E1-49D0-4AFF-9EAF-982F237DAE24} = {FA59E915-5D6D-446B-B80F-B1CE7F5A1FF3}
 		{A76651F3-5B4E-4231-8EAC-92F33212A73D} = {FA59E915-5D6D-446B-B80F-B1CE7F5A1FF3}
+		{96A7FAC0-A146-40FB-B26F-A1BF01DB6BDC} = {FA59E915-5D6D-446B-B80F-B1CE7F5A1FF3}
 	EndGlobalSection
 EndGlobal

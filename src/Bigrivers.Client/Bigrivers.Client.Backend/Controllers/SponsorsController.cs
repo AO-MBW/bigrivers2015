@@ -1,7 +1,8 @@
 ﻿using System.Linq;
+using System.Web;
 using System.Web.Mvc;
-using System.Web.Razor.Editor;
 using Bigrivers.Client.Backend.ViewModels;
+using Bigrivers.Client.Helpers;
 using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.Backend.Controllers
@@ -53,7 +54,7 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Artist/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(SponsorViewModel viewModel)
+        public ActionResult New(SponsorViewModel viewModel, HttpPostedFileBase file)
         {
             if (!ModelState.IsValid)
             {
@@ -61,14 +62,26 @@ namespace Bigrivers.Client.Backend.Controllers
                 return View("Edit", viewModel);
             }
 
+            File photoEntity;
+            if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] { "image" }))
+            {
+                photoEntity = ImageHelper.UploadFile(file, "sponsor");
+            }
+            else
+            {
+                return RedirectToAction("Manage");
+            }
+
             var singleSponsor = new Sponsor
             {
                 Name = viewModel.Name,
                 Url = viewModel.Url,
-                Image = viewModel.Image,
+                Image = photoEntity.Key,
                 Status = viewModel.Status
             };
 
+            // Only add file to DB if it hasn't been uploaded before
+            if (!Db.Files.Any(m => m.Md5 == photoEntity.Md5)) Db.Files.Add(photoEntity);
             Db.Sponsors.Add(singleSponsor);
             Db.SaveChanges();
 
@@ -96,14 +109,23 @@ namespace Bigrivers.Client.Backend.Controllers
 
         // POST: Artist/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, SponsorViewModel viewModel)
+        public ActionResult Edit(int id, SponsorViewModel viewModel, HttpPostedFileBase file)
         {
             var singleSponsor = Db.Sponsors.Find(id);
 
+            File photoEntity = null;
+            if (file != null)
+            {
+                if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] { "image" }))
+                {
+                    photoEntity = ImageHelper.UploadFile(file, "sponsor");
+                }
+            }
+
             singleSponsor.Name = viewModel.Name;
             singleSponsor.Url = viewModel.Url;
-            singleSponsor.Image = viewModel.Image;
             singleSponsor.Status = viewModel.Status;
+            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleSponsor.Image = photoEntity.Key;
             Db.SaveChanges();
 
             return RedirectToAction("Manage");
@@ -115,6 +137,8 @@ namespace Bigrivers.Client.Backend.Controllers
             if (id == null) return RedirectToAction("Manage");
             var singleSponsor = Db.Sponsors.Find(id);
             if (singleSponsor == null || singleSponsor.Deleted) return RedirectToAction("Manage");
+
+            
 
             singleSponsor.Status = false;
             singleSponsor.Deleted = true;

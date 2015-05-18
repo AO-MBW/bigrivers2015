@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Bigrivers.Server.Data;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
+using Bigrivers.Client.Helpers;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
@@ -66,7 +63,7 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Events/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(EventViewModel viewModel)
+        public ActionResult New(EventViewModel viewModel, HttpPostedFileBase logo, HttpPostedFileBase background)
         {
             if (!ModelState.IsValid)
             {
@@ -74,13 +71,33 @@ namespace Bigrivers.Client.Backend.Controllers
                 return View("Edit", viewModel);
             }
 
+            File frontpageLogo;
+            if (ImageHelper.IsSize(logo, 200000) && ImageHelper.IsMimes(logo, new[] { "image" }))
+            {
+                frontpageLogo = ImageHelper.UploadFile(logo, "eventlogo");
+            }
+            else
+            {
+                return RedirectToAction("Manage");
+            }
+
+            File backgroundImage;
+            if (ImageHelper.IsSize(background, 200000) && ImageHelper.IsMimes(background, new[] { "image" }))
+            {
+                backgroundImage = ImageHelper.UploadFile(background, "eventbg");
+            }
+            else
+            {
+                return RedirectToAction("Manage");
+            }
+
             var singleEvent = new Event
             {
                 Title = viewModel.Title,
                 Description = viewModel.Description,
                 ShortDescription = viewModel.ShortDescription,
-                FrontpageLogo = viewModel.FrontpageLogo,
-                BackgroundImage = viewModel.BackgroundImage,
+                FrontpageLogo = frontpageLogo.Key,
+                BackgroundImage = backgroundImage.Key,
                 WebsiteStatus = viewModel.WebsiteStatus,
                 YoutubeChannelStatus = viewModel.YoutubeChannelStatus,
                 FacebookStatus = viewModel.FacebookStatus,
@@ -92,6 +109,9 @@ namespace Bigrivers.Client.Backend.Controllers
                 Status = viewModel.Status
             };
 
+            // Only add file to DB if it hasn't been uploaded before
+            if (!Db.Files.Any(m => m.Md5 == backgroundImage.Md5)) Db.Files.Add(backgroundImage);
+            if (!Db.Files.Any(m => m.Md5 == frontpageLogo.Md5)) Db.Files.Add(frontpageLogo);
             Db.Events.Add(singleEvent);
             Db.SaveChanges();
 
@@ -104,6 +124,8 @@ namespace Bigrivers.Client.Backend.Controllers
             if (id == null) return RedirectToAction("New");
             var singleEvent = Db.Events.Find(id);
             if (singleEvent == null || singleEvent.Deleted) return RedirectToAction("Manage");
+
+            
 
             var model = new EventViewModel
             {
@@ -129,14 +151,30 @@ namespace Bigrivers.Client.Backend.Controllers
 
         // POST: Events/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, EventViewModel viewModel)
+        public ActionResult Edit(int id, EventViewModel viewModel, HttpPostedFileBase logo, HttpPostedFileBase background)
         {
+            File frontpageLogo = null;
+            if (logo != null)
+            {
+                if (ImageHelper.IsSize(logo, 200000) && ImageHelper.IsMimes(logo, new[] { "image" }))
+                {
+                    frontpageLogo = ImageHelper.UploadFile(logo, "eventlogo");
+                }
+            }
+
+            File backgroundImage = null;
+            if (background != null)
+            {
+                if (ImageHelper.IsSize(background, 200000) && ImageHelper.IsMimes(background, new[] { "image" }))
+                {
+                    backgroundImage = ImageHelper.UploadFile(background, "eventbg");
+                }
+            }
+
             var singleEvent = Db.Events.Find(id);
             singleEvent.Title = viewModel.Title;
             singleEvent.Description = viewModel.Description;
             singleEvent.ShortDescription = viewModel.ShortDescription;
-            singleEvent.FrontpageLogo = viewModel.FrontpageLogo;
-            singleEvent.BackgroundImage = viewModel.BackgroundImage;
             singleEvent.WebsiteStatus = viewModel.WebsiteStatus;
             singleEvent.YoutubeChannelStatus = viewModel.YoutubeChannelStatus;
             singleEvent.FacebookStatus = viewModel.FacebookStatus;
@@ -146,6 +184,9 @@ namespace Bigrivers.Client.Backend.Controllers
             singleEvent.TicketRequired = viewModel.TicketRequired;
             singleEvent.Price = viewModel.Price ?? singleEvent.Price;
             singleEvent.Status = viewModel.Status;
+
+            if (frontpageLogo != null && !Db.Files.Any(m => m.Md5 == frontpageLogo.Md5)) singleEvent.FrontpageLogo = frontpageLogo.Key;
+            if (backgroundImage != null && !Db.Files.Any(m => m.Md5 == backgroundImage.Md5)) singleEvent.BackgroundImage = backgroundImage.Key;
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

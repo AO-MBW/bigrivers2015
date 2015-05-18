@@ -107,13 +107,6 @@ namespace Bigrivers.Client.Backend.Controllers
                     {
                         Value = s.Id.ToString(),
                         Text = s.Title
-                    }).ToList(),
-                Genres = Db.Genres
-                    .Where(m => !m.Deleted)
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Name
                     }).ToList()
             };
 
@@ -142,11 +135,6 @@ namespace Bigrivers.Client.Backend.Controllers
                     Value = "",
                     Text = ""
                 });
-            model.Genres.Insert(0, new SelectListItem
-                {
-                    Value = "",
-                    Text = ""
-                });
 
             ViewBag.Title = "Nieuw MenuItem";
             return View("Edit", model);
@@ -168,7 +156,28 @@ namespace Bigrivers.Client.Backend.Controllers
             switch (viewModel.LinkType)
             {
                 case "internal":
-                    url = "/Home/" + viewModel.InternalType + "/" + viewModel.InternalId;
+                    var internalId = "";
+
+                    switch (viewModel.InternalType)
+                    {
+                        case "Events":
+                            internalId = viewModel.InternalEventId;
+                            break;
+                        case "Artists":
+                            internalId = viewModel.InternalArtistId;
+                            break;
+                        case "Performances":
+                            internalId = viewModel.InternalPerformanceId;
+                            break;
+                        case "News":
+                            internalId = viewModel.InternalNewsId;
+                            break;
+                        case "Sponsors":
+                            internalId = viewModel.InternalSponsorId;
+                            break;
+                    }
+
+                    url = "/Home/" + viewModel.InternalType + "/" + internalId;
                     break;
                 case "external":
                     url = viewModel.ExternalUrl;
@@ -182,7 +191,7 @@ namespace Bigrivers.Client.Backend.Controllers
                     break;
             }
 
-            var item = Db.MenuItems.OrderByDescending(m => m.Order).FirstOrDefault(m => !m.Status);
+            var item = Db.MenuItems.OrderByDescending(m => m.Order).FirstOrDefault(m => m.Status);
             var order = item != null ? item.Order + 1 : 1;
 
             var singleMenuItem = new MenuItem
@@ -237,7 +246,6 @@ namespace Bigrivers.Client.Backend.Controllers
                 Status = singleMenuItem.Status,
                 LinkType = linkType,
                 InternalType = internalType,
-                InternalId = internalId,
                 Events = Db.Events
                     .Where(m => !m.Deleted)
                     .Select(s => new SelectListItem
@@ -272,15 +280,27 @@ namespace Bigrivers.Client.Backend.Controllers
                     {
                         Value = s.Id.ToString(),
                         Text = s.Title
-                    }).ToList(),
-                Genres = Db.Genres
-                    .Where(m => !m.Deleted)
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Name
                     }).ToList()
             };
+
+            switch (internalType)
+            {
+                case "Events":
+                    model.InternalEventId = internalId;
+                    break;
+                case "Artists":
+                    model.InternalArtistId = internalId;
+                    break;
+                case "Performances":
+                    model.InternalPerformanceId = internalId;
+                    break;
+                case "News":
+                    model.InternalNewsId = internalId;
+                    break;
+                case "Sponsors":
+                    model.InternalSponsorId = internalId;
+                    break;
+            }
 
             // Add an empty entry to lists to select a single object, e.g. /Artists/5, so there can exist a /Artists/
             model.Events.Insert(0, new SelectListItem
@@ -308,11 +328,6 @@ namespace Bigrivers.Client.Backend.Controllers
                     Value = "",
                     Text = ""
                 });
-            model.Genres.Insert(0, new SelectListItem
-                {
-                    Value = "",
-                    Text = ""
-                });
             ViewBag.Title = "Bewerk MenuItem";
             return View(model);
         }
@@ -328,7 +343,28 @@ namespace Bigrivers.Client.Backend.Controllers
             switch (viewModel.LinkType)
             {
                 case "internal":
-                    url = "/Home/" + viewModel.InternalType + "/" + viewModel.InternalId;
+                    var internalId = "";
+
+                    switch (viewModel.InternalType)
+                    {
+                        case "Events":
+                            internalId = viewModel.InternalEventId;
+                            break;
+                        case "Artists":
+                            internalId = viewModel.InternalArtistId;
+                            break;
+                        case "Performances":
+                            internalId = viewModel.InternalPerformanceId;
+                            break;
+                        case "News":
+                            internalId = viewModel.InternalNewsId;
+                            break;
+                        case "Sponsors":
+                            internalId = viewModel.InternalSponsorId;
+                            break;
+                    }
+
+                    url = "/Home/" + viewModel.InternalType + "/" + internalId;
                     break;
                 case "external":
                     url = viewModel.ExternalUrl;

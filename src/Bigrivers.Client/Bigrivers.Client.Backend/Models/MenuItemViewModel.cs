@@ -23,7 +23,11 @@ namespace Bigrivers.Client.Backend.ViewModels
         public string ExternalUrl { get; set; }
 
         public string InternalType { get; set; }
-        public string InternalId { get; set; }
+        public string InternalEventId { get; set; }
+        public string InternalArtistId { get; set; }
+        public string InternalPerformanceId { get; set; }
+        public string InternalNewsId { get; set; }
+        public string InternalSponsorId { get; set; }
 
         public IEnumerable<SelectListItem> LinkTypes
         {
@@ -82,12 +86,6 @@ namespace Bigrivers.Client.Backend.ViewModels
                         Text = "Sponsoren",
                         Value = "Sponsors"
 
-                    },
-                    new SelectListItem()
-                    {
-                        Text = "Genres",
-                        Value = "Genres"
-
                     }
                 };
             }
@@ -98,7 +96,6 @@ namespace Bigrivers.Client.Backend.ViewModels
         public List<SelectListItem> Performances { get; set; }
         public List<SelectListItem> NewsItems { get; set; }
         public List<SelectListItem> Sponsors { get; set; }
-        public List<SelectListItem> Genres { get; set; }
 
     }
 }

@@ -6,26 +6,25 @@
     </div>
 
     <div id="content">
-        @using (Html.BeginForm())
-        {
+        <form method="POST" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             @Html.ValidationSummary()
             <fieldset>
                 @Html.LabelFor(m => m.Name)
                 @Html.TextBoxFor(m => m.Name)
                 @Html.LabelFor(m => m.Description)
-                @Html.TextAreaFor(m => m.Description, new {@Id = "description"})
+                @Html.TextAreaFor(m => m.Description, new { @Id = "description" })
                 @*<script>
-                        // Replace the <textarea id="description"> with a CKEditor
-                        // instance, using default configuration.
-                        CKEDITOR.replace("description");
-                    </script>*@
+                    // Replace the <textarea id="description"> with a CKEditor
+                    // instance, using default configuration.
+                    CKEDITOR.replace("description");
+                </script>*@
             </fieldset>
             <hr />
             <fieldset>
                 @Html.LabelFor(m => m.Avatar)
-                <span>Upload een foto voor de artiest</span><br/>
-                <input type="file" name="pic">
+                <span>Upload een foto voor de artiest</span><br />
+                <input type="file" name="file">
             </fieldset>
             <hr />
             <fieldset>
@@ -45,6 +44,6 @@
             <div class="footer">
                 <input type="submit" name="save" value="Artiest opslaan">
             </div>
-        }
-    </div>
+        </form>
+</div>
 </div>

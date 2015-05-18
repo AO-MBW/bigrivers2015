@@ -55,17 +55,24 @@
                     }
                     <td>
                         @Html.ActionLink("Wijzig", "Edit", "MenuItems", new { m.Id }, null)
-                        @(!m.IsParent ? Html.ActionLink("Verwijder", "Delete", "MenuItems", new {m.Id}, new {@onclick = (string) String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Weet je dit zeker?');", m.DisplayName)}) : Html.ActionLink("Verwijder", "Delete", "MenuItems", new {m.Id}, new {@onclick = (string) String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Dit zal alle submenuitems inactief zetten. Weet je dit zeker?');", m.DisplayName)}))
+                        @if (!m.IsParent)
+                        {
+                            @Html.ActionLink("Verwijder", "Delete", "MenuItems", new {m.Id}, new {@onclick = (string) String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Weet je dit zeker?');", m.DisplayName)});
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Verwijder", "Delete", "MenuItems", new {m.Id}, new {@onclick = (string) String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Dit zal alle submenuitems inactief zetten. Weet je dit zeker?');", m.DisplayName)});
+                        } 
 
                         @if (m.Status)
                         {
                             @Html.ActionLink("Up", "ShiftOrder", "MenuItems", new { id = m.Id, param = "up" }, null)
                             @Html.ActionLink("Down", "ShiftOrder", "MenuItems", new { id = m.Id, param = "down" }, null)
-                            
+
                             // Omit own name from selectlist
                             var list = ((List<SelectListItem>)ViewBag.menuParents)
                             .Where(l => l.Text != m.DisplayName);
-                            
+
                             if (m.Parent == null && !m.IsParent)
                             {
                                 @Html.DropDownList("Parent", list)

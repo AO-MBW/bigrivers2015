@@ -1,25 +1,14 @@
 ﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Bigrivers.Client.Backend.Helpers;
+using Bigrivers.Client.Helpers;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
-using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
     public class ButtonItemsController : BaseController
     {
-        public ButtonItemsController()
-        {
-            Container = BlobClient.GetContainerReference("files");
-            Container.CreateIfNotExists();
-            Container.SetPermissions(
-                new BlobContainerPermissions
-                {
-                    PublicAccess = BlobContainerPublicAccessType.Blob
-                });
-        }
 
         // GET: ButtonItems/Index
         public ActionResult Index()
@@ -76,14 +65,13 @@ namespace Bigrivers.Client.Backend.Controllers
             }
 
             File photoEntity;
-            try
+            if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] {"image"}))
             {
-                photoEntity = ImageHelpers.UploadFile(file, 2000000, new[] {"image"});
+                photoEntity = ImageHelper.UploadFile(file, "buttonitem");
             }
-            catch
+            else
             {
-                ViewBag.Title = "Nieuw ButtonItem";
-                return View("Edit", viewModel);
+                return RedirectToAction("Manage");
             }
 
             // Set item's order as last item in list
@@ -95,10 +83,11 @@ namespace Bigrivers.Client.Backend.Controllers
                 DisplayName = viewModel.DisplayName,
                 Order = order,
                 Status = viewModel.Status,
-                Logo = photoEntity.Key
+                Logo = photoEntity
             };
 
-            Db.Files.Add(photoEntity);
+            // Check if file is not yet uploaded
+            if (!Db.Files.Any(m => m.Md5 == photoEntity.Md5 && m.Container == photoEntity.Container)) Db.Files.Add(photoEntity);
             Db.ButtonItems.Add(singleButtonItem);
             Db.SaveChanges();
 
@@ -134,21 +123,16 @@ namespace Bigrivers.Client.Backend.Controllers
             File photoEntity = null;
             if (file != null)
             {
-                try
+                if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] {"image"}))
                 {
-                    photoEntity = ImageHelpers.UploadFile(file, 2000000, new[] { "image" });
+                    photoEntity = ImageHelper.UploadFile(file, "buttonitem");
                 }
-                catch
-                {
-                    ViewBag.Title = "Nieuw ButtonItem";
-                    return View("Edit", viewModel);
-                } 
             }
 
             singleButtonItem.URL = viewModel.URL;
             singleButtonItem.DisplayName = viewModel.DisplayName;
             singleButtonItem.Status = viewModel.Status;
-            if (photoEntity != null) singleButtonItem.Logo = photoEntity.Key;
+            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleButtonItem.Logo = photoEntity;
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

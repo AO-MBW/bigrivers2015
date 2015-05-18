@@ -6,26 +6,23 @@
     </div>
 
     <div id="content">
-        @using (Html.BeginForm())
-        {
+        <form method="POST" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             @Html.ValidationSummary()
             <fieldset>
                 @Html.LabelFor(m => m.Title)
                 @Html.TextBoxFor(m => m.Title)
                 @Html.LabelFor(m => m.Description)
-                @Html.TextAreaFor(m => m.Description, new {@Id = "description"})
+                @Html.TextAreaFor(m => m.Description, new { @Id = "description" })
                 @Html.LabelFor(m => m.ShortDescription)
                 @Html.TextAreaFor(m => m.ShortDescription, new { @Id = "description" })
             </fieldset>
             <hr />
             <fieldset>
                 @Html.LabelFor(m => m.FrontpageLogo)
-                <span>Upload een logo voor op de frontpage</span><br/>
-                <input type="file" name="">
-                @*@Html.LabelFor(m => m.BackgroundImage)
-                <span>Upload een achtergrond voor de event pagina</span><br />
-                <input type="file" name="pic">*@
+                <input type="file" name="logo">
+                @Html.LabelFor(m => m.BackgroundImage)
+                <input type="file" name="background">
             </fieldset>
             <fieldset>
                 <label>@Html.CheckBoxFor(m => m.WebsiteStatus) Geef link naar website weer</label>
@@ -36,14 +33,14 @@
             <hr />
             <fieldset>
                 @Html.LabelFor(m => m.Start)
-                @Html.TextBoxFor(m => m.Start, new {@id = "datepicker1"})
+                @Html.TextBoxFor(m => m.Start, new { @id = "datepicker1" })
                 @Html.LabelFor(m => m.End)
-                @Html.TextBoxFor(m => m.End, new {@id = "datepicker2"})
+                @Html.TextBoxFor(m => m.End, new { @id = "datepicker2" })
             </fieldset>
             <fieldset>
                 <label>@Html.CheckBoxFor(m => m.TicketRequired, new { id = "TicketRequired" }) Tickets Verplicht</label>
                 @Html.LabelFor(m => m.Price)
-                @Html.TextBoxFor(m => m.Price, new { id = "Price"})
+                @Html.TextBoxFor(m => m.Price, new { id = "Price" })
             </fieldset>
             <fieldset>
                 <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
@@ -52,7 +49,7 @@
             <div class="footer">
                 <input type="submit" name="save" value="Evenement opslaan">
             </div>
-        }
-        <script src="/Scripts/ViewScripts/Event-Edit.js"></script>
-    </div>
+        </form>
+            <script src="/Scripts/ViewScripts/Event-Edit.js"></script>
+</div>
 </div>

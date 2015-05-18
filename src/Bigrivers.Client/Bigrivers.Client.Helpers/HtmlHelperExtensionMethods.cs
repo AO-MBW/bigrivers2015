@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Bigrivers.Client.Backend.Helpers
+namespace Bigrivers.Client.Helpers
 {
     public static class HtmlHelperExtensionMethods
     {
