@@ -11,6 +11,9 @@ namespace Bigrivers.Server.Data.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+#if DEBUG
+            AutomaticMigrationDataLossAllowed = true;
+#endif
         }
 
         protected override void Seed(BigriversDb context)
