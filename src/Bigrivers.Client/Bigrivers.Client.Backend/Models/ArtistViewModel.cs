@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using Bigrivers.Server.Model;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Bigrivers.Client.Backend.ViewModels
 {
     public class ArtistViewModel
     {
+        [Required]
         [Display(Name = "Naam")]
         public string Name { get; set; }
 
+        [Required]
         [Display(Name = "Beschrijving")]
         public string Description { get; set; }
 
@@ -36,6 +32,7 @@ namespace Bigrivers.Client.Backend.ViewModels
         [DataType(DataType.Url)]
         public string Twitter { get; set; }
 
+        [Required]
         public bool Status { get; set; }
     }
 }

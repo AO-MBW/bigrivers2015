@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -7,6 +6,7 @@ namespace Bigrivers.Client.Backend.ViewModels
 {
     public class MenuItemViewModel
     {
+        [Required]
         [Display(Name = "Weergavenaam")]
         public string DisplayName { get; set; }
 

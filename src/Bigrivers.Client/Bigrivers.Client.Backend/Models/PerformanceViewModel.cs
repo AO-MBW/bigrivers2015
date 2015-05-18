@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.Backend.ViewModels
 {
     public class PerformanceViewModel
     {
+        [Required]
         [Display(Name = "Beschrijving")]
         public string Description { get; set; }
 
@@ -22,12 +21,12 @@ namespace Bigrivers.Client.Backend.ViewModels
         [DataType(DataType.DateTime)]
         public DateTime End { get; set; }
 
-        [Required]
         public bool Status { get; set; }
 
         [Required]
         [Display(Name = "Artiest")]
         public int? Artist { get; set; }
+
         [Required]
         [Display(Name = "Evenement")]
         public int? Event { get; set; }

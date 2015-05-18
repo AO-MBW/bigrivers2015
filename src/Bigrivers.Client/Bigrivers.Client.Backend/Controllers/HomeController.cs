@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using Bigrivers.Client.Backend.ViewModels;
-using Bigrivers.Server.Data;
 using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.Backend.Controllers
