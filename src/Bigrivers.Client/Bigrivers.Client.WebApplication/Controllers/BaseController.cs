@@ -10,7 +10,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
 {
     public class BaseController : Controller
     {
-        public static readonly BigriversDb AccessLayer = new BigriversDb();
+        protected readonly BigriversDb AccessLayer = new BigriversDb();
 
         public BaseController()
         {

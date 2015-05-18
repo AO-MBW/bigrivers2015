@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Bigrivers.Server.Model
 {
@@ -15,5 +16,7 @@ namespace Bigrivers.Server.Model
 
         [DefaultValue(false)]
         public bool Deleted { get; set; }
+
+        public virtual List<Event> Events { get; set; }
     }
 }

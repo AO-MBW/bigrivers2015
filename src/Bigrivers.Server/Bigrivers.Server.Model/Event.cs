@@ -34,6 +34,7 @@ namespace Bigrivers.Server.Model
         public bool Deleted { get; set; }
 
         public virtual List<Performance> Performances { get; set; }
+        public virtual List<Sponsor> Sponsors { get; set; }
         public virtual Location Location { get; set; }
     }
 }

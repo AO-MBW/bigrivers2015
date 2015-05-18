@@ -405,6 +405,7 @@ namespace Bigrivers.Client.Backend.Controllers
             }
 
             singleMenuItem.Order = null;
+            singleMenuItem.IsParent = false;
             singleMenuItem.Status = false;
             singleMenuItem.Deleted = true;
             Db.SaveChanges();
@@ -429,7 +430,7 @@ namespace Bigrivers.Client.Backend.Controllers
                     break;
                 case false:
                     singleMenuItem.Order = null;
-
+                    singleMenuItem.IsParent = false;
                     // Unlick all children and set inactive
                     var children = Db.MenuItems.Where(m => m.Parent == id).ToList();
                     if (children.Count > 0)

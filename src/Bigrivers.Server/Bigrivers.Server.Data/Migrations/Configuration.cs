@@ -105,6 +105,7 @@ namespace Bigrivers.Server.Data.Migrations
                 FacebookStatus = true,
                 TwitterStatus = true,
                 Performances = new List<Performance>(),
+                Sponsors = new List<Sponsor>(),
                 Status = true
             };
 
@@ -123,6 +124,7 @@ namespace Bigrivers.Server.Data.Migrations
                 Name = "Da Vinci College",
                 Url = "http://davincicollege.nl",
                 Priority = 0,
+                Events = new List<Event>(),
                 Status = true
             };
 
@@ -138,8 +140,10 @@ namespace Bigrivers.Server.Data.Migrations
 
             brm.Performances.Add(bzbperf);
             brm.Location = loc;
+            brm.Sponsors.Add(dvc);
             bzb.Performances.Add(bzbperf);
             loc.Events.Add(brm);
+            dvc.Events.Add(brm);
 
             context.Artists.Add(bzb);
             context.Events.Add(brm);
