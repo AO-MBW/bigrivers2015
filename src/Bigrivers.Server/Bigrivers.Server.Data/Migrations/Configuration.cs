@@ -527,7 +527,7 @@ namespace Bigrivers.Server.Data.Migrations
             //Create Button Item
             ButtonItem button1 = new ButtonItem
             {
-                URL = "/Home/Events.jpg",
+                URL = "/Home/Events",
                 DisplayName = "Events",
                 Logo = "/Images/Event_logo.png",
                 Order = 0,
@@ -536,7 +536,7 @@ namespace Bigrivers.Server.Data.Migrations
 
             ButtonItem button2 = new ButtonItem
             {
-                URL = "/Home/Events.jpg",
+                URL = "/Home/Events",
                 DisplayName = "Events",
                 Logo = "/Images/Event_logo.png",
                 Order = 0,
@@ -545,7 +545,7 @@ namespace Bigrivers.Server.Data.Migrations
 
             ButtonItem button3 = new ButtonItem
             {
-                URL = "/Home/Events.jpg",
+                URL = "/Home/Events",
                 DisplayName = "Events",
                 Logo = "/Images/Event_logo.png",
                 Order = 0,
