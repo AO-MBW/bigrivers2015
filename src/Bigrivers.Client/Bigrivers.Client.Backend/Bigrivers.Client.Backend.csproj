@@ -122,19 +122,26 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ArtistsController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ButtonItemsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuItemsController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PerformancesController.cs" />
+    <Compile Include="Controllers\SponsorsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HtmlHelperExtensionMethods.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\ArtistViewModel.cs" />
+    <Compile Include="Models\ButtonItemViewModel.cs" />
     <Compile Include="Models\MenuItemViewModel.cs" />
+    <Compile Include="Models\NewsItemViewModel.cs" />
     <Compile Include="Models\PerformanceViewModel.cs" />
     <Compile Include="Models\SettingsViewModel.cs" />
+    <Compile Include="Models\SponsorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -144,19 +151,20 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Img\artist.png" />
-    <Content Include="Img\artisthover.png" />
-    <Content Include="Img\dropdown.png" />
-    <Content Include="Img\event.png" />
-    <Content Include="Img\eventhover.png" />
-    <Content Include="Img\home.png" />
-    <Content Include="Img\homehover.png" />
-    <Content Include="Img\logo.png" />
-    <Content Include="Img\news.png" />
-    <Content Include="Img\newshover.png" />
-    <Content Include="Img\settings.png" />
-    <Content Include="Img\settingshover.png" />
-    <Content Include="Img\thumbnail_unknown.png" />
+    <Content Include="Images\artist.png" />
+    <Content Include="Images\artisthover.png" />
+    <Content Include="Images\dropdown.png" />
+    <Content Include="Images\event.png" />
+    <Content Include="Images\eventhover.png" />
+    <Content Include="Images\Event_logo.png" />
+    <Content Include="Images\home.png" />
+    <Content Include="Images\homehover.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\news.png" />
+    <Content Include="Images\newshover.png" />
+    <Content Include="Images\settings.png" />
+    <Content Include="Images\settingshover.png" />
+    <Content Include="Images\thumbnail_unknown.png" />
     <Content Include="Scripts\Admin\ckeditor\CHANGES.md" />
     <Content Include="Scripts\Admin\ckeditor\LICENSE.md" />
     <Content Include="Scripts\Admin\ckeditor\plugins\oembed\README.md" />
@@ -330,7 +338,7 @@
     <Content Include="Scripts\Admin\ckeditor\skins\moono\images\refresh.png" />
     <Content Include="Scripts\Admin\ckeditor\styles.js" />
     <Content Include="Scripts\Admin\functions.js" />
-    <Content Include="Scripts\Edit.js" />
+    <Content Include="Scripts\ViewScripts\Event-Edit.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -366,6 +374,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ViewScripts\Menuitem-Edit.js" />
+    <Content Include="Scripts\ViewScripts\Performance-Edit.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -390,6 +400,12 @@
     <Content Include="Views\Home\Settings.cshtml" />
     <Content Include="Views\Performances\Manage.cshtml" />
     <Content Include="Views\Performances\Edit.cshtml" />
+    <Content Include="Views\ButtonItems\Edit.cshtml" />
+    <Content Include="Views\ButtonItems\Manage.cshtml" />
+    <Content Include="Views\News\Edit.cshtml" />
+    <Content Include="Views\News\Manage.cshtml" />
+    <Content Include="Views\Sponsors\Edit.cshtml" />
+    <Content Include="Views\Sponsors\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

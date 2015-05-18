@@ -11,6 +11,10 @@
             @Html.AntiForgeryToken()
             @Html.ValidationSummary()
             <fieldset>
+                @(Model.Event != null ? Html.DropDownListFor(m => m.Event, Model.Events, new {data_selected = Model.Event}) : Html.DropDownListFor(m => m.Event, Model.Events))
+
+                @(Model.Artist != null ? Html.DropDownListFor(m => m.Artist, Model.Artists, new {data_selected = Model.Artist}) : Html.DropDownListFor(m => m.Artist, Model.Artists))
+
                 @Html.LabelFor(m => m.Description)
                 @Html.TextAreaFor(m => m.Description, new { @Id = "description" })
             </fieldset>
@@ -21,22 +25,13 @@
                 @Html.TextBoxFor(m => m.End, new { @id = "datepicker2" })
             </fieldset>
             <fieldset>
-                <label class="label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
+                <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
             </fieldset>
             <hr />
             <div class="footer">
                 <input type="submit" name="save" value="Optreden opslaan">
             </div>
         }
-        <script>
-            $("#datepicker1").datetimepicker({
-                dateFormat: "d-m-yy",
-                timeFormat: "h:mm:s"
-            });
-            $("#datepicker2").datetimepicker({
-                dateFormat: "d-m-yy",
-                timeFormat: "H:mm:ss"
-            });
-        </script>
+        <script src="/Scripts/ViewScripts/Performance-Edit.js"></script>
     </div>
 </div>

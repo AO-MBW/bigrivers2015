@@ -13,16 +13,42 @@
             <fieldset>
                 @Html.LabelFor(m => m.DisplayName)
                 @Html.TextBoxFor(m => m.DisplayName)
-                @Html.LabelFor(m => m.URL)
-                @Html.TextBoxFor(m => m.URL)
             </fieldset>
             <fieldset>
-                <label class="label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
+                @Html.LabelFor(m => m.LinkType)
+                @Html.DropDownListFor(m => m.LinkType, Model.LinkTypes, new {id = "SelectLinkType"})
             </fieldset>
-            <hr />
+            <fieldset class="linkType" id="external">
+                @Html.LabelFor(m => m.ExternalUrl)
+                @Html.TextBoxFor(m => m.ExternalUrl)
+            </fieldset>
+            <hr/>
+            <fieldset class="linkType" id="internal">
+                @Html.DropDownListFor(m => m.InternalType, Model.Types, new {id = "SelectInternalType"})
+                <span style="font-size: 22px; font-weight: bold;">></span>
+                @Html.DropDownListFor(m => m.InternalId, Model.Events, new {id = "Events", @class = "InternalType"})
+                @Html.DropDownListFor(m => m.InternalId, Model.Artists, new {id = "Artists", @class = "InternalType"})
+                @Html.DropDownListFor(m => m.InternalId, Model.Performances, new {id = "Performances", @class = "InternalType"})
+                @Html.DropDownListFor(m => m.InternalId, Model.NewsItems, new {id = "News", @class = "InternalType"})
+                @Html.DropDownListFor(m => m.InternalId, Model.Sponsors, new {id = "Sponsors", @class = "InternalType"})
+                @Html.DropDownListFor(m => m.InternalId, Model.Genres, new {id = "Genres", @class = "InternalType"})
+            </fieldset>
+            <fieldset class="linkType" id="file">
+                <p>Test file</p>
+            </fieldset>
+            <fieldset>
+                <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
+            </fieldset>
+            <hr/>
             <div class="footer">
-                <input type="submit" name="save" value="Menuitem opslaan">
+                <input type="submit" name="save" value="ButtonItem opslaan">
             </div>
         }
     </div>
 </div>
+
+<script>
+    $("#SelectLinkType").val("@Model.LinkType");
+    $("#SelectInternalType").val("@Model.InternalType");
+</script>
+<script src="/Scripts/ViewScripts/Menuitem-Edit.js"></script>

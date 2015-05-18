@@ -29,23 +29,31 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var a in listArtists)
+                @foreach (var m in listArtists)
                 {
-                    <tr>
-                        <td>@a.Name</td>
-                        <td>Auteurnaam</td>
-                        <td>@Html.HyperLink("W", a.Website, true)@Html.HyperLink("Y", a.YoutubeChannel, true)@Html.HyperLink("F", a.Facebook, true)@Html.HyperLink("T", a.Twitter, true)</td>
-                        <td>Datum gewijzigd</td>
-                        @if (a.Status)
-                        {
-                            <td>@Html.ActionLink("Actief", "SwitchStatus", "Artists", new { a.Id }, null)</td>
-                        }
-                        else
-                        {
-                            <td>@Html.ActionLink("Inactief", "SwitchStatus", "Artists", new { a.Id }, null)</td>
-                        }
-                        <td>@Html.ActionLink("Wijzig", "Edit", "Artists", new { a.Id}, null)@Html.ActionLink("Verwijder", "Delete", "Artists", new { a.Id }, new { @onclick = "return confirm('Je staat op het punt om "+a.Name+" te verwijderen. Weet je dit zeker?');"})</td>
-                    </tr>
+                    if (!m.Status)
+                    {
+                        @:<tr class="inactive">
+                    }
+                    else
+                    {
+                        @:<tr>
+                    }
+                    <td>@m.Name</td>
+                    <td>Auteurnaam</td>
+                    <td>
+                        @Html.HyperLink("W", m.Website, true)
+                        @Html.HyperLink("Y", m.YoutubeChannel, true)
+                        @Html.HyperLink("F", m.Facebook, true)
+                        @Html.HyperLink("T", m.Twitter, true)
+                    </td>
+                    <td>Datum gewijzigd</td>
+                    <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "Artists", new { m.Id }, null)</td>
+                    <td>
+                        @Html.ActionLink("Wijzig", "Edit", "Artists", new { m.Id }, null)
+                        @Html.ActionLink("Verwijder", "Delete", "Artists", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om " + m.Name + " te verwijderen. Weet je dit zeker?');" })
+                    </td>
+                @:</tr>
                 }
             </tbody>
         </table>

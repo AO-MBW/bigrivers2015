@@ -46,27 +46,13 @@
                 @Html.TextBoxFor(m => m.Price, new { id = "Price"})
             </fieldset>
             <fieldset>
-                <label class="label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
+                <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
             </fieldset>
             <hr />
             <div class="footer">
                 <input type="submit" name="save" value="Evenement opslaan">
             </div>
         }
-        @*<script>
-            // Replace the <textarea id="description"> with a CKEditor
-            // instance, using default configuration.
-            CKEDITOR.replace("description");
-        </script>*@
-        <script>
-            $("#datepicker1").datetimepicker({
-                dateFormat: "d-m-yy",
-                timeFormat: "h:mm:s"
-            });
-            $("#datepicker2").datetimepicker({
-                dateFormat: "d-m-yy",
-                timeFormat: "H:mm:ss"
-            });
-        </script>
+        <script src="/Scripts/ViewScripts/Event-Edit.js"></script>
     </div>
 </div>

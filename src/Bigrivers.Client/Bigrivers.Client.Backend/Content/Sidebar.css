@@ -16,11 +16,11 @@
 	width: 40px;
 	height: 40px;
 	margin-left: 25px;
-	background: url(/img/home.png);
+	background: url(/Images/home.png);
 }
 
 #sidebar .home a:hover {
-	background: url(/img/homehover.png);
+	background: url(/Images/homehover.png);
 }
 
 #sidebar .news a {
@@ -30,11 +30,11 @@
 	width: 40px;
 	height: 40px;
 	margin-left: 25px;
-	background: url(/img/news.png);
+	background: url(/Images/news.png);
 }
 
 #sidebar .news a:hover {
-	background: url(/img/newshover.png);
+	background: url(/Images/newshover.png);
 }
 
 #sidebar .artist a {
@@ -44,11 +44,11 @@
 	width: 40px;
 	height: 40px;
 	margin-left: 25px;
-	background: url(/img/artist.png);
+	background: url(/Images/artist.png);
 }
 
 #sidebar .artist a:hover {
-	background: url(/img/artisthover.png);
+	background: url(/Images/artisthover.png);
 }
 
 #sidebar .event a {
@@ -58,11 +58,11 @@
 	width: 40px;
 	height: 40px;
 	margin-left: 25px;
-	background: url(/img/event.png);
+	background: url(/Images/event.png);
 }
 
 #sidebar .event a:hover {
-	background: url(/img/eventhover.png);
+	background: url(/Images/eventhover.png);
 }
 
 #sidebar .settings a {
@@ -72,11 +72,11 @@
 	width: 40px;
 	height: 40px;
 	margin-left: 25px;
-	background: url(/img/settings.png);
+	background: url(/Images/settings.png);
 }
 
 #sidebar .settings a:hover {
-	background: url(/img/settingshover.png);
+	background: url(/Images/settingshover.png);
 }
 
 #sidebar .home .news .artist .event .settings a img {

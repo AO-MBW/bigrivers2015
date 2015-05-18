@@ -3,23 +3,20 @@
     <div class="block">
         <h2>Nieuws</h2>
         <div class="itemblock">
-            <div class="stats">
-                <h3>Nieuwsitems:</h3>
-            </div>
             <div class="item">
                 @Html.ActionLink("Voeg nieuwsbericht toe", "New", "News")
             </div>
             <div class="item">
                 @Html.ActionLink("Beheer nieuwsberichten", "Manage", "News")
             </div>
+            <div class="item">
+                @Html.ActionLink("Beheer nieuwswidget", "Widget", "News")
+            </div>
         </div>
     </div>
     <div class="block">
         <h2>Artiesten</h2>
         <div class="itemblock">
-            <div class="stats">
-                <h3>Artiesten, Optredens:</h3>
-            </div>
             <div class="item">
                 @Html.ActionLink("Voeg artiest / band toe", "New", "Artists")
             </div>
@@ -37,9 +34,6 @@
     <div class="block">
         <h2>Evenementen, sponsoren</h2>
         <div class="itemblock">
-            <div class="stats">
-                <h3>Evenementen, sponsoren:</h3>
-            </div>
             <div class="item">
                 @Html.ActionLink("Voeg evenement toe", "New", "Events")
             </div>
@@ -57,9 +51,6 @@
     <div class="block">
         <h2>Genre's, Podia</h2>
         <div class="itemblock">
-            <div class="stats">
-                <h3>Podia:</h3>
-            </div>
             <div class="item">
                 @Html.ActionLink("Voeg genres toe", "New", "Genres")
             </div>
@@ -77,18 +68,17 @@
     <div class="block">
         <h2>Leeg Blok</h2>
         <div class="itemblock">
-            <div class="stats">
-                <h3></h3>
+            <div class="item">
+                @Html.ActionLink("Voeg ButtonItem toe", "New", "ButtonItems")
             </div>
-
+            <div class="item">
+                @Html.ActionLink("Beheer ButtonItems", "Manage", "ButtonItems")
+            </div>
         </div>
     </div>
     <div class="block">
         <h2>Instellingen</h2>
         <div class="itemblock">
-            <div class="stats">
-                <h3>Site instellingen</h3>
-            </div>
             <div class="item">
                 @Html.ActionLink("Beheer Menuitems", "Manage", "MenuItems")
             </div>

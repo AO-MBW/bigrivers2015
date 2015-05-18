@@ -9,7 +9,7 @@ namespace Bigrivers.Server.Model
         public string Name { get; set; }
         public virtual List<Artist> Artists { get; set; }
 
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool Deleted { get; set; }
     }
 }

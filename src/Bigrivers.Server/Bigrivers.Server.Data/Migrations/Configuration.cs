@@ -471,56 +471,63 @@ namespace Bigrivers.Server.Data.Migrations
             {
                 URL = "http://www.crowdfunding.nl/",
                 DisplayName = "Crowdfunding",
-                Order = 0,
-                Parent = 0,
+                Order = 1,
+                Parent = null,
+                IsParent = false,
                 Status = true
             };
             MenuItem menu2 = new MenuItem
             {
-                URL = "/Home/Events",
+                URL = "/Home/Events/",
                 DisplayName = "Evenementen",
-                Order = 0,
-                Parent = 0,
+                Order = 2,
+                Parent = null,
+                IsParent = false,
                 Status = true
             };
             MenuItem menu3 = new MenuItem
             {
-                URL = "/Home/Artists",
+                URL = "/Home/Artists/",
                 DisplayName = "Artiesten",
-                Order = 0,
-                Parent = 0,
+                Order = 3,
+                Parent = null,
+                IsParent = false,
                 Status = true
             };
             MenuItem menu4 = new MenuItem
             {
-                URL = "/Home/Performances",
+                URL = "/Home/Performances/",
                 DisplayName = "Optredens",
-                Order = 0,
-                Parent = 0,
+                Order = 4,
+                Parent = null,
+                IsParent = false,
                 Status = true
             };
             MenuItem menu5 = new MenuItem
             {
-                URL = "/Home/Genres",
+                URL = "/Home/Genres/",
                 DisplayName = "Genres",
-                Order = 0,
-                Parent = 0,
+                Order = 5,
+                Parent = null,
+                IsParent = false,
                 Status = true
             };
             MenuItem menu6 = new MenuItem
             {
-                URL = "/Home/Contact",
+                URL = "/Home/Contact/",
                 DisplayName = "Contact",
-                Order = 0,
-                Parent = 0,
+                Order = 6,
+                Parent = null,
+                IsParent = false,
                 Status = true
             };
             MenuItem menu7 = new MenuItem
             {
                 URL = "/Images/br15.jpg",
                 DisplayName = "Logo",
-                Order = 0,
-                Parent = 0,
+                Order = 7,
+                Parent = null,
+                IsParent = false,
                 Status = true
             };
 
@@ -530,7 +537,7 @@ namespace Bigrivers.Server.Data.Migrations
                 URL = "/Home/Events",
                 DisplayName = "Events",
                 Logo = "/Images/Event_logo.png",
-                Order = 0,
+                Order = 1,
                 Status = true
             };
 
@@ -539,7 +546,7 @@ namespace Bigrivers.Server.Data.Migrations
                 URL = "/Home/Events",
                 DisplayName = "Events",
                 Logo = "/Images/Event_logo.png",
-                Order = 0,
+                Order = 2,
                 Status = true
             };
 
@@ -548,7 +555,7 @@ namespace Bigrivers.Server.Data.Migrations
                 URL = "/Home/Events",
                 DisplayName = "Events",
                 Logo = "/Images/Event_logo.png",
-                Order = 0,
+                Order = 3,
                 Status = true
             };
 

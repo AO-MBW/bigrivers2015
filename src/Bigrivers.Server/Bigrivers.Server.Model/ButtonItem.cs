@@ -13,12 +13,12 @@ namespace Bigrivers.Server.Model
         public string DisplayName { get; set; }
         public string URL { get; set; }
         public string Logo { get; set; }
-        public int Order { get; set; }
+        public int? Order { get; set; }
 
         [DefaultValue(true)]
         public bool Status { get; set; }
 
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool Deleted { get; set; }
     }
 }

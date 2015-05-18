@@ -1,21 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using Bigrivers.Server.Data;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
-    public class ArtistsController : Controller
+    public class ArtistsController : BaseController
     {
-        // TODO: Create BaseController class for BigRiversDb
-        private readonly BigriversDb _db = new BigriversDb();
-
         // GET: Artist/Index
         public ActionResult Index()
         {
@@ -25,10 +16,23 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Artist/
         public ActionResult Manage()
         {
-            // List all artists and return view
-            ViewBag.listArtists = _db.Artists.Where(m => !m.Deleted).ToList();
+            var artists = GetArtists().ToList();
+            var listArtists = artists.Where(m => m.Status)
+                .ToList();
 
+            listArtists.AddRange(artists.Where(m => !m.Status).ToList());
+            ViewBag.listArtists = listArtists;
             ViewBag.Title = "Artiesten";
+            return View("Manage");
+        }
+
+        public ActionResult Search(string id)
+        {
+            ViewBag.listArtists = GetArtists()
+                .Where(m => m.Name.Contains(id))
+                .ToList();
+
+            ViewBag.Title = "Zoek Artiesten";
             return View("Manage");
         }
 
@@ -55,7 +59,6 @@ namespace Bigrivers.Client.Backend.Controllers
                 return View("Edit", viewModel);
             }
 
-            //ViewBag.Title = "Resultaat - Example";
             var singleArtist = new Artist
             {
                 Name = viewModel.Name,
@@ -68,8 +71,8 @@ namespace Bigrivers.Client.Backend.Controllers
                 Status = viewModel.Status
             };
 
-            _db.Artists.Add(singleArtist);
-            _db.SaveChanges();
+            Db.Artists.Add(singleArtist);
+            Db.SaveChanges();
 
             return RedirectToAction("Manage");
         }
@@ -78,12 +81,7 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Edit(int? id)
         {
             if (id == null) return RedirectToAction("New");
-
-            // Find single artist
-            var singleArtist = _db.Artists.Find(id);
-
-
-            // Send to Manage view if artist is not found
+            var singleArtist = Db.Artists.Find(id);
             if (singleArtist == null || singleArtist.Deleted) return RedirectToAction("Manage");
 
             var model = new ArtistViewModel
@@ -106,7 +104,7 @@ namespace Bigrivers.Client.Backend.Controllers
         [HttpPost]
         public ActionResult Edit(int id, ArtistViewModel viewModel)
         {
-            var singleArtist = _db.Artists.Find(id);
+            var singleArtist = Db.Artists.Find(id);
 
             singleArtist.Name = viewModel.Name;
             singleArtist.Description = viewModel.Description;
@@ -116,7 +114,7 @@ namespace Bigrivers.Client.Backend.Controllers
             singleArtist.Facebook = viewModel.Facebook;
             singleArtist.Twitter = viewModel.Twitter;
             singleArtist.Status = viewModel.Status;
-            _db.SaveChanges();
+            Db.SaveChanges();
 
             return RedirectToAction("Manage");
         }
@@ -125,13 +123,16 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Delete(int? id)
         {
             if (id == null) return RedirectToAction("Manage");
-
-            var singleArtist = _db.Artists.Find(id);
-
+            var singleArtist = Db.Artists.Find(id);
             if (singleArtist == null || singleArtist.Deleted) return RedirectToAction("Manage");
 
+            singleArtist.Status = false;
+            foreach (var p in singleArtist.Performances)
+            {
+                p.Artist = null;
+            }
             singleArtist.Deleted = true;
-            _db.SaveChanges();
+            Db.SaveChanges();
 
             return RedirectToAction("Manage");
         }
@@ -140,14 +141,18 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult SwitchStatus(int? id)
         {
             if (id == null) return RedirectToAction("Manage");
-
-            var singleArtist = _db.Artists.Find(id);
-
+            var singleArtist = Db.Artists.Find(id);
             if (singleArtist == null || singleArtist.Deleted) return RedirectToAction("Manage");
 
             singleArtist.Status = !singleArtist.Status;
-            _db.SaveChanges();
+            Db.SaveChanges();
             return RedirectToAction("Manage");
         }
+
+        private IQueryable<Artist> GetArtists(bool includeDeleted = false)
+        {
+            return includeDeleted ? Db.Artists : Db.Artists.Where(a => !a.Deleted);
+        }
+        
     }
 }

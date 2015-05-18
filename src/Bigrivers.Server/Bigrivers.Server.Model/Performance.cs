@@ -13,7 +13,7 @@ namespace Bigrivers.Server.Model
         [DefaultValue(true)]
         public bool Status { get; set; }
 
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool Deleted { get; set; }
 
         public virtual Artist Artist { get; set; }

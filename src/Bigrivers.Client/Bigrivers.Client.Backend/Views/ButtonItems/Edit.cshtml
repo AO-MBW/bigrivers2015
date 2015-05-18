@@ -1,0 +1,28 @@
+﻿@model Bigrivers.Client.Backend.ViewModels.ButtonItemViewModel
+
+<div id="wrapper">
+    <div class="page-title">
+        <h1>@ViewBag.Title</h1>
+    </div>
+
+    <div id="content">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+            <fieldset>
+                @Html.LabelFor(m => m.DisplayName)
+                @Html.TextBoxFor(m => m.DisplayName)
+                @Html.LabelFor(m => m.URL)
+                @Html.TextBoxFor(m => m.URL)
+            </fieldset>
+            <fieldset>
+                <label class="label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
+            </fieldset>
+            <hr />
+            <div class="footer">
+                <input type="submit" name="save" value="Menuitem opslaan">
+            </div>
+        }
+    </div>
+</div>

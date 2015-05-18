@@ -6,10 +6,8 @@ using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly BigriversDb _db = new BigriversDb();
-
         public ActionResult Index()
         {
             ViewBag.Title = "Home";
@@ -19,7 +17,7 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Settings()
         {
             // Find single artist
-            var settings = _db.Links.FirstOrDefault();
+            var settings = Db.Links.FirstOrDefault();
 
             var model = new SettingsViewModel
             {
@@ -42,7 +40,7 @@ namespace Bigrivers.Client.Backend.Controllers
         [HttpPost]
         public ActionResult Settings(SettingsViewModel viewModel)
         {
-            var settings = _db.Links.FirstOrDefault();
+            var settings = Db.Links.FirstOrDefault();
             if (settings != null)
             {
                 settings.YoutubeChannel = viewModel.YoutubeChannel;
@@ -57,9 +55,9 @@ namespace Bigrivers.Client.Backend.Controllers
                     Facebook = viewModel.Facebook,
                     Twitter = viewModel.Twitter
                 };
-                _db.Links.Add(firstSettings);
+                Db.Links.Add(firstSettings);
             }
-            _db.SaveChanges();
+            Db.SaveChanges();
 
             return RedirectToAction("Settings");
         }

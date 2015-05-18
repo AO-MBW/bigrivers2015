@@ -126,16 +126,7 @@ section#wrapper {
 	font-weight: bold;
 }
 
-.xdebug-error {
-	margin-left: 125px;
-}
-
 /*/// --- Account menu Styling --- ///*/
-
-#account-menu {
-	
-}
-
 ul#accountContainer {
 	position: absolute;
 	top: 40px;
@@ -322,11 +313,9 @@ ul#accountContainer a {
 	padding: 5px;
 	background-color: #f1f1f1;
 	border: 1px solid #ccc;
-	-webkit-border-radius: 3px;
 	border-radius: 3px;
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
 	box-shadow: 0 1px 2px rgba(0,0,0,0.15);
-	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
@@ -348,7 +337,7 @@ ul#accountContainer a {
 #add-block #thumbnail img {
 	width: 150px;
 	height: 150px;
-	background: url(../img/thumbnail_unknown.png);
+	background: url(../Images/thumbnail_unknown.png);
 }
 
 #add-block input[type="text"] {
@@ -489,11 +478,9 @@ label.check {
 	padding: 5px;
 	background-color: #f1f1f1;
 	border: 1px solid #ccc;
-	-webkit-border-radius: 3px;
 	border-radius: 3px;
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
 	box-shadow: 0 1px 2px rgba(0,0,0,0.15);
-	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
@@ -609,6 +596,16 @@ h2 {
 	color: #1d1e1b;
 }
 
+#content table tr.child td {
+	padding-left: 50px;
+	background-color: #ccc;
+}
+
+#content table tr.inactive td {
+	background-color: #b9b9b9;
+	color: #444;
+}
+
 #content table a {
 	padding-right: 10px;
 	color: #5b83dd;
@@ -617,4 +614,44 @@ h2 {
 
 #content table a:hover {
 	text-decoration: underline;
+}
+
+/* Button CSS */
+#content div.buttonItemContainer {
+	width: 1000px;
+}
+
+#content div.buttonItemContainer div {
+	float: left;
+	background-color: white;
+	height: 200px;
+	width: 300px;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+
+#content div.buttonItemContainer div.inactive {
+	background-color: #b9b9b9;
+}
+
+#content div.buttonItemContainer div img {
+	width: 100px;
+	height: 100px;
+	margin-left: 100px;
+	margin-top: 20px;
+}
+
+#content div.buttonItemContainer div p {
+	height: 20px;
+	width: 300px;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	font-size: 15pt;
+	color: black;
+	text-decoration: none;
+	text-align: center;
+}
+
+#content div.buttonItemContainer div p a {
+	text-decoration: none;
 }
