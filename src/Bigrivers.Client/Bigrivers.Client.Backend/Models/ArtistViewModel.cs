@@ -13,7 +13,6 @@ namespace Bigrivers.Client.Backend.ViewModels
         public string Description { get; set; }
 
         [Display(Name = "Afbeelding")]
-        [DataType(DataType.Upload)]
         public string Avatar { get; set; }
 
         [Display(Name = "Youtubekanaal")]

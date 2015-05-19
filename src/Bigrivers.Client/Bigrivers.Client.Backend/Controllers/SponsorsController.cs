@@ -109,6 +109,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
         // POST: Artist/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, SponsorViewModel viewModel, HttpPostedFileBase file)
         {
             var singleSponsor = Db.Sponsors.Find(id);

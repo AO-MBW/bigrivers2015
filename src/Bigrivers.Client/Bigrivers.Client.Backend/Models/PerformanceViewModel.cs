@@ -7,18 +7,14 @@ namespace Bigrivers.Client.Backend.ViewModels
 {
     public class PerformanceViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Het veld beschrijving is niet ingevuld")]
         [Display(Name = "Beschrijving")]
         public string Description { get; set; }
 
-        [Required]
         [Display(Name = "Starttijd")]
-        [DataType(DataType.DateTime)]
         public DateTime Start { get; set; }
 
-        [Required]
         [Display(Name = "Eindtijd")]
-        [DataType(DataType.DateTime)]
         public DateTime End { get; set; }
 
         public bool Status { get; set; }

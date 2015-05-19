@@ -26,7 +26,6 @@
 	font-weight: normal;
 }
 
-
 #content form textarea {
 	width: 100%;
 	min-height: 300px;
@@ -95,6 +94,10 @@
 	border: none;
 }
 
+#content form fieldset .input-validation-error {
+	border: 1px solid red;
+}
+
 #content .form-item {
 	margin: 10px 0 10px 0;
 }
@@ -116,15 +119,9 @@
 
 /*//--- Form Errors ---//*/
 
-.error {
-	display: block;
-	width: 730px;
-	color: #fff;
-	background-color: #c84040;
-}
-
-.error label {
-	display: block;
-	width: 100%;
-	padding: 10px;
+#content div.validation-summary-errors ul {
+	list-style-type: none;
+    margin-left: 10px;
+	padding-left: 0;
+	color: red;
 }

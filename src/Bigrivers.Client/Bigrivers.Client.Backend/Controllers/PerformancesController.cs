@@ -42,26 +42,9 @@ namespace Bigrivers.Client.Backend.Controllers
                 End = DateTime.Now.AddHours(1),
                 Status = true,
                 Event = null,
-                Artist = null,
-                Events = Db.Events
-                    .Where(m => !m.Deleted)
-                    .ToList()
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Title
-                    })
-                    .ToList(),
-                Artists = Db.Artists
-                    .Where(m => !m.Deleted)
-                    .ToList()
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Name
-                    })
-                    .ToList()
+                Artist = null
             };
+            viewModel = FillViewModelSelectLists(viewModel);
 
             ViewBag.Title = "Nieuw Optreden";
             return View("Edit", viewModel);
@@ -75,6 +58,7 @@ namespace Bigrivers.Client.Backend.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.Title = "Nieuw Optreden";
+                viewModel = FillViewModelSelectLists(viewModel);
                 return View("Edit", viewModel);
             }
 
@@ -101,44 +85,35 @@ namespace Bigrivers.Client.Backend.Controllers
             var singlePerformance = Db.Performances.Find(id);
             if (singlePerformance == null || singlePerformance.Deleted) return RedirectToAction("Manage");
 
-            var model = new PerformanceViewModel
+            var viewModel = new PerformanceViewModel
             {
                 Description = singlePerformance.Description,
                 Start = singlePerformance.Start.DateTime,
                 End = singlePerformance.End.DateTime,
                 Status = singlePerformance.Status,
                 Event = singlePerformance.Event.Id,
-                Artist = singlePerformance.Artist.Id,
-                Events = Db.Events
-                    .Where(m => !m.Deleted)
-                    .ToList()
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Title
-                    })
-                    .ToList(),
-                Artists = Db.Artists
-                    .Where(m => !m.Deleted)
-                    .ToList()
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Name
-                    })
-                    .ToList()
+                Artist = singlePerformance.Artist.Id
             };
+            viewModel = FillViewModelSelectLists(viewModel);
 
             // Set all active parents into new list first
 
             ViewBag.Title = "Bewerk Optreden";
-            return View(model);
+            return View(viewModel);
         }
 
         // POST: Performances/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, PerformanceViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Title = "Bewerk Optreden";
+                viewModel = FillViewModelSelectLists(viewModel);
+                return View("Edit", viewModel);
+            }
+
             var singlePerformance = Db.Performances.Find(id);
 
             singlePerformance.Description = viewModel.Description;
@@ -182,6 +157,30 @@ namespace Bigrivers.Client.Backend.Controllers
         private IQueryable<Performance> GetPerformances(bool includeDeleted = false)
         {
             return includeDeleted ? Db.Performances : Db.Performances.Where(a => !a.Deleted);
+        }
+
+        private PerformanceViewModel FillViewModelSelectLists(PerformanceViewModel viewModel)
+        {
+            viewModel.Events = Db.Events
+                .Where(m => !m.Deleted)
+                .ToList()
+                .Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Title
+                })
+                .ToList();
+            viewModel.Artists = Db.Artists
+                .Where(m => !m.Deleted)
+                .ToList()
+                .Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Name
+                })
+                .ToList();
+
+            return viewModel;
         }
     }
 }

@@ -116,6 +116,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
         // POST: ButtonItems/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, ButtonItemViewModel viewModel, HttpPostedFileBase file)
         {
             var singleButtonItem = Db.ButtonItems.Find(id);

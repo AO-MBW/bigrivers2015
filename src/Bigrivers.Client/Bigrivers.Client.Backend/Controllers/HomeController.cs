@@ -37,6 +37,7 @@ namespace Bigrivers.Client.Backend.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Settings(SettingsViewModel viewModel)
         {
             var settings = Db.Links.FirstOrDefault();

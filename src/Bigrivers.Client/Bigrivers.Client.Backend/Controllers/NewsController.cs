@@ -95,6 +95,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
         // POST: Artist/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, NewsItemViewModel viewModel)
         {
             var singleNewsItem = Db.NewsItems.Find(id);

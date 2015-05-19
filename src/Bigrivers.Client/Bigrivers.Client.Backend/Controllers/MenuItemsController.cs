@@ -68,76 +68,17 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult New()
         {
             // Add an empty entry to lists to select a single object, e.g. /Artists/5, so there can exist a /Artists/
-            var model = new MenuItemViewModel
+            var viewModel = new MenuItemViewModel
             {
                 LinkType = "internal",
                 InternalType = "Events",
-                Status = true,
-                Events = Db.Events
-                    .Where(m => !m.Deleted)
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Title
-                    }).ToList(),
-                Artists = Db.Artists
-                    .Where(m => !m.Deleted)
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Name
-                    }).ToList(),
-                Performances = Db.Performances
-                    .Where(m => !m.Deleted)
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Artist.Name
-                    }).ToList(),
-                Sponsors = Db.Sponsors
-                    .Where(m => !m.Deleted)
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Name
-                    }).ToList(),
-                NewsItems = Db.NewsItems
-                    .Where(m => !m.Deleted)
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Title
-                    }).ToList()
+                Status = true
             };
+            viewModel = FillSelectLists(viewModel);
 
-            model.Events.Insert(0, new SelectListItem
-                {
-                    Value = "",
-                    Text = ""
-                });
-            model.Artists.Insert(0, new SelectListItem
-                {
-                    Value = "",
-                    Text = ""
-                });
-            model.Sponsors.Insert(0, new SelectListItem
-                {
-                    Value = "",
-                    Text = ""
-                });
-            model.NewsItems.Insert(0, new SelectListItem
-                {
-                    Value = "",
-                    Text = ""
-                });
-            model.Performances.Insert(0, new SelectListItem
-                {
-                    Value = "",
-                    Text = ""
-                });
 
             ViewBag.Title = "Nieuw MenuItem";
-            return View("Edit", model);
+            return View("Edit", viewModel);
         }
 
         // POST: MenuItem/New
@@ -147,6 +88,7 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             if (!ModelState.IsValid)
             {
+                viewModel = FillSelectLists(viewModel);
                 ViewBag.Title = "Nieuw MenuItem";
                 return View("Edit", viewModel);
             }
@@ -216,7 +158,6 @@ namespace Bigrivers.Client.Backend.Controllers
             if (singleMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
 
             // Find type of link (internal, external, file) through URL
-            // TODO: Set up RegEx-based system to find single object links (e.g. /Artists/5) and properly load the value to the page
             string linkType;
             var internalType = "Events";
             var internalId = "";
@@ -239,103 +180,53 @@ namespace Bigrivers.Client.Backend.Controllers
             }
 
             // Create the new model with everything in it.
-            var model = new MenuItemViewModel
+            var viewModel = new MenuItemViewModel
             {
                 ExternalUrl = externalUrl,
                 DisplayName = singleMenuItem.DisplayName,
                 Status = singleMenuItem.Status,
                 LinkType = linkType,
-                InternalType = internalType,
-                Events = Db.Events
-                    .Where(m => !m.Deleted)
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Title
-                    }).ToList(),
-                Artists = Db.Artists
-                    .Where(m => !m.Deleted)
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Name
-                    }).ToList(),
-                Performances = Db.Performances
-                    .Where(m => !m.Deleted)
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Artist.Name
-                    }).ToList(),
-                Sponsors = Db.Sponsors
-                    .Where(m => !m.Deleted)
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Name
-                    }).ToList(),
-                NewsItems = Db.NewsItems
-                    .Where(m => !m.Deleted)
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Title
-                    }).ToList()
+                InternalType = internalType
             };
+            viewModel = FillSelectLists(viewModel);
 
             switch (internalType)
             {
                 case "Events":
-                    model.InternalEventId = internalId;
+                    viewModel.InternalEventId = internalId;
                     break;
                 case "Artists":
-                    model.InternalArtistId = internalId;
+                    viewModel.InternalArtistId = internalId;
                     break;
                 case "Performances":
-                    model.InternalPerformanceId = internalId;
+                    viewModel.InternalPerformanceId = internalId;
                     break;
                 case "News":
-                    model.InternalNewsId = internalId;
+                    viewModel.InternalNewsId = internalId;
                     break;
                 case "Sponsors":
-                    model.InternalSponsorId = internalId;
+                    viewModel.InternalSponsorId = internalId;
                     break;
             }
 
             // Add an empty entry to lists to select a single object, e.g. /Artists/5, so there can exist a /Artists/
-            model.Events.Insert(0, new SelectListItem
-                {
-                    Value = "",
-                    Text = ""
-                });
-            model.Artists.Insert(0, new SelectListItem
-                {
-                    Value = "",
-                    Text = ""
-                });
-            model.Sponsors.Insert(0, new SelectListItem
-                {
-                    Value = "",
-                    Text = ""
-                });
-            model.NewsItems.Insert(0, new SelectListItem
-                {
-                    Value = "",
-                    Text = ""
-                });
-            model.Performances.Insert(0, new SelectListItem
-                {
-                    Value = "",
-                    Text = ""
-                });
+            
             ViewBag.Title = "Bewerk MenuItem";
-            return View(model);
+            return View(viewModel);
         }
 
         // POST: MenuItem/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, MenuItemViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                viewModel = FillSelectLists(viewModel);
+                ViewBag.Title = "Nieuw MenuItem";
+                return View("Edit", viewModel);
+            }
+
             var singleMenuItem = Db.MenuItems.Find(id);
             string url;
 
@@ -545,6 +436,73 @@ namespace Bigrivers.Client.Backend.Controllers
         private IQueryable<MenuItem> GetMenuItems(bool includeDeleted = false)
         {
             return includeDeleted ? Db.MenuItems : Db.MenuItems.Where(a => !a.Deleted);
+        }
+
+        private MenuItemViewModel FillSelectLists(MenuItemViewModel viewModel)
+        {
+            viewModel.Events = Db.Events
+                .Where(m => !m.Deleted)
+                .Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Title
+                }).ToList();
+            viewModel.Artists = Db.Artists
+                .Where(m => !m.Deleted)
+                .Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Name
+                }).ToList();
+            viewModel.Performances = Db.Performances
+                .Where(m => !m.Deleted)
+                .Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Artist.Name
+                }).ToList();
+            viewModel.Sponsors = Db.Sponsors
+                .Where(m => !m.Deleted)
+                .Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Name
+                }).ToList();
+            viewModel.NewsItems = Db.NewsItems
+                .Where(m => !m.Deleted)
+                .Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Title
+                }).ToList();
+
+            viewModel.Events.Insert(0, new SelectListItem
+            {
+                Value = "",
+                Text = ""
+            });
+            viewModel.Artists.Insert(0, new SelectListItem
+            {
+                Value = "",
+                Text = ""
+            });
+            viewModel.Sponsors.Insert(0, new SelectListItem
+            {
+                Value = "",
+                Text = ""
+            });
+            viewModel.NewsItems.Insert(0, new SelectListItem
+            {
+                Value = "",
+                Text = ""
+            });
+            viewModel.Performances.Insert(0, new SelectListItem
+            {
+                Value = "",
+                Text = ""
+            });
+
+            return viewModel;
         }
     }
 }

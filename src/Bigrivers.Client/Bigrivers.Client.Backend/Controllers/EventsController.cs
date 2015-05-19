@@ -151,6 +151,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
         // POST: Events/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, EventViewModel viewModel, HttpPostedFileBase logo, HttpPostedFileBase background)
         {
             File frontpageLogo = null;
