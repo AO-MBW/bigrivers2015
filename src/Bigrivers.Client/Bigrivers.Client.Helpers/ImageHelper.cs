@@ -50,6 +50,28 @@ namespace Bigrivers.Client.Helpers
         }
 
         /// <summary>
+        /// Checks size in Bytes or byte multiples (KB, MB, GB) of the given file.
+        /// byteMultiplier must be lowercase kb, mb or gb.
+        /// Returns false if the file exceeds the maximum size.
+        /// </summary>
+        public static bool IsSize(HttpPostedFileBase file, int maxSize, string byteMultiplier)
+        {
+            switch (byteMultiplier)
+            {
+                case "kb":
+                    maxSize *= 1000;
+                    break;
+                case "mb":
+                    maxSize *= 1000000;
+                    break;
+                case "gb":
+                    maxSize *= 1000000000;
+                    break;
+            }
+            return IsSize(file, maxSize);
+        }
+
+        /// <summary>
         /// Checks if given file is of any MIME type given in array.
         /// Returns false if it doesn't match with any mime type in array.
         /// </summary>

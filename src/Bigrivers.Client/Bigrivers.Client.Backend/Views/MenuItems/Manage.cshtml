@@ -31,14 +31,20 @@
                     {
                         @:<tr data-id="@m.Id">
                     }
+                    
                     <td>@m.DisplayName</td>
                     <td>
-                        @if (!m.IsParent){
+                        @* Only display URL if the MenuItem is not a parent *@
+                        @if (!m.IsParent)
+                        {
                             @m.URL
                         }
                     </td>
+                    
+                    // Status switcher links
                     if (m.Status)
                     {
+                        // Change alert text depending on isparent status
                         if (!m.IsParent)
                         {
                             <td>@Html.ActionLink("Actief", "SwitchStatus", "MenuItems", new { m.Id }, new { @onclick = "return confirm('Als je dit menuitem uitschakelt, is het niet meer zichtbaar in de menubalk en wordt het uit de volgorde gehaalt. Weet je dit zeker?');" })</td>
@@ -55,6 +61,7 @@
                     }
                     <td>
                         @Html.ActionLink("Wijzig", "Edit", "MenuItems", new { m.Id }, null)
+                        @* Change delete alert text depending on isparent status *@
                         @if (!m.IsParent)
                         {
                             @Html.ActionLink("Verwijder", "Delete", "MenuItems", new {m.Id}, new {@onclick = (string) String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Weet je dit zeker?');", m.DisplayName)});
@@ -62,8 +69,9 @@
                         else
                         {
                             @Html.ActionLink("Verwijder", "Delete", "MenuItems", new {m.Id}, new {@onclick = (string) String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Dit zal alle submenuitems inactief zetten. Weet je dit zeker?');", m.DisplayName)});
-                        } 
+                        }
 
+                        @* Only display order switches and parent selector if the MenuItem is active *@
                         @if (m.Status)
                         {
                             @Html.ActionLink("Up", "ShiftOrder", "MenuItems", new { id = m.Id, param = "up" }, null)
@@ -73,6 +81,7 @@
                             var list = ((List<SelectListItem>)ViewBag.menuParents)
                             .Where(l => l.Text != m.DisplayName);
 
+                            // Display list with all other parent items to root menuitems, display list with current parent pre-selected to submenuitems
                             if (m.Parent == null && !m.IsParent)
                             {
                                 @Html.DropDownList("Parent", list)

@@ -62,14 +62,21 @@ namespace Bigrivers.Client.Backend.Controllers
             if (file != null)
             {
                 // File has to be < 2MB and an image
-                if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] { "image" }))
+                if (!ImageHelper.IsSize(file, 2, "mb"))
                 {
-                    photoEntity = ImageHelper.UploadFile(file, "artist");
+                    ModelState.AddModelError("Avatar", "De afbeelding mag niet groter zijn dan 2 MB");
                 }
-                else
+                if (!ImageHelper.IsMimes(file, new[] { "image" }))
                 {
+                    ModelState.AddModelError("Avatar", "Het bestand moet een afbeelding zijn");
+                }
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Title = "Nieuwe Artiest";
                     return View("Edit", viewModel);
                 }
+                photoEntity = ImageHelper.UploadFile(file, "artist");
+                
             }
 
             var singleArtist = new Artist
@@ -133,10 +140,19 @@ namespace Bigrivers.Client.Backend.Controllers
             if (file != null)
             {
                 // File has to be < 2MB and an image
-                if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] { "image" }))
+                if (!ImageHelper.IsSize(file, 200000))
                 {
-                    photoEntity = ImageHelper.UploadFile(file, "artist");
+                    ModelState.AddModelError("Avatar", "De afbeelding mag niet groter zijn dan 2 MB");
+                    ViewBag.Title = "Nieuwe Artiest";
+                    return View("Edit", viewModel);
                 }
+                if (!ImageHelper.IsMimes(file, new[] { "image" }))
+                {
+                    ModelState.AddModelError("Avatar", "Het bestand moet een afbeelding zijn");
+                    ViewBag.Title = "Nieuwe Artiest";
+                    return View("Edit", viewModel);
+                }
+                photoEntity = ImageHelper.UploadFile(file, "artist");
             }
 
             singleArtist.Name = viewModel.Name;

@@ -62,15 +62,19 @@ namespace Bigrivers.Client.Backend.Controllers
                 return View("Edit", viewModel);
             }
 
-            File photoEntity;
-            if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] { "image" }))
+            File photoEntity = null;
+            if (file != null)
             {
-                photoEntity = ImageHelper.UploadFile(file, "sponsor");
+                if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] { "image" }))
+                {
+                    photoEntity = ImageHelper.UploadFile(file, "sponsor");
+                }
+                else
+                {
+                    return RedirectToAction("Manage");
+                }
             }
-            else
-            {
-                return RedirectToAction("Manage");
-            }
+            
 
             var singleSponsor = new Sponsor
             {
@@ -91,9 +95,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Artist/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null) return RedirectToAction("New");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleSponsor = Db.Sponsors.Find(id);
-            if (singleSponsor == null || singleSponsor.Deleted) return RedirectToAction("Manage");
 
             var model = new SponsorViewModel
             {
@@ -112,7 +115,14 @@ namespace Bigrivers.Client.Backend.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, SponsorViewModel viewModel, HttpPostedFileBase file)
         {
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleSponsor = Db.Sponsors.Find(id);
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Title = "Sponsor toevoegen";
+                return View("Edit", viewModel);
+            }
 
             File photoEntity = null;
             if (file != null)
@@ -135,11 +145,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Artist/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleSponsor = Db.Sponsors.Find(id);
-            if (singleSponsor == null || singleSponsor.Deleted) return RedirectToAction("Manage");
-
-            
 
             singleSponsor.Status = false;
             singleSponsor.Deleted = true;
@@ -151,9 +158,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Artist/SwitchStatus/5
         public ActionResult SwitchStatus(int? id)
         {
-            if (id == null) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleSponsor = Db.Sponsors.Find(id);
-            if (singleSponsor == null || singleSponsor.Deleted) return RedirectToAction("Manage");
 
             singleSponsor.Status = !singleSponsor.Status;
             Db.SaveChanges();
@@ -165,5 +171,11 @@ namespace Bigrivers.Client.Backend.Controllers
             return includeDeleted ? Db.Sponsors : Db.Sponsors.Where(a => !a.Deleted);
         }
 
+        private bool VerifyId(int? id)
+        {
+            if (id == null) return false;
+            var singleSponsor = Db.Sponsors.Find(id);
+            return singleSponsor != null && !singleSponsor.Deleted;
+        }
     }
 }

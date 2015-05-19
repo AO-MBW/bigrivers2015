@@ -77,9 +77,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Artist/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null) return RedirectToAction("New");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleNewsItem = Db.NewsItems.Find(id);
-            if (singleNewsItem == null || singleNewsItem.Deleted) return RedirectToAction("Manage");
 
             var model = new NewsItemViewModel
             {
@@ -98,6 +97,13 @@ namespace Bigrivers.Client.Backend.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, NewsItemViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Title = "Nieuws toevoegen";
+                return View("Edit", viewModel);
+            }
+
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleNewsItem = Db.NewsItems.Find(id);
 
             singleNewsItem.Title = viewModel.Title;
@@ -112,9 +118,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Artist/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleNewsItem = Db.NewsItems.Find(id);
-            if (singleNewsItem == null || singleNewsItem.Deleted) return RedirectToAction("Manage");
 
             singleNewsItem.Status = false;
             singleNewsItem.Deleted = true;
@@ -126,9 +131,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Artist/SwitchStatus/5
         public ActionResult SwitchStatus(int? id)
         {
-            if (id == null) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleNewsItem = Db.NewsItems.Find(id);
-            if (singleNewsItem == null || singleNewsItem.Deleted) return RedirectToAction("Manage");
 
             singleNewsItem.Status = !singleNewsItem.Status;
             Db.SaveChanges();
@@ -140,5 +144,11 @@ namespace Bigrivers.Client.Backend.Controllers
             return includeDeleted ? Db.NewsItems : Db.NewsItems.Where(a => !a.Deleted);
         }
 
+        private bool VerifyId(int? id)
+        {
+            if (id == null) return false;
+            var singleNewsItem = Db.NewsItems.Find(id);
+            return singleNewsItem != null && !singleNewsItem.Deleted;
+        }
     }
 }

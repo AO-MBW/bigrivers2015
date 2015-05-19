@@ -356,9 +356,7 @@ namespace Bigrivers.Client.Backend.Controllers
             if (param != "up" && param != "down") return RedirectToAction("Manage");
             var singleMenuItem = Db.MenuItems.Find(id);
 
-            
-            // TODO: Refactor to minimize code
-            MenuItem switchItem;
+            MenuItem switchItem = null;
             switch (param)
             {
                 case "up":
@@ -372,7 +370,6 @@ namespace Bigrivers.Client.Backend.Controllers
                         .Where(m => m.Order < singleMenuItem.Order && m.Status && m.Parent == singleMenuItem.Parent)
                         .OrderByDescending(m => m.Order)
                         .FirstOrDefault();
-                    
                     break;
                 }
                 case "down":
@@ -389,12 +386,7 @@ namespace Bigrivers.Client.Backend.Controllers
                         .FirstOrDefault();
                     break;
                 }
-                default:
-                {
-                    return RedirectToAction("Manage");
-                }
             }
-
             if (switchItem == null || switchItem.Deleted) return RedirectToAction("Manage");
 
             // Save order of the item to switch with in temporary variable

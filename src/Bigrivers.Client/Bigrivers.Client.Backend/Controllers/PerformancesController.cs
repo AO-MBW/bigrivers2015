@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Bigrivers.Server.Data;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
 
@@ -81,9 +76,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Performances/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null) return RedirectToAction("New");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singlePerformance = Db.Performances.Find(id);
-            if (singlePerformance == null || singlePerformance.Deleted) return RedirectToAction("Manage");
 
             var viewModel = new PerformanceViewModel
             {
@@ -114,6 +108,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 return View("Edit", viewModel);
             }
 
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singlePerformance = Db.Performances.Find(id);
 
             singlePerformance.Description = viewModel.Description;
@@ -130,9 +125,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Performances/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singlePerformance = Db.Performances.Find(id);
-            if (singlePerformance == null || singlePerformance.Deleted) return RedirectToAction("Manage");
 
             singlePerformance.Artist.Performances.Remove(singlePerformance);
             singlePerformance.Status = false;
@@ -145,9 +139,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Performances/SwitchStatus/5
         public ActionResult SwitchStatus(int? id)
         {
-            if (id == null) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singlePerformance = Db.Performances.Find(id);
-            if (singlePerformance == null || singlePerformance.Deleted) return RedirectToAction("Manage");
 
             singlePerformance.Status = !singlePerformance.Status;
             Db.SaveChanges();
@@ -157,6 +150,13 @@ namespace Bigrivers.Client.Backend.Controllers
         private IQueryable<Performance> GetPerformances(bool includeDeleted = false)
         {
             return includeDeleted ? Db.Performances : Db.Performances.Where(a => !a.Deleted);
+        }
+
+        private bool VerifyId(int? id)
+        {
+            if (id == null) return false;
+            var singlePerformance = Db.Performances.Find(id);
+            return singlePerformance != null && !singlePerformance.Deleted;
         }
 
         private PerformanceViewModel FillViewModelSelectLists(PerformanceViewModel viewModel)

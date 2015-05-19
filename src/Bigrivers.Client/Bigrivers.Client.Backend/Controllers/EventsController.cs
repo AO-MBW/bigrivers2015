@@ -121,11 +121,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Events/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null) return RedirectToAction("New");
+            if(!VerifyId(id)) return RedirectToAction("Manage");
             var singleEvent = Db.Events.Find(id);
-            if (singleEvent == null || singleEvent.Deleted) return RedirectToAction("Manage");
-
-            
 
             var model = new EventViewModel
             {
@@ -154,6 +151,15 @@ namespace Bigrivers.Client.Backend.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, EventViewModel viewModel, HttpPostedFileBase logo, HttpPostedFileBase background)
         {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Title = "Nieuw Evenement";
+                return View("Edit", viewModel);
+            }
+
+            if (!VerifyId(id)) return RedirectToAction("Manage");
+            var singleEvent = Db.Events.Find(id);
+
             File frontpageLogo = null;
             if (logo != null)
             {
@@ -172,7 +178,6 @@ namespace Bigrivers.Client.Backend.Controllers
                 }
             }
 
-            var singleEvent = Db.Events.Find(id);
             singleEvent.Title = viewModel.Title;
             singleEvent.Description = viewModel.Description;
             singleEvent.ShortDescription = viewModel.ShortDescription;
@@ -196,9 +201,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Events/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleEvent = Db.Events.Find(id);
-            if (singleEvent == null || singleEvent.Deleted) return RedirectToAction("Manage");
 
             foreach (var p in singleEvent.Performances)
             {
@@ -214,9 +218,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Events/SwitchStatus/5
         public ActionResult SwitchStatus(int? id)
         {
-            if (id == null) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleEvent = Db.Events.Find(id);
-            if (singleEvent == null || singleEvent.Deleted) return RedirectToAction("Manage");
 
             singleEvent.Status = !singleEvent.Status;
             Db.SaveChanges();
@@ -226,6 +229,13 @@ namespace Bigrivers.Client.Backend.Controllers
         private IQueryable<Event> GetEvents(bool includeDeleted = false)
         {
             return includeDeleted ? Db.Events : Db.Events.Where(a => !a.Deleted);
+        }
+
+        private bool VerifyId(int? id)
+        {
+            if (id == null) return false;
+            var singleEvent = Db.Events.Find(id);
+            return singleEvent != null && !singleEvent.Deleted;
         }
     }
 }
