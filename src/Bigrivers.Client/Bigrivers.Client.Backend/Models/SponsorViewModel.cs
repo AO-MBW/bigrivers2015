@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.Backend.ViewModels
 {
@@ -8,10 +9,8 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Display(Name = "Naam")]
         public string Name { get; set; }
 
-        [Required]
         [Display(Name = "Afbeelding")]
-        [DataType(DataType.Upload)]
-        public string Image { get; set; }
+        public File Image { get; set; }
 
         [Required]
         [Display(Name = "Website")]

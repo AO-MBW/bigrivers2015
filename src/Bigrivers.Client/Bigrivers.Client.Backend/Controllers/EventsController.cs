@@ -96,8 +96,8 @@ namespace Bigrivers.Client.Backend.Controllers
                 Title = viewModel.Title,
                 Description = viewModel.Description,
                 ShortDescription = viewModel.ShortDescription,
-                FrontpageLogo = frontpageLogo.Key,
-                BackgroundImage = backgroundImage.Key,
+                FrontpageLogo = frontpageLogo,
+                BackgroundImage = backgroundImage,
                 WebsiteStatus = viewModel.WebsiteStatus,
                 YoutubeChannelStatus = viewModel.YoutubeChannelStatus,
                 FacebookStatus = viewModel.FacebookStatus,
@@ -186,8 +186,8 @@ namespace Bigrivers.Client.Backend.Controllers
             singleEvent.Price = viewModel.Price ?? singleEvent.Price;
             singleEvent.Status = viewModel.Status;
 
-            if (frontpageLogo != null && !Db.Files.Any(m => m.Md5 == frontpageLogo.Md5)) singleEvent.FrontpageLogo = frontpageLogo.Key;
-            if (backgroundImage != null && !Db.Files.Any(m => m.Md5 == backgroundImage.Md5)) singleEvent.BackgroundImage = backgroundImage.Key;
+            if (frontpageLogo != null && !Db.Files.Any(m => m.Md5 == frontpageLogo.Md5)) singleEvent.FrontpageLogo = frontpageLogo;
+            if (backgroundImage != null && !Db.Files.Any(m => m.Md5 == backgroundImage.Md5)) singleEvent.BackgroundImage = backgroundImage;
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

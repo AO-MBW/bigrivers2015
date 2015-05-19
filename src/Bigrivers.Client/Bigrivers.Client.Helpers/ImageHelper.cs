@@ -18,13 +18,15 @@ namespace Bigrivers.Client.Helpers
         private static readonly CloudBlobClient BlobClient;
         private static CloudBlobContainer _container;
         
-
         static ImageHelper()
         {
             var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
             BlobClient = storageAccount.CreateCloudBlobClient();
         }
 
+        /// <summary>
+        /// Returns the Url of the given File object
+        /// </summary>
         public static string GetImageUrl(File file)
         {
             _container = BlobClient.GetContainerReference(file.Container);
@@ -38,16 +40,29 @@ namespace Bigrivers.Client.Helpers
             return _container.GetBlockBlobReference(file.Key).Uri.ToString();
         }
 
+        /// <summary>
+        /// Checks size in Bytes of the given file.
+        /// Returns false if the file exceeds the maximum size.
+        /// </summary>
         public static bool IsSize(HttpPostedFileBase file, int maxSize)
         {
             return file.ContentLength <= maxSize;
         }
 
+        /// <summary>
+        /// Checks if given file is of any MIME type given in array.
+        /// Returns false if it doesn't match with any mime type in array.
+        /// </summary>
         public static bool IsMimes(HttpPostedFileBase file, string[] mimeTypes)
         {
             return !mimeTypes.Any() || mimeTypes.All(mime => file.ContentType.Contains(mime));
         }
 
+        /// <summary>
+        /// Uploads a file to AzureStorage into given container.
+        /// Returns the File object generated from the given file.
+        /// Will not upload file if it already exists in given container, and return the File object corresponding to existing file instead.
+        /// </summary>
         public static File UploadFile(HttpPostedFileBase file, string container)
         {
             var extension = Path.GetExtension(file.FileName);
@@ -86,6 +101,10 @@ namespace Bigrivers.Client.Helpers
             return photoEntity;
         }
 
+        /// <summary>
+        /// Checks if file is smaller than given dimensions.
+        /// Returns false if the file is larger than given dimensions.
+        /// </summary>
         public static bool IsSmallerThanDimensions(Stream imageStream, int maxHeight, int maxWidth)
         {
             using (var img = Image.FromStream(imageStream))
@@ -95,6 +114,10 @@ namespace Bigrivers.Client.Helpers
             return false;
         }
 
+        /// <summary>
+        /// Checks if file is exactly the given dimensions.
+        /// Returns false if the file is not of the given dimensions.
+        /// </summary>
         public static bool IsExactDimensions(Stream imageStream, int height, int width)
         {
             using (var img = Image.FromStream(imageStream))

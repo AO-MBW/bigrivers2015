@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.Backend.ViewModels
 {
@@ -13,7 +14,7 @@ namespace Bigrivers.Client.Backend.ViewModels
         public string Description { get; set; }
 
         [Display(Name = "Afbeelding")]
-        public string Avatar { get; set; }
+        public File Avatar { get; set; }
 
         [Display(Name = "Youtubekanaal")]
         [DataType(DataType.Url)]

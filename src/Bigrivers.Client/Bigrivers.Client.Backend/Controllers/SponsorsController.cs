@@ -76,7 +76,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Name = viewModel.Name,
                 Url = viewModel.Url,
-                Image = photoEntity.Key,
+                Image = photoEntity,
                 Status = viewModel.Status
             };
 
@@ -126,7 +126,7 @@ namespace Bigrivers.Client.Backend.Controllers
             singleSponsor.Name = viewModel.Name;
             singleSponsor.Url = viewModel.Url;
             singleSponsor.Status = viewModel.Status;
-            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleSponsor.Image = photoEntity.Key;
+            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleSponsor.Image = photoEntity;
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

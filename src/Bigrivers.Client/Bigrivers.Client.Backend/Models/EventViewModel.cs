@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.Backend.ViewModels
 {
@@ -17,15 +18,11 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Display(Name = "Korte beschrijving")]
         public string ShortDescription { get; set; }
 
-        [Required]
         [Display(Name = "Afbeelding")]
-        [DataType(DataType.Upload)]
-        public string FrontpageLogo { get; set; }
+        public File FrontpageLogo { get; set; }
 
-        [Required]
         [Display(Name = "Afbeelding")]
-        [DataType(DataType.Upload)]
-        public string BackgroundImage { get; set; }
+        public File BackgroundImage { get; set; }
 
         public bool WebsiteStatus { get; set; }
         public bool YoutubeChannelStatus { get; set; }

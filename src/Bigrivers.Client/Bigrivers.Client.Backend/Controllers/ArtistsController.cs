@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Bigrivers.Server.Model;
@@ -18,12 +19,7 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Artist/
         public ActionResult Manage()
         {
-            var artists = GetArtists().ToList();
-            var listArtists = artists.Where(m => m.Status)
-                .ToList();
-
-            listArtists.AddRange(artists.Where(m => !m.Status).ToList());
-            ViewBag.listArtists = listArtists;
+            ViewBag.listArtists = ListArtistsInOrder();
             ViewBag.Title = "Artiesten";
             return View("Manage");
         }
@@ -61,21 +57,26 @@ namespace Bigrivers.Client.Backend.Controllers
                 return View("Edit", viewModel);
             }
 
-            File photoEntity;
-            if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] { "image" }))
+            // Upload file to Azurestorage if needed
+            File photoEntity = null;
+            if (file != null)
             {
-                photoEntity = ImageHelper.UploadFile(file, "artist");
-            }
-            else
-            {
-                return RedirectToAction("Manage");
+                // File has to be < 2MB and an image
+                if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] { "image" }))
+                {
+                    photoEntity = ImageHelper.UploadFile(file, "artist");
+                }
+                else
+                {
+                    return View("Edit", viewModel);
+                }
             }
 
             var singleArtist = new Artist
             {
                 Name = viewModel.Name,
                 Description = viewModel.Description,
-                Avatar = photoEntity.Key,
+                Avatar = photoEntity,
                 Website = viewModel.Website,
                 YoutubeChannel = viewModel.YoutubeChannel,
                 Facebook = viewModel.Facebook,
@@ -84,7 +85,7 @@ namespace Bigrivers.Client.Backend.Controllers
             };
 
             // Only add file to DB if it hasn't been uploaded before
-            if (!Db.Files.Any(m => m.Md5 == photoEntity.Md5)) Db.Files.Add(photoEntity);
+            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) Db.Files.Add(photoEntity);
             Db.Artists.Add(singleArtist);
             Db.SaveChanges();
 
@@ -94,14 +95,14 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Artist/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null) return RedirectToAction("New");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleArtist = Db.Artists.Find(id);
-            if (singleArtist == null || singleArtist.Deleted) return RedirectToAction("Manage");
 
             var model = new ArtistViewModel
             {
                 Name = singleArtist.Name,
                 Description = singleArtist.Description,
+                Avatar = singleArtist.Avatar,
                 Website = singleArtist.Website,
                 YoutubeChannel = singleArtist.YoutubeChannel,
                 Facebook = singleArtist.Facebook,
@@ -118,11 +119,20 @@ namespace Bigrivers.Client.Backend.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, ArtistViewModel viewModel, HttpPostedFileBase file)
         {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Title = "Nieuwe Artiest";
+                return View("Edit", viewModel);
+            }
+
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleArtist = Db.Artists.Find(id);
 
+            // Upload file to Azurestorage if needed
             File photoEntity = null;
             if (file != null)
             {
+                // File has to be < 2MB and an image
                 if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] { "image" }))
                 {
                     photoEntity = ImageHelper.UploadFile(file, "artist");
@@ -136,7 +146,7 @@ namespace Bigrivers.Client.Backend.Controllers
             singleArtist.Facebook = viewModel.Facebook;
             singleArtist.Twitter = viewModel.Twitter;
             singleArtist.Status = viewModel.Status;
-            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleArtist.Avatar = photoEntity.Key;
+            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleArtist.Avatar = photoEntity;
             Db.SaveChanges();
 
             return RedirectToAction("Manage");
@@ -145,16 +155,18 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Artist/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleArtist = Db.Artists.Find(id);
-            if (singleArtist == null || singleArtist.Deleted) return RedirectToAction("Manage");
 
+            // Set inactive before deletion so there's no need to explicitly check 'deleted' on frontend
             singleArtist.Status = false;
+            singleArtist.Deleted = true;
+
+            // Remove references to artist in other tables
             foreach (var p in singleArtist.Performances)
             {
                 p.Artist = null;
             }
-            singleArtist.Deleted = true;
             Db.SaveChanges();
 
             return RedirectToAction("Manage");
@@ -163,9 +175,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Artist/SwitchStatus/5
         public ActionResult SwitchStatus(int? id)
         {
-            if (id == null) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleArtist = Db.Artists.Find(id);
-            if (singleArtist == null || singleArtist.Deleted) return RedirectToAction("Manage");
 
             singleArtist.Status = !singleArtist.Status;
             Db.SaveChanges();
@@ -176,6 +187,25 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             return includeDeleted ? Db.Artists : Db.Artists.Where(a => !a.Deleted);
         }
-        
+
+        private List<Artist> ListArtistsInOrder()
+        {
+            var artists = GetArtists()
+                .ToList();
+            var listArtists = artists
+                .Where(m => m.Status)
+                .ToList();
+            listArtists.AddRange(artists.Where(m => !m.Status)
+                .ToList());
+            return listArtists;
+        }
+
+        // Verify if an Artist Id is supplied and corresponds to an existing Artist
+        private bool VerifyId(int? id)
+        {
+            if (id == null) return false;
+            var singleArtist = Db.Artists.Find(id);
+            return singleArtist != null && !singleArtist.Deleted;
+        }
     }
 }

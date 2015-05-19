@@ -15,18 +15,43 @@ namespace Bigrivers.Client.Backend.ViewModels
 
         public bool Status { get; set; }
 
+        /// <summary>
+        /// Variable to set either an internal, external or file link.
+        /// </summary>
         [Display(Name = "Naar...")]
         public string LinkType { get; set; }
 
+        /// <summary>
+        /// ExternalURL is the field used when linking to a different website
+        /// </summary>
         [Display(Name = "URL")]
         [DataType(DataType.Url)]
         public string ExternalUrl { get; set; }
 
+        /// <summary>
+        ///  InternalType is the type of object that's being linked to when linking to an internal page
+        /// </summary>
         public string InternalType { get; set; }
+
+        ///<summary>
+        /// Internal*Id is the Id of the object being linked to when linking to an internal page 
+        /// </summary>
         public string InternalEventId { get; set; }
+        ///<summary>
+        /// Internal*Id is the Id of the object being linked to when linking to an internal page 
+        /// </summary>
         public string InternalArtistId { get; set; }
+        ///<summary>
+        /// Internal*Id is the Id of the object being linked to when linking to an internal page 
+        /// </summary>
         public string InternalPerformanceId { get; set; }
+        ///<summary>
+        /// Internal*Id is the Id of the object being linked to when linking to an internal page 
+        /// </summary>
         public string InternalNewsId { get; set; }
+        ///<summary>
+        /// Internal*Id is the Id of the object being linked to when linking to an internal page 
+        /// </summary>
         public string InternalSponsorId { get; set; }
 
         public IEnumerable<SelectListItem> LinkTypes
@@ -85,6 +110,12 @@ namespace Bigrivers.Client.Backend.ViewModels
                     {
                         Text = "Sponsoren",
                         Value = "Sponsors"
+
+                    },
+                    new SelectListItem()
+                    {
+                        Text = "Contact",
+                        Value = "Contact"
 
                     }
                 };

@@ -100,6 +100,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 case "internal":
                     var internalId = "";
 
+                    // Get the correct 'Internal Id' from the form
                     switch (viewModel.InternalType)
                     {
                         case "Events":
@@ -117,13 +118,17 @@ namespace Bigrivers.Client.Backend.Controllers
                         case "Sponsors":
                             internalId = viewModel.InternalSponsorId;
                             break;
+                        case "Contact":
+                            break;
                     }
 
-                    url = "/Home/" + viewModel.InternalType + "/" + internalId;
+                    // Form the URL from set variables
+                    url = string.Format("/Home/{0}/{1}",viewModel.InternalType, internalId);
                     break;
                 case "external":
                     url = viewModel.ExternalUrl;
-                    if (!url.StartsWith("http")) url = "http://" + url;
+                    // Make sure the URL uses Http if it doesn't use Http / Https already
+                    if (!url.StartsWith("http")) url = string.Format("http://{0}", url);
                     break;
                 case "file":
                     url = viewModel.ExternalUrl;
@@ -133,6 +138,7 @@ namespace Bigrivers.Client.Backend.Controllers
                     break;
             }
 
+            // Set the new item as the last item in the root order
             var item = Db.MenuItems.OrderByDescending(m => m.Order).FirstOrDefault(m => m.Status);
             var order = item != null ? item.Order + 1 : 1;
 
@@ -153,15 +159,16 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: MenuItem/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null) return RedirectToAction("New");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleMenuItem = Db.MenuItems.Find(id);
-            if (singleMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
 
-            // Find type of link (internal, external, file) through URL
+            // Set empty / default variables in case they won't be given a value down below
             string linkType;
             var internalType = "Events";
             var internalId = "";
             var externalUrl = "";
+
+            // Detect menuitem link type from keywords in the URL field
             if (singleMenuItem.URL.Contains("http"))
             {
                 linkType = "external";
@@ -182,14 +189,15 @@ namespace Bigrivers.Client.Backend.Controllers
             // Create the new model with everything in it.
             var viewModel = new MenuItemViewModel
             {
-                ExternalUrl = externalUrl,
                 DisplayName = singleMenuItem.DisplayName,
                 Status = singleMenuItem.Status,
                 LinkType = linkType,
-                InternalType = internalType
+                InternalType = internalType,
+                ExternalUrl = externalUrl,
             };
             viewModel = FillSelectLists(viewModel);
-
+            
+            // Set the Id for the 'Internal Id'
             switch (internalType)
             {
                 case "Events":
@@ -208,8 +216,6 @@ namespace Bigrivers.Client.Backend.Controllers
                     viewModel.InternalSponsorId = internalId;
                     break;
             }
-
-            // Add an empty entry to lists to select a single object, e.g. /Artists/5, so there can exist a /Artists/
             
             ViewBag.Title = "Bewerk MenuItem";
             return View(viewModel);
@@ -227,6 +233,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 return View("Edit", viewModel);
             }
 
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleMenuItem = Db.MenuItems.Find(id);
             string url;
 
@@ -236,6 +243,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 case "internal":
                     var internalId = "";
 
+                    // Set the 'Internal Id' based on the 'Internal Type'
                     switch (viewModel.InternalType)
                     {
                         case "Events":
@@ -255,10 +263,12 @@ namespace Bigrivers.Client.Backend.Controllers
                             break;
                     }
 
-                    url = "/Home/" + viewModel.InternalType + "/" + internalId;
+                    // Create the URL
+                    url = string.Format("/Home/{0}/{1}", viewModel.InternalType, internalId);
                     break;
                 case "external":
                     url = viewModel.ExternalUrl;
+                    if (!url.StartsWith("http")) url = string.Format("http://{0}", url);
                     break;
                 case "file":
                     url = viewModel.ExternalUrl;
@@ -279,9 +289,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: MenuItem/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleMenuItem = Db.MenuItems.Find(id);
-            if (singleMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
 
             // Unlink all children and set inactive
             var children = Db.MenuItems.Where(m => m.Parent == id).ToList();
@@ -308,9 +317,8 @@ namespace Bigrivers.Client.Backend.Controllers
         // Switch boolean Status from menuitem to opposite value
         public ActionResult SwitchStatus(int? id)
         {
-            if (id == null) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleMenuItem = Db.MenuItems.Find(id);
-            if (singleMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
 
             singleMenuItem.Status = !singleMenuItem.Status;
             switch (singleMenuItem.Status)
@@ -322,7 +330,8 @@ namespace Bigrivers.Client.Backend.Controllers
                 case false:
                     singleMenuItem.Order = null;
                     singleMenuItem.IsParent = false;
-                    // Unlick all children and set inactive
+
+                    // Unlink and deactivate all children from the parent
                     var children = Db.MenuItems.Where(m => m.Parent == id).ToList();
                     if (children.Count > 0)
                     {
@@ -343,12 +352,13 @@ namespace Bigrivers.Client.Backend.Controllers
         // Switch order of menuitems in direction param with menuitem above / below
         public ActionResult ShiftOrder(int? id, string param)
         {
-            if (id == null || param == null) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             if (param != "up" && param != "down") return RedirectToAction("Manage");
             var singleMenuItem = Db.MenuItems.Find(id);
-            if (singleMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
 
+            
             // TODO: Refactor to minimize code
+            MenuItem switchItem;
             switch (param)
             {
                 case "up":
@@ -358,14 +368,11 @@ namespace Bigrivers.Client.Backend.Controllers
                         .OrderBy(m => m.Order)
                         .First() == singleMenuItem) return RedirectToAction("Manage");
 
-                    var nextMenuItem = Db.MenuItems
+                    switchItem = Db.MenuItems
                         .Where(m => m.Order < singleMenuItem.Order && m.Status && m.Parent == singleMenuItem.Parent)
                         .OrderByDescending(m => m.Order)
                         .FirstOrDefault();
-                    if (nextMenuItem == null || nextMenuItem.Deleted) return RedirectToAction("Manage");
-                    var neworder = nextMenuItem.Order;
-                    nextMenuItem.Order = singleMenuItem.Order;
-                    singleMenuItem.Order = neworder;
+                    
                     break;
                 }
                 case "down":
@@ -376,18 +383,24 @@ namespace Bigrivers.Client.Backend.Controllers
                         .OrderByDescending(m => m.Order)
                         .First() == singleMenuItem) return RedirectToAction("Manage");
 
-                    var previousMenuItem = Db.MenuItems
+                    switchItem = Db.MenuItems
                         .Where(m => m.Order > singleMenuItem.Order && m.Status && m.Parent == singleMenuItem.Parent)
                         .OrderBy(m => m.Order)
                         .FirstOrDefault();
-                    if (previousMenuItem == null || previousMenuItem.Deleted) return RedirectToAction("Manage");
-                    var neworder = previousMenuItem.Order;
-                    previousMenuItem.Order = singleMenuItem.Order;
-                    singleMenuItem.Order = neworder;
                     break;
                 }
-                    
+                default:
+                {
+                    return RedirectToAction("Manage");
+                }
             }
+
+            if (switchItem == null || switchItem.Deleted) return RedirectToAction("Manage");
+
+            // Save order of the item to switch with in temporary variable
+            var t = switchItem.Order;
+            switchItem.Order = singleMenuItem.Order;
+            singleMenuItem.Order = t;
 
             Db.SaveChanges();
             return RedirectToAction("Manage");
@@ -395,11 +408,12 @@ namespace Bigrivers.Client.Backend.Controllers
 
         public ActionResult AddToParent(int? id, int? param)
         {
-            if (id == null || param == null) return RedirectToAction("Manage");
+            if(!VerifyId(id)) return RedirectToAction("Manage");
+            if (param == null) return RedirectToAction("Manage");
             var singleMenuItem = Db.MenuItems.Find(id);
-            if (singleMenuItem == null || singleMenuItem.Deleted) return RedirectToAction("Manage");
+            var oldParent = Db.MenuItems
+                .FirstOrDefault(m => m.Id == singleMenuItem.Parent);
 
-            var oldParent = Db.MenuItems.FirstOrDefault(m => m.Id == singleMenuItem.Parent);
             // Remove the IsParent property of the previous parent if it doesn't have more children
             if (oldParent != null && Db.MenuItems
                 .Where(m => m.Parent == oldParent.Id)
@@ -414,8 +428,8 @@ namespace Bigrivers.Client.Backend.Controllers
             if (param.Value != -1)
             {
                 singleMenuItem.Parent = param.Value;
-
-                var parent = Db.MenuItems.FirstOrDefault(m => m.Id == singleMenuItem.Parent);
+                var parent = Db.MenuItems
+                    .FirstOrDefault(m => m.Id == singleMenuItem.Parent);
                 parent.IsParent = true;
             }
 
@@ -436,6 +450,13 @@ namespace Bigrivers.Client.Backend.Controllers
         private IQueryable<MenuItem> GetMenuItems(bool includeDeleted = false)
         {
             return includeDeleted ? Db.MenuItems : Db.MenuItems.Where(a => !a.Deleted);
+        }
+
+        private bool VerifyId(int? id)
+        {
+            if (id == null) return false;
+            var singleMenuItem = Db.MenuItems.Find(id);
+            return singleMenuItem != null && !singleMenuItem.Deleted;
         }
 
         private MenuItemViewModel FillSelectLists(MenuItemViewModel viewModel)

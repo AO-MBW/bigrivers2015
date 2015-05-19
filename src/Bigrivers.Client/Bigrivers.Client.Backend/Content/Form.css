@@ -13,16 +13,11 @@
 
 #content form label {
 	display: block;
-	margin: 15px 0 5px;
+	margin-bottom: 5px;
 	font-weight: bold;
 	color: #3c3c3e;
 }
 #content form .label-selectable {
-	font-weight: normal;
-}
-
-#content form label.radio {
-	margin: 1px;
 	font-weight: normal;
 }
 
@@ -51,8 +46,8 @@
 #content form input[type="text"] {
 	width: 100%;
 	height: 35px;
-	margin: 0 0 15px;
-	padding: 5px 10px 5px 10px;
+	margin-bottom: 15px;
+	padding: 5px 10px;
 	border: 1px solid #c5c5c5;
 }
 
@@ -94,6 +89,18 @@
 	border: none;
 }
 
+#content form img.editor {
+	height: 100px;
+	float: left;
+	width: auto;
+	margin-right: 10px;
+}
+
+#content form p {
+	margin-top: 0;
+	margin-bottom: 5px;
+}
+
 #content form fieldset .input-validation-error {
 	border: 1px solid red;
 }
@@ -121,7 +128,7 @@
 
 #content div.validation-summary-errors ul {
 	list-style-type: none;
-    margin-left: 10px;
+	margin-left: 10px;
 	padding-left: 0;
 	color: red;
 }

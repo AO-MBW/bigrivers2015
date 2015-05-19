@@ -10,8 +10,7 @@ namespace Bigrivers.Server.Model
         public string Title { get; set; }
         public string ShortDescription { get; set; }
         public string Description { get; set; }
-        public string FrontpageLogo { get; set; }
-        public string BackgroundImage { get; set; }
+        
 
         [DefaultValue(true)]
         public bool WebsiteStatus { get; set; }
@@ -36,5 +35,7 @@ namespace Bigrivers.Server.Model
         public virtual List<Performance> Performances { get; set; }
         public virtual List<Sponsor> Sponsors { get; set; }
         public virtual Location Location { get; set; }
+        public virtual File FrontpageLogo { get; set; }
+        public virtual File BackgroundImage { get; set; }
     }
 }
