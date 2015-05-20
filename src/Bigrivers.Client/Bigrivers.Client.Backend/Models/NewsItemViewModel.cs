@@ -12,7 +12,6 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Display(Name = "Inhoud")]
         public string Content { get; set; }
 
-        [Required]
         [Display(Name = "Afbeelding")]
         [DataType(DataType.Upload)]
         public string Image { get; set; }

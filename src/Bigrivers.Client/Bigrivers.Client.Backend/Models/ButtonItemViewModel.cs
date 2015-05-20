@@ -13,7 +13,6 @@ namespace Bigrivers.Client.Backend.ViewModels
         [DataType(DataType.Url)]
         public string URL { get; set; }
 
-        [Required]
         public File Logo { get; set; }
 
         public int? Order { get; set; }

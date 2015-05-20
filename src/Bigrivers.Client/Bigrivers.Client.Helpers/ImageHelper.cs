@@ -137,6 +137,19 @@ namespace Bigrivers.Client.Helpers
         }
 
         /// <summary>
+        /// Checks if file is larger than given dimensions.
+        /// Returns false if the file is smaller than given dimensions.
+        /// </summary>
+        public static bool IsLargerThanDimensions(Stream imageStream, int minHeight, int minWidth)
+        {
+            using (var img = Image.FromStream(imageStream))
+            {
+                if (img.Width > minWidth && img.Height > minHeight) return true;
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Checks if file is exactly the given dimensions.
         /// Returns false if the file is not of the given dimensions.
         /// </summary>
@@ -148,5 +161,14 @@ namespace Bigrivers.Client.Helpers
             }
             return false;
         }
+
+        //public static bool IsAspectRatio(Stream imageStream, int height, int width)
+        //{
+        //    using (var img = Image.FromStream(imageStream))
+        //    {
+        //        if (img.Width == width && img.Height == height) return true;
+        //    }
+        //    return false;
+        //}
     }
 }
