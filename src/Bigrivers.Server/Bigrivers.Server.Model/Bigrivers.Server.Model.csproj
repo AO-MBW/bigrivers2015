@@ -39,7 +39,7 @@
     <Compile Include="Event.cs" />
     <Compile Include="File.cs" />
     <Compile Include="Genre.cs" />
-    <Compile Include="Link.cs" />
+    <Compile Include="SiteInformation.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="NewsItem.cs" />

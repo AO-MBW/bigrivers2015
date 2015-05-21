@@ -16,7 +16,7 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Settings()
         {
             // Find single artist
-            var settings = Db.Links.FirstOrDefault();
+            var settings = Db.SiteInformation.FirstOrDefault();
 
             var model = new SettingsViewModel
             {
@@ -40,7 +40,7 @@ namespace Bigrivers.Client.Backend.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Settings(SettingsViewModel viewModel)
         {
-            var settings = Db.Links.FirstOrDefault();
+            var settings = Db.SiteInformation.FirstOrDefault();
             if (settings != null)
             {
                 settings.YoutubeChannel = viewModel.YoutubeChannel;
@@ -49,13 +49,13 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             else
             {
-                var firstSettings = new Link
+                var firstSettings = new SiteInformation
                 {
                     YoutubeChannel = viewModel.YoutubeChannel,
                     Facebook = viewModel.Facebook,
                     Twitter = viewModel.Twitter
                 };
-                Db.Links.Add(firstSettings);
+                Db.SiteInformation.Add(firstSettings);
             }
             Db.SaveChanges();
 

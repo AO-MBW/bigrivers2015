@@ -30,7 +30,7 @@ namespace Bigrivers.Server.Data
         public virtual DbSet<Sponsor> Sponsors { get; set; }
         public virtual DbSet<MenuItem> MenuItems { get; set; }
         public virtual DbSet<ButtonItem> ButtonItems { get; set; }
-        public virtual DbSet<Link> Links { get; set; }
+        public virtual DbSet<SiteInformation> SiteInformation { get; set; }
         public virtual DbSet<File> Files { get; set; }
     }
 }
