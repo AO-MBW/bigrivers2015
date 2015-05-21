@@ -3,8 +3,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Bigrivers.Server.Model;
-using Bigrivers.Client.Backend.ViewModels;
 using Bigrivers.Client.Helpers;
+using Bigrivers.Server.Model.Backend.ViewModels;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
@@ -76,7 +76,6 @@ namespace Bigrivers.Client.Backend.Controllers
                     return View("Edit", viewModel);
                 }
                 photoEntity = ImageHelper.UploadFile(file, "artist");
-                
             }
 
             var singleArtist = new Artist

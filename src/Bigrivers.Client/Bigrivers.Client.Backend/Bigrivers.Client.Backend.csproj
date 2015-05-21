@@ -155,14 +155,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventViewModel.cs" />
-    <Compile Include="Models\ArtistViewModel.cs" />
-    <Compile Include="Models\ButtonItemViewModel.cs" />
-    <Compile Include="Models\MenuItemViewModel.cs" />
-    <Compile Include="Models\NewsItemViewModel.cs" />
-    <Compile Include="Models\PerformanceViewModel.cs" />
-    <Compile Include="Models\SettingsViewModel.cs" />
-    <Compile Include="Models\SponsorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -396,7 +388,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\ViewScripts\Menuitem-Edit.js" />
+    <Content Include="Scripts\ViewScripts\LinkEditor.js" />
     <Content Include="Scripts\ViewScripts\Performance-Edit.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />

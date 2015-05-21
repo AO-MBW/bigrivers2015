@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Bigrivers.Client.Backend.Models;
 using Bigrivers.Client.Helpers;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
@@ -55,8 +56,14 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             var viewModel = new ButtonItemViewModel
             {
+                LinkView = new LinkViewModel
+                {
+                    LinkType = "internal",
+                    InternalType = "Events"
+                },
                 Status = true
             };
+            viewModel.LinkView = LinkHelper.FillSelectLists(viewModel.LinkView);
 
             ViewBag.Title = "Nieuw ButtonItem";
             return View("Edit", viewModel);
@@ -65,35 +72,42 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: ButtonItems/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(ButtonItemViewModel viewModel, HttpPostedFileBase file)
+        public ActionResult New(ButtonItemViewModel viewModel, HttpPostedFileBase image, HttpPostedFileBase file)
         {
+            if (file == null && viewModel.LinkView.LinkType == "file")
+            {
+                ModelState.AddModelError("", "Er moet een bestand worden geupload");
+            }
+            else if (viewModel.LinkView.LinkType == "file")
+            {
+                if (ImageHelper.IsSize(file, 2, "mb")) ModelState.AddModelError("", "Het bestand mag niet groter dan 2 MB zijn");
+            }
             if (!ModelState.IsValid)
             {
+                viewModel.LinkView = LinkHelper.FillSelectLists(viewModel.LinkView);
                 ViewBag.Title = "Nieuw ButtonItem";
                 return View("Edit", viewModel);
             }
 
             File photoEntity = null;
-            if (file != null)
+            if (image != null)
             {
-                
-                if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] {"image"}))
+                if (ImageHelper.IsSize(image, 200000) && ImageHelper.IsMimes(image, new[] {"image"}))
                 {
-                    photoEntity = ImageHelper.UploadFile(file, "buttonitem");
+                    photoEntity = ImageHelper.UploadFile(image, "buttonitem");
                 }
                 else
                 {
                     return RedirectToAction("Manage");
                 }
             }
-            
 
             // Set item's order as last item in list
             var order = Db.ButtonItems.Count(m => m.Status) > 0 ? Db.ButtonItems.OrderByDescending(m => m.Order).First().Order + 1 : 1;
 
             var singleButtonItem = new ButtonItem
             {
-                URL = viewModel.URL,
+                Target = LinkHelper.SetLink(viewModel.LinkView, file),
                 DisplayName = viewModel.DisplayName,
                 Order = order,
                 Status = viewModel.Status,
@@ -116,9 +130,9 @@ namespace Bigrivers.Client.Backend.Controllers
 
             var model = new ButtonItemViewModel
             {
-                URL = singleButtonItem.URL,
                 DisplayName = singleButtonItem.DisplayName,
-                Status = singleButtonItem.Status
+                Status = singleButtonItem.Status,
+                LinkView = LinkHelper.SetViewModel(singleButtonItem.Target, new LinkViewModel())
             };
             ViewBag.Title = "Bewerk ButtonItem";
             return View(model);
@@ -127,23 +141,38 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: ButtonItems/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, ButtonItemViewModel viewModel, HttpPostedFileBase file)
+        public ActionResult Edit(int id, ButtonItemViewModel viewModel, HttpPostedFileBase image, HttpPostedFileBase file)
         {
+            if (file == null && viewModel.LinkView.LinkType == "file")
+            {
+                ModelState.AddModelError("", "Er moet een bestand worden geupload");
+            }
+            else if (viewModel.LinkView.LinkType == "file")
+            {
+                if (ImageHelper.IsSize(file, 2, "mb")) ModelState.AddModelError("", "Het bestand mag niet groter dan 2 MB zijn");
+            }
+            if (!ModelState.IsValid)
+            {
+                viewModel.LinkView = LinkHelper.FillSelectLists(viewModel.LinkView);
+                ViewBag.Title = "Nieuw MenuItem";
+                return View("Edit", viewModel);
+            }
+
             if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleButtonItem = Db.ButtonItems.Find(id);
 
             File photoEntity = null;
-            if (file != null)
+            if (image != null)
             {
-                if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] {"image"}))
+                if (ImageHelper.IsSize(image, 200000) && ImageHelper.IsMimes(image, new[] {"image"}))
                 {
-                    photoEntity = ImageHelper.UploadFile(file, "buttonitem");
+                    photoEntity = ImageHelper.UploadFile(image, "buttonitem");
                 }
             }
 
-            singleButtonItem.URL = viewModel.URL;
             singleButtonItem.DisplayName = viewModel.DisplayName;
             singleButtonItem.Status = viewModel.Status;
+            singleButtonItem.Target = LinkHelper.SetLink(viewModel.LinkView, file);
             if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleButtonItem.Logo = photoEntity;
             Db.SaveChanges();
 

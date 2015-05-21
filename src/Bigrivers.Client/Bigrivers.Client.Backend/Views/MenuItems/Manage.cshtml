@@ -37,7 +37,7 @@
                         @* Only display URL if the MenuItem is not a parent *@
                         @if (!m.IsParent)
                         {
-                            @m.URL
+                            @LinkHelper.GetUrl(m.Target, true);
                         }
                     </td>
                     

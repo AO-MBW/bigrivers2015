@@ -2,19 +2,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace Bigrivers.Client.Backend.ViewModels
+namespace Bigrivers.Client.Backend.Models
 {
-    public class MenuItemViewModel
+    public class LinkViewModel
     {
-        [Required]
-        [Display(Name = "Weergavenaam")]
-        public string DisplayName { get; set; }
-
-        public int? Order { get; set; }
-        public int Parent { get; set; }
-
-        public bool Status { get; set; }
-
         /// <summary>
         /// Variable to set either an internal, external or file link.
         /// </summary>
@@ -77,7 +68,7 @@ namespace Bigrivers.Client.Backend.ViewModels
                     }
                 };
             }
-        } 
+        }
 
         public IEnumerable<SelectListItem> Types
         {
@@ -127,6 +118,5 @@ namespace Bigrivers.Client.Backend.ViewModels
         public List<SelectListItem> Performances { get; set; }
         public List<SelectListItem> NewsItems { get; set; }
         public List<SelectListItem> Sponsors { get; set; }
-
     }
 }

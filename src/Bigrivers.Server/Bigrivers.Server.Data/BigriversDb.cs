@@ -32,5 +32,6 @@ namespace Bigrivers.Server.Data
         public virtual DbSet<ButtonItem> ButtonItems { get; set; }
         public virtual DbSet<SiteInformation> SiteInformation { get; set; }
         public virtual DbSet<File> Files { get; set; }
+        public virtual DbSet<Link> Links { get; set; }
     }
 }
