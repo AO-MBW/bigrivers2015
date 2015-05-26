@@ -127,7 +127,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
         public ActionResult Contact()
         {
-            var socialMedia = AccessLayer.Links.FirstOrDefault();
+            var socialMedia = AccessLayer.SiteInformation.FirstOrDefault();
 
             var model = new SettingsViewModel
             {

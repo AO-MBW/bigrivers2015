@@ -12,19 +12,52 @@
             <fieldset>
                 @Html.LabelFor(m => m.DisplayName)
                 @Html.TextBoxFor(m => m.DisplayName)
-                @Html.LabelFor(m => m.URL)
-                @Html.TextBoxFor(m => m.URL)
             </fieldset>
+            <hr/>
+            @* Start of the Link Builder *@
             <fieldset>
+                @Html.LabelFor(m => m.LinkView.LinkType)
+                @Html.DropDownListFor(m => m.LinkView.LinkType, Model.LinkView.LinkTypes, new {id = "SelectLinkType"})
+            </fieldset>
+            <fieldset class="linkType" id="external">
+                @Html.LabelFor(m => m.LinkView.ExternalUrl)
+                @Html.TextBoxFor(m => m.LinkView.ExternalUrl)
+            </fieldset>
+            <fieldset class="linkType" id="internal">
+                @Html.DropDownListFor(m => m.LinkView.InternalType, Model.LinkView.Types, new {id = "SelectInternalType"})
+                <span style="font-size: 22px; font-weight: bold;">></span>
+                @Html.DropDownListFor(m => m.LinkView.InternalEventId, Model.LinkView.Events, new {id = "Events", @class = "InternalType"})
+                @Html.DropDownListFor(m => m.LinkView.InternalArtistId, Model.LinkView.Artists, new {id = "Artists", @class = "InternalType"})
+                @Html.DropDownListFor(m => m.LinkView.InternalPerformanceId, Model.LinkView.Performances, new {id = "Performances", @class = "InternalType"})
+                @Html.DropDownListFor(m => m.LinkView.InternalNewsId, Model.LinkView.NewsItems, new {id = "News", @class = "InternalType"})
+                @Html.DropDownListFor(m => m.LinkView.InternalSponsorId, Model.LinkView.Sponsors, new {id = "Sponsors", @class = "InternalType"})
+            </fieldset>
+            <fieldset class="linkType" id="file">
+                <p>Upload een bestand om naar te linken</p>
                 <input type="file" name="file">
+            </fieldset>
+            @* End of the Link Builder *@
+            <hr/>
+            <fieldset>
+                <input type="file" name="image">
             </fieldset>
             <fieldset>
                 <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
             </fieldset>
-            <hr />
+            <hr/>
             <div class="footer">
                 <input type="submit" name="save" value="Menuitem opslaan">
             </div>
         </form>
     </div>
 </div>
+<script>
+    $("#SelectLinkType").val("@Model.LinkView.LinkType");
+    $("#SelectInternalType").val("@Model.LinkView.InternalType");
+    $("#Events").val("@Model.LinkView.InternalEventId");
+    $("#Artists").val("@Model.LinkView.InternalArtistId");
+    $("#Performances").val("@Model.LinkView.InternalPerformanceId");
+    $("#News").val("@Model.LinkView.InternalNewsId");
+    $("#Sponsors").val("@Model.LinkView.InternalSponsorId");
+</script>
+<script src="/Scripts/ViewScripts/LinkEditor.js"></script>

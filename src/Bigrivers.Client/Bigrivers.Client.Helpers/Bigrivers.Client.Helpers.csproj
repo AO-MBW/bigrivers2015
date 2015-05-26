@@ -104,6 +104,7 @@
   <ItemGroup>
     <Compile Include="HtmlHelperExtensionMethods.cs" />
     <Compile Include="ImageHelper.cs" />
+    <Compile Include="LinkHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

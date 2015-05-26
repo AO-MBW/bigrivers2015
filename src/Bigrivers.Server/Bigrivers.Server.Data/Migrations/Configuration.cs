@@ -22,11 +22,16 @@ namespace Bigrivers.Server.Data.Migrations
             context.Performances.RemoveRange(context.Performances);
             context.MenuItems.RemoveRange(context.MenuItems);
             context.ButtonItems.RemoveRange(context.ButtonItems);
+            context.Links.RemoveRange(context.Links);
 
             //Create Menu Items
             context.MenuItems.Add(new MenuItem
             {
-                URL = "http://www.crowdfunding.nl/",
+                Target = new Link
+                {
+                    Type = "external",
+                    ExternalUrl = "http://www.crowdfunding.nl/"
+                },
                 DisplayName = "Crowdfunding",
                 Order = 1,
                 Parent = null,
@@ -35,7 +40,11 @@ namespace Bigrivers.Server.Data.Migrations
             });
             context.MenuItems.Add(new MenuItem
             {
-                URL = "/Home/Events/",
+                Target = new Link
+                {
+                    Type = "internal",
+                    InternalType = "Events"
+                },
                 DisplayName = "Evenementen",
                 Order = 2,
                 Parent = null,
@@ -44,7 +53,11 @@ namespace Bigrivers.Server.Data.Migrations
             });
             context.MenuItems.Add(new MenuItem
             {
-                URL = "/Home/Artists/",
+                Target = new Link
+                {
+                    Type = "internal",
+                    InternalType = "Artists"
+                },
                 DisplayName = "Artiesten",
                 Order = 3,
                 Parent = null,
@@ -53,7 +66,11 @@ namespace Bigrivers.Server.Data.Migrations
             });
             context.MenuItems.Add(new MenuItem
             {
-                URL = "/Home/Performances/",
+                Target = new Link
+                {
+                    Type = "internal",
+                    InternalType = "Performances"
+                },
                 DisplayName = "Optredens",
                 Order = 4,
                 Parent = null,
@@ -62,7 +79,11 @@ namespace Bigrivers.Server.Data.Migrations
             });
             context.MenuItems.Add(new MenuItem
             {
-                URL = "/Home/Contact/",
+                Target = new Link
+                {
+                    Type = "internal",
+                    InternalType = "Contact"
+                },
                 DisplayName = "Contact",
                 Order = 5,
                 Parent = null,
@@ -71,7 +92,11 @@ namespace Bigrivers.Server.Data.Migrations
             });
             context.MenuItems.Add(new MenuItem
             {
-                URL = "/Images/br15.jpg",
+                Target = new Link
+                {
+                    Type = "external",
+                    ExternalUrl = "/Images/br15.jpg"
+                },
                 DisplayName = "Logo",
                 Order = 6,
                 Parent = null,

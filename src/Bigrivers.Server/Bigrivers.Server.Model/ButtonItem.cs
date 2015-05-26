@@ -6,7 +6,6 @@ namespace Bigrivers.Server.Model
     {
         public int Id { get; set; }
         public string DisplayName { get; set; }
-        public string URL { get; set; }
         public int? Order { get; set; }
 
         [DefaultValue(true)]
@@ -15,6 +14,7 @@ namespace Bigrivers.Server.Model
         [DefaultValue(false)]
         public bool Deleted { get; set; }
 
+        public virtual Link Target { get; set; }
         public virtual File Logo { get; set; }
     }
 }

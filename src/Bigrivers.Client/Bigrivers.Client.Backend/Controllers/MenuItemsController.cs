@@ -1,7 +1,10 @@
 ﻿using System.Linq;
+using System.Web;
 using System.Web.Mvc;
+using Bigrivers.Client.Backend.Models;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
+using Bigrivers.Client.Helpers;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
@@ -70,12 +73,14 @@ namespace Bigrivers.Client.Backend.Controllers
             // Add an empty entry to lists to select a single object, e.g. /Artists/5, so there can exist a /Artists/
             var viewModel = new MenuItemViewModel
             {
-                LinkType = "internal",
-                InternalType = "Events",
+                LinkView = new LinkViewModel
+                {
+                    LinkType = "internal",
+                    InternalType = "Events"
+                },
                 Status = true
             };
-            viewModel = FillSelectLists(viewModel);
-
+            viewModel.LinkView = LinkHelper.FillSelectLists(viewModel.LinkView);
 
             ViewBag.Title = "Nieuw MenuItem";
             return View("Edit", viewModel);
@@ -84,67 +89,32 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: MenuItem/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(MenuItemViewModel viewModel)
+        public ActionResult New(MenuItemViewModel viewModel, HttpPostedFileBase file)
         {
+            if (file == null && viewModel.LinkView.LinkType == "file")
+            {
+                ModelState.AddModelError("", "Er moet een bestand worden geupload");
+            }
+            else if (viewModel.LinkView.LinkType == "file")
+            {
+                if (ImageHelper.IsSize(file, 2, "mb")) ModelState.AddModelError("", "Het bestand mag niet groter dan 2 MB zijn");
+            }
             if (!ModelState.IsValid)
             {
-                viewModel = FillSelectLists(viewModel);
+                viewModel.LinkView = LinkHelper.FillSelectLists(viewModel.LinkView);
                 ViewBag.Title = "Nieuw MenuItem";
                 return View("Edit", viewModel);
             }
-
-            string url;
-            // Set the url variable to a working url based on the link type
-            switch (viewModel.LinkType)
-            {
-                case "internal":
-                    var internalId = "";
-
-                    // Get the correct 'Internal Id' from the form
-                    switch (viewModel.InternalType)
-                    {
-                        case "Events":
-                            internalId = viewModel.InternalEventId;
-                            break;
-                        case "Artists":
-                            internalId = viewModel.InternalArtistId;
-                            break;
-                        case "Performances":
-                            internalId = viewModel.InternalPerformanceId;
-                            break;
-                        case "News":
-                            internalId = viewModel.InternalNewsId;
-                            break;
-                        case "Sponsors":
-                            internalId = viewModel.InternalSponsorId;
-                            break;
-                        case "Contact":
-                            break;
-                    }
-
-                    // Form the URL from set variables
-                    url = string.Format("/Home/{0}/{1}",viewModel.InternalType, internalId);
-                    break;
-                case "external":
-                    url = viewModel.ExternalUrl;
-                    // Make sure the URL uses Http if it doesn't use Http / Https already
-                    if (!url.StartsWith("http")) url = string.Format("http://{0}", url);
-                    break;
-                case "file":
-                    url = viewModel.ExternalUrl;
-                    break;
-                default:
-                    url = viewModel.ExternalUrl;
-                    break;
-            }
-
+            
             // Set the new item as the last item in the root order
-            var item = Db.MenuItems.OrderByDescending(m => m.Order).FirstOrDefault(m => m.Status);
+            var item = Db.MenuItems
+                .OrderByDescending(m => m.Order)
+                .FirstOrDefault(m => m.Status);
             var order = item != null ? item.Order + 1 : 1;
 
             var singleMenuItem = new MenuItem
             {
-                URL = url,
+                Target = LinkHelper.SetLink(viewModel.LinkView, file),
                 DisplayName = viewModel.DisplayName,
                 Order = order,
                 Status = viewModel.Status
@@ -162,60 +132,13 @@ namespace Bigrivers.Client.Backend.Controllers
             if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleMenuItem = Db.MenuItems.Find(id);
 
-            // Set empty / default variables in case they won't be given a value down below
-            string linkType;
-            var internalType = "Events";
-            var internalId = "";
-            var externalUrl = "";
-
-            // Detect menuitem link type from keywords in the URL field
-            if (singleMenuItem.URL.Contains("http"))
-            {
-                linkType = "external";
-                externalUrl = singleMenuItem.URL;
-            }
-            else if (singleMenuItem.URL.Contains("/Images/"))
-            {
-                linkType = "file";
-            }
-            else
-            {
-                linkType = "internal";
-                var arr = singleMenuItem.URL.Split(new []{'/'});
-                internalType = arr[2];
-                internalId = arr[3];
-            }
-
             // Create the new model with everything in it.
             var viewModel = new MenuItemViewModel
             {
                 DisplayName = singleMenuItem.DisplayName,
                 Status = singleMenuItem.Status,
-                LinkType = linkType,
-                InternalType = internalType,
-                ExternalUrl = externalUrl,
+                LinkView = LinkHelper.SetViewModel(singleMenuItem.Target, new LinkViewModel())
             };
-            viewModel = FillSelectLists(viewModel);
-            
-            // Set the Id for the 'Internal Id'
-            switch (internalType)
-            {
-                case "Events":
-                    viewModel.InternalEventId = internalId;
-                    break;
-                case "Artists":
-                    viewModel.InternalArtistId = internalId;
-                    break;
-                case "Performances":
-                    viewModel.InternalPerformanceId = internalId;
-                    break;
-                case "News":
-                    viewModel.InternalNewsId = internalId;
-                    break;
-                case "Sponsors":
-                    viewModel.InternalSponsorId = internalId;
-                    break;
-            }
             
             ViewBag.Title = "Bewerk MenuItem";
             return View(viewModel);
@@ -224,63 +147,30 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: MenuItem/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, MenuItemViewModel viewModel)
+        public ActionResult Edit(int id, MenuItemViewModel viewModel, HttpPostedFileBase file)
         {
+            if (file == null && viewModel.LinkView.LinkType == "file")
+            {
+                ModelState.AddModelError("", "Er moet een bestand worden geupload");
+            }
+            else if (viewModel.LinkView.LinkType == "file")
+            {
+                if (ImageHelper.IsSize(file, 2, "mb")) ModelState.AddModelError("", "Het bestand mag niet groter dan 2 MB zijn");
+            }
             if (!ModelState.IsValid)
             {
-                viewModel = FillSelectLists(viewModel);
+                viewModel.LinkView = LinkHelper.FillSelectLists(viewModel.LinkView);
                 ViewBag.Title = "Nieuw MenuItem";
                 return View("Edit", viewModel);
             }
 
             if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleMenuItem = Db.MenuItems.Find(id);
-            string url;
 
-            // Set the url variable to a working url based on the link type
-            switch (viewModel.LinkType)
-            {
-                case "internal":
-                    var internalId = "";
-
-                    // Set the 'Internal Id' based on the 'Internal Type'
-                    switch (viewModel.InternalType)
-                    {
-                        case "Events":
-                            internalId = viewModel.InternalEventId;
-                            break;
-                        case "Artists":
-                            internalId = viewModel.InternalArtistId;
-                            break;
-                        case "Performances":
-                            internalId = viewModel.InternalPerformanceId;
-                            break;
-                        case "News":
-                            internalId = viewModel.InternalNewsId;
-                            break;
-                        case "Sponsors":
-                            internalId = viewModel.InternalSponsorId;
-                            break;
-                    }
-
-                    // Create the URL
-                    url = string.Format("/Home/{0}/{1}", viewModel.InternalType, internalId);
-                    break;
-                case "external":
-                    url = viewModel.ExternalUrl;
-                    if (!url.StartsWith("http")) url = string.Format("http://{0}", url);
-                    break;
-                case "file":
-                    url = viewModel.ExternalUrl;
-                    break;
-                default:
-                    url = viewModel.ExternalUrl;
-                    break;
-            }
-
-            singleMenuItem.URL = url;
             singleMenuItem.DisplayName = viewModel.DisplayName;
             singleMenuItem.Status = viewModel.Status;
+            singleMenuItem.Target = LinkHelper.SetLink(viewModel.LinkView, file);
+
             Db.SaveChanges();
 
             return RedirectToAction("Manage");
@@ -449,73 +339,6 @@ namespace Bigrivers.Client.Backend.Controllers
             if (id == null) return false;
             var singleMenuItem = Db.MenuItems.Find(id);
             return singleMenuItem != null && !singleMenuItem.Deleted;
-        }
-
-        private MenuItemViewModel FillSelectLists(MenuItemViewModel viewModel)
-        {
-            viewModel.Events = Db.Events
-                .Where(m => !m.Deleted)
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Title
-                }).ToList();
-            viewModel.Artists = Db.Artists
-                .Where(m => !m.Deleted)
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Name
-                }).ToList();
-            viewModel.Performances = Db.Performances
-                .Where(m => !m.Deleted)
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Artist.Name
-                }).ToList();
-            viewModel.Sponsors = Db.Sponsors
-                .Where(m => !m.Deleted)
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Name
-                }).ToList();
-            viewModel.NewsItems = Db.NewsItems
-                .Where(m => !m.Deleted)
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Title
-                }).ToList();
-
-            viewModel.Events.Insert(0, new SelectListItem
-            {
-                Value = "",
-                Text = ""
-            });
-            viewModel.Artists.Insert(0, new SelectListItem
-            {
-                Value = "",
-                Text = ""
-            });
-            viewModel.Sponsors.Insert(0, new SelectListItem
-            {
-                Value = "",
-                Text = ""
-            });
-            viewModel.NewsItems.Insert(0, new SelectListItem
-            {
-                Value = "",
-                Text = ""
-            });
-            viewModel.Performances.Insert(0, new SelectListItem
-            {
-                Value = "",
-                Text = ""
-            });
-
-            return viewModel;
         }
     }
 }

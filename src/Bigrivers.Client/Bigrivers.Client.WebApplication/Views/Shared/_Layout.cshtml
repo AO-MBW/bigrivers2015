@@ -28,10 +28,9 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-
                 @foreach (MenuItem item in ViewBag.MenuItems)
                 {
-                    <li><a href="@item.URL">@item.DisplayName</a></li>
+                    <li><a href="@LinkHelper.GetUrl(item.Target)">@item.DisplayName</a></li>
 
                 }
             </ul>

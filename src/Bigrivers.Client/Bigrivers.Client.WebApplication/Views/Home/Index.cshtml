@@ -4,7 +4,7 @@
 @foreach (ButtonItem item in ViewBag.ButtonItems)
 {
     <div class="Button">
-        <a class="ButtonLink" href="@item.URL">
+        <a class="ButtonLink" href="@LinkHelper.GetUrl(item.Target)">
             <div class="ButtonDiv">
                 <img src="@ImageHelper.GetImageUrl(item.Logo)" class="ButtonImg" />
                 <p class="ButtonTitle">@item.DisplayName</p>
