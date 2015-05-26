@@ -94,7 +94,7 @@ namespace Bigrivers.Client.Helpers
 
             if (Db.Files.Any(m => m.Md5 == hash && m.Container == container))
             {
-                return Db.Files.Single(m => m.Md5 == hash);
+                return Db.Files.Single(m => m.Md5 == hash && m.Container == container);
             }
 
             var photoEntity = new File
@@ -117,6 +117,8 @@ namespace Bigrivers.Client.Helpers
                     PublicAccess = BlobContainerPublicAccessType.Blob
                 });
 
+            Db.Files.Add(photoEntity);
+            Db.SaveChanges();
             var block = _container.GetBlockBlobReference(key);
             block.Properties.ContentType = file.ContentType;
             block.UploadFromStream(file.InputStream);

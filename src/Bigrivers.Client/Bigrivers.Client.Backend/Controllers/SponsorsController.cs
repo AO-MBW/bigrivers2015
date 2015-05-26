@@ -75,17 +75,14 @@ namespace Bigrivers.Client.Backend.Controllers
                 }
             }
             
-
             var singleSponsor = new Sponsor
             {
                 Name = viewModel.Name,
                 Url = viewModel.Url,
-                Image = photoEntity,
+                Image = Db.Files.Single(m => m.Md5 == photoEntity.Md5 && m.Container == photoEntity.Container),
                 Status = viewModel.Status
             };
 
-            // Only add file to DB if it hasn't been uploaded before
-            if (!Db.Files.Any(m => m.Md5 == photoEntity.Md5)) Db.Files.Add(photoEntity);
             Db.Sponsors.Add(singleSponsor);
             Db.SaveChanges();
 
@@ -136,7 +133,7 @@ namespace Bigrivers.Client.Backend.Controllers
             singleSponsor.Name = viewModel.Name;
             singleSponsor.Url = viewModel.Url;
             singleSponsor.Status = viewModel.Status;
-            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleSponsor.Image = photoEntity;
+            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleSponsor.Image = Db.Files.Single(m => m.Md5 == photoEntity.Md5 && m.Container == photoEntity.Container);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

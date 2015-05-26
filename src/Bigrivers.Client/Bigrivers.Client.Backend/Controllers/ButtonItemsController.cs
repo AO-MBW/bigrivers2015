@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Entity.Migrations;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Bigrivers.Client.Backend.Models;
@@ -111,14 +112,11 @@ namespace Bigrivers.Client.Backend.Controllers
                 DisplayName = viewModel.DisplayName,
                 Order = order,
                 Status = viewModel.Status,
-                Logo = photoEntity
+                Logo = Db.Files.Single(m => m.Md5 == photoEntity.Md5 && m.Container == photoEntity.Container)
             };
 
-            // Check if file is not yet uploaded
-            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5 && m.Container == photoEntity.Container)) Db.Files.Add(photoEntity);
             Db.ButtonItems.Add(singleButtonItem);
             Db.SaveChanges();
-
             return RedirectToAction("Manage");
         }
 
@@ -173,7 +171,7 @@ namespace Bigrivers.Client.Backend.Controllers
             singleButtonItem.DisplayName = viewModel.DisplayName;
             singleButtonItem.Status = viewModel.Status;
             singleButtonItem.Target = LinkHelper.SetLink(viewModel.LinkView, file);
-            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleButtonItem.Logo = photoEntity;
+            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleButtonItem.Logo = Db.Files.Single(m => m.Md5 == photoEntity.Md5 && m.Container == photoEntity.Container);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");
