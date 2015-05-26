@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using Bigrivers.Client.Backend.ViewModels;
 using Bigrivers.Server.Model;
@@ -151,6 +152,36 @@ namespace Bigrivers.Client.Backend.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                return RedirectToAction("Manage");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return View(model);
+        }
         #endregion
 
         #region Login / Logout
@@ -174,6 +205,16 @@ namespace Bigrivers.Client.Backend.Controllers
             if (!ModelState.IsValid)
             {
                 return View("Login", "~/Views/Shared/_LayoutLogin.cshtml", model);
+            }
+
+            if (!UserManager.Users.Any() && model.LoginName == "developer" && model.Password == WebConfigurationManager.AppSettings["DefaultAccountPassword"])
+            {
+                await Register(new RegisterViewModel
+                {
+                    LoginName = "developer",
+                    Password = WebConfigurationManager.AppSettings["DefaultAccountPassword"],
+                    Role = "developer"
+                });
             }
 
             // This doesn't count login failures towards account lockout
@@ -239,7 +280,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
         private bool UserIsManager
         {
-            get { return !User.IsInRole("developer") && !User.IsInRole("Bigrivers Admin"); }
+            get { return User.IsInRole("developer") || User.IsInRole("Bigrivers Admin"); }
         }
 
         #endregion

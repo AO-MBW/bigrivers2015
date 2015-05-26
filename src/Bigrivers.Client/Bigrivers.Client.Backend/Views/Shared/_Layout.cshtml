@@ -16,6 +16,7 @@
             <li class="dropdown">
                 @User.Identity.Name<img class="icon" src="/Images/dropdown.png" width="15" height="15" />
                 <ul class="sub_navigation">
+                    <li>@Html.ActionLink("Wijzig wachtwoord", "ChangePassword", "Account")</li>
                     <li>@Html.ActionLink("Log uit", "Logout", "Account")</li>
                 </ul>
             </li>
