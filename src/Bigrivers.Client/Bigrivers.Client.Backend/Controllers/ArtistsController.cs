@@ -82,7 +82,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Name = viewModel.Name,
                 Description = viewModel.Description,
-                Avatar = photoEntity,
+                Avatar = Db.Files.Single(m => m.Md5 == photoEntity.Md5 && m.Container == photoEntity.Container),
                 Website = viewModel.Website,
                 YoutubeChannel = viewModel.YoutubeChannel,
                 Facebook = viewModel.Facebook,
@@ -90,8 +90,6 @@ namespace Bigrivers.Client.Backend.Controllers
                 Status = viewModel.Status
             };
 
-            // Only add file to DB if it hasn't been uploaded before
-            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) Db.Files.Add(photoEntity);
             Db.Artists.Add(singleArtist);
             Db.SaveChanges();
 

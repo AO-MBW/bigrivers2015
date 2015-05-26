@@ -7,13 +7,13 @@ namespace Bigrivers.Client.Backend.Controllers
 {
     public class NewsController : BaseController
     {
-        // GET: Artist/Index
+        // GET: News/Index
         public ActionResult Index()
         {
             return RedirectToAction("Manage");
         }
 
-        // GET: Artist/
+        // GET: News/
         public ActionResult Manage()
         {
             var newsItems = GetNewsItems().ToList();
@@ -37,7 +37,7 @@ namespace Bigrivers.Client.Backend.Controllers
             return View("Manage");
         }
 
-        // GET: Artist/New
+        // GET: News/New
         public ActionResult New()
         {
             var viewModel = new NewsItemViewModel
@@ -49,7 +49,7 @@ namespace Bigrivers.Client.Backend.Controllers
             return View("Edit", viewModel);
         }
 
-        // POST: Artist/New
+        // POST: News/New
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult New(NewsItemViewModel viewModel)
@@ -74,7 +74,7 @@ namespace Bigrivers.Client.Backend.Controllers
             return RedirectToAction("Manage");
         }
 
-        // GET: Artist/Edit/5
+        // GET: News/Edit/5
         public ActionResult Edit(int? id)
         {
             if (!VerifyId(id)) return RedirectToAction("Manage");
@@ -92,7 +92,7 @@ namespace Bigrivers.Client.Backend.Controllers
             return View(model);
         }
 
-        // POST: Artist/Edit/5
+        // POST: News/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, NewsItemViewModel viewModel)
@@ -115,7 +115,7 @@ namespace Bigrivers.Client.Backend.Controllers
             return RedirectToAction("Manage");
         }
 
-        // POST: Artist/Delete/5
+        // POST: News/Delete/5
         public ActionResult Delete(int? id)
         {
             if (!VerifyId(id)) return RedirectToAction("Manage");
@@ -128,7 +128,7 @@ namespace Bigrivers.Client.Backend.Controllers
             return RedirectToAction("Manage");
         }
 
-        // GET: Artist/SwitchStatus/5
+        // GET: News/SwitchStatus/5
         public ActionResult SwitchStatus(int? id)
         {
             if (!VerifyId(id)) return RedirectToAction("Manage");

@@ -96,8 +96,8 @@ namespace Bigrivers.Client.Backend.Controllers
                 Title = viewModel.Title,
                 Description = viewModel.Description,
                 ShortDescription = viewModel.ShortDescription,
-                FrontpageLogo = frontpageLogo,
-                BackgroundImage = backgroundImage,
+                FrontpageLogo = Db.Files.Single(m => m.Md5 == frontpageLogo.Md5 && m.Container == frontpageLogo.Container),
+                BackgroundImage = Db.Files.Single(m => m.Md5 == backgroundImage.Md5 && m.Container == backgroundImage.Container),
                 WebsiteStatus = viewModel.WebsiteStatus,
                 YoutubeChannelStatus = viewModel.YoutubeChannelStatus,
                 FacebookStatus = viewModel.FacebookStatus,
@@ -108,10 +108,6 @@ namespace Bigrivers.Client.Backend.Controllers
                 Price = viewModel.Price ?? 0.00m,
                 Status = viewModel.Status
             };
-
-            // Only add file to DB if it hasn't been uploaded before
-            if (!Db.Files.Any(m => m.Md5 == backgroundImage.Md5)) Db.Files.Add(backgroundImage);
-            if (!Db.Files.Any(m => m.Md5 == frontpageLogo.Md5)) Db.Files.Add(frontpageLogo);
             Db.Events.Add(singleEvent);
             Db.SaveChanges();
 
@@ -191,8 +187,8 @@ namespace Bigrivers.Client.Backend.Controllers
             singleEvent.Price = viewModel.Price ?? singleEvent.Price;
             singleEvent.Status = viewModel.Status;
 
-            if (frontpageLogo != null && !Db.Files.Any(m => m.Md5 == frontpageLogo.Md5)) singleEvent.FrontpageLogo = frontpageLogo;
-            if (backgroundImage != null && !Db.Files.Any(m => m.Md5 == backgroundImage.Md5)) singleEvent.BackgroundImage = backgroundImage;
+            if (frontpageLogo != null && !Db.Files.Any(m => m.Md5 == frontpageLogo.Md5)) singleEvent.FrontpageLogo = Db.Files.Single(m => m.Md5 == frontpageLogo.Md5 && m.Container == frontpageLogo.Container);
+            if (backgroundImage != null && !Db.Files.Any(m => m.Md5 == backgroundImage.Md5)) singleEvent.BackgroundImage = Db.Files.Single(m => m.Md5 == backgroundImage.Md5 && m.Container == backgroundImage.Container);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");
