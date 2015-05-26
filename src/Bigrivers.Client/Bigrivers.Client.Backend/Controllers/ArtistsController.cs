@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Bigrivers.Client.Backend.ViewModels;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Helpers;
-using Bigrivers.Server.Model.Backend.ViewModels;
 
 namespace Bigrivers.Client.Backend.Controllers
 {

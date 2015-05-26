@@ -9,7 +9,6 @@ html, body {
 
 h1 {
 	margin: 0;
-	padding-top: 25px;
 	padding-bottom: 25px;
 	color: #fff;
 	font-size: 2.4em;
@@ -59,32 +58,34 @@ section#wrapper {
 
 #login-form h1 {
 	text-align: center;
+	margin-bottom: 0;
+	padding-bottom: 0;
 }
 
 #login-form h2 {
+	margin-top: 0;
 	text-align: center;
 	font-weight: 400;
 	color: #5b83dd;
 }
 
-#login-form input[type="text"] {
+#login-form label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+	color: #3c3c3e;
+}
+
+#login-form .label-selectable {
+	font-weight: normal;
+}
+
+#login-form input[type="text"], #login-form input[type="password"] {
 	width: 100%;
 	height: 35px;
+	margin-bottom: 5px;
 	padding: 5px;
 	border: 1px solid #ccc;
-}
-
-#login-form input[type="password"] {
-	width: 100%;
-	height: 35px;
-	padding: 5px;
-	border: 1px solid black;
-}
-
-#login-form p.forgot {
-	float: left;
-	margin: 0;
-	padding: 0;
 }
 
 #login-form a {

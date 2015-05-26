@@ -24,6 +24,19 @@ namespace Bigrivers.Server.Data.Migrations
             context.ButtonItems.RemoveRange(context.ButtonItems);
             context.Links.RemoveRange(context.Links);
 
+            context.Roles.AddOrUpdate(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole()
+            {
+                Name = "developer"
+            });
+            context.Roles.AddOrUpdate(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole()
+            {
+                Name = "Bigrivers Admin"
+            });
+            context.Roles.AddOrUpdate(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole()
+            {
+                Name = "Bigrivers gebruiker"
+            });
+
             //Create Menu Items
             context.MenuItems.Add(new MenuItem
             {

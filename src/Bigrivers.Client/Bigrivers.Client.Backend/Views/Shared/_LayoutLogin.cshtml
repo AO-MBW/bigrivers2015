@@ -11,18 +11,14 @@
     <title>@ViewBag.Title - Bigrivers CMS</title>
 </head>
 <body>
-    <div id="account-menu">
-        <ul id="accountContainer">
-            <li class="dropdown">
-                @User.Identity.Name<img class="icon" src="/Images/dropdown.png" width="15" height="15" />
-                <ul class="sub_navigation">
-                    <li>@Html.ActionLink("Log uit", "Logout", "Account")</li>
-                </ul>
-            </li>
-        </ul>
-    </div>
+    <div id="login-form">
+        <h1><img src="/Images/logo.png" /></h1>
+        <h2>Big Rivers CMS</h2>
 
-    @Html.Partial("_Sidebar")
-    @RenderBody()
+        <div class="errormsg">
+            <ul></ul>
+        </div>
+        @RenderBody()
+    </div>
 </body>
 </html>

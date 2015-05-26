@@ -1,0 +1,15 @@
+﻿@model Bigrivers.Client.Backend.ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+@using(Html.BeginForm())
+{
+    @Html.LabelFor(m => m.LoginName)
+    @Html.TextBoxFor(m => m.LoginName)    
+    @Html.LabelFor(m => m.Password)
+    @Html.PasswordFor(m => m.Password)
+    <p class="submit">
+        <input type="submit" value="Inloggen">
+    </p>
+}

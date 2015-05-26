@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
+using Bigrivers.Server.Model;
 
-namespace Bigrivers.Server.Model.Backend.ViewModels
+namespace Bigrivers.Client.Backend.ViewModels
 {
     public class ArtistViewModel
     {

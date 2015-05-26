@@ -1,9 +1,10 @@
 using System.Data.Entity;
 using Bigrivers.Server.Model;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Bigrivers.Server.Data
 {
-    public class BigriversDb : DbContext
+    public class BigriversDb : IdentityDbContext<StaffMember>
     {
         // Your context has been configured to use a 'Model' connection string from your application's 
         // configuration file (App.config or Web.config). By default, this connection string targets the 
@@ -15,6 +16,11 @@ namespace Bigrivers.Server.Data
             : base("name=BigriversContext")
         {
            // this.Configuration.LazyLoadingEnabled = false;
+        }
+
+        public static BigriversDb Create()
+        {
+            return new BigriversDb();
         }
 
         // Add a DbSet for each entity type that you want to include in your model. For more information 

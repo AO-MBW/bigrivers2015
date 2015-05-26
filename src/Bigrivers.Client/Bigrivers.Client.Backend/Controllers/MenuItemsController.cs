@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Bigrivers.Client.Backend.Helpers;
 using Bigrivers.Client.Backend.Models;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
@@ -80,7 +81,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 },
                 Status = true
             };
-            viewModel.LinkView = LinkHelper.FillSelectLists(viewModel.LinkView);
+            viewModel.LinkView = LinkManageHelper.FillSelectLists(viewModel.LinkView);
 
             ViewBag.Title = "Nieuw MenuItem";
             return View("Edit", viewModel);
@@ -101,7 +102,7 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             if (!ModelState.IsValid)
             {
-                viewModel.LinkView = LinkHelper.FillSelectLists(viewModel.LinkView);
+                viewModel.LinkView = LinkManageHelper.FillSelectLists(viewModel.LinkView);
                 ViewBag.Title = "Nieuw MenuItem";
                 return View("Edit", viewModel);
             }
@@ -114,7 +115,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
             var singleMenuItem = new MenuItem
             {
-                Target = LinkHelper.SetLink(viewModel.LinkView, file),
+                Target = LinkManageHelper.SetLink(viewModel.LinkView, file),
                 DisplayName = viewModel.DisplayName,
                 Order = order,
                 Status = viewModel.Status
@@ -137,7 +138,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 DisplayName = singleMenuItem.DisplayName,
                 Status = singleMenuItem.Status,
-                LinkView = LinkHelper.SetViewModel(singleMenuItem.Target, new LinkViewModel())
+                LinkView = LinkManageHelper.SetViewModel(singleMenuItem.Target, new LinkViewModel())
             };
             
             ViewBag.Title = "Bewerk MenuItem";
@@ -159,7 +160,7 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             if (!ModelState.IsValid)
             {
-                viewModel.LinkView = LinkHelper.FillSelectLists(viewModel.LinkView);
+                viewModel.LinkView = LinkManageHelper.FillSelectLists(viewModel.LinkView);
                 ViewBag.Title = "Nieuw MenuItem";
                 return View("Edit", viewModel);
             }
@@ -169,7 +170,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
             singleMenuItem.DisplayName = viewModel.DisplayName;
             singleMenuItem.Status = viewModel.Status;
-            singleMenuItem.Target = LinkHelper.SetLink(viewModel.LinkView, file);
+            singleMenuItem.Target = LinkManageHelper.SetLink(viewModel.LinkView, file);
 
             Db.SaveChanges();
 

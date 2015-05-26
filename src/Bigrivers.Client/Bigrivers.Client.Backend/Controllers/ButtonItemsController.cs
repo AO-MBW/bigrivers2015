@@ -5,6 +5,7 @@ using Bigrivers.Client.Backend.Models;
 using Bigrivers.Client.Helpers;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
+using Bigrivers.Client.Backend.Helpers;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
@@ -63,7 +64,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 },
                 Status = true
             };
-            viewModel.LinkView = LinkHelper.FillSelectLists(viewModel.LinkView);
+            viewModel.LinkView = LinkManageHelper.FillSelectLists(viewModel.LinkView);
 
             ViewBag.Title = "Nieuw ButtonItem";
             return View("Edit", viewModel);
@@ -84,7 +85,7 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             if (!ModelState.IsValid)
             {
-                viewModel.LinkView = LinkHelper.FillSelectLists(viewModel.LinkView);
+                viewModel.LinkView = LinkManageHelper.FillSelectLists(viewModel.LinkView);
                 ViewBag.Title = "Nieuw ButtonItem";
                 return View("Edit", viewModel);
             }
@@ -107,7 +108,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
             var singleButtonItem = new ButtonItem
             {
-                Target = LinkHelper.SetLink(viewModel.LinkView, file),
+                Target = LinkManageHelper.SetLink(viewModel.LinkView, file),
                 DisplayName = viewModel.DisplayName,
                 Order = order,
                 Status = viewModel.Status,
@@ -132,7 +133,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 DisplayName = singleButtonItem.DisplayName,
                 Status = singleButtonItem.Status,
-                LinkView = LinkHelper.SetViewModel(singleButtonItem.Target, new LinkViewModel())
+                LinkView = LinkManageHelper.SetViewModel(singleButtonItem.Target, new LinkViewModel())
             };
             ViewBag.Title = "Bewerk ButtonItem";
             return View(model);
@@ -153,7 +154,7 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             if (!ModelState.IsValid)
             {
-                viewModel.LinkView = LinkHelper.FillSelectLists(viewModel.LinkView);
+                viewModel.LinkView = LinkManageHelper.FillSelectLists(viewModel.LinkView);
                 ViewBag.Title = "Nieuw MenuItem";
                 return View("Edit", viewModel);
             }
@@ -172,7 +173,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
             singleButtonItem.DisplayName = viewModel.DisplayName;
             singleButtonItem.Status = viewModel.Status;
-            singleButtonItem.Target = LinkHelper.SetLink(viewModel.LinkView, file);
+            singleButtonItem.Target = LinkManageHelper.SetLink(viewModel.LinkView, file);
             if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleButtonItem.Logo = photoEntity;
             Db.SaveChanges();
 
