@@ -24,16 +24,6 @@ namespace Bigrivers.Client.Backend.Controllers
             return View("Manage");
         }
 
-        public ActionResult Search(string id)
-        {
-            ViewBag.listArtists = GetArtists()
-                .Where(m => m.Name.Contains(id))
-                .ToList();
-
-            ViewBag.Title = "Zoek Artiesten";
-            return View("Manage");
-        }
-
         // GET: Artist/New
         public ActionResult New()
         {

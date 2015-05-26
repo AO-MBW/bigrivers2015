@@ -30,17 +30,6 @@ namespace Bigrivers.Client.Backend.Controllers
             return View("Manage");
         }
 
-        public ActionResult Search(string id)
-        {
-            var search = id;
-            ViewBag.listEvents = GetEvents()
-                .Where(m => m.Title.Contains(search))
-                .ToList();
-
-            ViewBag.Title = "Zoek Evenementen";
-            return View("Manage");
-        }
-
         // GET: Events/New
         public ActionResult New()
         {

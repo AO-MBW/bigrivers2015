@@ -57,17 +57,6 @@ namespace Bigrivers.Client.Backend.Controllers
             return View();
         }
 
-        public ActionResult Search(string id)
-        {
-            var search = id;
-            var menuItems = GetMenuItems().Where(m => m.DisplayName.Contains(search)).ToList();
-
-            var listMenuItems = menuItems.Where(m => m.Status && m.Parent == null).OrderBy(m => m.Order).ToList();
-
-            ViewBag.Title = "Zoek MenuItems";
-            return View("Manage");
-        }
-
         // GET: MenuItem/Create
         public ActionResult New()
         {

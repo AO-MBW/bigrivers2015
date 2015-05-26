@@ -41,18 +41,6 @@ namespace Bigrivers.Client.Backend.Controllers
             return View("Manage");
         }
 
-        public ActionResult Search(string id)
-        {
-            var search = id;
-            ViewBag.listButtonItems = GetButtonItems()
-                .Where(m => m.DisplayName.Contains(search))
-                .OrderBy(m => m.Order)
-                .ToList();
-
-            ViewBag.Title = "Zoek ButtonItems";
-            return View("Manage");
-        }
-
         // GET: ButtonItems/Create
         public ActionResult New()
         {

@@ -27,16 +27,6 @@ namespace Bigrivers.Client.Backend.Controllers
             return View("Manage");
         }
 
-        public ActionResult Search(string id)
-        {
-            ViewBag.listNewsItems = GetNewsItems()
-                .Where(m => m.Title.Contains(id))
-                .ToList();
-
-            ViewBag.Title = "Zoek Nieuws";
-            return View("Manage");
-        }
-
         // GET: News/New
         public ActionResult New()
         {

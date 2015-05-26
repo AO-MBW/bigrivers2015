@@ -29,16 +29,6 @@ namespace Bigrivers.Client.Backend.Controllers
             return View("Manage");
         }
 
-        public ActionResult Search(string id)
-        {
-            ViewBag.listSponsors = GetSponsors()
-                .Where(m => m.Name.Contains(id))
-                .ToList();
-
-            ViewBag.Title = "Zoek Sponsoren";
-            return View("Manage");
-        }
-
         // GET: Artist/New
         public ActionResult New()
         {
