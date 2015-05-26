@@ -146,5 +146,28 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
             return View(model);
         }
+
+        public ActionResult News(int? id)
+        {
+            if (id != null) return News(id.Value);
+
+            ViewBag.NewsItemsList = AccessLayer.NewsItems
+                .Where(a => a.Status)
+                .ToList();
+
+            return View("News");
+        }
+
+        private ActionResult News(int id)
+        {
+            ViewBag.CurrentNews = AccessLayer.NewsItems
+                .Where(a => a.Id == id)
+                .SingleOrDefault();
+
+            if (ViewBag.CurrentNews == null) return RedirectToAction("News");
+
+            return View("NewsItem");
+        }
+
     }
 }
