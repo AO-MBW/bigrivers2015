@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web;
 using Bigrivers.Client.Backend.Models;
 using Bigrivers.Client.Helpers;
 using Bigrivers.Server.Data;
@@ -68,8 +66,6 @@ namespace Bigrivers.Client.Backend.Helpers
             viewModel.InternalType = link.InternalType ?? "Events";
             viewModel.ExternalUrl = link.ExternalUrl;
 
-            viewModel = FillSelectLists(viewModel);
-
             // Set the Id for the 'Internal Id'
             switch (link.InternalType)
             {
@@ -89,73 +85,6 @@ namespace Bigrivers.Client.Backend.Helpers
                     viewModel.InternalSponsorId = link.InternalId;
                     break;
             }
-
-            return viewModel;
-        }
-
-        public static LinkViewModel FillSelectLists(LinkViewModel viewModel)
-        {
-            viewModel.Events = Db.Events
-                .Where(m => !m.Deleted)
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Title
-                }).ToList();
-            viewModel.Artists = Db.Artists
-                .Where(m => !m.Deleted)
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Name
-                }).ToList();
-            viewModel.Performances = Db.Performances
-                .Where(m => !m.Deleted)
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Artist.Name
-                }).ToList();
-            viewModel.Sponsors = Db.Sponsors
-                .Where(m => !m.Deleted)
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Name
-                }).ToList();
-            viewModel.NewsItems = Db.NewsItems
-                .Where(m => !m.Deleted)
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Title
-                }).ToList();
-
-            viewModel.Events.Insert(0, new SelectListItem
-            {
-                Value = "",
-                Text = ""
-            });
-            viewModel.Artists.Insert(0, new SelectListItem
-            {
-                Value = "",
-                Text = ""
-            });
-            viewModel.Sponsors.Insert(0, new SelectListItem
-            {
-                Value = "",
-                Text = ""
-            });
-            viewModel.NewsItems.Insert(0, new SelectListItem
-            {
-                Value = "",
-                Text = ""
-            });
-            viewModel.Performances.Insert(0, new SelectListItem
-            {
-                Value = "",
-                Text = ""
-            });
 
             return viewModel;
         }

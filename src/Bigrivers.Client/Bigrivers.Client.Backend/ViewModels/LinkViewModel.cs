@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web.Mvc;
+using Bigrivers.Server.Data;
 
 namespace Bigrivers.Client.Backend.Models
 {
     public class LinkViewModel
     {
+        private BigriversDb _db = new BigriversDb();
+
         /// <summary>
         /// Variable to set either an internal, external or file link.
         /// </summary>
@@ -113,10 +117,104 @@ namespace Bigrivers.Client.Backend.Models
             }
         }
 
-        public List<SelectListItem> Events { get; set; }
-        public List<SelectListItem> Artists { get; set; }
-        public List<SelectListItem> Performances { get; set; }
-        public List<SelectListItem> NewsItems { get; set; }
-        public List<SelectListItem> Sponsors { get; set; }
+        public List<SelectListItem> Events
+        {
+            get
+            {
+                var l = _db.Events
+                .Where(m => !m.Deleted)
+                .Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Title
+                }).ToList();
+                l.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+                return l;
+            }
+        }
+
+        public List<SelectListItem> Artists
+        {
+            get
+            {
+                var l = _db.Artists
+                    .Where(m => !m.Deleted)
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Name
+                    }).ToList();
+                l.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+                return l;
+            }
+        }
+
+        public List<SelectListItem> Performances
+        {
+            get
+            {
+                var l = _db.Performances
+                .Where(m => !m.Deleted)
+                .Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Artist.Name
+                }).ToList();
+                l.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+                return l;
+            }
+        }
+
+        public List<SelectListItem> NewsItems
+        {
+            get
+            {
+                var l = _db.NewsItems
+                .Where(m => !m.Deleted)
+                .Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Title
+                }).ToList();
+                l.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+                return l;
+            }
+        }
+
+        public List<SelectListItem> Sponsors
+        {
+            get
+            {
+                var l = _db.Sponsors
+                .Where(m => !m.Deleted)
+                .Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Name
+                }).ToList();
+                l.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+                return l;
+            }
+        }
     }
 }

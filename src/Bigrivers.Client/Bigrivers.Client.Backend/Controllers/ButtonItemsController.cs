@@ -1,5 +1,4 @@
-﻿using System.Data.Entity.Migrations;
-using System.Linq;
+﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Bigrivers.Client.Backend.Models;
@@ -53,7 +52,6 @@ namespace Bigrivers.Client.Backend.Controllers
                 },
                 Status = true
             };
-            viewModel.LinkView = LinkManageHelper.FillSelectLists(viewModel.LinkView);
 
             ViewBag.Title = "Nieuw ButtonItem";
             return View("Edit", viewModel);
@@ -74,7 +72,6 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             if (!ModelState.IsValid)
             {
-                viewModel.LinkView = LinkManageHelper.FillSelectLists(viewModel.LinkView);
                 ViewBag.Title = "Nieuw ButtonItem";
                 return View("Edit", viewModel);
             }
@@ -140,7 +137,6 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             if (!ModelState.IsValid)
             {
-                viewModel.LinkView = LinkManageHelper.FillSelectLists(viewModel.LinkView);
                 ViewBag.Title = "Nieuw MenuItem";
                 return View("Edit", viewModel);
             }

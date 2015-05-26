@@ -70,7 +70,6 @@ namespace Bigrivers.Client.Backend.Controllers
                 },
                 Status = true
             };
-            viewModel.LinkView = LinkManageHelper.FillSelectLists(viewModel.LinkView);
 
             ViewBag.Title = "Nieuw MenuItem";
             return View("Edit", viewModel);
@@ -91,7 +90,6 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             if (!ModelState.IsValid)
             {
-                viewModel.LinkView = LinkManageHelper.FillSelectLists(viewModel.LinkView);
                 ViewBag.Title = "Nieuw MenuItem";
                 return View("Edit", viewModel);
             }
@@ -149,7 +147,6 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             if (!ModelState.IsValid)
             {
-                viewModel.LinkView = LinkManageHelper.FillSelectLists(viewModel.LinkView);
                 ViewBag.Title = "Nieuw MenuItem";
                 return View("Edit", viewModel);
             }
