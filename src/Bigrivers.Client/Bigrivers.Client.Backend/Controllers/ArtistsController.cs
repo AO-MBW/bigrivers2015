@@ -72,7 +72,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Name = viewModel.Name,
                 Description = viewModel.Description,
-                Avatar = Db.Files.Single(m => m.Md5 == photoEntity.Md5 && m.Container == photoEntity.Container),
+                Avatar = Db.Files.Find(photoEntity),
                 Website = viewModel.Website,
                 YoutubeChannel = viewModel.YoutubeChannel,
                 Facebook = viewModel.Facebook,
@@ -149,7 +149,7 @@ namespace Bigrivers.Client.Backend.Controllers
             singleArtist.Facebook = viewModel.Facebook;
             singleArtist.Twitter = viewModel.Twitter;
             singleArtist.Status = viewModel.Status;
-            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleArtist.Avatar = photoEntity;
+            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleArtist.Avatar = Db.Files.Find(photoEntity);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");
