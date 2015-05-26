@@ -15,6 +15,7 @@ namespace Bigrivers.Server.Data.Migrations
 
         protected override void Seed(BigriversDb context)
         {
+            // Remove all old data from database
             context.Genres.RemoveRange(context.Genres);
             context.Locations.RemoveRange(context.Locations);
             context.Artists.RemoveRange(context.Artists);
@@ -23,7 +24,18 @@ namespace Bigrivers.Server.Data.Migrations
             context.MenuItems.RemoveRange(context.MenuItems);
             context.ButtonItems.RemoveRange(context.ButtonItems);
             context.Links.RemoveRange(context.Links);
+            foreach (var r in context.Roles)
+            {
+                context.Roles.Remove(r);
+            }
+            foreach (var u in context.Users)
+            {
+                context.Users.Remove(u);
+            }
+            // Save changes so that you don't have to deal with already existing entities
+            context.SaveChanges();
 
+            // Add in all standard data
             context.Roles.AddOrUpdate(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole()
             {
                 Name = "developer"

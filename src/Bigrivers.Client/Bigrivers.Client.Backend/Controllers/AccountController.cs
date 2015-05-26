@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -81,7 +82,7 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            if (!UserIsManager) return RedirectToAction("Index", "Home");
+            if (!UserIsManager && UserManager.Users.Any()) return RedirectToAction("Index", "Home");
 
             var user = new StaffMember
             {
@@ -209,7 +210,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
             if (!UserManager.Users.Any() && model.LoginName == "developer" && model.Password == WebConfigurationManager.AppSettings["DefaultAccountPassword"])
             {
-                await Register(new RegisterViewModel
+                var r = await Register(new RegisterViewModel
                 {
                     LoginName = "developer",
                     Password = WebConfigurationManager.AppSettings["DefaultAccountPassword"],
