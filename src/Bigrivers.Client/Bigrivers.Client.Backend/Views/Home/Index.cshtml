@@ -1,96 +1,98 @@
-﻿<div class="block">
-    <h2>Nieuws</h2>
-    <div class="itemblock">
-        <div class="item">
-            @Html.ActionLink("Voeg nieuwsbericht toe", "New", "News")
-        </div>
-        <div class="item">
-            @Html.ActionLink("Beheer nieuwsberichten", "Manage", "News")
-        </div>
-        <div class="item">
-            @Html.ActionLink("Beheer nieuwswidget", "Widget", "News")
-        </div>
-    </div>
-</div>
-<div class="block">
-    <h2>Artiesten</h2>
-    <div class="itemblock">
-        <div class="item">
-            @Html.ActionLink("Beheer artiesten", "Manage", "Artists")
-        </div>
-        <div class="item">
-            @Html.ActionLink("Voeg artiest / band toe", "New", "Artists")
-        </div>
-        <div class="item">
-            @Html.ActionLink("Beheer optredens", "Manage", "Performances")
-        </div>
-        <div class="item">
-            @Html.ActionLink("Voeg optreden toe", "New", "Performances")
+﻿<div id="content">
+    <div class="block">
+        <h2>Nieuws</h2>
+        <div class="itemblock">
+            <div class="item">
+                @Html.ActionLink("Voeg nieuwsbericht toe", "New", "News")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Beheer nieuwsberichten", "Manage", "News")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Beheer nieuwswidget", "Widget", "News")
+            </div>
         </div>
     </div>
-</div>
-<div class="block">
-    <h2>Evenementen, sponsoren</h2>
-    <div class="itemblock">
-        <div class="item">
-            @Html.ActionLink("Beheer Evenementen", "Manage", "Events")
-        </div>
-        <div class="item">
-            @Html.ActionLink("Voeg evenement toe", "New", "Events")
-        </div>
-        <div class="item">
-            @Html.ActionLink("Beheer sponsoren", "Manage", "Sponsors")
-        </div>
-        <div class="item">
-            @Html.ActionLink("Voeg sponsor toe", "New", "Sponsors")
-        </div>
-    </div>
-</div>
-<div class="block">
-    <h2>Genre's, Podia</h2>
-    <div class="itemblock">
-        <div class="item">
-            @Html.ActionLink("Beheer genres", "Manage", "Genres")
-        </div>
-        <div class="item">
-            @Html.ActionLink("Voeg genres toe", "New", "Genres")
-        </div>
-        <div class="item">
-            @Html.ActionLink("Beheer podia", "Manage", "Locations")
-        </div>
-        <div class="item">
-            @Html.ActionLink("Voeg podium toe", "New", "Locations")
+    <div class="block">
+        <h2>Artiesten</h2>
+        <div class="itemblock">
+            <div class="item">
+                @Html.ActionLink("Beheer artiesten", "Manage", "Artists")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Voeg artiest / band toe", "New", "Artists")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Beheer optredens", "Manage", "Performances")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Voeg optreden toe", "New", "Performances")
+            </div>
         </div>
     </div>
-</div>
-<div class="block">
-    <h2>Menu's</h2>
-    <div class="itemblock">
-        <div class="item">
-            @Html.ActionLink("Beheer ButtonItems", "Manage", "ButtonItems")
-        </div>
-        <div class="item">
-            @Html.ActionLink("Voeg ButtonItem toe", "New", "ButtonItems")
-        </div>
-        <div class="item">
-            @Html.ActionLink("Beheer Menuitems", "Manage", "MenuItems")
-        </div>
-        <div class="item">
-            @Html.ActionLink("Voeg menuitem toe", "New", "MenuItems")
+    <div class="block">
+        <h2>Evenementen, sponsoren</h2>
+        <div class="itemblock">
+            <div class="item">
+                @Html.ActionLink("Beheer Evenementen", "Manage", "Events")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Voeg evenement toe", "New", "Events")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Beheer sponsoren", "Manage", "Sponsors")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Voeg sponsor toe", "New", "Sponsors")
+            </div>
         </div>
     </div>
-</div>
-<div class="block">
-    <h2>Instellingen</h2>
-    <div class="itemblock">
-        <div class="item">
-            @Html.ActionLink("Beheer Pagina's", "Manage", "Pages")
+    <div class="block">
+        <h2>Genre's, Podia</h2>
+        <div class="itemblock">
+            <div class="item">
+                @Html.ActionLink("Beheer genres", "Manage", "Genres")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Voeg genres toe", "New", "Genres")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Beheer podia", "Manage", "Locations")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Voeg podium toe", "New", "Locations")
+            </div>
         </div>
-        <div class="item">
-            @Html.ActionLink("Logo en links", "Settings", "Home")
+    </div>
+    <div class="block">
+        <h2>Menu's</h2>
+        <div class="itemblock">
+            <div class="item">
+                @Html.ActionLink("Beheer ButtonItems", "Manage", "ButtonItems")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Voeg ButtonItem toe", "New", "ButtonItems")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Beheer Menuitems", "Manage", "MenuItems")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Voeg menuitem toe", "New", "MenuItems")
+            </div>
         </div>
-        <div class="item">
-            @Html.ActionLink("Beheer gebruikers", "Manage", "Account")
+    </div>
+    <div class="block">
+        <h2>Instellingen</h2>
+        <div class="itemblock">
+            <div class="item">
+                @Html.ActionLink("Beheer Pagina's", "Manage", "Pages")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Logo en links", "Settings", "Home")
+            </div>
+            <div class="item">
+                @Html.ActionLink("Beheer gebruikers", "Manage", "Account")
+            </div>
         </div>
     </div>
 </div>

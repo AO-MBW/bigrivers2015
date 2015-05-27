@@ -1,10 +1,15 @@
-﻿/*/// The main styling for the admin sections /*/
-
-html, body {
+﻿html, body {
 	margin: 0;
 	padding: 0;
 	font-family: calibri;
 	background-color: #5b83dd;
+}
+
+#container {
+	position: relative;
+	margin: 0 125px;
+	z-index: 0;
+	min-width: 450px;
 }
 
 h1 {
@@ -13,6 +18,19 @@ h1 {
 	color: #fff;
 	font-size: 2.4em;
 	font-weight: normal;
+}
+
+.page-title h1 {
+	margin: 0;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	color: #fff;
+	font-size: 2.4em;
+	font-weight: 300;
+}
+
+h2 {
+	color: #416c92;
 }
 
 h3 {
@@ -34,6 +52,15 @@ hr {
 	/* End hr fix */
 }
 
+#content br {
+	height: 0;
+	width: 0;
+}
+
+#content br.clear {
+	clear: both;
+}
+
 span.tag {
 	padding: 3px;
 	color: #fff;
@@ -46,29 +73,7 @@ span.tag {
 	font-weight: bold;
 }
 
-/*//--- Wrapper ---//*/
-
-#wrapper {
-	position: relative;
-	margin: 0 125px;
-	z-index: 0;
-	min-width: 450px;
-}
-
-.page-title h1 {
-	margin: 0;
-	padding-top: 25px;
-	padding-bottom: 25px;
-	color: #fff;
-	font-size: 2.4em;
-	font-weight: 300;
-}
-
-h2 {
-	color: #416c92;
-}
-
-/*//--- Main Content ---//*/
+/* Main Content */
 
 #content {
 	position: relative;
@@ -79,8 +84,89 @@ h2 {
 	margin-bottom: 25px;
 }
 
+/* Login Form */
 
-/*/// --- Account menu Styling --- ///*/
+#login-form {
+	width: 350px;
+	margin: 12% auto 0 auto;
+	padding: 25px 20px 50px;
+	background-color: #fff;
+	box-shadow: 0 1px 3px rgba(0,0,0,.13);
+	border-radius: 3px;
+}
+
+#login-form h1 {
+	text-align: center;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+#login-form h2 {
+	margin-top: 0;
+	text-align: center;
+	font-weight: 400;
+	color: #5b83dd;
+}
+
+#login-form fieldset {
+	border: none;
+}
+
+#login-form label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+	color: #3c3c3e;
+}
+
+#login-form input[type="text"], #login-form input[type="password"] {
+	width: 100%;
+	height: 35px;
+	margin-bottom: 5px;
+	padding: 5px;
+	border: 1px solid #ccc;
+}
+
+#login-form a {
+	color: #5b83dd;
+	text-decoration: none;
+}
+
+#login-form p.submit {
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	max-width: 100%;
+}
+
+#login-form input[type="submit"] {
+	float: right;
+	height: 32px;
+	padding: 8px;
+	background-color: #5b83dd;
+	color: #fff;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.errormsg {
+	display: block;
+	text-align: center;
+}
+
+.errormsg ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.errormsg li {
+	color: #c84040;
+	font-weight: bold;
+}
+
+/* Account menu Styling */
 ul#accountContainer {
 	position: absolute;
 	top: 40px;
@@ -134,38 +220,8 @@ ul#accountContainer a {
 	padding: 10px;
 }
 
-/*/// --- Action Bar Styling --- ///*/
-
-#actionbar {
-	position: relative;
-	height: 80px;
-}
-
-#actionbar .action-block {
-	float: left;
-	margin-right: 5px;
-}
-
-#actionbar .action-block a {
-	display: block;
-	width: 200px;
-	height: 40px;
-	line-height: 40px;
-	padding: 5px;
-	background-color: #f1f1f1;
-	text-align: center;
-	text-decoration: none;
-	color: #5b83dd;
-}
-
-#actionbar .action-block a:hover {
-	background-color: #8dba42;
-	color: #fff;
-}
-
-/*/// --- Dashboard Block Styling --- ///*/
-
-.block {
+/* Dashboard Block Styling */
+div.block {
 	float: left;
 	width: 350px;
 	height: 400px;
@@ -173,31 +229,6 @@ ul#accountContainer a {
 	margin-bottom: 15px;
 	background-color: #f1f1f1;
 	border: 1px solid #ccc;
-}
-
-.block.disabled {
-	float: left;
-	width: 350px;
-	height: 400px;
-	margin-right: 25px;
-	margin-bottom: 25px;
-	background-color: #ccc;
-	border: 1px solid #ccc;
-}
-
-.block .stats {
-	width: 100%;
-	margin: 10px;
-}
-
-.stats td {
-	height: 35px;
-}
-
-.block .stats h3 {
-	color: #c29797;
-	font-weight: 300;
-	font-size: 1em;
 }
 
 .block .itemblock {
@@ -255,114 +286,4 @@ ul#accountContainer a {
 	display: block;
 	width: 100%;
 	padding: 10px;
-}
-
-
-/*//--- Action bar inside the content div ---//*/
-
-#actionbar {
-	width: 100%;
-	height: 80px;
-	margin-bottom: 20px;
-}
-
-#actionbar a {
-	display: inline-block;
-	min-width: 100px;
-	height: 30px;
-	line-height: 30px;
-	padding: 10px;
-	background-color: #f1f1f1;
-	text-align: center;
-	text-decoration: none;
-	color: #5b83dd;
-}
-
-#actionbar a:hover {
-	background-color: #6bb52f;
-	color: #fff;
-}
-
-/*//--- Content Table ---//*/
-
-#content table {
-	width: 100%;
-	border-collapse: collapse;
-	background-color: #f7f7f7;
-}
-
-#content table th {
-	padding: 5px 5px;
-	font-weight: normal;
-	font-size: 1em;
-	text-align: left;
-	background-color: #858991;
-	color: #fff;
-	border: 1px solid #ccc;
-}
-
-#content table td {
-	padding: 8px 5px;
-	vertical-align: middle;
-	color: #1d1e1b;
-}
-
-#content table tr.child td {
-	padding-left: 50px;
-	background-color: #ccc;
-}
-
-#content table tr.inactive td {
-	background-color: #b9b9b9;
-	color: #444;
-}
-
-#content table a {
-	padding-right: 10px;
-	color: #5b83dd;
-	text-decoration: none;
-}
-
-#content table a:hover {
-	text-decoration: underline;
-}
-
-/* Button CSS */
-#content div.buttonItemContainer {
-	width: 1000px;
-}
-
-#content div.buttonItemContainer div {
-	float: left;
-	background-color: white;
-	height: 200px;
-	width: 300px;
-	margin-top: 10px;
-	margin-right: 10px;
-}
-
-#content div.buttonItemContainer div.inactive {
-	background-color: #b9b9b9;
-}
-
-#content div.buttonItemContainer div img {
-	width: 100px;
-	height: 100px;
-	margin-left: 100px;
-	margin-top: 20px;
-}
-
-#content div.buttonItemContainer div p {
-	height: 20px;
-	width: 300px;
-	margin-top: 10px;
-	margin-bottom: 5px;
-	font-size: 15pt;
-	color: black;
-	text-decoration: none;
-	text-align: center;
-}
-
-#content div.buttonItemContainer div p a {
-	text-decoration: none;
 }

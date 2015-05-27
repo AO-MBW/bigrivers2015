@@ -32,9 +32,10 @@ namespace Bigrivers.Client.Backend
                       "~/Scripts/jquery-ui-1.11.4.custom/external/addon/jquery-ui-timepicker-addon.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/site.css",
+                      "~/Content/Site.css",
                       "~/Content/Sidebar.css",
-                      "~/Content/Form.css"));
+                      "~/Content/Form.css",
+                      "~/Content/Manager.css"));
         }
     }
 }

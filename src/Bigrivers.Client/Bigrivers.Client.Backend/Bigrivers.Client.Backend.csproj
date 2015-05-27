@@ -209,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Form.css" />
+    <Content Include="Content\Manager.css" />
     <Content Include="Content\Sidebar.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

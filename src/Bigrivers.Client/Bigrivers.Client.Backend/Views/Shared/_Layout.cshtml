@@ -11,24 +11,24 @@
     <title>@ViewBag.Title - Bigrivers CMS</title>
 </head>
 <body>
-<div id="wrapper">
-    <div id="account-menu">
-        <ul id="accountContainer">
-            <li class="dropdown">
-                @User.Identity.Name<img class="icon" src="/Images/dropdown.png" width="15" height="15" />
-                <ul class="sub_navigation">
-                    <li>@Html.ActionLink("Wijzig wachtwoord", "ChangePassword", "Account")</li>
-                    <li>@Html.ActionLink("Log uit", "Logout", "Account")</li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-    <div class="page-title">
-        <h1>@ViewBag.Title</h1>
-    </div>
+    <div id="container">
+        <div id="account-menu">
+            <ul id="accountContainer">
+                <li class="dropdown">
+                    @User.Identity.Name<img class="icon" src="/Images/dropdown.png" width="15" height="15" />
+                    <ul class="sub_navigation">
+                        <li>@Html.ActionLink("Wijzig wachtwoord", "ChangePassword", "Account")</li>
+                        <li>@Html.ActionLink("Log uit", "Logout", "Account")</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="page-title">
+            <h1>@ViewBag.Title</h1>
+        </div>
 
-    @Html.Partial("_Sidebar")
-    @RenderBody()
-</div>
+        @Html.Partial("_Sidebar")
+        @RenderBody()
+    </div>
 </body>
 </html>

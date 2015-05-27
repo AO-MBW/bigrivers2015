@@ -37,12 +37,16 @@
 	padding: 0 15px;
 }
 
-#content div.form-div form input, #content div.form-div form textarea {
+#content div.form-div form input, #content div.form-div form textarea, #content div.form-div form select {
 	width: calc(100% - 22px);
 	height: 35px;
 	margin-bottom: 15px;
 	padding: 5px 10px;
 	border: 1px solid #c5c5c5;
+}
+
+#content div.form-div form select {
+	width: 200px;
 }
 
 #content div.form-div form input[type="file"] {
@@ -58,7 +62,11 @@
 }
 
 #content div.form-div form input[type=submit] {
-	width: initial;
+	width: 150px;
+	height: 40px;
+	color: #fff;
+	background-color: #5b83dd;
+	border: none;
 }
 
 #content div.form-div form textarea {
