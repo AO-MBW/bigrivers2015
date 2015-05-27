@@ -10,15 +10,6 @@
 	
 }
 
-#content div.form-div form br {
-	height: 0;
-	width: 0;
-}
-
-#content div.form-div form br.clear {
-	clear: both;
-}
-
 #content div.form-div form label {
 	display: block;
 	margin-bottom: 5px;

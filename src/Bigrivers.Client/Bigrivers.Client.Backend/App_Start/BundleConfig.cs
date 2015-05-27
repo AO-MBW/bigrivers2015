@@ -22,9 +22,8 @@ namespace Bigrivers.Client.Backend
                       "~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.js",
                       "~/Scripts/jquery-ui-1.11.4.custom/external/addon/jquery-ui-timepicker-addon.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/backendscripts").Include(
-                "~/Scripts/Edit.js",
-                "~/Scripts/Admin/functions.js",
+            bundles.Add(new ScriptBundle("~/bundles/viewscripts").Include(
+                "~/Scripts/ViewScripts/UserManagerDropdown.js",
                 "~/Scripts/Admin/ckeditor/ckeditor.js"));
 
             bundles.Add(new StyleBundle("~/Content/jqueryui").Include(

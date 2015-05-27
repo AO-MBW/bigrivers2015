@@ -52,15 +52,6 @@ hr {
 	/* End hr fix */
 }
 
-#content br {
-	height: 0;
-	width: 0;
-}
-
-#content br.clear {
-	clear: both;
-}
-
 span.tag {
 	padding: 3px;
 	color: #fff;
@@ -69,8 +60,18 @@ span.tag {
 	box-shadow: 0 1px 3px rgba(0,0,0,.13);
 }
 
-.Bold {
+/* Helpers */
+.bold {
 	font-weight: bold;
+}
+
+br {
+	height: 0;
+	width: 0;
+}
+
+br.clear {
+	clear: both;
 }
 
 /* Main Content */
@@ -150,28 +151,11 @@ span.tag {
 	cursor: pointer;
 }
 
-.errormsg {
-	display: block;
-	text-align: center;
-}
-
-.errormsg ul {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-}
-
-.errormsg li {
-	color: #c84040;
-	font-weight: bold;
-}
-
 /* Account menu Styling */
 ul#accountContainer {
-	position: absolute;
-	top: 40px;
-	right: 40px;
+	float: right;
 	margin: 0;
+	margin-top: 50px;
 	list-style-type: none;
 	font-size: 1.3em;
 	color: #fff;
@@ -184,7 +168,7 @@ ul#accountContainer li {
 
 ul#accountContainer .icon {
 	float: right;
-	margin-top: 10px;
+	margin-top: 7px;
 	margin-left: 5px;
 }
 
@@ -194,11 +178,11 @@ ul.sub_navigation {
 	min-width: 100px;
 	padding: 0;
 	margin: 0;
-	margin-top: 20px;
+	margin-top: 5px;
 	list-style-type: none;
 	z-index: 100000;
 	background-color: #fff;
-	box-shadow: 0 1px 3px rgba(0,0,0,.13);
+	box-shadow: 0 4px 3px rgba(0,0,0,.13);
 }
 
 ul.sub_navigation li {
