@@ -17,15 +17,15 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Display(Name = "Eindtijd")]
         public DateTime End { get; set; }
 
-        public bool Status { get; set; }
-
         [Required]
-        [Display(Name = "Artiest")]
+        [Display(Name = "Door artiest")]
         public int? Artist { get; set; }
 
         [Required]
-        [Display(Name = "Evenement")]
+        [Display(Name = "Op evenement")]
         public int? Event { get; set; }
+
+        public bool Status { get; set; }
 
         public IEnumerable<SelectListItem> Events { get; set; }
         public IEnumerable<SelectListItem> Artists { get; set; }

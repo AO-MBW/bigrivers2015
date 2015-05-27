@@ -1,11 +1,8 @@
 ﻿@model Bigrivers.Client.Backend.ViewModels.SponsorViewModel
 
-<div id="wrapper">
-    <div class="page-title">
-        <h1>@ViewBag.Title</h1>
-    </div>
 
-    <div id="content">
+<div id="content">
+    <div class="form-div">
         <form method="POST" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             @Html.ValidationSummary()
@@ -14,7 +11,6 @@
                 @Html.TextBoxFor(m => m.Name)
                 @Html.LabelFor(m => m.Url)
                 @Html.TextBoxFor(m => m.Url)
-
             </fieldset>
             <hr />
             <fieldset>
@@ -22,13 +18,15 @@
                 <span>Upload het logo van deze sponsor</span><br />
                 <input type="file" name="pic">
             </fieldset>
+            <hr />
             <fieldset>
                 <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
             </fieldset>
             <hr />
-            <div class="footer">
+            <fieldset>
                 <input type="submit" name="save" value="Sponsor opslaan">
-            </div>
+            </fieldset>
         </form>
     </div>
+    
 </div>

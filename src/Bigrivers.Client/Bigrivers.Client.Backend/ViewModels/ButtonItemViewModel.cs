@@ -9,9 +9,8 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Required]
         [Display(Name = "Weergavenaam")]
         public string DisplayName { get; set; }
-        [Required]
-        [Display(Name = "URL")]
         public LinkViewModel LinkView { get; set; }
+        [Display(Name = "Button afbeelding")]
         public File Logo { get; set; }
         public int? Order { get; set; }
         public bool Status { get; set; }

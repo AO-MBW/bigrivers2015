@@ -1,11 +1,7 @@
 ﻿@model Bigrivers.Client.Backend.ViewModels.MenuItemViewModel
 
-<div id="wrapper">
-    <div class="page-title">
-        <h1>@ViewBag.Title</h1>
-    </div>
-
-    <div id="content">
+<div id="content">
+    <div class="form-div">
         <form method="POST" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             @Html.ValidationSummary()
@@ -13,17 +9,19 @@
                 @Html.LabelFor(m => m.DisplayName)
                 @Html.TextBoxFor(m => m.DisplayName)
             </fieldset>
+            <hr />
             @* Start of the Link Builder *@
             <fieldset>
                 @Html.LabelFor(m => m.LinkView.LinkType)
                 @Html.DropDownListFor(m => m.LinkView.LinkType, Model.LinkView.LinkTypes, new { id = "SelectLinkType" })
             </fieldset>
+            <hr />
             <fieldset class="linkType" id="external">
                 @Html.LabelFor(m => m.LinkView.ExternalUrl)
                 @Html.TextBoxFor(m => m.LinkView.ExternalUrl)
             </fieldset>
-            <hr />
             <fieldset class="linkType" id="internal">
+                @Html.LabelFor(m => m.LinkView.InternalType)
                 @Html.DropDownListFor(m => m.LinkView.InternalType, Model.LinkView.Types, new { id = "SelectInternalType" })
                 <span style="font-size: 22px; font-weight: bold;">></span>
                 @Html.DropDownListFor(m => m.LinkView.InternalEventId, Model.LinkView.Events, new { id = "Events", @class = "InternalType" })
@@ -33,19 +31,21 @@
                 @Html.DropDownListFor(m => m.LinkView.InternalSponsorId, Model.LinkView.Sponsors, new { id = "Sponsors", @class = "InternalType" })
             </fieldset>
             <fieldset class="linkType" id="file">
-                <p>Upload een bestand om naar te linken</p>
+                @Html.LabelFor(m => m.LinkView.File)
                 <input type="file" name="file">
             </fieldset>
             @* End of the Link Builder *@
+            <hr />
             <fieldset>
                 <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
             </fieldset>
             <hr />
-            <div class="footer">
-                <input type="submit" name="save" value="ButtonItem opslaan">
-            </div>
+            <fieldset>
+                <input type="submit" name="save" value="Menuitem opslaan">
+            </fieldset>
         </form>
     </div>
+    
 </div>
 <script>
     $("#SelectLinkType").val("@Model.LinkView.LinkType");

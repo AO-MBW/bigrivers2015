@@ -54,7 +54,6 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Title = viewModel.Title,
                 Content = viewModel.Content,
-                Image = viewModel.Image,
                 Status = viewModel.Status
             };
 
@@ -74,7 +73,6 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Title = singleNewsItem.Title,
                 Content = singleNewsItem.Content,
-                Image = singleNewsItem.Image,
                 Status = singleNewsItem.Status
             };
 
@@ -98,7 +96,6 @@ namespace Bigrivers.Client.Backend.Controllers
 
             singleNewsItem.Title = viewModel.Title;
             singleNewsItem.Content = viewModel.Content;
-            singleNewsItem.Image = viewModel.Image;
             singleNewsItem.Status = viewModel.Status;
             Db.SaveChanges();
 

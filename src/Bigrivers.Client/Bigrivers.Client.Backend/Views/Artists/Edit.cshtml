@@ -1,10 +1,7 @@
 ﻿@model Bigrivers.Client.Backend.ViewModels.ArtistViewModel
 
-<div id="wrapper">
-    <div class="page-title">
-        <h1>@ViewBag.Title</h1>
-    </div>
-    <div id="content">
+<div id="content">
+    <div class="form-div">
         <form method="POST" enctype="multipart/form-data">
             @Html.ValidationSummary()
             @Html.AntiForgeryToken()
@@ -14,10 +11,10 @@
                 @Html.LabelFor(m => m.Description)
                 @Html.TextAreaFor(m => m.Description, new {@Id = "description"})
                 @*<script>
-                    // Replace the <textarea id="description"> with a CKEditor
-                    // instance, using default configuration.
-                    CKEDITOR.replace("description");
-                </script>*@
+                // Replace the <textarea id="description"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace("description");
+            </script>*@
             </fieldset>
             <hr/>
             <fieldset>
@@ -40,13 +37,16 @@
                 @Html.LabelFor(m => m.Twitter)
                 @Html.TextBoxFor(m => m.Twitter)
             </fieldset>
+            <hr/>
             <fieldset>
-                <label class="label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
+                @Html.CheckBoxFor(m => m.Status)
+                <label class="label label-selectable">Actief</label>
+                <br class="clear"/>
             </fieldset>
             <hr/>
-            <div class="footer">
+            <fieldset>
                 <input type="submit" name="save" value="Artiest opslaan">
-            </div>
+            </fieldset>
         </form>
     </div>
 </div>

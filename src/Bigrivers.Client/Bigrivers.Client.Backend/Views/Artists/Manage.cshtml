@@ -2,61 +2,59 @@
 @{
     List<Artist> listArtists = ViewBag.ListArtists;
 }
-<div id="wrapper">
-    <h1>@ViewBag.Title</h1>
-    <div id="actionbar">
-        <div class="action-block">
-            @Html.ActionLink("Artiest Toevoegen", "New", "Artists")
-        </div>
-        <div class="action-block">
-            @Html.ActionLink("Optreden Toevoegen", "New", "Performances")
-        </div>
-        <div class="action-block">
-            @Html.ActionLink("Optredens Beheren", "Manage", "Performances")
-        </div>
-    </div>
-    <div id="content">
-        <table>
-            <thead>
-            <tr>
-                <th>Artiest</th>
-                <th>Auteur</th>
-                <th>Weblinks</th>
-                <th>Updated</th>
-                <th>Status</th>
-                <th>Acties</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var m in listArtists)
-            {
-                if (!m.Status)
-                {
-                    @:<tr class="inactive">
-                }
-                else
-                {
-                    @:<tr>
-                }
-                <td>@m.Name</td>
-                <td>Auteurnaam</td>
-                <td>
-                    @Html.HyperLink("W", m.Website, true)
-                    @Html.HyperLink("Y", m.YoutubeChannel, true)
-                    @Html.HyperLink("F", m.Facebook, true)
-                    @Html.HyperLink("T", m.Twitter, true)
-                </td>
-                <td>Datum gewijzigd</td>
-                <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "Artists", new {m.Id}, null)</td>
-                <td>
-                    @Html.ActionLink("Wijzig", "Edit", "Artists", new {m.Id}, null)
-                    @Html.ActionLink("Verwijder", "Delete", "Artists", new {m.Id}, new {@onclick = "return confirm('Je staat op het punt om " + m.Name + " te verwijderen. Weet je dit zeker?');"})
-                </td>
-                @:</tr>
 
-            }
-            </tbody>
-        </table>
-        <script src="/Scripts/ViewScripts/Artist-Manage.js"></script>
+<div id="actionbar">
+    <div class="action-block">
+        @Html.ActionLink("Artiest Toevoegen", "New", "Artists")
     </div>
+    <div class="action-block">
+        @Html.ActionLink("Optreden Toevoegen", "New", "Performances")
+    </div>
+    <div class="action-block">
+        @Html.ActionLink("Optredens Beheren", "Manage", "Performances")
+    </div>
+</div>
+<div id="content">
+    <table>
+        <thead>
+        <tr>
+            <th>Artiest</th>
+            <th>Auteur</th>
+            <th>Weblinks</th>
+            <th>Updated</th>
+            <th>Status</th>
+            <th>Acties</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var m in listArtists)
+        {
+            if (!m.Status)
+            {
+                @:<tr class="inactive">
+            }
+            else
+            {
+                @:<tr>
+            }
+            <td>@m.Name</td>
+            <td>Auteurnaam</td>
+            <td>
+                @Html.HyperLink("W", m.Website, true)
+                @Html.HyperLink("Y", m.YoutubeChannel, true)
+                @Html.HyperLink("F", m.Facebook, true)
+                @Html.HyperLink("T", m.Twitter, true)
+            </td>
+            <td>Datum gewijzigd</td>
+            <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "Artists", new {m.Id}, null)</td>
+            <td>
+                @Html.ActionLink("Wijzig", "Edit", "Artists", new {m.Id}, null)
+                @Html.ActionLink("Verwijder", "Delete", "Artists", new {m.Id}, new {@onclick = "return confirm('Je staat op het punt om " + m.Name + " te verwijderen. Weet je dit zeker?');"})
+            </td>
+            @:</tr>
+
+        }
+        </tbody>
+    </table>
+    <script src="/Scripts/ViewScripts/Artist-Manage.js"></script>
 </div>

@@ -208,7 +208,6 @@
     <Compile Include="ViewModels\SponsorViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\admin.css" />
     <Content Include="Content\Form.css" />
     <Content Include="Content\Sidebar.css" />
     <Content Include="favicon.ico" />

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Bigrivers.Client.Backend.Models;
+using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.Backend.ViewModels
 {

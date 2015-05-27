@@ -11,6 +11,7 @@
     <title>@ViewBag.Title - Bigrivers CMS</title>
 </head>
 <body>
+<div id="wrapper">
     <div id="account-menu">
         <ul id="accountContainer">
             <li class="dropdown">
@@ -22,8 +23,12 @@
             </li>
         </ul>
     </div>
+    <div class="page-title">
+        <h1>@ViewBag.Title</h1>
+    </div>
 
     @Html.Partial("_Sidebar")
     @RenderBody()
+</div>
 </body>
 </html>
