@@ -1,11 +1,7 @@
 ﻿@model Bigrivers.Client.Backend.ViewModels.NewsItemViewModel
 
-<div id="wrapper">
-    <div class="page-title">
-        <h1>@ViewBag.Title</h1>
-    </div>
-
-    <div id="content">
+<div id="content">
+    <div class="form-div">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
@@ -14,7 +10,7 @@
                 @Html.LabelFor(m => m.Title)
                 @Html.TextBoxFor(m => m.Title)
                 @Html.LabelFor(m => m.Content)
-                @Html.TextAreaFor(m => m.Content, new {@Id = "content"})
+                @Html.TextAreaFor(m => m.Content, new { @Id = "content" })
                 @*<script>
                         // Replace the <textarea id="content"> with a CKEditor
                         // instance, using default configuration.
@@ -24,16 +20,18 @@
             <hr />
             <fieldset>
                 @Html.LabelFor(m => m.Image)
-                <span>Upload een foto voor dit nieuwsbericht</span><br/>
+                <span>Upload een foto voor dit nieuwsbericht</span><br />
                 <input type="file" name="pic">
             </fieldset>
+            <hr />
             <fieldset>
                 <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
             </fieldset>
             <hr />
-            <div class="footer">
+            <fieldset>
                 <input type="submit" name="save" value="Nieuwsbericht opslaan">
-            </div>
+            </fieldset>
         }
     </div>
+    
 </div>

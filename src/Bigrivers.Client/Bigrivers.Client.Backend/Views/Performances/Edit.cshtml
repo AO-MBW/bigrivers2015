@@ -1,37 +1,40 @@
 ﻿@model Bigrivers.Client.Backend.ViewModels.PerformanceViewModel
 
-<div id="wrapper">
-    <div class="page-title">
-        <h1>@ViewBag.Title</h1>
+<div id="content">
+    <div class="form-div">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary()
+                <fieldset>
+                    @Html.LabelFor(m => m.Event)
+                    @(Model.Event != null ? Html.DropDownListFor(m => m.Event, Model.Events, new { data_selected = Model.Event }) : Html.DropDownListFor(m => m.Event, Model.Events))
+                    @Html.LabelFor(m => m.Artist)
+                    @(Model.Artist != null ? Html.DropDownListFor(m => m.Artist, Model.Artists, new { data_selected = Model.Artist }) : Html.DropDownListFor(m => m.Artist, Model.Artists))
+                </fieldset>
+                <hr />
+                <fieldset>
+                    @Html.LabelFor(m => m.Description)
+                    @Html.TextAreaFor(m => m.Description, new { @Id = "description" })
+                </fieldset>
+                <hr />
+                <fieldset>
+                    @Html.LabelFor(m => m.Start)
+                    @Html.TextBoxFor(m => m.Start, new { @id = "datepicker1" })
+                    @Html.LabelFor(m => m.End)
+                    @Html.TextBoxFor(m => m.End, new { @id = "datepicker2" })
+                </fieldset>
+                <hr />
+                <fieldset>
+                    <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
+                </fieldset>
+                <hr />
+                <fieldset>
+                    <input type="submit" name="save" value="Optreden opslaan">
+                </fieldset>
+
+            }
     </div>
-
-    <div id="content">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary()
-            <fieldset>
-                @(Model.Event != null ? Html.DropDownListFor(m => m.Event, Model.Events, new {data_selected = Model.Event}) : Html.DropDownListFor(m => m.Event, Model.Events))
-
-                @(Model.Artist != null ? Html.DropDownListFor(m => m.Artist, Model.Artists, new {data_selected = Model.Artist}) : Html.DropDownListFor(m => m.Artist, Model.Artists))
-
-                @Html.LabelFor(m => m.Description)
-                @Html.TextAreaFor(m => m.Description, new { @Id = "description" })
-            </fieldset>
-            <fieldset>
-                @Html.LabelFor(m => m.Start)
-                @Html.TextBoxFor(m => m.Start, new { @id = "datepicker1" })
-                @Html.LabelFor(m => m.End)
-                @Html.TextBoxFor(m => m.End, new { @id = "datepicker2" })
-            </fieldset>
-            <fieldset>
-                <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
-            </fieldset>
-            <hr />
-            <div class="footer">
-                <input type="submit" name="save" value="Optreden opslaan">
-            </div>
-        }
-        <script src="/Scripts/ViewScripts/Performance-Edit.js"></script>
-    </div>
+    
+    <script src="/Scripts/ViewScripts/Performance-Edit.js"></script>
 </div>

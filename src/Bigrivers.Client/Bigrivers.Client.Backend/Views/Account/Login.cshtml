@@ -5,11 +5,14 @@
 
 @using(Html.BeginForm())
 {
-    @Html.LabelFor(m => m.LoginName)
-    @Html.TextBoxFor(m => m.LoginName)    
-    @Html.LabelFor(m => m.Password)
-    @Html.PasswordFor(m => m.Password)
-    <p class="submit">
+    <fieldset>
+        @Html.LabelFor(m => m.LoginName)
+        @Html.TextBoxFor(m => m.LoginName)
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(m => m.Password)
+    </fieldset>
+    
+    <fieldset>
         <input type="submit" value="Inloggen">
-    </p>
+    </fieldset>
 }

@@ -3,11 +3,8 @@
     ViewBag.Title = "Register";
 }
 
-<div id="wrapper">
-    <div class="page-title">
-        <h1>@ViewBag.Title</h1>
-    </div>
-    <div id="content">
+<div id="content">
+    <div class="form-div">
         <form method="POST" enctype="multipart/form-data">
             @Html.ValidationSummary()
             @Html.AntiForgeryToken()
@@ -20,9 +17,10 @@
                 @Html.DropDownListFor(m => m.Role, Model.Roles)
             </fieldset>
             <hr />
-            <div class="footer">
-                <input type="submit" name="save" value="Registreer">
-            </div>
+            <fieldset>
+                <input type="submit" name="save" value="Opslaan">
+            </fieldset>
         </form>
     </div>
+    
 </div>

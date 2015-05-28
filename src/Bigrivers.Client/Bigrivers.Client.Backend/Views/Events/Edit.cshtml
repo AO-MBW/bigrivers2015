@@ -1,11 +1,7 @@
 ﻿@model Bigrivers.Client.Backend.ViewModels.EventViewModel
 
-<div id="wrapper">
-    <div class="page-title">
-        <h1>@ViewBag.Title</h1>
-    </div>
-
-    <div id="content">
+<div id="content">
+    <div class="form-div">
         <form method="POST" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             @Html.ValidationSummary()
@@ -19,12 +15,6 @@
             </fieldset>
             <hr />
             <fieldset>
-                @Html.LabelFor(m => m.FrontpageLogo)
-                <input type="file" name="logo">
-                @Html.LabelFor(m => m.BackgroundImage)
-                <input type="file" name="background">
-            </fieldset>
-            <fieldset>
                 <label>@Html.CheckBoxFor(m => m.WebsiteStatus) Geef link naar website weer</label>
                 <label>@Html.CheckBoxFor(m => m.YoutubeChannelStatus) Geef link naar Youtubekanaal weer</label>
                 <label>@Html.CheckBoxFor(m => m.FacebookStatus) Geef link naar Facebookpagina weer</label>
@@ -37,19 +27,22 @@
                 @Html.LabelFor(m => m.End)
                 @Html.TextBoxFor(m => m.End, new { @id = "datepicker2" })
             </fieldset>
+            <hr />
             <fieldset>
                 <label>@Html.CheckBoxFor(m => m.TicketRequired, new { id = "TicketRequired" }) Tickets Verplicht</label>
                 @Html.LabelFor(m => m.Price)
                 @Html.TextBoxFor(m => m.Price, new { id = "Price" })
             </fieldset>
+            <hr />
             <fieldset>
                 <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
             </fieldset>
             <hr />
-            <div class="footer">
+            <fieldset>
                 <input type="submit" name="save" value="Evenement opslaan">
-            </div>
+            </fieldset>
         </form>
-            <script src="/Scripts/ViewScripts/Event-Edit.js"></script>
+    </div>
+    
 </div>
-</div>
+<script src="/Scripts/ViewScripts/Event-Edit.js"></script>

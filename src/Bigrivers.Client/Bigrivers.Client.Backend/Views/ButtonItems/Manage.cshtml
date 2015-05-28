@@ -2,43 +2,46 @@
 @{
     List<ButtonItem> listButtonItems = ViewBag.listButtonItems;
 }
-<div id="wrapper">
-    @ViewBag.errormsg
-    <h1>@ViewBag.Title</h1>
-    <div id="actionbar">
-        <div class="action-block">
-            @Html.ActionLink("Item Toevoegen", "New", "ButtonItems")
-        </div>
+
+<div id="actionbar">
+    <div class="action-block">
+        @Html.ActionLink("Item Toevoegen", "New", "ButtonItems")
     </div>
-    <div id="content">
-        <div class="buttonItemContainer">
-            @foreach (var m in listButtonItems.Where(m => m.Status))
-            {
-                <div>
+</div>
+<div id="content">
+    <div class="buttonItemContainer">
+        @foreach (var m in listButtonItems.Where(m => m.Status))
+        {
+            <div>
+                <h1>
                     @Html.ShowImage(ImageHelper.GetImageUrl(m.Logo))
-                    <p>@m.DisplayName - @Html.ActionLink("Actief", "SwitchStatus", "ButtonItems", new {m.Id}, null)</p>
-                    <p>
-                        @Html.ActionLink("Wijzig", "Edit", "ButtonItems", new {m.Id}, null)
-                        @Html.ActionLink("Verwijder", "Delete", "ButtonItems", new {m.Id}, new {@onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');"})
-                        @Html.ActionLink("Up", "ShiftOrder", "ButtonItems", new {id = m.Id, param = "up"}, null)
-                        @Html.ActionLink("Down", "ShiftOrder", "ButtonItems", new {id = m.Id, param = "down"}, null)
-                    </p>
-                </div>
-            }
-        </div>
-        <h3>Inactieve Items</h3>
-        <div class="buttonItemContainer">
-            @foreach (var m in listButtonItems.Where(m => !m.Status))
-            {
-                <div class="inactive">
+                </h1>
+                <p>@m.DisplayName - @Html.ActionLink("Actief", "SwitchStatus", "ButtonItems", new {m.Id}, null)</p>
+                <p>
+                    @Html.ActionLink("Wijzig", "Edit", "ButtonItems", new {m.Id}, null)
+                    @Html.ActionLink("Verwijder", "Delete", "ButtonItems", new {m.Id}, new {@onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');"})
+                    @Html.ActionLink("Up", "ShiftOrder", "ButtonItems", new {id = m.Id, param = "up"}, null)
+                    @Html.ActionLink("Down", "ShiftOrder", "ButtonItems", new {id = m.Id, param = "down"}, null)
+                </p>
+            </div>
+        }
+    </div>
+    <br class="clear"/>
+    <h3>Inactieve Items</h3>
+    <div class="buttonItemContainer">
+        @foreach (var m in listButtonItems.Where(m => !m.Status))
+        {
+            <div class="inactive">
+                <h1>
                     @Html.ShowImage(ImageHelper.GetImageUrl(m.Logo))
-                    <p>@m.DisplayName  - @Html.ActionLink("Inactief", "SwitchStatus", "ButtonItems", new { m.Id }, null)</p>
-                    <p>
-                        @Html.ActionLink("Wijzig", "Edit", "ButtonItems", new {m.Id}, null)
-                        @Html.ActionLink("Verwijder", "Delete", "ButtonItems", new {m.Id}, new {@onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');"})
-                    </p>
-                </div>
-            }
-        </div>
+                </h1>
+                
+                <p>@m.DisplayName - @Html.ActionLink("Inactief", "SwitchStatus", "ButtonItems", new {m.Id}, null)</p>
+                <p>
+                    @Html.ActionLink("Wijzig", "Edit", "ButtonItems", new {m.Id}, null)
+                    @Html.ActionLink("Verwijder", "Delete", "ButtonItems", new {m.Id}, new {@onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');"})
+                </p>
+            </div>
+        }
     </div>
 </div>

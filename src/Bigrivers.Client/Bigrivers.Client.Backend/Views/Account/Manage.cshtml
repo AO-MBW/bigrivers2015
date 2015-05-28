@@ -2,32 +2,30 @@
 @{
     ViewBag.Title = "Beheer gebruikers";
 }
-<div id="wrapper">
-    <h1>@ViewBag.Title</h1>
-    <div id="actionbar">
-        <div class="action-block">
-            @Html.ActionLink("Gebruiker Toevoegen", "New", "Account")
-        </div>
+
+<div id="actionbar">
+    <div class="action-block">
+        @Html.ActionLink("Gebruiker Toevoegen", "New", "Account")
     </div>
-    <div id="content">
-        <table>
-            <thead>
+</div>
+<div id="content">
+    <table>
+        <thead>
+            <tr>
+                <th>Gebruikersnaam</th>
+                <th>Groep</th>
+                <th>Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (UserViewModel m in Model)
+            {
                 <tr>
-                    <th>Gebruikersnaam</th>
-                    <th>Groep</th>
-                    <th>Acties</th>
+                    <td>@m.UserName</td>
+                    <td>@m.Role</td>
+                    <td>@Html.ActionLink("Wijzig", "Edit", "Account", new { m.Id }, null)</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (UserViewModel m in Model)
-                {
-                    <tr>
-                        <td>@m.UserName</td>
-                        <td>@m.Role</td>
-                        <td>@Html.ActionLink("Wijzig", "Edit", "Account", new { m.Id }, null)</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+            }
+        </tbody>
+    </table>
 </div>

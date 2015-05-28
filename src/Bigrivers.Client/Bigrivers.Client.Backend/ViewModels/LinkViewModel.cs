@@ -3,12 +3,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
 using Bigrivers.Server.Data;
+using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.Backend.Models
 {
     public class LinkViewModel
     {
-        private BigriversDb _db = new BigriversDb();
+        private readonly BigriversDb _db = new BigriversDb();
 
         /// <summary>
         /// Variable to set either an internal, external or file link.
@@ -24,8 +25,15 @@ namespace Bigrivers.Client.Backend.Models
         public string ExternalUrl { get; set; }
 
         /// <summary>
+        /// File is the field used when linking to a file in the Azurestorage
+        /// </summary>
+        [Display(Name = "Upload een bestand om naar te linken")]
+        public File File { get; set; }
+
+        /// <summary>
         ///  InternalType is the type of object that's being linked to when linking to an internal page
         /// </summary>
+        [Display(Name = "Naar een...")]
         public string InternalType { get; set; }
 
         ///<summary>
