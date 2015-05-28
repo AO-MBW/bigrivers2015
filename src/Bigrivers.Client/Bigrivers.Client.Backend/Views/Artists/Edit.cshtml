@@ -1,4 +1,8 @@
-﻿@model Bigrivers.Client.Backend.ViewModels.ArtistViewModel
+﻿@using File = Bigrivers.Server.Model.File
+@model Bigrivers.Client.Backend.ViewModels.ArtistViewModel
+@{
+    List<File> fileBase = ViewBag.FileBase;
+}
 
 <div id="content">
     <div class="form-div">
@@ -23,9 +27,29 @@
                     <img class="editor" src="@ImageHelper.GetImageUrl(Model.Avatar)">
                 }
                 @Html.LabelFor(m => m.Avatar)
-                <p>Upload een foto voor de artiest</p>
                 <input type="file" name="file">
+                <div class="photogallery">
+                    @foreach (var file in fileBase)
+                    {
+                        <div class="photogallery-item-container">
+                            <div class="photo-block">
+                                <div class="pseudo-align"></div>
+                                <div class="photo-container">
+                                    <img src="@ImageHelper.GetImageUrl(file)"/>
+                                </div>
+                            </div>
+                            <div class="text-block">
+                                
+                                <div class="text-container">
+                                    <p>@file.Name</p>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    }
+                </div>
             </fieldset>
+            <br class="clear" />
             <hr/>
             <fieldset>
                 @Html.LabelFor(m => m.Website)

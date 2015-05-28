@@ -32,6 +32,9 @@ namespace Bigrivers.Client.Backend.Controllers
                 Status = true
             };
 
+            var fileBase = Db.Files.Where(m => m.Container == "artist").ToList();
+            ViewBag.FileBase = fileBase;
+
             ViewBag.Title = "Nieuwe Artiest";
             return View("Edit", viewModel);
         }
@@ -43,6 +46,8 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var fileBase = Db.Files.Where(m => m.Container == "artist").ToList();
+                ViewBag.FileBase = fileBase;
                 ViewBag.Title = "Nieuwe Artiest";
                 return View("Edit", viewModel);
             }
@@ -72,7 +77,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Name = viewModel.Name,
                 Description = viewModel.Description,
-                Avatar = Db.Files.Find(photoEntity),
+                Avatar = Db.Files.Single(m => m.Md5 == photoEntity.Md5 && m.Container == photoEntity.Container),
                 Website = viewModel.Website,
                 YoutubeChannel = viewModel.YoutubeChannel,
                 Facebook = viewModel.Facebook,
@@ -104,6 +109,8 @@ namespace Bigrivers.Client.Backend.Controllers
                 Status = singleArtist.Status
             };
 
+            var fileBase = Db.Files.Where(m => m.Container == "artist").ToList();
+            ViewBag.FileBase = fileBase;
             ViewBag.Title = "Bewerk Artiest";
             return View(model);
         }
@@ -115,6 +122,8 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var fileBase = Db.Files.Where(m => m.Container == "artist").ToList();
+                ViewBag.FileBase = fileBase;
                 ViewBag.Title = "Nieuwe Artiest";
                 return View("Edit", viewModel);
             }
