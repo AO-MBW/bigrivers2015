@@ -4,11 +4,12 @@
 @foreach (ButtonItem item in ViewBag.ButtonItems)
 {
     <div class="Button">
+        <img src="../Images/Designconcept/polaroid.png" class="polaroid" />
         <a class="ButtonLink" href="@LinkHelper.GetUrl(item.Target)">
-            <div class="ButtonDiv">
-                <img src="@ImageHelper.GetImageUrl(item.Logo)" class="ButtonImg" />
-                <p class="ButtonTitle">@item.DisplayName</p>
+            <div class="ButtonDiv" >
+                <div class="ButtonImg" style="background-image: url(@ImageHelper.GetImageUrl(item.Logo));"></div>
             </div>
+            <p class="ButtonTitle">@item.DisplayName</p>
         </a>
     </div>
 }

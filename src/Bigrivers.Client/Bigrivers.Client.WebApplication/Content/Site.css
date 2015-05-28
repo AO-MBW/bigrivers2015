@@ -101,25 +101,20 @@ table.table{
 /* Frontpage Buttons*/
 .Button {
     float:left;
-    background-image:url(../Images/Designconcept/polaroid.png);
-    background-size: 100%;
-    height: 300px;
     width: 285px;
-    margin-top: 10px;
 }
 
 .ButtonDiv {
-    height: 214px;
-    width: 285px;
-    
+    height: 340px;
+    width: 285px;  
+    margin-top: -335px; 
 }
 
-.ButtonImg {
-    width: 60%;
-    height: 60%;
-    margin-left: 45px;
-    margin-top: 50px;
-    border: solid thick red;
+.ButtonImg{
+    height: 220px;
+    width: 225px;
+    margin-top: 30px;
+    margin-left: 25px;
 }
 
 .ButtonTitle {
@@ -132,8 +127,30 @@ table.table{
     text-decoration: none;
     text-align: center;
     font-family: Jokerman;
+    margin-top: -100px;
 }
 
 .ButtonLink:hover {
     text-decoration: none;
+}
+
+.polaroid{
+    width: 100%;
+    height: 100%;
+}
+
+.footer-content{
+    background-image: url(../images/Designconcept/footer.png);
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+p.bottomyear{
+    float: right;
+}
+
+.pseudo-align{
+    display: inline;
+    padding-right: 20px;
+    color: white;   
 }

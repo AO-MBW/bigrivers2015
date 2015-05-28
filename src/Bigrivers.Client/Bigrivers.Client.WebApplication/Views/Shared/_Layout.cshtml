@@ -12,7 +12,10 @@
 </head>
 
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="header">
+
+    </div>
+<div class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -20,7 +23,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <div>
+            <div class="home-link">
                 <a href="/Home/Index">
                     <img class="menuimg" src="/Images/br15.jpg" alt="Terug naar Home" title="Terug naar Home"/>
                 </a>
@@ -28,10 +31,13 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
+                @{
+                    int i = 1;
+                }
                 @foreach (MenuItem item in ViewBag.MenuItems)
                 {
-                    <li><a href="@LinkHelper.GetUrl(item.Target)">@item.DisplayName</a></li>
-
+                    <li id="menuitem-id-@i"><a class="menuitem-link" href="@LinkHelper.GetUrl(item.Target)">@item.DisplayName</a></li>
+                    i++;
                 }
             </ul>
         </div>
@@ -43,10 +49,11 @@
 </div>
 
 <div class="container footer-content">
-    <hr/>
-    <footer>
-        <p class="bottomyear">&copy; @DateTime.Now.Year - Big Rivers</p>
-    </footer>
+    <br/>
+    <div class="pseudo-align">Meld Je Aan Als Vrijwilleger</div>
+    <div class="pseudo-align">Foto's & Video's Aanleveren</div>
+    <div class="pseudo-align">Meld Je Band Aan Voor</div>
+        <p class="bottomyear">Copyright @DateTime.Now.Year - Big Rivers Festival</p>
 </div>
 </body>
 </html>
