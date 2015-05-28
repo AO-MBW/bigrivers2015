@@ -14,7 +14,7 @@ namespace Bigrivers.Client.Backend.ViewModels
         public string Description { get; set; }
 
         [Display(Name = "Upload een afbeelding voor de artiest")]
-        public File Avatar { get; set; }
+        public FileUploadViewModel Avatar { get; set; }
 
         [Display(Name = "Youtubekanaal")]
         [DataType(DataType.Url)]

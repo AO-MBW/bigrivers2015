@@ -54,7 +54,7 @@ namespace Bigrivers.Client.Backend.Helpers
                     link.ExternalUrl = viewModel.ExternalUrl;
                     break;
                 case "file":
-                    link.File = ImageHelper.UploadFile(file, "uploadedfiles");
+                    link.File = FileUploadHelper.UploadFile(file, "uploadedfiles");
                     break;
             }
             return link;

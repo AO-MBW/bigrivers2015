@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Bigrivers.Client.Backend.Helpers;
 using Bigrivers.Client.Backend.ViewModels;
 using Bigrivers.Client.Helpers;
 using Bigrivers.Server.Model;
@@ -55,9 +56,9 @@ namespace Bigrivers.Client.Backend.Controllers
             File photoEntity = null;
             if (file != null)
             {
-                if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] { "image" }))
+                if (FileUploadHelper.IsSize(file, 200000) && FileUploadHelper.IsMimes(file, new[] { "image" }))
                 {
-                    photoEntity = ImageHelper.UploadFile(file, "sponsor");
+                    photoEntity = FileUploadHelper.UploadFile(file, "sponsor");
                 }
                 else
                 {
@@ -114,9 +115,9 @@ namespace Bigrivers.Client.Backend.Controllers
             File photoEntity = null;
             if (file != null)
             {
-                if (ImageHelper.IsSize(file, 200000) && ImageHelper.IsMimes(file, new[] { "image" }))
+                if (FileUploadHelper.IsSize(file, 200000) && FileUploadHelper.IsMimes(file, new[] { "image" }))
                 {
-                    photoEntity = ImageHelper.UploadFile(file, "sponsor");
+                    photoEntity = FileUploadHelper.UploadFile(file, "sponsor");
                 }
             }
 

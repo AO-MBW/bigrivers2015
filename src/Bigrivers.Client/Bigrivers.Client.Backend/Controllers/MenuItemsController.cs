@@ -86,7 +86,7 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             else if (viewModel.LinkView.LinkType == "file")
             {
-                if (ImageHelper.IsSize(file, 2, "mb")) ModelState.AddModelError("", "Het bestand mag niet groter dan 2 MB zijn");
+                if (FileUploadHelper.IsSize(file, 2, "mb")) ModelState.AddModelError("", "Het bestand mag niet groter dan 2 MB zijn");
             }
             if (!ModelState.IsValid)
             {
@@ -143,7 +143,7 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             else if (viewModel.LinkView.LinkType == "file")
             {
-                if (ImageHelper.IsSize(file, 2, "mb")) ModelState.AddModelError("", "Het bestand mag niet groter dan 2 MB zijn");
+                if (FileUploadHelper.IsSize(file, 2, "mb")) ModelState.AddModelError("", "Het bestand mag niet groter dan 2 MB zijn");
             }
             if (!ModelState.IsValid)
             {

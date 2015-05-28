@@ -68,7 +68,7 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             else if (viewModel.LinkView.LinkType == "file")
             {
-                if (ImageHelper.IsSize(file, 2, "mb")) ModelState.AddModelError("", "Het bestand mag niet groter dan 2 MB zijn");
+                if (FileUploadHelper.IsSize(file, 2, "mb")) ModelState.AddModelError("", "Het bestand mag niet groter dan 2 MB zijn");
             }
             if (!ModelState.IsValid)
             {
@@ -79,9 +79,9 @@ namespace Bigrivers.Client.Backend.Controllers
             File photoEntity = null;
             if (image != null)
             {
-                if (ImageHelper.IsSize(image, 200000) && ImageHelper.IsMimes(image, new[] {"image"}))
+                if (FileUploadHelper.IsSize(image, 200000) && FileUploadHelper.IsMimes(image, new[] { "image" }))
                 {
-                    photoEntity = ImageHelper.UploadFile(image, "buttonitem");
+                    photoEntity = FileUploadHelper.UploadFile(image, "buttonitem");
                 }
                 else
                 {
@@ -133,7 +133,7 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             else if (viewModel.LinkView.LinkType == "file")
             {
-                if (ImageHelper.IsSize(file, 2, "mb")) ModelState.AddModelError("", "Het bestand mag niet groter dan 2 MB zijn");
+                if (FileUploadHelper.IsSize(file, 2, "mb")) ModelState.AddModelError("", "Het bestand mag niet groter dan 2 MB zijn");
             }
             if (!ModelState.IsValid)
             {
@@ -147,9 +147,9 @@ namespace Bigrivers.Client.Backend.Controllers
             File photoEntity = null;
             if (image != null)
             {
-                if (ImageHelper.IsSize(image, 200000) && ImageHelper.IsMimes(image, new[] {"image"}))
+                if (FileUploadHelper.IsSize(image, 200000) && FileUploadHelper.IsMimes(image, new[] { "image" }))
                 {
-                    photoEntity = ImageHelper.UploadFile(image, "buttonitem");
+                    photoEntity = FileUploadHelper.UploadFile(image, "buttonitem");
                 }
             }
 

@@ -22,34 +22,58 @@
             </fieldset>
             <hr/>
             <fieldset>
-                @if (Model.Avatar != null)
+                @if (Model.Avatar.ExistingFile != null)
                 {
-                    <img class="editor" src="@ImageHelper.GetImageUrl(Model.Avatar)">
+                    <img class="editor" src="@ImageHelper.GetImageUrl(Model.Avatar.ExistingFile)">
                 }
                 @Html.LabelFor(m => m.Avatar)
-                <input type="file" name="file">
-                <div class="photogallery">
-                    @foreach (var file in fileBase)
-                    {
-                        <div class="photogallery-item-container">
-                            <div class="photo-block">
-                                <div class="pseudo-align"></div>
-                                <div class="photo-container">
-                                    <img src="@ImageHelper.GetImageUrl(file)"/>
-                                </div>
-                            </div>
-                            <div class="text-block">
-                                
-                                <div class="text-container">
-                                    <p>@file.Name</p>
-                                </div>
-                                
-                            </div>
+                @* File Upload Block Start *@
+                <div id="file-select-container">
+                    @Html.HiddenFor(m => m.Avatar.NewUpload, new { id = "upload-type"})
+                    @Html.HiddenFor(m => m.Avatar.Key, new { id = "select-existing-key"})
+
+                    @* Button bar *@
+                    <div id="file-select-button-bar">
+                        <div id="upload-button" class="file-upload-button selected">
+                            <p>Upload een bestand</p>
                         </div>
-                    }
+                        <div id="gallery-button" class="file-upload-button non-selected">
+                            <p>Kies een bestaande afbeelding</p>
+                        </div>
+                    </div>
+
+                    <br class="clear"/>
+
+                    @* File upload block *@
+                    <div id="file-upload">
+                        @Html.TextBoxFor(m => m.Avatar.UploadFile, new {type = "file"})
+                    </div>
+
+                    @* Gallery block *@
+                    <div id="file-gallery">
+                        @foreach (var file in fileBase)
+                        {
+                            <div class="file-gallery-item-container non-selected" data-file-key="@file.Key">
+                                <div class="file-block">
+                                    <div class="pseudo-align"></div>
+                                    <div class="file-container">
+                                        <img src="@ImageHelper.GetImageUrl(file)"/>
+                                    </div>
+                                </div>
+                                <div class="text-block">
+                                    <div class="text-container">
+                                        <p>@file.Name</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div id="file-gallery-nav">
+                        </div>
+                    </div>
                 </div>
+                @* File Upload Block End *@
             </fieldset>
-            <br class="clear" />
+            <br class="clear"/>
             <hr/>
             <fieldset>
                 @Html.LabelFor(m => m.Website)
@@ -74,3 +98,4 @@
         </form>
     </div>
 </div>
+<script src="/Scripts/ViewScripts/FileExplorer.js"></script>

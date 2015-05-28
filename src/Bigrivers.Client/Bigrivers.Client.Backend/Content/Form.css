@@ -42,9 +42,9 @@
 
 #content div.form-div form input[type="file"] {
 	border: none;
-    padding: 0;
-    height: initial;
-    width: initial;
+	padding: 0;
+	height: initial;
+	width: initial;
 }
 
 #content div.form-div form input[type="checkbox"] {
@@ -67,24 +67,82 @@
 	min-height: 300px;
 }
 
+/* File selecting system */
+#content div.form-div form #file-select-button-bar {
+	position: relative;
+	height: 30px;
+}
 
-#content div.form-div form div.photogallery div.photogallery-item-container {
+#content div.form-div form #file-select-button-bar .file-upload-button {
 	float: left;
-	width: 10%;
-	margin: 0 1% 0 0;
-	padding: 2px;
-	height: 180px;
+	height: 25px;
+	margin-right: 10px;
+}
+
+#content div.form-div form #file-select-button-bar div.file-upload-button p {
+	margin: 0;
+	display: block;
+	width: 200px;
+	height: 25px;
+	line-height: 25px;
+	padding: 5px;
+	text-align: center;
+	text-decoration: none;
+}
+
+#content div.form-div form #file-select-button-bar div.selected p {
+	background-color: #8dba42;
+	color: #fff;
+	cursor: default;
+}
+
+#content div.form-div form #file-select-button-bar div.non-selected p {
 	background-color: #f1f1f1;
 	color: #5b83dd;
+	cursor: pointer;
+}
+
+#content div.form-div form #file-select-button-bar .file-upload-button p:hover {
+	background-color: #8dba42;
+	color: #fff;
+}
+
+#content div.form-div form #file-gallery {
+	display: none;
+	height: 29em;
+	padding: 10px;
+	background-color: rgb(60, 60, 62);
+	background-color: rgba(0, 0, 0, 0.1);
+	
+}
+
+#content div.form-div form #file-gallery div.file-gallery-item-container {
+	float: left;
+	width: 15%;
+	margin: 0 1% 2em 0;
+	padding: 2px;
+	height: 180px;
 	border: 1px solid #5b83dd;
 }
 
-#content div.form-div form div.photogallery div.photogallery-item-container:hover {
-    background-color: #8dba42;
-    color: #fff;
+#content div.form-div form #file-gallery div.selected {
+	background-color: #8dba42;
+	color: #fff;
+	cursor: default;
 }
 
-#content div.form-div form div.photogallery div.photo-block {
+#content div.form-div form #file-gallery div.non-selected {
+	background-color: #f1f1f1;
+	color: #5b83dd;
+	cursor: pointer;
+}
+
+#content div.form-div form #file-gallery div.file-gallery-item-container:hover {
+	background-color: #8dba42;
+	color: #fff;
+}
+
+#content div.form-div form #file-gallery div.file-block {
 	max-width: 100%;
 	height: 150px;
 	font-size: 0;
@@ -98,36 +156,36 @@ div.pseudo-align {
 	width: 0;
 }
 
-#content div.form-div form div.photogallery div.photogallery-item-container div.photo-block div.photo-container {
+#content div.form-div form #file-gallery div.file-gallery-item-container div.file-block div.file-container {
 	display: inline-block;
 	vertical-align: middle;
 	width: 100%;
 	text-align: center;
 }
 
-#content div.form-div form div.photogallery div.photogallery-item-container div.photo-block div.photo-container img {
+#content div.form-div form #file-gallery div.file-gallery-item-container div.file-block div.file-container img {
 	max-width: 100%;
 	max-height: 150px;
-    
+	
 }
 
-#content div.form-div form div.photogallery div.photogallery-item-container div.text-block {
+#content div.form-div form #file-gallery div.file-gallery-item-container div.text-block {
 	width: 100%;
 	height: 25px;
 	font-size: 1em;
 }
 
-#content div.form-div form div.photogallery div.photogallery-item-container div.text-block div.text-container {
+#content div.form-div form #file-gallery div.file-gallery-item-container div.text-block div.text-container {
 	width: 100%;
-    height: 100%;
+	height: 100%;
 	text-align: center;
 }
 
-#content div.form-div form div.photogallery div.photogallery-item-container div.text-block p {
+#content div.form-div form #file-gallery div.file-gallery-item-container div.text-block p {
 	width: 100%;
-    height: 100%;
-    line-height: 25px;
-    margin: 0;
+	height: 100%;
+	line-height: 25px;
+	margin: 0;
 }
 
 

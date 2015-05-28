@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Bigrivers.Client.Backend.Helpers;
 using Bigrivers.Client.Backend.ViewModels;
 using Bigrivers.Server.Model;
-using Bigrivers.Client.Helpers;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
@@ -29,6 +28,10 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             var viewModel = new ArtistViewModel
             {
+                Avatar = new FileUploadViewModel
+                {
+                    NewUpload = true
+                },
                 Status = true
             };
 
@@ -42,7 +45,7 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Artist/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(ArtistViewModel viewModel, HttpPostedFileBase file)
+        public ActionResult New(ArtistViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -52,32 +55,40 @@ namespace Bigrivers.Client.Backend.Controllers
                 return View("Edit", viewModel);
             }
 
-            // Upload file to Azurestorage if needed
             File photoEntity = null;
-            if (file != null)
+            if (viewModel.Avatar.NewUpload)
             {
-                // File has to be < 2MB and an image
-                if (!ImageHelper.IsSize(file, 2, "mb"))
+                // Upload file to Azurestorage if needed
+                if (viewModel.Avatar.UploadFile != null)
                 {
-                    ModelState.AddModelError("Avatar", "De afbeelding mag niet groter zijn dan 2 MB");
+                    // File has to be < 2MB and an image
+                    if (!FileUploadHelper.IsSize(viewModel.Avatar.UploadFile, 2, "mb"))
+                    {
+                        ModelState.AddModelError("Avatar", "De afbeelding mag niet groter zijn dan 2 MB");
+                    }
+                    if (!FileUploadHelper.IsMimes(viewModel.Avatar.UploadFile, new[] {"image"}))
+                    {
+                        ModelState.AddModelError("Avatar", "Het bestand moet een afbeelding zijn");
+                    }
+                    if (!ModelState.IsValid)
+                    {
+                        ViewBag.Title = "Nieuwe Artiest";
+                        return View("Edit", viewModel);
+                    }
+                    photoEntity = FileUploadHelper.UploadFile(viewModel.Avatar.UploadFile, "artist");
                 }
-                if (!ImageHelper.IsMimes(file, new[] { "image" }))
-                {
-                    ModelState.AddModelError("Avatar", "Het bestand moet een afbeelding zijn");
-                }
-                if (!ModelState.IsValid)
-                {
-                    ViewBag.Title = "Nieuwe Artiest";
-                    return View("Edit", viewModel);
-                }
-                photoEntity = ImageHelper.UploadFile(file, "artist");
             }
+            else
+            {
+                photoEntity = Db.Files.Single(m => m.Key == viewModel.Avatar.Key);
+            }
+            
 
             var singleArtist = new Artist
             {
                 Name = viewModel.Name,
                 Description = viewModel.Description,
-                Avatar = Db.Files.Single(m => m.Md5 == photoEntity.Md5 && m.Container == photoEntity.Container),
+                Avatar = Db.Files.Single(m => m.Key == photoEntity.Key),
                 Website = viewModel.Website,
                 YoutubeChannel = viewModel.YoutubeChannel,
                 Facebook = viewModel.Facebook,
@@ -101,7 +112,11 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Name = singleArtist.Name,
                 Description = singleArtist.Description,
-                Avatar = singleArtist.Avatar,
+                Avatar = new FileUploadViewModel
+                {
+                    NewUpload = true,
+                    ExistingFile = singleArtist.Avatar
+                },
                 Website = singleArtist.Website,
                 YoutubeChannel = singleArtist.YoutubeChannel,
                 Facebook = singleArtist.Facebook,
@@ -118,7 +133,7 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Artist/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, ArtistViewModel viewModel, HttpPostedFileBase file)
+        public ActionResult Edit(int id, ArtistViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -131,24 +146,31 @@ namespace Bigrivers.Client.Backend.Controllers
             if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleArtist = Db.Artists.Find(id);
 
-            // Upload file to Azurestorage if needed
             File photoEntity = null;
-            if (file != null)
+            if (viewModel.Avatar.NewUpload)
             {
-                // File has to be < 2MB and an image
-                if (!ImageHelper.IsSize(file, 200000))
+                // Upload file to Azurestorage if needed
+                if (viewModel.Avatar.UploadFile != null)
                 {
-                    ModelState.AddModelError("Avatar", "De afbeelding mag niet groter zijn dan 2 MB");
-                    ViewBag.Title = "Nieuwe Artiest";
-                    return View("Edit", viewModel);
+                    // File has to be < 2MB and an image
+                    if (!FileUploadHelper.IsSize(viewModel.Avatar.UploadFile, 200000))
+                    {
+                        ModelState.AddModelError("Avatar", "De afbeelding mag niet groter zijn dan 2 MB");
+                        ViewBag.Title = "Nieuwe Artiest";
+                        return View("Edit", viewModel);
+                    }
+                    if (!FileUploadHelper.IsMimes(viewModel.Avatar.UploadFile, new[] { "image" }))
+                    {
+                        ModelState.AddModelError("Avatar", "Het bestand moet een afbeelding zijn");
+                        ViewBag.Title = "Nieuwe Artiest";
+                        return View("Edit", viewModel);
+                    }
+                    photoEntity = FileUploadHelper.UploadFile(viewModel.Avatar.UploadFile, "artist");
                 }
-                if (!ImageHelper.IsMimes(file, new[] { "image" }))
-                {
-                    ModelState.AddModelError("Avatar", "Het bestand moet een afbeelding zijn");
-                    ViewBag.Title = "Nieuwe Artiest";
-                    return View("Edit", viewModel);
-                }
-                photoEntity = ImageHelper.UploadFile(file, "artist");
+            }
+            else
+            {
+                photoEntity = Db.Files.Single(m => m.Key == viewModel.Avatar.Key);
             }
 
             singleArtist.Name = viewModel.Name;
@@ -158,7 +180,7 @@ namespace Bigrivers.Client.Backend.Controllers
             singleArtist.Facebook = viewModel.Facebook;
             singleArtist.Twitter = viewModel.Twitter;
             singleArtist.Status = viewModel.Status;
-            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleArtist.Avatar = Db.Files.Find(photoEntity);
+            if (photoEntity != null) singleArtist.Avatar = Db.Files.Single(m => m.Key == photoEntity.Key);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");
