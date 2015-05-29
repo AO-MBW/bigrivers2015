@@ -1,15 +1,56 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+
+
+<div class="newsitem">
+    <img src="../Images/Designconcept/polaroid.png" class="polaroid" />
+
+
+    <div class="index-carousel">
+        <br>
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+
+                <div class="item active">
+                    <img src="../Images/sample.jpg">
+                </div>
+
+                <div class="item">
+                    <img src="../Images/sample.jpg">
+                </div>
+
+                <div class="item">
+                    <img src="../Images/sample.jpg">
+                </div>
+
+                <div class="item">
+                    <img src="../Images/sample.jpg">
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
 @foreach (ButtonItem item in ViewBag.ButtonItems)
 {
     <div class="Button">
         <img src="../Images/Designconcept/polaroid.png" class="polaroid" />
         <a class="ButtonLink" href="@LinkHelper.GetUrl(item.Target)">
-            <div class="ButtonDiv" >
-                <div class="ButtonImg" style="background-image: url(@ImageHelper.GetImageUrl(item.Logo));"></div>
-            </div>
+            <div class="ButtonImg" style="background-image: url(@ImageHelper.GetImageUrl(item.Logo));"></div>
+            @*<div class="ButtonDiv" >
+              
+            </div>*@
             <p class="ButtonTitle">@item.DisplayName</p>
         </a>
     </div>
 }
+
+
+
+}    
