@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
+using System.Web.Mvc;
 using Bigrivers.Server.Data;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
@@ -71,6 +73,7 @@ namespace Bigrivers.Client.Backend.Helpers
         /// </summary>
         public static File UploadFile(HttpPostedFileBase file, string container)
         {
+            file.InputStream.Position = 0;
             var extension = Path.GetExtension(file.FileName);
             var key = string.Format("File-{0}{1}", Guid.NewGuid(), extension);
 
@@ -120,7 +123,7 @@ namespace Bigrivers.Client.Backend.Helpers
         {
             using (var img = Image.FromStream(imageStream))
             {
-                if (img.Width < maxWidth && img.Height < maxHeight) return true;
+                if (img.Width <= maxWidth && img.Height <= maxHeight) return true;
             }
             return false;
         }
@@ -133,7 +136,7 @@ namespace Bigrivers.Client.Backend.Helpers
         {
             using (var img = Image.FromStream(imageStream))
             {
-                if (img.Width > minWidth && img.Height > minHeight) return true;
+                if (img.Width >= minWidth && img.Height >= minHeight) return true;
             }
             return false;
         }
@@ -159,5 +162,62 @@ namespace Bigrivers.Client.Backend.Helpers
         //    }
         //    return false;
         //}
+    }
+
+    public class FileUploadValidator
+    {
+        public HttpPostedFileBase FileObject { get; set; }
+        public FileUploadModelErrors ModelErrors { get; set; }
+        public bool Required { get; set; }
+        public int MaxByteSize { get; set; }
+        public int? MaxHeight { get; set; }
+        public int? MaxWidth { get; set; }
+        public int? MinHeight { get; set; }
+        public int? MinWidth { get; set; }
+        public string[] MimeTypes { get; set; }
+
+        public List<string> CheckFile()
+        {
+            var ModelErrorList = new List<string>();
+            if (Required && FileObject == null) ModelErrorList.Add(ModelErrors.Required);
+            else if (FileObject != null)
+            {
+                if (!FileUploadHelper.IsSize(FileObject, MaxByteSize))
+                {
+                    ModelErrorList.Add(ModelErrors.ExceedsMaxByteSize);
+                }
+                if (!FileUploadHelper.IsMimes(FileObject, MimeTypes))
+                {
+                    ModelErrorList.Add(ModelErrors.ForbiddenMime);
+                }
+                if (FileObject.ContentType.Contains("image"))
+                {
+                    if (!ImageUploadHelper.IsSmallerThanDimensions(FileObject.InputStream,
+                    MaxHeight ?? 999999999,
+                    MaxWidth ?? 999999999))
+                    {
+                        ModelErrorList.Add(ModelErrors.ExceedsPixelSizeMaximum);
+                    }
+                    if (!ImageUploadHelper.IsLargerThanDimensions(FileObject.InputStream,
+                        MaxHeight ?? 0,
+                        MaxWidth ?? 0))
+                    {
+                        ModelErrorList.Add(ModelErrors.BeneathPixelSizeMinimum);
+                    }
+                }
+                
+            }
+
+            return ModelErrorList;
+        }
+    }
+
+    public class FileUploadModelErrors
+    {
+        public string Required { get; set; }
+        public string ExceedsMaxByteSize { get; set; }
+        public string ExceedsPixelSizeMaximum { get; set; }
+        public string BeneathPixelSizeMinimum { get; set; }
+        public string ForbiddenMime { get; set; }
     }
 }

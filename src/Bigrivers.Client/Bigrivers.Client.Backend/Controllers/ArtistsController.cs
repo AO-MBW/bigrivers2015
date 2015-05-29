@@ -47,6 +47,22 @@ namespace Bigrivers.Client.Backend.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult New(ArtistViewModel viewModel)
         {
+            // Run over a validator to add custom model errors
+            foreach (var error in new FileUploadValidator
+            {
+                Required = false,
+                FileObject = viewModel.Avatar.UploadFile,
+                MaxByteSize = 2000000,
+                MimeTypes = new[] { "image" },
+                ModelErrors = new FileUploadModelErrors
+                {
+                    ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
+                    ForbiddenMime = "Het bestand moet een afbeelding zijn"
+                }
+            }.CheckFile())
+            {
+                ModelState.AddModelError("", error);
+            }
             if (!ModelState.IsValid)
             {
                 var fileBase = Db.Files.Where(m => m.Container == "artist").ToList();
@@ -56,33 +72,21 @@ namespace Bigrivers.Client.Backend.Controllers
             }
 
             File photoEntity = null;
+            // Either upload file to AzureStorage or use file Key from explorer to get the file
             if (viewModel.Avatar.NewUpload)
             {
-                // Upload file to Azurestorage if needed
                 if (viewModel.Avatar.UploadFile != null)
                 {
-                    // File has to be < 2MB and an image
-                    if (!FileUploadHelper.IsSize(viewModel.Avatar.UploadFile, 2, "mb"))
-                    {
-                        ModelState.AddModelError("Avatar", "De afbeelding mag niet groter zijn dan 2 MB");
-                    }
-                    if (!FileUploadHelper.IsMimes(viewModel.Avatar.UploadFile, new[] {"image"}))
-                    {
-                        ModelState.AddModelError("Avatar", "Het bestand moet een afbeelding zijn");
-                    }
-                    if (!ModelState.IsValid)
-                    {
-                        ViewBag.Title = "Nieuwe Artiest";
-                        return View("Edit", viewModel);
-                    }
                     photoEntity = FileUploadHelper.UploadFile(viewModel.Avatar.UploadFile, "artist");
                 }
             }
             else
             {
-                photoEntity = Db.Files.Single(m => m.Key == viewModel.Avatar.Key);
+                if (viewModel.Avatar.Key != null)
+                {
+                    photoEntity = Db.Files.Single(m => m.Key == viewModel.Avatar.Key);
+                }
             }
-            
 
             var singleArtist = new Artist
             {
@@ -135,6 +139,26 @@ namespace Bigrivers.Client.Backend.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, ArtistViewModel viewModel)
         {
+            if (viewModel.Avatar.NewUpload)
+            {
+                // Run over a validator to add custom model errors
+                foreach (var error in new FileUploadValidator
+                {
+                    Required = false,
+                    FileObject = viewModel.Avatar.UploadFile,
+                    MaxByteSize = 2000000,
+                    MimeTypes = new[] { "image" },
+                    ModelErrors = new FileUploadModelErrors
+                    {
+                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
+                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
+                    }
+                }.CheckFile())
+                {
+                    ModelState.AddModelError("", error);
+                }
+            }
+            
             if (!ModelState.IsValid)
             {
                 var fileBase = Db.Files.Where(m => m.Container == "artist").ToList();
@@ -147,30 +171,20 @@ namespace Bigrivers.Client.Backend.Controllers
             var singleArtist = Db.Artists.Find(id);
 
             File photoEntity = null;
+            // Either upload file to AzureStorage or use file Key from explorer to get the file
             if (viewModel.Avatar.NewUpload)
             {
-                // Upload file to Azurestorage if needed
                 if (viewModel.Avatar.UploadFile != null)
                 {
-                    // File has to be < 2MB and an image
-                    if (!FileUploadHelper.IsSize(viewModel.Avatar.UploadFile, 200000))
-                    {
-                        ModelState.AddModelError("Avatar", "De afbeelding mag niet groter zijn dan 2 MB");
-                        ViewBag.Title = "Nieuwe Artiest";
-                        return View("Edit", viewModel);
-                    }
-                    if (!FileUploadHelper.IsMimes(viewModel.Avatar.UploadFile, new[] { "image" }))
-                    {
-                        ModelState.AddModelError("Avatar", "Het bestand moet een afbeelding zijn");
-                        ViewBag.Title = "Nieuwe Artiest";
-                        return View("Edit", viewModel);
-                    }
                     photoEntity = FileUploadHelper.UploadFile(viewModel.Avatar.UploadFile, "artist");
                 }
             }
             else
             {
-                photoEntity = Db.Files.Single(m => m.Key == viewModel.Avatar.Key);
+                if (viewModel.Avatar.Key != null)
+                {
+                    photoEntity = Db.Files.Single(m => m.Key == viewModel.Avatar.Key);
+                }
             }
 
             singleArtist.Name = viewModel.Name;

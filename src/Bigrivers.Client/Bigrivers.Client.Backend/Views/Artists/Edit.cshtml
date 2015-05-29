@@ -22,15 +22,22 @@
             </fieldset>
             <hr/>
             <fieldset>
-                @if (Model.Avatar.ExistingFile != null)
-                {
-                    <img class="editor" src="@ImageHelper.GetImageUrl(Model.Avatar.ExistingFile)">
-                }
-                @Html.LabelFor(m => m.Avatar)
-                @* File Upload Block Start *@
+                    @* File Upload Block Start *@
+                    @if (Model.Avatar.ExistingFile != null)
+                    {
+                        <div class="existing-file-container">
+                            <div class="existing-file-image">
+                                <img src="@ImageHelper.GetImageUrl(Model.Avatar.ExistingFile)">
+                            </div>
+                            <div class="existing-file-text">
+                                <p>@Model.Avatar.ExistingFile.Name</p>
+                            </div>
+                        </div>
+                    }
                 <div id="file-select-container">
-                    @Html.HiddenFor(m => m.Avatar.NewUpload, new { id = "upload-type"})
-                    @Html.HiddenFor(m => m.Avatar.Key, new { id = "select-existing-key"})
+                    @Html.LabelFor(m => m.Avatar)
+                    @Html.HiddenFor(m => m.Avatar.NewUpload, new {id = "upload-type"})
+                    @Html.HiddenFor(m => m.Avatar.Key, new {id = "select-existing-key"})
 
                     @* Button bar *@
                     <div id="file-select-button-bar">
@@ -41,8 +48,6 @@
                             <p>Kies een bestaande afbeelding</p>
                         </div>
                     </div>
-
-                    <br class="clear"/>
 
                     @* File upload block *@
                     <div id="file-upload">
@@ -67,8 +72,6 @@
                                 </div>
                             </div>
                         }
-                        <div id="file-gallery-nav">
-                        </div>
                     </div>
                 </div>
                 @* File Upload Block End *@
