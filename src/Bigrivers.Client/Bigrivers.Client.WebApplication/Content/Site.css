@@ -145,7 +145,6 @@ table.table{
     float:left;
     width: 285px;
     height: auto;
-    border: 1px solid red;
 }
 
 
@@ -170,8 +169,6 @@ p.bottomyear{
     height: 215px;
     margin-left: 35px;
     margin-top: -325px;
-    border-style: solid;
-    border-color: yellow;   
 }
 
 .carousel-inner div.item,
