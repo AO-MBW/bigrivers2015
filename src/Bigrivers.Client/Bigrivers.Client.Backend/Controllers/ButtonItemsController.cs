@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Bigrivers.Client.Backend.Models;
 using Bigrivers.Server.Model;
@@ -35,11 +34,12 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 return new FileUploadValidator
                 {
-                    Required = false,
+                    Required = true,
                     MaxByteSize = 2000000,
                     MimeTypes = new string[] {},
                     ModelErrors = new FileUploadModelErrors
                     {
+                        Required = "Er moet een bestand worden geupload",
                         ExceedsMaxByteSize = "Het bestand mag niet groter zijn dan 2 MB",
                     }
                 };
@@ -109,6 +109,9 @@ namespace Bigrivers.Client.Backend.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult New(ButtonItemViewModel model)
         {
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
+            model.LinkView.File.FileBase = Db.Files.Where(m => m.Container == FileLinkUploadLocation).ToList();
+
             // Run over a validator to add custom model errors
             foreach (var error in FileValidator.CheckFile(model.Image))
             {
@@ -125,8 +128,6 @@ namespace Bigrivers.Client.Backend.Controllers
             
             if (!ModelState.IsValid)
             {
-                model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
-                model.LinkView.File.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
                 ViewBag.Title = "Nieuw ButtonItem";
                 return View("Edit", model);
             }
@@ -142,16 +143,9 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             else
             {
-                if (model.Image.Key != null)
+                if (model.Image.Key != "false")
                 {
                     photoEntity = Db.Files.Single(m => m.Key == model.Image.Key);
-                }
-                else
-                {
-                    photoEntity = new File
-                    {
-                        Key = ""
-                    };
                 }
             }
 
@@ -165,7 +159,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 DisplayName = model.DisplayName,
                 Order = order,
                 Status = model.Status,
-                Logo = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key)
+                Logo = photoEntity != null ? Db.Files.Single(m => m.Key == photoEntity.Key) : null
             };
 
             Db.ButtonItems.Add(singleButtonItem);
@@ -197,7 +191,7 @@ namespace Bigrivers.Client.Backend.Controllers
                     NewUpload = true,
                     ExistingFile = singleButtonItem.Logo,
                     FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
-                },
+                }
             };
             ViewBag.Title = "Bewerk ButtonItem";
             return View(model);
@@ -206,8 +200,16 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: ButtonItems/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, ButtonItemViewModel model, HttpPostedFileBase file)
+        public ActionResult Edit(int id, ButtonItemViewModel model)
         {
+            if (!VerifyId(id)) return RedirectToAction("Manage");
+            var singleButtonItem = Db.ButtonItems.Find(id);
+
+            model.Image.ExistingFile = singleButtonItem.Logo;
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
+            model.LinkView.File.ExistingFile = singleButtonItem.Target.File;
+            model.LinkView.File.FileBase = Db.Files.Where(m => m.Container == FileLinkUploadLocation).ToList();
+
             // Run over a validator to add custom model errors
             foreach (var error in FileValidator.CheckFile(model.Image))
             {
@@ -224,14 +226,9 @@ namespace Bigrivers.Client.Backend.Controllers
 
             if (!ModelState.IsValid)
             {
-                model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
-                model.LinkView.File.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
                 ViewBag.Title = "Nieuw MenuItem";
                 return View("Edit", model);
             }
-
-            if (!VerifyId(id)) return RedirectToAction("Manage");
-            var singleButtonItem = Db.ButtonItems.Find(id);
 
             File photoEntity = null;
             // Either upload file to AzureStorage or use file Key from explorer to get the file
@@ -244,24 +241,22 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             else
             {
-                if (model.Image.Key != null)
+                if (model.Image.Key != "false")
                 {
                     photoEntity = Db.Files.Single(m => m.Key == model.Image.Key);
                 }
-                else
-                {
-                    photoEntity = new File
-                    {
-                        Key = ""
-                    };
-                }
             }
-            var linkId = LinkManageHelper.SetLink(model.LinkView).Id;
+
+            var link = singleButtonItem.Target;
+            if (model.LinkView.File.UploadFile != null || model.LinkView.File.Key != null && model.LinkView.File.Key != "false")
+            {
+                link = LinkManageHelper.SetLink(model.LinkView);
+            }
                 
             singleButtonItem.DisplayName = model.DisplayName;
             singleButtonItem.Status = model.Status;
-            singleButtonItem.Target = Db.Links.SingleOrDefault(m => m.Id == linkId);
-            singleButtonItem.Logo = Db.Files.Single(m => m.Key == photoEntity.Key);
+            singleButtonItem.Target = Db.Links.Single(m => m.Id == link.Id);
+            if (photoEntity != null) singleButtonItem.Logo = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

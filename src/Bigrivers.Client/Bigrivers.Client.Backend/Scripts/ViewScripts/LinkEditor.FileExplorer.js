@@ -19,9 +19,9 @@
 	});
 
 	$(".link-file-gallery-item-container").click(function() {
-		$(".link-select-existing-key").val($(this).data("file-key"));
+		$("#link-select-existing-key").val($(this).data("file-key"));
 
-		var blocks = $("#link-file-gallery-item-container");
+		var blocks = $(".link-file-gallery-item-container");
 		// Set default item in selectlist
 		$.each(blocks, function() {
 			$(this).removeClass("selected").addClass("non-selected");

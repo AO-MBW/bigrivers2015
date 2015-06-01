@@ -31,9 +31,62 @@
                 @Html.DropDownListFor(m => m.LinkView.InternalSponsorId, Model.LinkView.Sponsors, new { id = "Sponsors", @class = "InternalType" })
             </fieldset>
             <fieldset class="linkType" id="file">
-                @Html.LabelFor(m => m.LinkView.File)
-                <input type="file" name="file">
+                @* Link File Upload Block Start *@
+                @if (Model.LinkView.File.ExistingFile != null)
+                {
+                    <div class="existing-file-container">
+                        <div class="existing-file-image">
+                            <img src="@ImageHelper.GetImageUrl(Model.LinkView.File.ExistingFile)">
+                        </div>
+                        <div class="existing-file-text">
+                            <p>@Model.LinkView.File.ExistingFile.Name</p>
+                        </div>
+                    </div>
+                }
+                <div id="link-file-select-container">
+                    @Html.LabelFor(m => m.LinkView.File)
+                    @Html.HiddenFor(m => m.LinkView.File.NewUpload, new { id = "link-upload-type" })
+                    @Html.HiddenFor(m => m.LinkView.File.Key, new { id = "link-select-existing-key" })
+
+                    @* Button bar *@
+                    <div id="link-file-select-button-bar">
+                        <div id="link-upload-button" class="file-upload-button selected">
+                            <p>Upload een bestand</p>
+                        </div>
+                        <div id="link-gallery-button" class="file-upload-button non-selected">
+                            <p>Kies een bestaande afbeelding</p>
+                        </div>
+                    </div>
+
+                    @* File upload block *@
+                    <div id="link-file-upload">
+                        @Html.TextBoxFor(m => m.LinkView.File.UploadFile, new { type = "file" })
+                    </div>
+
+                    @* Gallery block *@
+                    <div id="link-file-gallery">
+                        @foreach (var file in Model.LinkView.File.FileBase)
+                        {
+                            <div class="link-file-gallery-item-container non-selected" data-file-key="@file.Key">
+                                <div class="file-block">
+                                    <div class="pseudo-align"></div>
+                                    <div class="file-container">
+                                        <img src="@ImageHelper.GetImageUrl(file)" />
+                                    </div>
+                                </div>
+                                <div class="text-block">
+                                    <div class="text-container">
+                                        <p>@file.Name</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                @* Link File Upload Block End *@
             </fieldset>
+            <br class="clear" />
             @* End of the Link Builder *@
             <hr />
             <fieldset>
@@ -57,3 +110,4 @@
     $("#Sponsors").val("@Model.LinkView.InternalSponsorId");
 </script>
 <script src="/Scripts/ViewScripts/LinkEditor.js"></script>
+<script src="/Scripts/ViewScripts/LinkEditor.FileExplorer.js"></script>

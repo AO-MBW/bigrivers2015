@@ -71,6 +71,7 @@ namespace Bigrivers.Client.Backend.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult New(SponsorViewModel model)
         {
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
             // Run over a validator to add custom model errors
             foreach (var error in FileValidator.CheckFile(model.Image))
             {
@@ -79,7 +80,6 @@ namespace Bigrivers.Client.Backend.Controllers
 
             if (!ModelState.IsValid)
             {
-                model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
                 ViewBag.Title = "Sponsor toevoegen";
                 return View("Edit", model);
             }
@@ -95,16 +95,9 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             else
             {
-                if (model.Image.Key != null)
+                if (model.Image.Key != "false")
                 {
                     photoEntity = Db.Files.Single(m => m.Key == model.Image.Key);
-                }
-                else
-                {
-                    photoEntity = new File
-                    {
-                        Key = ""
-                    };
                 }
             }
             
@@ -112,7 +105,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Name = model.Name,
                 Url = model.Url,
-                Image = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key),
+                Image = photoEntity != null ? Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key) : null,
                 Status = model.Status
             };
 
@@ -150,6 +143,12 @@ namespace Bigrivers.Client.Backend.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, SponsorViewModel model)
         {
+            if (!VerifyId(id)) return RedirectToAction("Manage");
+            var singleSponsor = Db.Sponsors.Find(id);
+
+            model.Image.ExistingFile = singleSponsor.Image;
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
+
             // Run over a validator to add custom model errors
             foreach (var error in FileValidator.CheckFile(model.Image))
             {
@@ -158,14 +157,9 @@ namespace Bigrivers.Client.Backend.Controllers
 
             if (!ModelState.IsValid)
             {
-                model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
                 ViewBag.Title = "Sponsor toevoegen";
                 return View("Edit", model);
             }
-
-            if (!VerifyId(id)) return RedirectToAction("Manage");
-            var singleSponsor = Db.Sponsors.Find(id);
-
 
             File photoEntity = null;
             // Either upload file to AzureStorage or use file Key from explorer to get the file
@@ -178,23 +172,16 @@ namespace Bigrivers.Client.Backend.Controllers
             }
             else
             {
-                if (model.Image.Key != null)
+                if (model.Image.Key != "false")
                 {
                     photoEntity = Db.Files.Single(m => m.Key == model.Image.Key);
-                }
-                else
-                {
-                    photoEntity = new File
-                    {
-                        Key = ""
-                    };
                 }
             }
 
             singleSponsor.Name = model.Name;
             singleSponsor.Url = model.Url;
             singleSponsor.Status = model.Status;
-            singleSponsor.Image = Db.Files.Single(m => m.Key == photoEntity.Key);
+            if (photoEntity != null) singleSponsor.Image = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

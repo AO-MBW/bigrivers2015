@@ -188,7 +188,9 @@ namespace Bigrivers.Client.Backend.Helpers
             // Check if the file, if required, is actually supplied
             if (FileObject.ExistingFile == null && Required && (
                 (FileObject.NewUpload && FileObject.UploadFile == null)
-                || (!FileObject.NewUpload && FileObject.Key == "false")))
+                || (!FileObject.NewUpload && 
+                    (FileObject.Key == "false" || FileObject.Key == null))
+                    ))
             {
                 modelErrorList.Add(ModelErrors.Required);
             }

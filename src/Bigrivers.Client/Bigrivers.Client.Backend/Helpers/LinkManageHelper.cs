@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Entity.Migrations;
+using System.Linq;
 using Bigrivers.Client.Backend.Models;
 using Bigrivers.Server.Data;
 using Bigrivers.Server.Model;
@@ -60,16 +61,9 @@ namespace Bigrivers.Client.Backend.Helpers
                     }
                     else
                     {
-                        if (model.File.Key != null)
+                        if (model.File.Key != "false")
                         {
                             fileEntity = Db.Files.Single(m => m.Key == model.File.Key);
-                        }
-                        else
-                        {
-                            fileEntity = new File
-                            {
-                                Key = ""
-                            };
                         }
                     }
 

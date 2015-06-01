@@ -1,16 +1,34 @@
 ﻿using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Bigrivers.Client.Backend.Helpers;
 using Bigrivers.Client.Backend.Models;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
-using Bigrivers.Client.Helpers;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
     public class MenuItemsController : BaseController
     {
+
+        private static FileUploadValidator LinkFileValidator
+        {
+            get
+            {
+                return new FileUploadValidator
+                {
+                    Required = true,
+                    MaxByteSize = 2000000,
+                    MimeTypes = new string[] { },
+                    ModelErrors = new FileUploadModelErrors
+                    {
+                        Required = "Er moet een bestand worden geupload",
+                        ExceedsMaxByteSize = "Het bestand mag niet groter zijn dan 2 MB",
+                    }
+                };
+            }
+        }
+        private static string FileLinkUploadLocation { get { return Helpers.FileUploadLocation.LinkUpload; } }
+
         // GET: MenuItem/Index
         public ActionResult Index()
         {
@@ -61,37 +79,45 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult New()
         {
             // Add an empty entry to lists to select a single object, e.g. /Artists/5, so there can exist a /Artists/
-            var viewModel = new MenuItemViewModel
+            var model = new MenuItemViewModel
             {
                 LinkView = new LinkViewModel
                 {
                     LinkType = "internal",
-                    InternalType = "Events"
+                    InternalType = "Events",
+                    File = new FileUploadViewModel
+                    {
+                        NewUpload = true,
+                        FileBase = Db.Files.Where(m => m.Container == FileLinkUploadLocation).ToList()
+                    }
                 },
                 Status = true
             };
 
             ViewBag.Title = "Nieuw MenuItem";
-            return View("Edit", viewModel);
+            return View("Edit", model);
         }
 
         // POST: MenuItem/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(MenuItemViewModel viewModel, HttpPostedFileBase file)
+        public ActionResult New(MenuItemViewModel model)
         {
-            if (file == null && viewModel.LinkView.LinkType == "file")
+            model.LinkView.File.FileBase = Db.Files.Where(m => m.Container == FileLinkUploadLocation).ToList();
+
+            if (model.LinkView.LinkType == "file")
             {
-                ModelState.AddModelError("", "Er moet een bestand worden geupload");
+                // Run over a validator to add custom model errors
+                foreach (var error in LinkFileValidator.CheckFile(model.LinkView.File))
+                {
+                    ModelState.AddModelError("", error);
+                }
             }
-            else if (viewModel.LinkView.LinkType == "file")
-            {
-                if (FileUploadHelper.IsSize(file, 2, "mb")) ModelState.AddModelError("", "Het bestand mag niet groter dan 2 MB zijn");
-            }
+
             if (!ModelState.IsValid)
             {
                 ViewBag.Title = "Nieuw MenuItem";
-                return View("Edit", viewModel);
+                return View("Edit", model);
             }
             
             // Set the new item as the last item in the root order
@@ -100,17 +126,18 @@ namespace Bigrivers.Client.Backend.Controllers
                 .FirstOrDefault(m => m.Status);
             var order = item != null ? item.Order + 1 : 1;
 
+            var link = LinkManageHelper.SetLink(model.LinkView);
+
             var singleMenuItem = new MenuItem
             {
-                Target = LinkManageHelper.SetLink(viewModel.LinkView),
-                DisplayName = viewModel.DisplayName,
+                Target = Db.Links.SingleOrDefault(m => m.Id == link.Id),
+                DisplayName = model.DisplayName,
                 Order = order,
-                Status = viewModel.Status
+                Status = model.Status
             };
 
             Db.MenuItems.Add(singleMenuItem);
             Db.SaveChanges();
-
             return RedirectToAction("Manage");
         }
 
@@ -125,7 +152,15 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 DisplayName = singleMenuItem.DisplayName,
                 Status = singleMenuItem.Status,
-                LinkView = LinkManageHelper.SetViewModel(singleMenuItem.Target, new LinkViewModel())
+                LinkView = LinkManageHelper.SetViewModel(singleMenuItem.Target, new LinkViewModel
+                {
+                    File = new FileUploadViewModel
+                    {
+                        NewUpload = true,
+                        ExistingFile = singleMenuItem.Target.File,
+                        FileBase = Db.Files.Where(m => m.Container == FileLinkUploadLocation).ToList()
+                    }
+                }),
             };
             
             ViewBag.Title = "Bewerk MenuItem";
@@ -135,28 +170,37 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: MenuItem/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, MenuItemViewModel viewModel, HttpPostedFileBase file)
+        public ActionResult Edit(int id, MenuItemViewModel model)
         {
-            if (file == null && viewModel.LinkView.LinkType == "file")
+            if (!VerifyId(id)) return RedirectToAction("Manage");
+            var singleMenuItem = Db.MenuItems.Find(id);
+
+            model.LinkView.File.ExistingFile = singleMenuItem.Target.File;
+            model.LinkView.File.FileBase = Db.Files.Where(m => m.Container == FileLinkUploadLocation).ToList();
+
+            if (model.LinkView.LinkType == "file")
             {
-                ModelState.AddModelError("", "Er moet een bestand worden geupload");
-            }
-            else if (viewModel.LinkView.LinkType == "file")
-            {
-                if (FileUploadHelper.IsSize(file, 2, "mb")) ModelState.AddModelError("", "Het bestand mag niet groter dan 2 MB zijn");
+                // Run over a validator to add custom model errors
+                foreach (var error in LinkFileValidator.CheckFile(model.LinkView.File))
+                {
+                    ModelState.AddModelError("", error);
+                }
             }
             if (!ModelState.IsValid)
             {
                 ViewBag.Title = "Nieuw MenuItem";
-                return View("Edit", viewModel);
+                return View("Edit", model);
             }
 
-            if (!VerifyId(id)) return RedirectToAction("Manage");
-            var singleMenuItem = Db.MenuItems.Find(id);
+            var link = singleMenuItem.Target;
+            if (model.LinkView.File.UploadFile != null || model.LinkView.File.Key != null && model.LinkView.File.Key != "false")
+            {
+                link = LinkManageHelper.SetLink(model.LinkView);
+            }
 
-            singleMenuItem.DisplayName = viewModel.DisplayName;
-            singleMenuItem.Status = viewModel.Status;
-            singleMenuItem.Target = LinkManageHelper.SetLink(viewModel.LinkView);
+            singleMenuItem.DisplayName = model.DisplayName;
+            singleMenuItem.Status = model.Status;
+            singleMenuItem.Target = Db.Links.Single(m => m.Id == link.Id);
 
             Db.SaveChanges();
 
