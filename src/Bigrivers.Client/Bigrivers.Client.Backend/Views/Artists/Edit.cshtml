@@ -1,8 +1,4 @@
-﻿@using File = Bigrivers.Server.Model.File
-@model Bigrivers.Client.Backend.ViewModels.ArtistViewModel
-@{
-    List<File> fileBase = ViewBag.FileBase;
-}
+﻿@model Bigrivers.Client.Backend.ViewModels.ArtistViewModel
 
 <div id="content">
     <div class="form-div">
@@ -21,23 +17,23 @@
             </script>*@
             </fieldset>
             <hr/>
+            @* File Upload Block Start *@
             <fieldset>
-                    @* File Upload Block Start *@
-                    @if (Model.Avatar.ExistingFile != null)
+                    @if (Model.Image.ExistingFile != null)
                     {
                         <div class="existing-file-container">
                             <div class="existing-file-image">
-                                <img src="@ImageHelper.GetImageUrl(Model.Avatar.ExistingFile)">
+                                <img src="@ImageHelper.GetImageUrl(Model.Image.ExistingFile)">
                             </div>
                             <div class="existing-file-text">
-                                <p>@Model.Avatar.ExistingFile.Name</p>
+                                <p>@Model.Image.ExistingFile.Name</p>
                             </div>
                         </div>
                     }
                 <div id="file-select-container">
-                    @Html.LabelFor(m => m.Avatar)
-                    @Html.HiddenFor(m => m.Avatar.NewUpload, new {id = "upload-type"})
-                    @Html.HiddenFor(m => m.Avatar.Key, new {id = "select-existing-key"})
+                    @Html.LabelFor(m => m.Image)
+                    @Html.HiddenFor(m => m.Image.NewUpload, new { id = "upload-type" })
+                    @Html.HiddenFor(m => m.Image.Key, new { id = "select-existing-key" })
 
                     @* Button bar *@
                     <div id="file-select-button-bar">
@@ -51,18 +47,18 @@
 
                     @* File upload block *@
                     <div id="file-upload">
-                        @Html.TextBoxFor(m => m.Avatar.UploadFile, new {type = "file"})
+                        @Html.TextBoxFor(m => m.Image.UploadFile, new { type = "file" })
                     </div>
 
                     @* Gallery block *@
                     <div id="file-gallery">
-                        @foreach (var file in fileBase)
+                        @foreach (var file in Model.Image.FileBase)
                         {
                             <div class="file-gallery-item-container non-selected" data-file-key="@file.Key">
                                 <div class="file-block">
                                     <div class="pseudo-align"></div>
                                     <div class="file-container">
-                                        <img src="@ImageHelper.GetImageUrl(file)"/>
+                                        <img src="@ImageHelper.GetImageUrl(file)" />
                                     </div>
                                 </div>
                                 <div class="text-block">
@@ -74,9 +70,9 @@
                         }
                     </div>
                 </div>
-                @* File Upload Block End *@
             </fieldset>
             <br class="clear"/>
+            @* File Upload Block End *@
             <hr/>
             <fieldset>
                 @Html.LabelFor(m => m.Website)

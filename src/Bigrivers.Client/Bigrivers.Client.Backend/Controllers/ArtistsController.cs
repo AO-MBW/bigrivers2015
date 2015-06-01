@@ -9,6 +9,26 @@ namespace Bigrivers.Client.Backend.Controllers
 {
     public class ArtistsController : BaseController
     {
+        private static FileUploadValidator FileValidator
+        {
+            get
+            {
+                return new FileUploadValidator
+                {
+                    Required = false,
+                    MaxByteSize = 2000000,
+                    MimeTypes = new[] {"image"},
+                    ModelErrors = new FileUploadModelErrors
+                    {
+                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
+                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
+                    }
+                };
+            }
+        }
+
+        private static string FileUploadLocation { get { return Helpers.FileUploadLocation.Artist; } }
+
         // GET: Artist/Index
         public ActionResult Index()
         {
@@ -28,15 +48,13 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             var viewModel = new ArtistViewModel
             {
-                Avatar = new FileUploadViewModel
+                Image = new FileUploadViewModel
                 {
-                    NewUpload = true
+                    NewUpload = true,
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
                 },
                 Status = true
             };
-
-            var fileBase = Db.Files.Where(m => m.Container == "artist").ToList();
-            ViewBag.FileBase = fileBase;
 
             ViewBag.Title = "Nieuwe Artiest";
             return View("Edit", viewModel);
@@ -45,59 +63,55 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Artist/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(ArtistViewModel viewModel)
+        public ActionResult New(ArtistViewModel model)
         {
             // Run over a validator to add custom model errors
-            foreach (var error in new FileUploadValidator
-            {
-                Required = false,
-                FileObject = viewModel.Avatar.UploadFile,
-                MaxByteSize = 2000000,
-                MimeTypes = new[] { "image" },
-                ModelErrors = new FileUploadModelErrors
-                {
-                    ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
-                    ForbiddenMime = "Het bestand moet een afbeelding zijn"
-                }
-            }.CheckFile())
+            foreach (var error in FileValidator.CheckFile(model.Image))
             {
                 ModelState.AddModelError("", error);
             }
+
             if (!ModelState.IsValid)
             {
-                var fileBase = Db.Files.Where(m => m.Container == "artist").ToList();
-                ViewBag.FileBase = fileBase;
+                model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
                 ViewBag.Title = "Nieuwe Artiest";
-                return View("Edit", viewModel);
+                return View("Edit", model);
             }
 
             File photoEntity = null;
             // Either upload file to AzureStorage or use file Key from explorer to get the file
-            if (viewModel.Avatar.NewUpload)
+            if (model.Image.NewUpload)
             {
-                if (viewModel.Avatar.UploadFile != null)
+                if (model.Image.UploadFile != null)
                 {
-                    photoEntity = FileUploadHelper.UploadFile(viewModel.Avatar.UploadFile, "artist");
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
                 }
             }
             else
             {
-                if (viewModel.Avatar.Key != null)
+                if (model.Image.Key != null)
                 {
-                    photoEntity = Db.Files.Single(m => m.Key == viewModel.Avatar.Key);
+                    photoEntity = Db.Files.Single(m => m.Key == model.Image.Key);
                 }
+                else
+                {
+                    photoEntity = new File
+                    {
+                        Key = ""
+                    };
+                }     
             }
 
             var singleArtist = new Artist
             {
-                Name = viewModel.Name,
-                Description = viewModel.Description,
-                Avatar = Db.Files.Single(m => m.Key == photoEntity.Key),
-                Website = viewModel.Website,
-                YoutubeChannel = viewModel.YoutubeChannel,
-                Facebook = viewModel.Facebook,
-                Twitter = viewModel.Twitter,
-                Status = viewModel.Status
+                Name = model.Name,
+                Description = model.Description,
+                Avatar = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key),
+                Website = model.Website,
+                YoutubeChannel = model.YoutubeChannel,
+                Facebook = model.Facebook,
+                Twitter = model.Twitter,
+                Status = model.Status
             };
 
             Db.Artists.Add(singleArtist);
@@ -116,10 +130,11 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Name = singleArtist.Name,
                 Description = singleArtist.Description,
-                Avatar = new FileUploadViewModel
+                Image = new FileUploadViewModel
                 {
                     NewUpload = true,
-                    ExistingFile = singleArtist.Avatar
+                    ExistingFile = singleArtist.Avatar,
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
                 },
                 Website = singleArtist.Website,
                 YoutubeChannel = singleArtist.YoutubeChannel,
@@ -128,8 +143,6 @@ namespace Bigrivers.Client.Backend.Controllers
                 Status = singleArtist.Status
             };
 
-            var fileBase = Db.Files.Where(m => m.Container == "artist").ToList();
-            ViewBag.FileBase = fileBase;
             ViewBag.Title = "Bewerk Artiest";
             return View(model);
         }
@@ -137,34 +150,19 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Artist/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, ArtistViewModel viewModel)
+        public ActionResult Edit(int id, ArtistViewModel model)
         {
-            if (viewModel.Avatar.NewUpload)
+            // Run over a validator to add custom model errors
+            foreach (var error in FileValidator.CheckFile(model.Image))
             {
-                // Run over a validator to add custom model errors
-                foreach (var error in new FileUploadValidator
-                {
-                    Required = false,
-                    FileObject = viewModel.Avatar.UploadFile,
-                    MaxByteSize = 2000000,
-                    MimeTypes = new[] { "image" },
-                    ModelErrors = new FileUploadModelErrors
-                    {
-                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
-                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
-                    }
-                }.CheckFile())
-                {
-                    ModelState.AddModelError("", error);
-                }
+                ModelState.AddModelError("", error);
             }
             
             if (!ModelState.IsValid)
             {
-                var fileBase = Db.Files.Where(m => m.Container == "artist").ToList();
-                ViewBag.FileBase = fileBase;
+                model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
                 ViewBag.Title = "Nieuwe Artiest";
-                return View("Edit", viewModel);
+                return View("Edit", model);
             }
 
             if (!VerifyId(id)) return RedirectToAction("Manage");
@@ -172,29 +170,36 @@ namespace Bigrivers.Client.Backend.Controllers
 
             File photoEntity = null;
             // Either upload file to AzureStorage or use file Key from explorer to get the file
-            if (viewModel.Avatar.NewUpload)
+            if (model.Image.NewUpload)
             {
-                if (viewModel.Avatar.UploadFile != null)
+                if (model.Image.UploadFile != null)
                 {
-                    photoEntity = FileUploadHelper.UploadFile(viewModel.Avatar.UploadFile, "artist");
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
                 }
             }
             else
             {
-                if (viewModel.Avatar.Key != null)
+                if (model.Image.Key != null)
                 {
-                    photoEntity = Db.Files.Single(m => m.Key == viewModel.Avatar.Key);
+                    photoEntity = Db.Files.Single(m => m.Key == model.Image.Key);
+                }
+                else
+                {
+                    photoEntity = new File
+                    {
+                        Key = ""
+                    };
                 }
             }
 
-            singleArtist.Name = viewModel.Name;
-            singleArtist.Description = viewModel.Description;
-            singleArtist.Website = viewModel.Website;
-            singleArtist.YoutubeChannel = viewModel.YoutubeChannel;
-            singleArtist.Facebook = viewModel.Facebook;
-            singleArtist.Twitter = viewModel.Twitter;
-            singleArtist.Status = viewModel.Status;
-            if (photoEntity != null) singleArtist.Avatar = Db.Files.Single(m => m.Key == photoEntity.Key);
+            singleArtist.Name = model.Name;
+            singleArtist.Description = model.Description;
+            singleArtist.Website = model.Website;
+            singleArtist.YoutubeChannel = model.YoutubeChannel;
+            singleArtist.Facebook = model.Facebook;
+            singleArtist.Twitter = model.Twitter;
+            singleArtist.Status = model.Status;
+            singleArtist.Avatar = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

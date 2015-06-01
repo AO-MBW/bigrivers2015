@@ -1,15 +1,34 @@
 ﻿using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Bigrivers.Client.Backend.Helpers;
 using Bigrivers.Client.Backend.ViewModels;
-using Bigrivers.Client.Helpers;
 using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
     public class SponsorsController : BaseController
     {
+        private static FileUploadValidator FileValidator
+        {
+            get
+            {
+                return new FileUploadValidator
+                {
+                    Required = true,
+                    MaxByteSize = 2000000,
+                    MimeTypes = new[] { "image" },
+                    ModelErrors = new FileUploadModelErrors
+                    {
+                        Required = "Er moet een afbeelding worden geupload",
+                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
+                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
+                    }
+                };
+            }
+        }
+
+        private static string FileUploadLocation { get { return Helpers.FileUploadLocation.Sponsor; } }
+
         // GET: Artist/Index
         public ActionResult Index()
         {
@@ -33,45 +52,68 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Artist/New
         public ActionResult New()
         {
-            var viewModel = new SponsorViewModel
+            var model = new SponsorViewModel
             {
+                Image = new FileUploadViewModel
+                {
+                    NewUpload = true,
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
+                },
                 Status = true
             };
 
             ViewBag.Title = "Sponsor toevoegen";
-            return View("Edit", viewModel);
+            return View("Edit", model);
         }
 
         // POST: Artist/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(SponsorViewModel viewModel, HttpPostedFileBase file)
+        public ActionResult New(SponsorViewModel model)
         {
+            // Run over a validator to add custom model errors
+            foreach (var error in FileValidator.CheckFile(model.Image))
+            {
+                ModelState.AddModelError("", error);
+            }
+
             if (!ModelState.IsValid)
             {
+                model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
                 ViewBag.Title = "Sponsor toevoegen";
-                return View("Edit", viewModel);
+                return View("Edit", model);
             }
 
             File photoEntity = null;
-            if (file != null)
+            // Either upload file to AzureStorage or use file Key from explorer to get the file
+            if (model.Image.NewUpload)
             {
-                if (FileUploadHelper.IsSize(file, 200000) && FileUploadHelper.IsMimes(file, new[] { "image" }))
+                if (model.Image.UploadFile != null)
                 {
-                    photoEntity = FileUploadHelper.UploadFile(file, "sponsor");
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
+                }
+            }
+            else
+            {
+                if (model.Image.Key != null)
+                {
+                    photoEntity = Db.Files.Single(m => m.Key == model.Image.Key);
                 }
                 else
                 {
-                    return RedirectToAction("Manage");
+                    photoEntity = new File
+                    {
+                        Key = ""
+                    };
                 }
             }
             
             var singleSponsor = new Sponsor
             {
-                Name = viewModel.Name,
-                Url = viewModel.Url,
-                Image = Db.Files.Single(m => m.Md5 == photoEntity.Md5 && m.Container == photoEntity.Container),
-                Status = viewModel.Status
+                Name = model.Name,
+                Url = model.Url,
+                Image = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key),
+                Status = model.Status
             };
 
             Db.Sponsors.Add(singleSponsor);
@@ -90,7 +132,12 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Name = singleSponsor.Name,
                 Url = singleSponsor.Url,
-                Image = singleSponsor.Image,
+                Image = new FileUploadViewModel
+                {
+                    NewUpload = true,
+                    ExistingFile = singleSponsor.Image,
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
+                },
                 Status = singleSponsor.Status
             };
 
@@ -101,30 +148,53 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Artist/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, SponsorViewModel viewModel, HttpPostedFileBase file)
+        public ActionResult Edit(int id, SponsorViewModel model)
         {
-            if (!VerifyId(id)) return RedirectToAction("Manage");
-            var singleSponsor = Db.Sponsors.Find(id);
+            // Run over a validator to add custom model errors
+            foreach (var error in FileValidator.CheckFile(model.Image))
+            {
+                ModelState.AddModelError("", error);
+            }
 
             if (!ModelState.IsValid)
             {
+                model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
                 ViewBag.Title = "Sponsor toevoegen";
-                return View("Edit", viewModel);
+                return View("Edit", model);
             }
 
+            if (!VerifyId(id)) return RedirectToAction("Manage");
+            var singleSponsor = Db.Sponsors.Find(id);
+
+
             File photoEntity = null;
-            if (file != null)
+            // Either upload file to AzureStorage or use file Key from explorer to get the file
+            if (model.Image.NewUpload)
             {
-                if (FileUploadHelper.IsSize(file, 200000) && FileUploadHelper.IsMimes(file, new[] { "image" }))
+                if (model.Image.UploadFile != null)
                 {
-                    photoEntity = FileUploadHelper.UploadFile(file, "sponsor");
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
+                }
+            }
+            else
+            {
+                if (model.Image.Key != null)
+                {
+                    photoEntity = Db.Files.Single(m => m.Key == model.Image.Key);
+                }
+                else
+                {
+                    photoEntity = new File
+                    {
+                        Key = ""
+                    };
                 }
             }
 
-            singleSponsor.Name = viewModel.Name;
-            singleSponsor.Url = viewModel.Url;
-            singleSponsor.Status = viewModel.Status;
-            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleSponsor.Image = Db.Files.Single(m => m.Md5 == photoEntity.Md5 && m.Container == photoEntity.Container);
+            singleSponsor.Name = model.Name;
+            singleSponsor.Url = model.Url;
+            singleSponsor.Status = model.Status;
+            singleSponsor.Image = Db.Files.Single(m => m.Key == photoEntity.Key);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

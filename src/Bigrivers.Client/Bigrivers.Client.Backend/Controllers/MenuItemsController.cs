@@ -102,7 +102,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
             var singleMenuItem = new MenuItem
             {
-                Target = LinkManageHelper.SetLink(viewModel.LinkView, file),
+                Target = LinkManageHelper.SetLink(viewModel.LinkView),
                 DisplayName = viewModel.DisplayName,
                 Order = order,
                 Status = viewModel.Status
@@ -156,7 +156,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
             singleMenuItem.DisplayName = viewModel.DisplayName;
             singleMenuItem.Status = viewModel.Status;
-            singleMenuItem.Target = LinkManageHelper.SetLink(viewModel.LinkView, file);
+            singleMenuItem.Target = LinkManageHelper.SetLink(viewModel.LinkView);
 
             Db.SaveChanges();
 

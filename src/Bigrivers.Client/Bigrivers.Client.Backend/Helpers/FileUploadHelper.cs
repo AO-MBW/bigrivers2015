@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
-using System.Web.Mvc;
+using Bigrivers.Client.Backend.ViewModels;
 using Bigrivers.Server.Data;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
@@ -86,7 +86,7 @@ namespace Bigrivers.Client.Backend.Helpers
 
             var photoEntity = new File
             {
-                Name = file.FileName.Replace(extension, ""),
+                Name = file.FileName.Replace(extension ?? "", ""),
                 ContentLength = file.ContentLength,
                 ContentType = file.ContentType,
                 Key = key,
@@ -166,7 +166,7 @@ namespace Bigrivers.Client.Backend.Helpers
 
     public class FileUploadValidator
     {
-        public HttpPostedFileBase FileObject { get; set; }
+        public FileUploadViewModel FileObject { get; set; }
         public FileUploadModelErrors ModelErrors { get; set; }
         public bool Required { get; set; }
         public int MaxByteSize { get; set; }
@@ -176,39 +176,51 @@ namespace Bigrivers.Client.Backend.Helpers
         public int? MinWidth { get; set; }
         public string[] MimeTypes { get; set; }
 
+        public List<string> CheckFile(FileUploadViewModel file)
+        {
+            FileObject = file;
+            return CheckFile();
+        } 
+
         public List<string> CheckFile()
         {
-            var ModelErrorList = new List<string>();
-            if (Required && FileObject == null) ModelErrorList.Add(ModelErrors.Required);
-            else if (FileObject != null)
+            var modelErrorList = new List<string>();
+            // Check if the file, if required, is actually supplied
+            if (FileObject.ExistingFile == null && Required && (
+                (FileObject.NewUpload && FileObject.UploadFile == null)
+                || (!FileObject.NewUpload && FileObject.Key == "false")))
             {
-                if (!FileUploadHelper.IsSize(FileObject, MaxByteSize))
+                modelErrorList.Add(ModelErrors.Required);
+            }
+            else if (FileObject.UploadFile != null)
+            {
+                if (!FileUploadHelper.IsSize(FileObject.UploadFile, MaxByteSize))
                 {
-                    ModelErrorList.Add(ModelErrors.ExceedsMaxByteSize);
+                    modelErrorList.Add(ModelErrors.ExceedsMaxByteSize);
                 }
-                if (!FileUploadHelper.IsMimes(FileObject, MimeTypes))
+                if (!FileUploadHelper.IsMimes(FileObject.UploadFile, MimeTypes))
                 {
-                    ModelErrorList.Add(ModelErrors.ForbiddenMime);
+                    modelErrorList.Add(ModelErrors.ForbiddenMime);
                 }
-                if (FileObject.ContentType.Contains("image"))
+                if (FileObject.UploadFile.ContentType.Contains("image"))
                 {
-                    if (!ImageUploadHelper.IsSmallerThanDimensions(FileObject.InputStream,
+                    if (!ImageUploadHelper.IsSmallerThanDimensions(FileObject.UploadFile.InputStream,
                     MaxHeight ?? 999999999,
                     MaxWidth ?? 999999999))
                     {
-                        ModelErrorList.Add(ModelErrors.ExceedsPixelSizeMaximum);
+                        modelErrorList.Add(ModelErrors.ExceedsPixelSizeMaximum);
                     }
-                    if (!ImageUploadHelper.IsLargerThanDimensions(FileObject.InputStream,
+                    if (!ImageUploadHelper.IsLargerThanDimensions(FileObject.UploadFile.InputStream,
                         MaxHeight ?? 0,
                         MaxWidth ?? 0))
                     {
-                        ModelErrorList.Add(ModelErrors.BeneathPixelSizeMinimum);
+                        modelErrorList.Add(ModelErrors.BeneathPixelSizeMinimum);
                     }
                 }
                 
             }
 
-            return ModelErrorList;
+            return modelErrorList;
         }
     }
 
@@ -219,5 +231,16 @@ namespace Bigrivers.Client.Backend.Helpers
         public string ExceedsPixelSizeMaximum { get; set; }
         public string BeneathPixelSizeMinimum { get; set; }
         public string ForbiddenMime { get; set; }
+    }
+
+    public static class FileUploadLocation
+    {
+        public static string Artist { get { return "artist"; } }
+        public static string Event { get { return "event"; } }
+        public static string Performance { get { return "performance"; } }
+        public static string News { get { return "news"; } }
+        public static string ButtonLogo { get { return "buttonlogo"; } }
+        public static string Sponsor { get { return "sponsor"; } }
+        public static string LinkUpload { get { return "linkupload"; } }
     }
 }

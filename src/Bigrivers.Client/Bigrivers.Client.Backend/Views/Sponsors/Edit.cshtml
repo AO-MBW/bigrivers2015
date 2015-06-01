@@ -12,21 +12,72 @@
                 @Html.LabelFor(m => m.Url)
                 @Html.TextBoxFor(m => m.Url)
             </fieldset>
-            <hr />
+            <hr/>
+            @* File Upload Block Start *@
             <fieldset>
-                @Html.LabelFor(m => m.Image)
-                <span>Upload het logo van deze sponsor</span><br />
-                <input type="file" name="pic">
+                @if (Model.Image.ExistingFile != null)
+                {
+                    <div class="existing-file-container">
+                        <div class="existing-file-image">
+                            <img src="@ImageHelper.GetImageUrl(Model.Image.ExistingFile)">
+                        </div>
+                        <div class="existing-file-text">
+                            <p>@Model.Image.ExistingFile.Name</p>
+                        </div>
+                    </div>
+                }
+                <div id="file-select-container">
+                    @Html.LabelFor(m => m.Image)
+                    @Html.HiddenFor(m => m.Image.NewUpload, new {id = "upload-type"})
+                    @Html.HiddenFor(m => m.Image.Key, new {id = "select-existing-key"})
+
+                    @* Button bar *@
+                    <div id="file-select-button-bar">
+                        <div id="upload-button" class="file-upload-button selected">
+                            <p>Upload een bestand</p>
+                        </div>
+                        <div id="gallery-button" class="file-upload-button non-selected">
+                            <p>Kies een bestaande afbeelding</p>
+                        </div>
+                    </div>
+
+                    @* File upload block *@
+                    <div id="file-upload">
+                        @Html.TextBoxFor(m => m.Image.UploadFile, new {type = "file"})
+                    </div>
+
+                    @* Gallery block *@
+                    <div id="file-gallery">
+                        @foreach (var file in Model.Image.FileBase)
+                        {
+                            <div class="file-gallery-item-container non-selected" data-file-key="@file.Key">
+                                <div class="file-block">
+                                    <div class="pseudo-align"></div>
+                                    <div class="file-container">
+                                        <img src="@ImageHelper.GetImageUrl(file)"/>
+                                    </div>
+                                </div>
+                                <div class="text-block">
+                                    <div class="text-container">
+                                        <p>@file.Name</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
             </fieldset>
-            <hr />
+            <br class="clear"/>
+            @* File Upload Block End *@
+            <hr/>
             <fieldset>
                 <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
             </fieldset>
-            <hr />
+            <hr/>
             <fieldset>
                 <input type="submit" name="save" value="Sponsor opslaan">
             </fieldset>
         </form>
     </div>
-    
 </div>
+<script src="/Scripts/ViewScripts/FileExplorer.js"></script>
