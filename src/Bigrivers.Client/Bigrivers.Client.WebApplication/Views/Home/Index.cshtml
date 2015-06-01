@@ -1,60 +1,58 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+    
+        <div class="newsitem">
+            <img src="../Images/Designconcept/polaroid.png" class="polaroid" />
 
 
-<div class="newsitem">
-    <img src="../Images/Designconcept/polaroid.png" class="polaroid" />
+            <div class="index-carousel">
+                <br>
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+
+                        <div class="item active">
+                            <img src="../Images/sample.jpg">
+                            <p class="ButtonTitle">Under Construction 1</p>
+                        </div>
+
+                        <div class="item">
+                            <img src="../Images/sample.jpg">
+                            <p class="ButtonTitle">Under Construction 2</p>
+                        </div>
+
+                        <div class="item">
+                            <img src="../Images/sample.jpg">
+                            <p class="ButtonTitle">Under Construction 3</p>
+                        </div>
+
+                        <div class="item">
+                            <img src="../Images/sample.jpg">
+                            <p class="ButtonTitle">Under Construction 4</p>
+                        </div>
+
+                    </div>
 
 
-    <div class="index-carousel">
-        <br>
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-
-                <div class="item active">
-                    <img src="../Images/sample.jpg">
-                    <p class="ButtonTitle">Under Construction 1</p>    
                 </div>
-
-                <div class="item">
-                    <img src="../Images/sample.jpg">
-                    <p class="ButtonTitle">Under Construction 2</p>
-                </div>
-
-                <div class="item">
-                    <img src="../Images/sample.jpg">
-                    <p class="ButtonTitle">Under Construction 3</p>
-                </div>
-
-                <div class="item">
-                    <img src="../Images/sample.jpg">
-                    <p class="ButtonTitle">Under Construction 4</p>
-                </div>
-
             </div>
-
-
         </div>
-    </div>
-</div>
 
-@foreach (ButtonItem item in ViewBag.ButtonItems)
-{
-    <div class="Button">
-        <img src="../Images/Designconcept/polaroid.png" class="polaroid" />
-        <a class="ButtonLink" href="@LinkHelper.GetUrl(item.Target)">
-            <div class="ButtonImg" style="background-image: url(@ImageHelper.GetImageUrl(item.Logo));"></div>
-            @*<div class="ButtonDiv" >
-              
-            </div>*@
-            <p class="ButtonTitle">@item.DisplayName</p>
-        </a>
-    </div>
-}
+        @foreach (ButtonItem item in ViewBag.ButtonItems)
+        {
+            <div class="Button">
+                <img src="../Images/Designconcept/polaroid.png" class="polaroid" />
+                <a class="ButtonLink" href="@LinkHelper.GetUrl(item.Target)">
+                    <div class="ButtonImg" style="background-image: url(@ImageHelper.GetImageUrl(item.Logo));"></div>
+                    @*<div class="ButtonDiv" >
+
+                        </div>*@
+                    <p class="ButtonTitle">@item.DisplayName</p>
+                </a>
+            </div>
+        }
 
 
-
-}    
+    
