@@ -50,24 +50,27 @@ namespace Bigrivers.Client.Backend.Helpers
                     link.ExternalUrl = model.ExternalUrl;
                     break;
                 case "file":
-                    File fileEntity = null;
-                    // Either upload file to AzureStorage or use file Key from explorer to get the file
-                    if (model.File.NewUpload)
+                    if (model.File.UploadFile != null || model.File.Key != null && model.File.Key != "false")
                     {
-                        if (model.File.UploadFile != null)
+                        File fileEntity = null;
+                        // Either upload file to AzureStorage or use file Key from explorer to get the file
+                        if (model.File.NewUpload)
                         {
-                            fileEntity = FileUploadHelper.UploadFile(model.File.UploadFile, FileUploadLocation);
+                            if (model.File.UploadFile != null)
+                            {
+                                fileEntity = FileUploadHelper.UploadFile(model.File.UploadFile, FileUploadLocation);
+                            }
                         }
-                    }
-                    else
-                    {
-                        if (model.File.Key != "false")
+                        else
                         {
-                            fileEntity = Db.Files.Single(m => m.Key == model.File.Key);
+                            if (model.File.Key != "false")
+                            {
+                                fileEntity = Db.Files.Single(m => m.Key == model.File.Key);
+                            }
                         }
-                    }
 
-                    link.File = Db.Files.SingleOrDefault(m => m.Key == fileEntity.Key);
+                        link.File = Db.Files.SingleOrDefault(m => m.Key == fileEntity.Key);
+                    }
                     break;
             }
             Db.Links.Add(link);

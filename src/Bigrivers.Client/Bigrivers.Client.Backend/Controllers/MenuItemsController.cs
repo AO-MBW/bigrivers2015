@@ -193,7 +193,11 @@ namespace Bigrivers.Client.Backend.Controllers
             }
 
             var link = singleMenuItem.Target;
-            if (model.LinkView.File.UploadFile != null || model.LinkView.File.Key != null && model.LinkView.File.Key != "false")
+            if (model.LinkView.LinkType == "file" && model.LinkView.File.UploadFile != null || model.LinkView.File.Key != null && model.LinkView.File.Key != "false")
+            {
+                link = LinkManageHelper.SetLink(model.LinkView);
+            }
+            else if (model.LinkView.LinkType != "file")
             {
                 link = LinkManageHelper.SetLink(model.LinkView);
             }
