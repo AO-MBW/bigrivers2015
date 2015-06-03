@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Bigrivers.Server.Model;
+using System.Linq;
+using System.Web.Mvc;
+using Bigrivers.Server.Data;
 
 namespace Bigrivers.Client.Backend.ViewModels
 {
     public class EventViewModel
     {
+        private readonly BigriversDb _db = new BigriversDb(); 
         [Required]
         [Display(Name = "Naam")]
         public string Title { get; set; }
@@ -38,6 +42,26 @@ namespace Bigrivers.Client.Backend.ViewModels
         public bool TicketRequired { get; set; }
 
         [Required]
+        [Display(Name = "Op evenement")]
+        public int? Location { get; set; }
+
+        [Required]
         public bool Status { get; set; }
+
+        public IEnumerable<SelectListItem> Locations
+        {
+            get
+            {
+                _db.Locations
+                    .Where(m => !m.Deleted)
+                    .ToList()
+                    .Select(s => new SelectListItem
+                    {
+                        Value = s.Id.ToString(),
+                        Text = s.Stagename
+                    })
+                    .ToList();
+            }
+        }
     }
 }

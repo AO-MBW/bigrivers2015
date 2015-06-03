@@ -32,6 +32,8 @@
                 <label>@Html.CheckBoxFor(m => m.TicketRequired, new { id = "TicketRequired" }) Tickets Verplicht</label>
                 @Html.LabelFor(m => m.Price)
                 @Html.TextBoxFor(m => m.Price, new { id = "Price" })
+                @Html.LabelFor(m => m.Location)
+                @(Model.Location != null ? Html.DropDownListFor(m => m.Location, Model.Locations, new { data_selected = Model.Location }) : Html.DropDownListFor(m => m.Location, Model.Locations))
             </fieldset>
             <hr />
             <fieldset>
