@@ -81,31 +81,34 @@ p.bottomyear{
     display:inline;
 }
 
-@media(min-width: 768px ){
-.menuimg{
-    height: 50%;
-    max-height: 50%;
-    width: 50%;
-    max-width: 50%;
-    margin-left: 0px;   
-  }
-.header{
-    border-style: solid;
-    border-color: red;
-    border-width: 5px;
-    margin-top: -50px;
-}
-.header-p{
-    color: yellow;
-}
+@media(min-width: 768px ) {
+    .menuimg {
+        height: 50%;
+        max-height: 50%;
+        width: 50%;
+        max-width: 50%;
+        margin-left: 0px;
+    }
 
-table.table{
-    color: white;
-}
-.head-h1{
-    color: white;
-}
+    .header {
+        border-style: solid;
+        border-color: red;
+        border-width: 5px;
+        margin-top: -50px;
+    }
 
+    .header-p {
+        color: yellow;
+    }
+
+    table.table {
+        color: white;
+    }
+
+    .head-h1 {
+        color: white;
+    }
+}
 /* Frontpage Buttons*/
 /* sm-md size screen*/
 @media (min-width: 768px) {
@@ -119,6 +122,14 @@ table.table{
         left: 16.8%;
         width: 66.6%;
         height: 63%;
+    }
+
+    .carousel-inner{
+        position: absolute;
+        top: 10%;
+        left: 11%;
+        width: 69.1%;
+        height: 85%;
     }
 }
 
@@ -135,6 +146,14 @@ table.table{
         width: 59%;
         height: 63%;
     }
+
+    .carousel-inner{
+        position: absolute;
+        top: 10%;
+        left: 10.5%;
+        width: 59%;
+        height: 85%;
+    }
 }
 
 .Button {
@@ -145,14 +164,10 @@ table.table{
     text-decoration: none;
 }
 
-.ButtonImg{
-    height: 220px;
-    width:  220px;
-    margin-top: -310px;   
-    margin-left: 30px;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    border: 1px solid pink;
+.ButtonBackground {
+    position: center;
+    width: 100%;
+    height: auto;
 }
 
 .ButtonTitle {
@@ -170,19 +185,10 @@ table.table{
     height: 100%;
 }
 
-.carousel-inner{
-    position: absolute;
-    top: 10%;
-    left: 11%;
-    width: 69.1%;
-    height: 85%;
-}
-
 .CarouselImg {
     position: absolute;
-    top: 0%;
-    width: auto;
-    height: 100%;
+    height: 74% !important;
+    width: 100%;
 }
 
 .CarouselTitle {
@@ -209,22 +215,4 @@ p.bottomyear{
     display: inline;
     padding-right: 20px;
     color: white;   
-}
-
-.carousel-inner{
-    width: 215px;
-    height: 275px;
-    margin-left: 35px;
-    margin-top: -325px;
-}
-
-.carousel-inner div.item,
- .carousel-inner div.item img {
-    width: 100%;
-    height: 215px;
-}
-
-.main-div{
-    margin-left: auto;
-    margin-right: auto;
 }
