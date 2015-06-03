@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    List<WidgetItem> widgetItems = ViewBag.WidgetItems;
 }
 <div class="row">
     <div class="Button col-xs-6 col-sm-4 col-md-3">
@@ -7,12 +8,12 @@
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
-                    @foreach (NewsItem item in ViewBag.NewsItems)
+                    @foreach (var item in widgetItems)
                     {
-                    <div class="@(item.first?"item active":"item")">
-                        <a href="#">
-                            <img class="CarouselImg" src="../Images/sample.jpg">
-                            <p class="CarouselTitle">@item.Title</p>
+                    <div class="@(item == widgetItems.First()?"item active":"item")">
+                        <a href="@LinkHelper.GetUrl(item.Target)">
+                            <img class="CarouselImg" src="@ImageHelper.GetImageUrl(item.Image)">
+                            <p class="CarouselTitle">@item.DisplayName</p>
                         </a>
                     </div>
                     }
