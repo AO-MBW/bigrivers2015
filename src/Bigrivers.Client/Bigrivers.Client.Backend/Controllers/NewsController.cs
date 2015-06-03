@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using Bigrivers.Client.Backend.Helpers;
 using Bigrivers.Client.Backend.ViewModels;
 using Bigrivers.Server.Model;
 
@@ -7,6 +8,26 @@ namespace Bigrivers.Client.Backend.Controllers
 {
     public class NewsController : BaseController
     {
+        private static FileUploadValidator FileValidator
+        {
+            get
+            {
+                return new FileUploadValidator
+                {
+                    Required = false,
+                    MaxByteSize = 2000000,
+                    MimeTypes = new[] { "image" },
+                    ModelErrors = new FileUploadModelErrors
+                    {
+                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
+                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
+                    }
+                };
+            }
+        }
+
+        private static string FileUploadLocation { get { return Helpers.FileUploadLocation.News; } }
+
         // GET: News/Index
         public ActionResult Index()
         {
@@ -30,31 +51,62 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: News/New
         public ActionResult New()
         {
-            var viewModel = new NewsItemViewModel
+            var model = new NewsItemViewModel
             {
+                Image = new FileUploadViewModel
+                {
+                    NewUpload = true,
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
+                },
                 Status = true
             };
 
             ViewBag.Title = "Nieuws toevoegen";
-            return View("Edit", viewModel);
+            return View("Edit", model);
         }
 
         // POST: News/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(NewsItemViewModel viewModel)
+        public ActionResult New(NewsItemViewModel model)
         {
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
+
+            // Run over a validator to add custom model errors
+            foreach (var error in FileValidator.CheckFile(model.Image))
+            {
+                ModelState.AddModelError("", error);
+            }
+
             if (!ModelState.IsValid)
             {
                 ViewBag.Title = "Nieuws toevoegen";
-                return View("Edit", viewModel);
+                return View("Edit", model);
+            }
+
+            File photoEntity = null;
+            // Either upload file to AzureStorage or use file Key from explorer to get the file
+            if (model.Image.NewUpload)
+            {
+                if (model.Image.UploadFile != null)
+                {
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
+                }
+            }
+            else
+            {
+                if (model.Image.Key != "false")
+                {
+                    photoEntity = Db.Files.Single(m => m.Key == model.Image.Key);
+                }
             }
 
             var singleNewsItem = new NewsItem
             {
-                Title = viewModel.Title,
-                Content = viewModel.Content,
-                Status = viewModel.Status
+                Title = model.Title,
+                Content = model.Content,
+                Image = photoEntity != null ? Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key) : null,
+                Status = model.Status
             };
 
             Db.NewsItems.Add(singleNewsItem);
@@ -73,6 +125,12 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Title = singleNewsItem.Title,
                 Content = singleNewsItem.Content,
+                Image = new FileUploadViewModel
+                {
+                    NewUpload = true,
+                    ExistingFile = singleNewsItem.Image,
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
+                },
                 Status = singleNewsItem.Status
             };
 
@@ -83,20 +141,47 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: News/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, NewsItemViewModel viewModel)
+        public ActionResult Edit(int id, NewsItemViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                ViewBag.Title = "Nieuws toevoegen";
-                return View("Edit", viewModel);
-            }
-
             if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleNewsItem = Db.NewsItems.Find(id);
 
-            singleNewsItem.Title = viewModel.Title;
-            singleNewsItem.Content = viewModel.Content;
-            singleNewsItem.Status = viewModel.Status;
+            model.Image.ExistingFile = singleNewsItem.Image;
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
+
+            // Run over a validator to add custom model errors
+            foreach (var error in FileValidator.CheckFile(model.Image))
+            {
+                ModelState.AddModelError("", error);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Title = "Nieuws toevoegen";
+                return View("Edit", model);
+            }
+
+            File photoEntity = null;
+            // Either upload file to AzureStorage or use file Key from explorer to get the file
+            if (model.Image.NewUpload)
+            {
+                if (model.Image.UploadFile != null)
+                {
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
+                }
+            }
+            else
+            {
+                if (model.Image.Key != "false")
+                {
+                    photoEntity = Db.Files.Single(m => m.Key == model.Image.Key);
+                }
+            }
+
+            singleNewsItem.Title = model.Title;
+            singleNewsItem.Content = model.Content;
+            if (photoEntity != null) singleNewsItem.Image = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
+            singleNewsItem.Status = model.Status;
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

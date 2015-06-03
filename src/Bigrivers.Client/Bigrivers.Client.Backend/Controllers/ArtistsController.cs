@@ -1,15 +1,34 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Bigrivers.Client.Backend.Helpers;
 using Bigrivers.Client.Backend.ViewModels;
 using Bigrivers.Server.Model;
-using Bigrivers.Client.Helpers;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
     public class ArtistsController : BaseController
     {
+        private static FileUploadValidator FileValidator
+        {
+            get
+            {
+                return new FileUploadValidator
+                {
+                    Required = false,
+                    MaxByteSize = 2000000,
+                    MimeTypes = new[] {"image"},
+                    ModelErrors = new FileUploadModelErrors
+                    {
+                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
+                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
+                    }
+                };
+            }
+        }
+
+        private static string FileUploadLocation { get { return Helpers.FileUploadLocation.Artist; } }
+
         // GET: Artist/Index
         public ActionResult Index()
         {
@@ -29,6 +48,11 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             var viewModel = new ArtistViewModel
             {
+                Image = new FileUploadViewModel
+                {
+                    NewUpload = true,
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
+                },
                 Status = true
             };
 
@@ -39,45 +63,48 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Artist/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(ArtistViewModel viewModel, HttpPostedFileBase file)
+        public ActionResult New(ArtistViewModel model)
         {
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
+            // Run over a validator to add custom model errors
+            foreach (var error in FileValidator.CheckFile(model.Image))
+            {
+                ModelState.AddModelError("", error);
+            }
+
             if (!ModelState.IsValid)
             {
                 ViewBag.Title = "Nieuwe Artiest";
-                return View("Edit", viewModel);
+                return View("Edit", model);
             }
 
-            // Upload file to Azurestorage if needed
             File photoEntity = null;
-            if (file != null)
+            // Either upload file to AzureStorage or use file Key from explorer to get the file
+            if (model.Image.NewUpload)
             {
-                // File has to be < 2MB and an image
-                if (!ImageHelper.IsSize(file, 2, "mb"))
+                if (model.Image.UploadFile != null)
                 {
-                    ModelState.AddModelError("Avatar", "De afbeelding mag niet groter zijn dan 2 MB");
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
                 }
-                if (!ImageHelper.IsMimes(file, new[] { "image" }))
+            }
+            else
+            {
+                if (model.Image.Key != "false")
                 {
-                    ModelState.AddModelError("Avatar", "Het bestand moet een afbeelding zijn");
-                }
-                if (!ModelState.IsValid)
-                {
-                    ViewBag.Title = "Nieuwe Artiest";
-                    return View("Edit", viewModel);
-                }
-                photoEntity = ImageHelper.UploadFile(file, "artist");
+                    photoEntity = Db.Files.Single(m => m.Key == model.Image.Key);
+                }    
             }
 
             var singleArtist = new Artist
             {
-                Name = viewModel.Name,
-                Description = viewModel.Description,
-                Avatar = Db.Files.Find(photoEntity),
-                Website = viewModel.Website,
-                YoutubeChannel = viewModel.YoutubeChannel,
-                Facebook = viewModel.Facebook,
-                Twitter = viewModel.Twitter,
-                Status = viewModel.Status
+                Name = model.Name,
+                Description = model.Description,
+                Avatar = photoEntity != null ? Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key) : null,
+                Website = model.Website,
+                YoutubeChannel = model.YoutubeChannel,
+                Facebook = model.Facebook,
+                Twitter = model.Twitter,
+                Status = model.Status
             };
 
             Db.Artists.Add(singleArtist);
@@ -96,7 +123,12 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Name = singleArtist.Name,
                 Description = singleArtist.Description,
-                Avatar = singleArtist.Avatar,
+                Image = new FileUploadViewModel
+                {
+                    NewUpload = true,
+                    ExistingFile = singleArtist.Avatar,
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
+                },
                 Website = singleArtist.Website,
                 YoutubeChannel = singleArtist.YoutubeChannel,
                 Facebook = singleArtist.Facebook,
@@ -111,45 +143,51 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Artist/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, ArtistViewModel viewModel, HttpPostedFileBase file)
+        public ActionResult Edit(int id, ArtistViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                ViewBag.Title = "Nieuwe Artiest";
-                return View("Edit", viewModel);
-            }
-
             if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleArtist = Db.Artists.Find(id);
 
-            // Upload file to Azurestorage if needed
-            File photoEntity = null;
-            if (file != null)
+            model.Image.ExistingFile = singleArtist.Avatar;
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
+
+            // Run over a validator to add custom model errors
+            foreach (var error in FileValidator.CheckFile(model.Image))
             {
-                // File has to be < 2MB and an image
-                if (!ImageHelper.IsSize(file, 200000))
-                {
-                    ModelState.AddModelError("Avatar", "De afbeelding mag niet groter zijn dan 2 MB");
-                    ViewBag.Title = "Nieuwe Artiest";
-                    return View("Edit", viewModel);
-                }
-                if (!ImageHelper.IsMimes(file, new[] { "image" }))
-                {
-                    ModelState.AddModelError("Avatar", "Het bestand moet een afbeelding zijn");
-                    ViewBag.Title = "Nieuwe Artiest";
-                    return View("Edit", viewModel);
-                }
-                photoEntity = ImageHelper.UploadFile(file, "artist");
+                ModelState.AddModelError("", error);
+            }
+            
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Title = "Nieuwe Artiest";
+                return View("Edit", model);
             }
 
-            singleArtist.Name = viewModel.Name;
-            singleArtist.Description = viewModel.Description;
-            singleArtist.Website = viewModel.Website;
-            singleArtist.YoutubeChannel = viewModel.YoutubeChannel;
-            singleArtist.Facebook = viewModel.Facebook;
-            singleArtist.Twitter = viewModel.Twitter;
-            singleArtist.Status = viewModel.Status;
-            if (photoEntity != null && !Db.Files.Any(m => m.Md5 == photoEntity.Md5)) singleArtist.Avatar = Db.Files.Find(photoEntity);
+            File photoEntity = null;
+            // Either upload file to AzureStorage or use file Key from explorer to get the file
+            if (model.Image.NewUpload)
+            {
+                if (model.Image.UploadFile != null)
+                {
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
+                }
+            }
+            else
+            {
+                if (model.Image.Key != "false")
+                {
+                    photoEntity = Db.Files.Single(m => m.Key == model.Image.Key);
+                }
+            }
+
+            singleArtist.Name = model.Name;
+            singleArtist.Description = model.Description;
+            singleArtist.Website = model.Website;
+            singleArtist.YoutubeChannel = model.YoutubeChannel;
+            singleArtist.Facebook = model.Facebook;
+            singleArtist.Twitter = model.Twitter;
+            singleArtist.Status = model.Status;
+            if (photoEntity != null) singleArtist.Avatar = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

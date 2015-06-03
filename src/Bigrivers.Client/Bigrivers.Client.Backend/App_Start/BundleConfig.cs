@@ -34,6 +34,7 @@ namespace Bigrivers.Client.Backend
                       "~/Content/Site.css",
                       "~/Content/Sidebar.css",
                       "~/Content/Form.css",
+                      "~/Content/FileExplorer.css",
                       "~/Content/Manager.css"));
         }
     }

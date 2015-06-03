@@ -11,7 +11,7 @@ namespace Bigrivers.Client.Backend.ViewModels
         public string DisplayName { get; set; }
         public LinkViewModel LinkView { get; set; }
         [Display(Name = "Button afbeelding")]
-        public File Logo { get; set; }
+        public FileUploadViewModel Image { get; set; }
         public int? Order { get; set; }
         public bool Status { get; set; }
     }

@@ -1,6 +1,6 @@
-﻿using System.Web;
+﻿using System.Data.Entity.Migrations;
+using System.Linq;
 using Bigrivers.Client.Backend.Models;
-using Bigrivers.Client.Helpers;
 using Bigrivers.Server.Data;
 using Bigrivers.Server.Model;
 
@@ -9,40 +9,36 @@ namespace Bigrivers.Client.Backend.Helpers
     public class LinkManageHelper
     {
         private static readonly BigriversDb Db = new BigriversDb();
+        private static string FileUploadLocation { get { return Helpers.FileUploadLocation.LinkUpload; } }
 
-        public static Link SetLink(LinkViewModel viewModel)
-        {
-            return SetLink(viewModel, null);
-        }
-
-        public static Link SetLink(LinkViewModel viewModel, HttpPostedFileBase file)
+        public static Link SetLink(LinkViewModel model)
         {
             var link = new Link
             {
-                Type = viewModel.LinkType
+                Type = model.LinkType
             };
             // Set the url variable to a working url based on the link type
-            switch (viewModel.LinkType)
+            switch (model.LinkType)
             {
                 case "internal":
-                    link.InternalType = viewModel.InternalType;
+                    link.InternalType = model.InternalType;
                     // Get the correct 'Internal Id' from the form
-                    switch (viewModel.InternalType)
+                    switch (model.InternalType)
                     {
                         case "Events":
-                            link.InternalId = viewModel.InternalEventId;
+                            link.InternalId = model.InternalEventId;
                             break;
                         case "Artists":
-                            link.InternalId = viewModel.InternalArtistId;
+                            link.InternalId = model.InternalArtistId;
                             break;
                         case "Performances":
-                            link.InternalId = viewModel.InternalPerformanceId;
+                            link.InternalId = model.InternalPerformanceId;
                             break;
                         case "News":
-                            link.InternalId = viewModel.InternalNewsId;
+                            link.InternalId = model.InternalNewsId;
                             break;
                         case "Sponsors":
-                            link.InternalId = viewModel.InternalSponsorId;
+                            link.InternalId = model.InternalSponsorId;
                             break;
                         case "Contact":
                             break;
@@ -50,13 +46,35 @@ namespace Bigrivers.Client.Backend.Helpers
                     break;
                 case "external":
                     // Make sure the URL uses Http if it doesn't use Http / Https already
-                    if (!viewModel.ExternalUrl.StartsWith("http")) viewModel.ExternalUrl = string.Format("http://{0}", viewModel.ExternalUrl);
-                    link.ExternalUrl = viewModel.ExternalUrl;
+                    if (!model.ExternalUrl.StartsWith("http")) model.ExternalUrl = string.Format("http://{0}", model.ExternalUrl);
+                    link.ExternalUrl = model.ExternalUrl;
                     break;
                 case "file":
-                    link.File = ImageHelper.UploadFile(file, "uploadedfiles");
+                    if (model.File.UploadFile != null || model.File.Key != null && model.File.Key != "false")
+                    {
+                        File fileEntity = null;
+                        // Either upload file to AzureStorage or use file Key from explorer to get the file
+                        if (model.File.NewUpload)
+                        {
+                            if (model.File.UploadFile != null)
+                            {
+                                fileEntity = FileUploadHelper.UploadFile(model.File.UploadFile, FileUploadLocation);
+                            }
+                        }
+                        else
+                        {
+                            if (model.File.Key != "false")
+                            {
+                                fileEntity = Db.Files.Single(m => m.Key == model.File.Key);
+                            }
+                        }
+
+                        link.File = Db.Files.SingleOrDefault(m => m.Key == fileEntity.Key);
+                    }
                     break;
             }
+            Db.Links.Add(link);
+            Db.SaveChanges();
             return link;
         }
 
