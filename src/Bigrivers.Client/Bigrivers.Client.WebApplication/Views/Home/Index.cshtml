@@ -7,30 +7,15 @@
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
-                    <div class="item active">
+                    @foreach (NewsItem item in ViewBag.NewsItems)
+                    {
+                    <div class="@(item.first?"item active":"item")">
                         <a href="#">
                             <img class="CarouselImg" src="../Images/sample.jpg">
-                            <p class="CarouselTitle">Under Construction 1</p>
+                            <p class="CarouselTitle">@item.Title</p>
                         </a>
                     </div>
-                    <div class="item">
-                        <a href="#">
-                            <img class="CarouselImg" src="../Images/sample.jpg">
-                            <p class="CarouselTitle">Under Construction 2</p>
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="#">
-                            <img class="CarouselImg" src="../Images/sample.jpg">
-                            <p class="CarouselTitle">Under Construction 3</p>
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="#">
-                            <img class="CarouselImg" src="../Images/sample.jpg">
-                            <p class="CarouselTitle">Under Construction 4</p>
-                        </a>
-                    </div>
+                    }
                 </div>
             </div>
         </div>

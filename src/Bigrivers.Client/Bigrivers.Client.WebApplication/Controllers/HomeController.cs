@@ -28,6 +28,13 @@ namespace Bigrivers.Client.WebApplication.Controllers
         public ActionResult Index()
         {
             ViewBag.ButtonItems = AccessLayer.ButtonItems.Where(m => m.Status).ToList();
+
+            ViewBag.NewsItems = AccessLayer.NewsItems.Where(m => m.Status).ToList();
+            if (ViewBag.NewsItems.Count > 0)
+            {
+                ViewBag.NewsItems[0].first = true;
+            }
+
             return View("Index");
         }
 
