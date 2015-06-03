@@ -6,8 +6,7 @@
 
 #content div.form-div form hr {
 	margin: 0 16px 10px 16px;
-	padding: 0;
-	
+	padding: 0;	
 }
 
 #content div.form-div form label {
@@ -42,6 +41,9 @@
 
 #content div.form-div form input[type="file"] {
 	border: none;
+	padding: 0;
+	height: initial;
+	width: initial;
 }
 
 #content div.form-div form input[type="checkbox"] {
@@ -64,10 +66,6 @@
 	min-height: 300px;
 }
 
-#content div.form-div form fieldset .input-validation-error {
-	border: 1px solid red;
-}
-
 /* Form Errors */
 
 #content div.form-div form div.validation-summary-errors ul {
@@ -75,4 +73,8 @@
 	margin-left: 10px;
 	padding-left: 0;
 	color: red;
+}
+
+#content div.form-div form fieldset .input-validation-error {
+	border: 1px solid red;
 }

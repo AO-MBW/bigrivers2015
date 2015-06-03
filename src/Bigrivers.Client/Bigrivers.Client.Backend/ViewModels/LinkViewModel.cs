@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
+using Bigrivers.Client.Backend.ViewModels;
 using Bigrivers.Server.Data;
 using Bigrivers.Server.Model;
 
@@ -28,7 +29,7 @@ namespace Bigrivers.Client.Backend.Models
         /// File is the field used when linking to a file in the Azurestorage
         /// </summary>
         [Display(Name = "Upload een bestand om naar te linken")]
-        public File File { get; set; }
+        public FileUploadViewModel File { get; set; }
 
         /// <summary>
         ///  InternalType is the type of object that's being linked to when linking to an internal page

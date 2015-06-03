@@ -7,7 +7,7 @@ namespace Bigrivers.Server.Model
         public int Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public string Image { get; set; }
+        public virtual File Image { get; set; }
 
         [DefaultValue(true)]
         public bool Status { get; set; }

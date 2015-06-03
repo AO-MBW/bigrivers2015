@@ -14,7 +14,7 @@ namespace Bigrivers.Client.Backend.ViewModels
         public string Content { get; set; }
 
         [Display(Name = "Afbeelding")]
-        public File Image { get; set; }
+        public FileUploadViewModel Image { get; set; }
 
         public bool Status { get; set; }
     }
