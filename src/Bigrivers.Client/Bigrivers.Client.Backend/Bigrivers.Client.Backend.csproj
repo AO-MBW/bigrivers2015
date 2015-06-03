@@ -188,8 +188,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuItemsController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="Controllers\PerformancesController.cs" />
     <Compile Include="Controllers\SponsorsController.cs" />
+    <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -203,11 +205,13 @@
     <Compile Include="ViewModels\FileUploadViewModel.cs" />
     <Compile Include="ViewModels\LinkViewModel.cs" />
     <Compile Include="ViewModels\IdentityViewModels.cs" />
+    <Compile Include="ViewModels\LocationViewModel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="ViewModels\NewsItemViewModel.cs" />
     <Compile Include="ViewModels\PerformanceViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\SponsorViewModel.cs" />
+    <Compile Include="ViewModels\WidgetItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\FileExplorer.css" />
@@ -481,6 +485,10 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Scripts\ViewScripts\LinkEditor.FileExplorer.js" />
+    <Content Include="Views\Locations\Edit.cshtml" />
+    <Content Include="Views\Locations\Manage.cshtml" />
+    <Content Include="Views\Widget\Edit.cshtml" />
+    <Content Include="Views\Widget\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

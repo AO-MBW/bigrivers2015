@@ -87,6 +87,7 @@
     <Compile Include="File.cs" />
     <Compile Include="Genre.cs" />
     <Compile Include="Link.cs" />
+    <Compile Include="WidgetItem.cs" />
     <Compile Include="SiteInformation.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="MenuItem.cs" />
