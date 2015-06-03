@@ -99,58 +99,90 @@ table.table{
 }
 
 /* Frontpage Buttons*/
+/* sm-md size screen*/
+@media (min-width: 768px) {
+    .ButtonTitle, .CarouselTitle {
+        font-size: 12pt;
+    }
+
+    .ButtonImg{ 
+        position: absolute;
+        top: 10%;
+        left: 16.8%;
+        width: 66.6%;
+        height: 63%;
+    }
+}
+
+/* xs size screens*/
+@media (max-width: 768px) {
+    .ButtonTitle, .CarouselTitle {
+        font-size: 6pt;
+    }
+
+    .ButtonImg {
+        position: absolute;
+        top: 10.3%;
+        left: 20.7%;
+        width: 59%;
+        height: 63%;
+    }
+}
+
 .Button {
-    float:left;
-    width: 285px;
-    padding-bottom: 40px;
-    margin-right: 70px
+    margin-bottom: 15px;
 }
 
-.ButtonDiv {
-    height: 340px;
-    width: 285px;  
-    margin-top: -335px; 
+.Button:hover {
+    text-decoration: none;
 }
 
-.ButtonImg{
-    height: 220px;
-    width:  220px;
-    margin-top: -310px;   
-    margin-left: 30px;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    border: 1px solid pink;
+.ButtonBackground {
+    position: center;
+    width: 100%;
+    height: auto;
 }
 
 .ButtonTitle {
-    height: 60px;
-    width: 150px;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 15pt;
+    position: absolute;
+    top: 75%;
+    left: 10%;
+    width: 80%;
     color: black;
-    text-decoration: none;
     text-align: center;
-    font-family: Jokerman;  
 }
 
-.ButtonLink:hover {
-    text-decoration: none;
-}
-
-.polaroid{
+.index-carousel, .carousel, .item {
+    position: absolute;
     width: 100%;
     height: 100%;
 }
 
-.newsitem {
-    float:left;
-    width: 285px;
-    height: auto;
-    margin-right: 70px;
+.carousel-inner{
+    position: absolute;
+    top: 10%;
+    left: 11%;
+    width: 69.1%;
+    height: 85%;
 }
 
+.CarouselImg {
+    position: absolute;
+    top: 0%;
+    width: auto;
+    height: 100%;
+}
 
+.CarouselTitle {
+    position: absolute;
+    top: 75%;
+    left: 10%;
+    width: 80%;
+    color: black;
+    text-align: center;
+}
+
+/* Footer*/
 .footer-content{
     background-image: url(../images/Designconcept/footer.png);
     padding-top: 20px;
@@ -165,22 +197,4 @@ p.bottomyear{
     display: inline;
     padding-right: 20px;
     color: white;   
-}
-
-.carousel-inner{
-    width: 215px;
-    height: 275px;
-    margin-left: 35px;
-    margin-top: -325px;
-}
-
-.carousel-inner div.item,
- .carousel-inner div.item img {
-    width: 100%;
-    height: 215px;
-}
-
-.main-div{
-    margin-left: auto;
-    margin-right: auto;
 }
