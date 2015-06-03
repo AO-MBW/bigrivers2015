@@ -52,7 +52,7 @@ namespace Bigrivers.Client.Backend.ViewModels
         {
             get
             {
-                _db.Locations
+                return _db.Locations
                     .Where(m => !m.Deleted)
                     .ToList()
                     .Select(s => new SelectListItem
