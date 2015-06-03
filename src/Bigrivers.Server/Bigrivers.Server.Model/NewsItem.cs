@@ -14,5 +14,7 @@ namespace Bigrivers.Server.Model
 
         [DefaultValue(false)]
         public bool Deleted { get; set; }
+
+        public virtual bool first { get; set; }
     }
 }

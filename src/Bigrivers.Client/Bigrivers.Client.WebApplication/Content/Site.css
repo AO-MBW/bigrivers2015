@@ -89,6 +89,14 @@ p.bottomyear{
     max-width: 50%;
     margin-left: 0px;   
   }
+.header{
+    border-style: solid;
+    border-color: red;
+    border-width: 5px;
+    margin-top: -50px;
+}
+.header-p{
+    color: yellow;
 }
 
 table.table{
@@ -119,7 +127,6 @@ table.table{
     margin-left: 30px;
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    border: 1px solid pink;
 }
 
 .ButtonTitle {
@@ -184,3 +191,4 @@ p.bottomyear{
     margin-left: auto;
     margin-right: auto;
 }
+
