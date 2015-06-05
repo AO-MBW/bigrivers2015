@@ -1,0 +1,46 @@
+﻿@using Bigrivers.Server.Model
+
+@{ List<WidgetItem> widgetItems = Model; }
+
+<div id="actionbar">
+    <div class="action-block">
+        @Html.ActionLink("Item Toevoegen", "New", "Widget")
+    </div>
+</div>
+<div id="content">
+    <div class="buttonItemContainer">
+        @foreach (var m in widgetItems.Where(m => m.Status))
+        {
+            <div>
+                <h1>
+                    @Html.ShowImage(ImageHelper.GetImageUrl(m.Image))
+                </h1>
+                <p>@m.DisplayName - @Html.ActionLink("Actief", "SwitchStatus", "Widget", new { m.Id }, null)</p>
+                <p>
+                    @Html.ActionLink("Wijzig", "Edit", "Widget", new { m.Id }, null)
+                    @Html.ActionLink("Verwijder", "Delete", "Widget", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');" })
+                    @Html.ActionLink("Up", "ShiftOrder", "Widget", new { id = m.Id, param = "up" }, null)
+                    @Html.ActionLink("Down", "ShiftOrder", "Widget", new { id = m.Id, param = "down" }, null)
+                </p>
+            </div>
+        }
+    </div>
+    <br class="clear" />
+    <h3>Inactieve Items</h3>
+    <div class="buttonItemContainer">
+        @foreach (var m in widgetItems.Where(m => !m.Status))
+        {
+            <div class="inactive">
+                <h1>
+                    @Html.ShowImage(ImageHelper.GetImageUrl(m.Image))
+                </h1>
+
+                <p>@m.DisplayName - @Html.ActionLink("Inactief", "SwitchStatus", "Widget", new { m.Id }, null)</p>
+                <p>
+                    @Html.ActionLink("Wijzig", "Edit", "Widget", new { m.Id }, null)
+                    @Html.ActionLink("Verwijder", "Delete", "Widget", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');" })
+                </p>
+            </div>
+        }
+    </div>
+</div>

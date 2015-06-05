@@ -1,0 +1,171 @@
+﻿@model Bigrivers.Client.Backend.ViewModels.WidgetItemViewModel
+
+<div id="content">
+    <div class="form-div">
+        <form method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+            <fieldset>
+                @Html.LabelFor(m => m.DisplayName)
+                @Html.TextBoxFor(m => m.DisplayName)
+            </fieldset>
+            <hr />
+            @* Start of the Link Builder *@
+            <fieldset>
+                @Html.LabelFor(m => m.LinkView.LinkType)
+                @Html.DropDownListFor(m => m.LinkView.LinkType, Model.LinkView.LinkTypes, new { id = "SelectLinkType" })
+            </fieldset>
+            <hr />
+            <fieldset class="linkType" id="external">
+                @Html.LabelFor(m => m.LinkView.ExternalUrl)
+                @Html.TextBoxFor(m => m.LinkView.ExternalUrl)
+            </fieldset>
+            <fieldset class="linkType" id="internal">
+                @Html.LabelFor(m => m.LinkView.InternalType)
+                @Html.DropDownListFor(m => m.LinkView.InternalType, Model.LinkView.Types, new { id = "SelectInternalType" })
+                <span style="font-size: 22px; font-weight: bold;">></span>
+                @Html.DropDownListFor(m => m.LinkView.InternalEventId, Model.LinkView.Events, new { id = "Events", @class = "InternalType" })
+                @Html.DropDownListFor(m => m.LinkView.InternalArtistId, Model.LinkView.Artists, new { id = "Artists", @class = "InternalType" })
+                @Html.DropDownListFor(m => m.LinkView.InternalPerformanceId, Model.LinkView.Performances, new { id = "Performances", @class = "InternalType" })
+                @Html.DropDownListFor(m => m.LinkView.InternalNewsId, Model.LinkView.NewsItems, new { id = "News", @class = "InternalType" })
+                @Html.DropDownListFor(m => m.LinkView.InternalSponsorId, Model.LinkView.Sponsors, new { id = "Sponsors", @class = "InternalType" })
+            </fieldset>
+            <fieldset class="linkType" id="file">
+                @* Link File Upload Block Start *@
+                @if (Model.LinkView.File.ExistingFile != null)
+                {
+                    <div class="existing-file-container">
+                        <div class="existing-file-image">
+                            <img src="@ImageHelper.GetImageUrl(Model.LinkView.File.ExistingFile)">
+                        </div>
+                        <div class="existing-file-text">
+                            <p>@Model.LinkView.File.ExistingFile.Name</p>
+                        </div>
+                    </div>
+                }
+                <div id="link-file-select-container">
+                    @Html.LabelFor(m => m.LinkView.File)
+                    @Html.HiddenFor(m => m.LinkView.File.NewUpload, new {id = "link-upload-type"})
+                    @Html.HiddenFor(m => m.LinkView.File.Key, new {id = "link-select-existing-key"})
+
+                    @* Button bar *@
+                    <div id="link-file-select-button-bar">
+                        <div id="link-upload-button" class="file-upload-button selected">
+                            <p>Upload een bestand</p>
+                        </div>
+                        <div id="link-gallery-button" class="file-upload-button non-selected">
+                            <p>Kies een bestaande afbeelding</p>
+                        </div>
+                    </div>
+
+                    @* File upload block *@
+                    <div id="link-file-upload">
+                        @Html.TextBoxFor(m => m.LinkView.File.UploadFile, new {type = "file"})
+                    </div>
+
+                    @* Gallery block *@
+                    <div id="link-file-gallery">
+                        @foreach (var file in Model.LinkView.File.FileBase)
+                        {
+                            <div class="link-file-gallery-item-container non-selected" data-file-key="@file.Key">
+                                <div class="file-block">
+                                    <div class="pseudo-align"></div>
+                                    <div class="file-container">
+                                        <img src="@ImageHelper.GetImageUrl(file)" />
+                                    </div>
+                                </div>
+                                <div class="text-block">
+                                    <div class="text-container">
+                                        <p>@file.Name</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                
+                @* Link File Upload Block End *@
+            </fieldset>
+            <br class="clear" />
+            @* End of the Link Builder *@
+            <hr />
+            @* File Upload Block Start *@
+            <fieldset>
+                @if (Model.Image.ExistingFile != null)
+                {
+                    <div class="existing-file-container">
+                        <div class="existing-file-image">
+                            <img src="@ImageHelper.GetImageUrl(Model.Image.ExistingFile)">
+                        </div>
+                        <div class="existing-file-text">
+                            <p>@Model.Image.ExistingFile.Name</p>
+                        </div>
+                    </div>
+                }
+                <div id="file-select-container">
+                    @Html.LabelFor(m => m.Image)
+                    @Html.HiddenFor(m => m.Image.NewUpload, new { id = "upload-type" })
+                    @Html.HiddenFor(m => m.Image.Key, new { id = "select-existing-key" })
+
+                    @* Button bar *@
+                    <div id="file-select-button-bar">
+                        <div id="upload-button" class="file-upload-button selected">
+                            <p>Upload een bestand</p>
+                        </div>
+                        <div id="gallery-button" class="file-upload-button non-selected">
+                            <p>Kies een bestaande afbeelding</p>
+                        </div>
+                    </div>
+
+                    @* File upload block *@
+                    <div id="file-upload">
+                        @Html.TextBoxFor(m => m.Image.UploadFile, new { type = "file" })
+                    </div>
+
+                    @* Gallery block *@
+                    <div id="file-gallery">
+                        @foreach (var file in Model.Image.FileBase)
+                        {
+                            <div class="file-gallery-item-container non-selected" data-file-key="@file.Key">
+                                <div class="file-block">
+                                    <div class="pseudo-align"></div>
+                                    <div class="file-container">
+                                        <img src="@ImageHelper.GetImageUrl(file)" />
+                                    </div>
+                                </div>
+                                <div class="text-block">
+                                    <div class="text-container">
+                                        <p>@file.Name</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </fieldset>
+            <br class="clear" />
+            @* File Upload Block End *@
+            <hr />
+            <fieldset>
+                <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
+            </fieldset>
+            <hr />
+            <fieldset>
+                <input type="submit" name="save" value="Button opslaan">
+            </fieldset>
+        </form>
+    </div>
+    
+</div>
+<script>
+    $("#SelectLinkType").val("@Model.LinkView.LinkType");
+    $("#SelectInternalType").val("@Model.LinkView.InternalType");
+    $("#Events").val("@Model.LinkView.InternalEventId");
+    $("#Artists").val("@Model.LinkView.InternalArtistId");
+    $("#Performances").val("@Model.LinkView.InternalPerformanceId");
+    $("#News").val("@Model.LinkView.InternalNewsId");
+    $("#Sponsors").val("@Model.LinkView.InternalSponsorId");
+</script>
+<script src="/Scripts/ViewScripts/LinkEditor.js"></script>
+<script src="/Scripts/ViewScripts/FileExplorer.js"></script>
+<script src="/Scripts/ViewScripts/LinkEditor.FileExplorer.js"></script>

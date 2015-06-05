@@ -7,7 +7,7 @@ using Bigrivers.Client.Backend.Helpers;
 
 namespace Bigrivers.Client.Backend.Controllers
 {
-    public class ButtonItemsController : BaseController
+    public class WidgetController : BaseController
     {
         private static FileUploadValidator FileValidator
         {
@@ -28,7 +28,7 @@ namespace Bigrivers.Client.Backend.Controllers
             }
         }
 
-        private static FileUploadValidator LinkFileValidator
+        private static FileUploadValidator FileLinkValidator
         {
             get
             {
@@ -36,7 +36,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 {
                     Required = true,
                     MaxByteSize = 2000000,
-                    MimeTypes = new string[] {},
+                    MimeTypes = new string[] { },
                     ModelErrors = new FileUploadModelErrors
                     {
                         Required = "Er moet een bestand worden geupload",
@@ -46,7 +46,7 @@ namespace Bigrivers.Client.Backend.Controllers
             }
         }
 
-        private static string FileUploadLocation { get { return Helpers.FileUploadLocation.ButtonLogo; } }
+        private static string FileUploadLocation { get { return Helpers.FileUploadLocation.NewsWidget; } }
         private static string FileLinkUploadLocation { get { return Helpers.FileUploadLocation.LinkUpload; } }
 
         // GET: ButtonItems/Index
@@ -59,28 +59,28 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Manage()
         {
             // All menu items to unsorted list
-            var buttonItems = GetButtonItems()
+            var widgetItems = GetWidgetItems()
                 .ToList();
 
             // Set all active items into new list first
-            var listButtonItems = buttonItems
+            var listWidgetItems = widgetItems
                 .Where(m => m.Status)
                 .OrderBy(m => m.Order)
                 .ToList();
             // Finally, add all inactive items to the end of the list
-            listButtonItems
-                .AddRange(buttonItems.Where(m => !m.Status)
+            listWidgetItems
+                .AddRange(widgetItems.Where(m => !m.Status)
                 .ToList());
 
-            ViewBag.listButtonItems = listButtonItems;
-            ViewBag.Title = "ButtonItems";
-            return View("Manage");
+            var model = listWidgetItems;
+            ViewBag.Title = "Widget";
+            return View(model);
         }
 
         // GET: ButtonItems/Create
         public ActionResult New()
         {
-            var model = new ButtonItemViewModel
+            var model = new WidgetItemViewModel
             {
                 LinkView = new LinkViewModel
                 {
@@ -100,14 +100,14 @@ namespace Bigrivers.Client.Backend.Controllers
                 Status = true
             };
 
-            ViewBag.Title = "Nieuw ButtonItem";
+            ViewBag.Title = "Voeg toe aan widget";
             return View("Edit", model);
         }
 
         // POST: ButtonItems/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(ButtonItemViewModel model)
+        public ActionResult New(WidgetItemViewModel model)
         {
             model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
             model.LinkView.File.FileBase = Db.Files.Where(m => m.Container == FileLinkUploadLocation).ToList();
@@ -120,15 +120,15 @@ namespace Bigrivers.Client.Backend.Controllers
             if (model.LinkView.LinkType == "file")
             {
                 // Run over a validator to add custom model errors
-                foreach (var error in LinkFileValidator.CheckFile(model.LinkView.File))
+                foreach (var error in FileLinkValidator.CheckFile(model.LinkView.File))
                 {
                     ModelState.AddModelError("", error);
                 }
             }
-            
+
             if (!ModelState.IsValid)
             {
-                ViewBag.Title = "Nieuw ButtonItem";
+                ViewBag.Title = "Voeg toe aan widget";
                 return View("Edit", model);
             }
 
@@ -153,16 +153,16 @@ namespace Bigrivers.Client.Backend.Controllers
             var order = Db.ButtonItems.Count(m => m.Status) > 0 ? Db.ButtonItems.OrderByDescending(m => m.Order).First().Order + 1 : 1;
 
             var link = LinkManageHelper.SetLink(model.LinkView);
-            var singleButtonItem = new ButtonItem
+            var singleWidgetItem = new WidgetItem
             {
                 Target = Db.Links.SingleOrDefault(m => m.Id == link.Id),
                 DisplayName = model.DisplayName,
                 Order = order,
                 Status = model.Status,
-                Logo = photoEntity != null ? Db.Files.Single(m => m.Key == photoEntity.Key) : null
+                Image = photoEntity != null ? Db.Files.Single(m => m.Key == photoEntity.Key) : null
             };
 
-            Db.ButtonItems.Add(singleButtonItem);
+            Db.WidgetItems.Add(singleWidgetItem);
             Db.SaveChanges();
             return RedirectToAction("Manage");
         }
@@ -171,43 +171,43 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Edit(int? id)
         {
             if (!VerifyId(id)) return RedirectToAction("Manage");
-            var singleButtonItem = Db.ButtonItems.Find(id);
+            var singleWidgetItem = Db.WidgetItems.Find(id);
 
-            var model = new ButtonItemViewModel
+            var model = new WidgetItemViewModel
             {
-                DisplayName = singleButtonItem.DisplayName,
-                Status = singleButtonItem.Status,
-                LinkView = LinkManageHelper.SetViewModel(singleButtonItem.Target, new LinkViewModel
+                DisplayName = singleWidgetItem.DisplayName,
+                Status = singleWidgetItem.Status,
+                LinkView = LinkManageHelper.SetViewModel(singleWidgetItem.Target, new LinkViewModel
                 {
                     File = new FileUploadViewModel
                     {
                         NewUpload = true,
-                        ExistingFile = singleButtonItem.Target.File,
+                        ExistingFile = singleWidgetItem.Target.File,
                         FileBase = Db.Files.Where(m => m.Container == FileLinkUploadLocation).ToList()
                     }
                 }),
                 Image = new FileUploadViewModel
                 {
                     NewUpload = true,
-                    ExistingFile = singleButtonItem.Logo,
+                    ExistingFile = singleWidgetItem.Image,
                     FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
                 }
             };
-            ViewBag.Title = "Bewerk ButtonItem";
+            ViewBag.Title = "Bewerk widget";
             return View(model);
         }
 
         // POST: ButtonItems/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, ButtonItemViewModel model)
+        public ActionResult Edit(int id, WidgetItemViewModel model)
         {
             if (!VerifyId(id)) return RedirectToAction("Manage");
-            var singleButtonItem = Db.ButtonItems.Find(id);
+            var singleWidgetItem = Db.WidgetItems.Find(id);
 
-            model.Image.ExistingFile = singleButtonItem.Logo;
+            model.Image.ExistingFile = singleWidgetItem.Image;
             model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
-            model.LinkView.File.ExistingFile = singleButtonItem.Target.File;
+            model.LinkView.File.ExistingFile = singleWidgetItem.Target.File;
             model.LinkView.File.FileBase = Db.Files.Where(m => m.Container == FileLinkUploadLocation).ToList();
 
             // Run over a validator to add custom model errors
@@ -218,7 +218,7 @@ namespace Bigrivers.Client.Backend.Controllers
             if (model.LinkView.LinkType == "file")
             {
                 // Run over a validator to add custom model errors
-                foreach (var error in LinkFileValidator.CheckFile(model.LinkView.File))
+                foreach (var error in FileLinkValidator.CheckFile(model.LinkView.File))
                 {
                     ModelState.AddModelError("", error);
                 }
@@ -226,7 +226,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
             if (!ModelState.IsValid)
             {
-                ViewBag.Title = "Nieuw MenuItem";
+                ViewBag.Title = "Bewerk widget";
                 return View("Edit", model);
             }
 
@@ -247,7 +247,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 }
             }
 
-            var link = singleButtonItem.Target;
+            var link = singleWidgetItem.Target;
             if (model.LinkView.LinkType == "file" && model.LinkView.File.UploadFile != null || model.LinkView.File.Key != null && model.LinkView.File.Key != "false")
             {
                 link = LinkManageHelper.SetLink(model.LinkView);
@@ -256,11 +256,11 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 link = LinkManageHelper.SetLink(model.LinkView);
             }
-                
-            singleButtonItem.DisplayName = model.DisplayName;
-            singleButtonItem.Status = model.Status;
-            singleButtonItem.Target = Db.Links.Single(m => m.Id == link.Id);
-            if (photoEntity != null) singleButtonItem.Logo = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
+
+            singleWidgetItem.DisplayName = model.DisplayName;
+            singleWidgetItem.Status = model.Status;
+            singleWidgetItem.Target = Db.Links.Single(m => m.Id == link.Id);
+            if (photoEntity != null) singleWidgetItem.Image = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");
@@ -270,11 +270,11 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Delete(int? id)
         {
             if (!VerifyId(id)) return RedirectToAction("Manage");
-            var singleButtonItem = Db.ButtonItems.Find(id);
+            var singleWidgetItem = Db.ButtonItems.Find(id);
 
-            singleButtonItem.Order = null;
-            singleButtonItem.Status = false;
-            singleButtonItem.Deleted = true;
+            singleWidgetItem.Order = null;
+            singleWidgetItem.Status = false;
+            singleWidgetItem.Deleted = true;
             Db.SaveChanges();
 
             return RedirectToAction("Manage");
@@ -285,17 +285,16 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult SwitchStatus(int? id)
         {
             if (!VerifyId(id)) return RedirectToAction("Manage");
+            var singleWidgetItem = Db.WidgetItems.Find(id);
 
-            var singleButtonItem = Db.ButtonItems.Find(id);
-
-            singleButtonItem.Status = !singleButtonItem.Status;
-            switch (singleButtonItem.Status)
+            singleWidgetItem.Status = !singleWidgetItem.Status;
+            switch (singleWidgetItem.Status)
             {
                 case true:
-                    singleButtonItem.Order = Db.ButtonItems.OrderByDescending(m => m.Order).First().Order + 1;
+                    singleWidgetItem.Order = Db.WidgetItems.OrderByDescending(m => m.Order).First().Order + 1;
                     break;
                 case false:
-                    singleButtonItem.Order = null;
+                    singleWidgetItem.Order = null;
                     break;
             }
             Db.SaveChanges();
@@ -308,60 +307,60 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             if (!VerifyId(id)) return RedirectToAction("Manage");
             if (param != "up" && param != "down") return RedirectToAction("Manage");
-            var singleButtonItem = Db.ButtonItems.Find(id);
+            var singleWidgetItem = Db.WidgetItems.Find(id);
 
-            ButtonItem switchItem = null;
+            WidgetItem switchItem = null;
             switch (param)
             {
                 case "up":
-                {
-                    // Go to Manage if singleButtonItem already is the first item
-                    if (Db.ButtonItems
-                        .OrderBy(m => m.Order)
-                        .First() == singleButtonItem) return RedirectToAction("Manage");
+                    {
+                        // Go to Manage if singleButtonItem already is the first item
+                        if (Db.WidgetItems
+                            .OrderBy(m => m.Order)
+                            .First() == singleWidgetItem) return RedirectToAction("Manage");
 
-                    switchItem = Db.ButtonItems
-                        .Where(m => m.Order < singleButtonItem.Order && m.Status)
-                        .OrderByDescending(m => m.Order)
-                        .FirstOrDefault();
-                    break;
-                }
+                        switchItem = Db.WidgetItems
+                            .Where(m => m.Order < singleWidgetItem.Order && m.Status)
+                            .OrderByDescending(m => m.Order)
+                            .FirstOrDefault();
+                        break;
+                    }
                 case "down":
-                {
-                    // Go to Manage if singleButtonItem already is the last item
-                    // OrderDescending.First() is used because of issues from SQL limitations with the Last() method being used in this scenario
-                    if (Db.ButtonItems
-                        .OrderByDescending(m => m.Order)
-                        .First() == singleButtonItem) return RedirectToAction("Manage");
+                    {
+                        // Go to Manage if singleButtonItem already is the last item
+                        // OrderDescending.First() is used because of issues from SQL limitations with the Last() method being used in this scenario
+                        if (Db.WidgetItems
+                            .OrderByDescending(m => m.Order)
+                            .First() == singleWidgetItem) return RedirectToAction("Manage");
 
-                    switchItem = Db.ButtonItems
-                        .Where(m => m.Order > singleButtonItem.Order && m.Status)
-                        .OrderBy(m => m.Order)
-                        .FirstOrDefault();
-                    break;
-                }
+                        switchItem = Db.WidgetItems
+                            .Where(m => m.Order > singleWidgetItem.Order && m.Status)
+                            .OrderBy(m => m.Order)
+                            .FirstOrDefault();
+                        break;
+                    }
             }
-            if (switchItem == null || singleButtonItem.Deleted) return RedirectToAction("Manage");
+            if (switchItem == null || singleWidgetItem.Deleted) return RedirectToAction("Manage");
 
             // Save order of the item to switch with in temporary variable
             var t = switchItem.Order;
-            switchItem.Order = singleButtonItem.Order;
-            singleButtonItem.Order = t;
+            switchItem.Order = singleWidgetItem.Order;
+            singleWidgetItem.Order = t;
 
             Db.SaveChanges();
             return RedirectToAction("Manage");
         }
 
-        private IQueryable<ButtonItem> GetButtonItems(bool includeDeleted = false)
+        private IQueryable<WidgetItem> GetWidgetItems(bool includeDeleted = false)
         {
-            return includeDeleted ? Db.ButtonItems : Db.ButtonItems.Where(a => !a.Deleted);
+            return includeDeleted ? Db.WidgetItems : Db.WidgetItems.Where(a => !a.Deleted);
         }
 
         private bool VerifyId(int? id)
         {
             if (id == null) return false;
-            var singleButtonItem = Db.ButtonItems.Find(id);
-            return singleButtonItem != null && !singleButtonItem.Deleted;
+            var singleWidgetItem = Db.WidgetItems.Find(id);
+            return singleWidgetItem != null && !singleWidgetItem.Deleted;
         }
     }
 }

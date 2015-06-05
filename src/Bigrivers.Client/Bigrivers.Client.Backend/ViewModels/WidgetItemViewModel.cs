@@ -3,7 +3,7 @@ using Bigrivers.Client.Backend.Models;
 
 namespace Bigrivers.Client.Backend.ViewModels
 {
-    public class ButtonItemViewModel
+    public class WidgetItemViewModel
     {
         [Required]
         [Display(Name = "Weergavenaam")]

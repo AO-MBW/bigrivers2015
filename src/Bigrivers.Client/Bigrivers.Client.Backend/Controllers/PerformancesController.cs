@@ -39,7 +39,6 @@ namespace Bigrivers.Client.Backend.Controllers
                 Event = null,
                 Artist = null
             };
-            viewModel = FillViewModelSelectLists(viewModel);
 
             ViewBag.Title = "Nieuw Optreden";
             return View("Edit", viewModel);
@@ -53,7 +52,6 @@ namespace Bigrivers.Client.Backend.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.Title = "Nieuw Optreden";
-                viewModel = FillViewModelSelectLists(viewModel);
                 return View("Edit", viewModel);
             }
 
@@ -88,7 +86,6 @@ namespace Bigrivers.Client.Backend.Controllers
                 Event = singlePerformance.Event.Id,
                 Artist = singlePerformance.Artist.Id
             };
-            viewModel = FillViewModelSelectLists(viewModel);
 
             // Set all active parents into new list first
 
@@ -104,7 +101,6 @@ namespace Bigrivers.Client.Backend.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.Title = "Bewerk Optreden";
-                viewModel = FillViewModelSelectLists(viewModel);
                 return View("Edit", viewModel);
             }
 
@@ -157,30 +153,6 @@ namespace Bigrivers.Client.Backend.Controllers
             if (id == null) return false;
             var singlePerformance = Db.Performances.Find(id);
             return singlePerformance != null && !singlePerformance.Deleted;
-        }
-
-        private PerformanceViewModel FillViewModelSelectLists(PerformanceViewModel viewModel)
-        {
-            viewModel.Events = Db.Events
-                .Where(m => !m.Deleted)
-                .ToList()
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Title
-                })
-                .ToList();
-            viewModel.Artists = Db.Artists
-                .Where(m => !m.Deleted)
-                .ToList()
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Name
-                })
-                .ToList();
-
-            return viewModel;
         }
     }
 }

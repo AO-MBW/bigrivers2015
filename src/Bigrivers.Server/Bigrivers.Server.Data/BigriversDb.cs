@@ -31,6 +31,7 @@ namespace Bigrivers.Server.Data
         public virtual DbSet<Genre> Genres { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<NewsItem> NewsItems { get; set; }
+        public virtual DbSet<WidgetItem> WidgetItems { get; set; }
         public virtual DbSet<Performance> Performances { get; set; }
         public virtual DbSet<Page> Pages { get; set; }
         public virtual DbSet<Sponsor> Sponsors { get; set; }
