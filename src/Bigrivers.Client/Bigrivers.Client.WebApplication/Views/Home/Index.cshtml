@@ -2,6 +2,8 @@
     ViewBag.Title = "Home Page";
 }
 <div class="row">
+
+    <!-- Nieuws Widget -->
     <div class="Button col-xs-6 col-sm-4 col-md-3">
         <div class="index-carousel">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -11,10 +13,31 @@
                     {
                     <div class="@(item.first?"item active":"item")">
                         <a href="#">
-                            <img class="CarouselImg" src="../Images/sample.jpg">
+                            <img class="CarouselImg" src="@ImageHelper.GetImageUrl(item.Image)">
                             <p class="CarouselTitle">@item.Title</p>
                         </a>
                     </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <img class="ButtonBackground" src="../Images/Designconcept/polaroid.png">
+    </div>
+
+    <!-- Sponsoren Widget -->
+    <div class="Button col-xs-6 col-sm-4 col-md-3">
+        <div class="index-carousel">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    @foreach (Sponsor item in ViewBag.Sponsors)
+                    {
+                        <div class="@(item.first?"item active":"item")">
+                            <a href="@item.Url" target="_blank">
+                                <img class="CarouselImg" src="@ImageHelper.GetImageUrl(item.Image)">
+                                <p class="CarouselTitle">@item.Name</p>
+                            </a>
+                        </div>
                     }
                 </div>
             </div>
