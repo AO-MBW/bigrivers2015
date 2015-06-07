@@ -1,6 +1,6 @@
 ﻿@using Bigrivers.Server.Model
 @{
-    List<ButtonItem> listButtonItems = ViewBag.listButtonItems;
+    List<ButtonItem> buttonItems = Model;
 }
 
 <div id="actionbar">
@@ -10,36 +10,36 @@
 </div>
 <div id="content">
     <div class="buttonItemContainer">
-        @foreach (var m in listButtonItems.Where(m => m.Status))
+        @foreach (var m in buttonItems.Where(m => m.Status))
         {
             <div>
                 <h1>
                     @Html.ShowImage(ImageHelper.GetImageUrl(m.Logo))
                 </h1>
-                <p>@m.DisplayName - @Html.ActionLink("Actief", "SwitchStatus", "ButtonItems", new {m.Id}, null)</p>
+                <p>@m.DisplayName - @Html.ActionLink("Actief", "SwitchStatus", "ButtonItems", new { m.Id }, null)</p>
                 <p>
-                    @Html.ActionLink("Wijzig", "Edit", "ButtonItems", new {m.Id}, null)
-                    @Html.ActionLink("Verwijder", "Delete", "ButtonItems", new {m.Id}, new {@onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');"})
-                    @Html.ActionLink("Up", "ShiftOrder", "ButtonItems", new {id = m.Id, param = "up"}, null)
-                    @Html.ActionLink("Down", "ShiftOrder", "ButtonItems", new {id = m.Id, param = "down"}, null)
+                    @Html.ActionLink("Wijzig", "Edit", "ButtonItems", new { m.Id }, null)
+                    @Html.ActionLink("Verwijder", "Delete", "ButtonItems", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');" })
+                    @Html.ActionLink("Up", "ShiftOrder", "ButtonItems", new { id = m.Id, param = "up" }, null)
+                    @Html.ActionLink("Down", "ShiftOrder", "ButtonItems", new { id = m.Id, param = "down" }, null)
                 </p>
             </div>
         }
     </div>
-    <br class="clear"/>
+    <br class="clear" />
     <h3>Inactieve Items</h3>
     <div class="buttonItemContainer">
-        @foreach (var m in listButtonItems.Where(m => !m.Status))
+        @foreach (var m in buttonItems.Where(m => !m.Status))
         {
             <div class="inactive">
                 <h1>
                     @Html.ShowImage(ImageHelper.GetImageUrl(m.Logo))
                 </h1>
-                
-                <p>@m.DisplayName - @Html.ActionLink("Inactief", "SwitchStatus", "ButtonItems", new {m.Id}, null)</p>
+
+                <p>@m.DisplayName - @Html.ActionLink("Inactief", "SwitchStatus", "ButtonItems", new { m.Id }, null)</p>
                 <p>
-                    @Html.ActionLink("Wijzig", "Edit", "ButtonItems", new {m.Id}, null)
-                    @Html.ActionLink("Verwijder", "Delete", "ButtonItems", new {m.Id}, new {@onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');"})
+                    @Html.ActionLink("Wijzig", "Edit", "ButtonItems", new { m.Id }, null)
+                    @Html.ActionLink("Verwijder", "Delete", "ButtonItems", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');" })
                 </p>
             </div>
         }

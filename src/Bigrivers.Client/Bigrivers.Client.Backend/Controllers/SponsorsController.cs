@@ -38,15 +38,16 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Artist/
         public ActionResult Manage()
         {
-            var sponsors = GetSponsors().ToList();
-            var listSponsors = sponsors.Where(m => m.Status)
+            var sponsors = GetSponsors();
+            var model = sponsors
+                .Where(m => m.Status)
                 .ToList();
 
-            listSponsors.AddRange(sponsors.Where(m => !m.Status).ToList());
-            ViewBag.listSponsors = listSponsors;
+            model.AddRange(sponsors
+                .Where(m => !m.Status));
 
-            ViewBag.Title = "Nieuws";
-            return View("Manage");
+            ViewBag.Title = "Sponsoren";
+            return View(model);
         }
 
         // GET: Artist/New
@@ -100,7 +101,7 @@ namespace Bigrivers.Client.Backend.Controllers
                     photoEntity = Db.Files.Single(m => m.Key == model.Image.Key);
                 }
             }
-            
+
             var singleSponsor = new Sponsor
             {
                 Name = model.Name,

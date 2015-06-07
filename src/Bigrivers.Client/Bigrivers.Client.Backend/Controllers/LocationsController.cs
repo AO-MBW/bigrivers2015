@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
@@ -17,15 +16,16 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Performances/
         public ActionResult Manage()
         {
-            var performances = GetLocations().ToList();
-            var listLocations = performances.Where(m => m.Status)
+            var performances = GetLocations();
+            var model = performances
+                .Where(m => m.Status)
                 .ToList();
 
-            listLocations.AddRange(performances.Where(m => !m.Status).ToList());
-            var model = listLocations;
+            model.AddRange(performances
+                .Where(m => !m.Status));
 
             ViewBag.Title = "Podia";
-            return View("Manage", model);
+            return View(model);
         }
 
         // GET: Performances/Create

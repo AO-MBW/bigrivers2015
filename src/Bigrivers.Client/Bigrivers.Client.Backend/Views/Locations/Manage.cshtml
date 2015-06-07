@@ -7,12 +7,12 @@
 <div id="content">
     <table>
         <thead>
-        <tr>
-            <th>Podiumnaam</th>
-            <th>Locatie</th>
-            <th>Status</th>
-            <th>Acties</th>
-        </tr>
+            <tr>
+                <th>Podiumnaam</th>
+                <th>Locatie</th>
+                <th>Status</th>
+                <th>Acties</th>
+            </tr>
         </thead>
         <tbody>
             @foreach (Location m in Model)
@@ -25,10 +25,10 @@
                 {
                     @:<tr>
                 }
-                    <td>@m.Stagename</td>
-                    <td>@m.Street, @m.Zipcode, @m.City</td>
-                    <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "Locations", new { m.Id }, null)</td>
-                    <td>@Html.ActionLink("Wijzig", "Edit", "Locations", new { m.Id }, null)@Html.ActionLink("Verwijder", "Delete", "Locations", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om dit optreden te verwijderen. Weet je dit zeker?');" })</td>
+                <td>@m.Stagename</td>
+                <td>@m.Street, @m.Zipcode, @m.City</td>
+                <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "Locations", new { m.Id }, null)</td>
+                <td>@Html.ActionLink("Wijzig", "Edit", "Locations", new { m.Id }, null) @Html.ActionLink("Verwijder", "Delete", "Locations", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om dit optreden te verwijderen. Weet je dit zeker?');" })</td>
                 @:</tr>
             }
         </tbody>

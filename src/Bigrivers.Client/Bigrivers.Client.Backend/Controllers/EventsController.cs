@@ -17,21 +17,22 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Events/
         public ActionResult Manage()
         {
-            var events = GetEvents().ToList();
-            var listEvents = events.Where(m => m.Status)
+            var events = GetEvents();
+            var model = events
+                .Where(m => m.Status)
                 .ToList();
 
-            listEvents.AddRange(events.Where(m => !m.Status).ToList());
-            ViewBag.listEvents = listEvents;
+            model.AddRange(events
+                .Where(m => !m.Status));
 
             ViewBag.Title = "Evenementen";
-            return View("Manage");
+            return View("Manage", model);
         }
 
         // GET: Events/New
         public ActionResult New()
         {
-            var viewModel = new EventViewModel
+            var model = new EventViewModel
             {
                 WebsiteStatus = true,
                 YoutubeChannelStatus = true,
@@ -45,7 +46,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 Status = true
             };
             ViewBag.Title = "Nieuw Evenement";
-            return View("Edit", viewModel);
+            return View("Edit", model);
         }
 
         // POST: Events/New
@@ -84,7 +85,7 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Events/Edit/5
         public ActionResult Edit(int? id)
         {
-            if(!VerifyId(id)) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleEvent = Db.Events.Find(id);
 
             var model = new EventViewModel

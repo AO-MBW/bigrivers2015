@@ -58,22 +58,20 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: ButtonItems/
         public ActionResult Manage()
         {
-            // All menu items to unsorted list
-            var widgetItems = GetWidgetItems()
-                .ToList();
+            // All widget items to unsorted list
+            var widgetItems = GetWidgetItems();
 
             // Set all active items into new list first
-            var listWidgetItems = widgetItems
+            var model = widgetItems
                 .Where(m => m.Status)
                 .OrderBy(m => m.Order)
                 .ToList();
-            // Finally, add all inactive items to the end of the list
-            listWidgetItems
-                .AddRange(widgetItems.Where(m => !m.Status)
-                .ToList());
 
-            var model = listWidgetItems;
-            ViewBag.Title = "Widget";
+            // Finally, add all inactive items to the end of the list
+            model.AddRange(widgetItems
+                .Where(m => !m.Status));
+
+            ViewBag.Title = "Beheer widget";
             return View(model);
         }
 

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using Bigrivers.Client.Backend.Helpers;
 using Bigrivers.Client.Backend.ViewModels;
@@ -17,7 +16,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 {
                     Required = false,
                     MaxByteSize = 2000000,
-                    MimeTypes = new[] {"image"},
+                    MimeTypes = new[] { "image" },
                     ModelErrors = new FileUploadModelErrors
                     {
                         ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
@@ -38,15 +37,21 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Artist/
         public ActionResult Manage()
         {
-            ViewBag.listArtists = ListArtistsInOrder();
+            var artists = GetArtists();
+
+            var model = artists
+                .Where(m => m.Status)
+                .ToList();
+            model.AddRange(artists.Where(m => !m.Status));
+
             ViewBag.Title = "Artiesten";
-            return View("Manage");
+            return View(model);
         }
 
         // GET: Artist/New
         public ActionResult New()
         {
-            var viewModel = new ArtistViewModel
+            var model = new ArtistViewModel
             {
                 Image = new FileUploadViewModel
                 {
@@ -57,7 +62,7 @@ namespace Bigrivers.Client.Backend.Controllers
             };
 
             ViewBag.Title = "Nieuwe Artiest";
-            return View("Edit", viewModel);
+            return View("Edit", model);
         }
 
         // POST: Artist/New
@@ -92,7 +97,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 if (model.Image.Key != "false")
                 {
                     photoEntity = Db.Files.Single(m => m.Key == model.Image.Key);
-                }    
+                }
             }
 
             var singleArtist = new Artist
@@ -156,7 +161,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 ModelState.AddModelError("", error);
             }
-            
+
             if (!ModelState.IsValid)
             {
                 ViewBag.Title = "Nieuwe Artiest";
@@ -227,18 +232,6 @@ namespace Bigrivers.Client.Backend.Controllers
         private IQueryable<Artist> GetArtists(bool includeDeleted = false)
         {
             return includeDeleted ? Db.Artists : Db.Artists.Where(a => !a.Deleted);
-        }
-
-        private List<Artist> ListArtistsInOrder()
-        {
-            var artists = GetArtists()
-                .ToList();
-            var listArtists = artists
-                .Where(m => m.Status)
-                .ToList();
-            listArtists.AddRange(artists.Where(m => !m.Status)
-                .ToList());
-            return listArtists;
         }
 
         // Verify if an Artist Id is supplied and corresponds to an existing Artist
