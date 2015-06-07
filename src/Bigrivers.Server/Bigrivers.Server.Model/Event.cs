@@ -8,12 +8,8 @@ namespace Bigrivers.Server.Model
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string ShortDescription { get; set; }
         public string Description { get; set; }
-        
 
-        [DefaultValue(true)]
-        public bool WebsiteStatus { get; set; }
         [DefaultValue(true)]
         public bool YoutubeChannelStatus { get; set; }
         [DefaultValue(true)]
@@ -34,8 +30,5 @@ namespace Bigrivers.Server.Model
 
         public virtual List<Performance> Performances { get; set; }
         public virtual List<Sponsor> Sponsors { get; set; }
-        public virtual Location Location { get; set; }
-        public virtual File FrontpageLogo { get; set; }
-        public virtual File BackgroundImage { get; set; }
     }
 }

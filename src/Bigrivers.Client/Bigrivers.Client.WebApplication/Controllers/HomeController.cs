@@ -39,7 +39,6 @@ namespace Bigrivers.Client.WebApplication.Controllers
             if (id != null) return Event(id.Value);
 
             ViewBag.EventList = AccessLayer.Events
-                .Include(e => e.Location)
                 .Where(e => e.Status)
                 .ToList();
 

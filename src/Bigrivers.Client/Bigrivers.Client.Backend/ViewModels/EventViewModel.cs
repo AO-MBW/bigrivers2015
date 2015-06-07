@@ -18,11 +18,6 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Display(Name = "Beschrijving")]
         public string Description { get; set; }
 
-        [Required]
-        [Display(Name = "Korte beschrijving")]
-        public string ShortDescription { get; set; }
-
-        public bool WebsiteStatus { get; set; }
         public bool YoutubeChannelStatus { get; set; }
         public bool FacebookStatus { get; set; }
         public bool TwitterStatus { get; set; }
@@ -42,26 +37,6 @@ namespace Bigrivers.Client.Backend.ViewModels
         public bool TicketRequired { get; set; }
 
         [Required]
-        [Display(Name = "Op evenement")]
-        public int? Location { get; set; }
-
-        [Required]
         public bool Status { get; set; }
-
-        public IEnumerable<SelectListItem> Locations
-        {
-            get
-            {
-                return _db.Locations
-                    .Where(m => !m.Deleted)
-                    .ToList()
-                    .Select(s => new SelectListItem
-                    {
-                        Value = s.Id.ToString(),
-                        Text = s.Stagename
-                    })
-                    .ToList();
-            }
-        }
     }
 }

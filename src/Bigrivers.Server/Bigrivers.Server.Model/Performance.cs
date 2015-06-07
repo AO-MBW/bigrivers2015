@@ -18,5 +18,6 @@ namespace Bigrivers.Server.Model
 
         public virtual Artist Artist { get; set; }
         public virtual Event Event { get; set; }
+        public virtual Location Location { get; set; }
     }
 }
