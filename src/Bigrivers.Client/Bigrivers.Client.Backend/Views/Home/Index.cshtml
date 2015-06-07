@@ -8,9 +8,6 @@
             <div class="item">
                 @Html.ActionLink("Beheer nieuwsberichten", "Manage", "News")
             </div>
-            <div class="item">
-                @Html.ActionLink("Beheer widget", "Manage", "Widget")
-            </div>
         </div>
     </div>
     <div class="block">
@@ -68,16 +65,24 @@
         <h2>Menu's</h2>
         <div class="itemblock">
             <div class="item">
-                @Html.ActionLink("Beheer ButtonItems", "Manage", "ButtonItems")
+                @Html.ActionLink("Beheer menubalk", "Manage", "MenuItems")
             </div>
             <div class="item">
-                @Html.ActionLink("Voeg ButtonItem toe", "New", "ButtonItems")
+                @Html.ActionLink("Voeg toe aan menubalk", "New", "MenuItems")
+            </div>
+        </div>
+    </div>
+    <div class="block">
+        <h2>Frontpage knoppen</h2>
+        <div class="itemblock">
+            <div class="item">
+                @Html.ActionLink("Beheer knoppen", "Manage", "ButtonItems")
             </div>
             <div class="item">
-                @Html.ActionLink("Beheer Menuitems", "Manage", "MenuItems")
+                @Html.ActionLink("Voeg knoppen toe", "New", "ButtonItems")
             </div>
             <div class="item">
-                @Html.ActionLink("Voeg menuitem toe", "New", "MenuItems")
+                @Html.ActionLink("Beheer widget", "Manage", "Widget")
             </div>
         </div>
     </div>
@@ -91,7 +96,7 @@
                 @Html.ActionLink("Logo en links", "Settings", "Home")
             </div>
             <div class="item">
-                @Html.ActionLink("Beheer gebruikers", "Manage", "Account")
+                @Html.ActionLink("Beheer personeel", "Manage", "Account")
             </div>
         </div>
     </div>
