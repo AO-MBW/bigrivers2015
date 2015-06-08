@@ -1,7 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@{
+    List<MenuItem> childList = ViewBag.MenuItemsChild;
+}
+
+<!DOCTYPE HTML>
 <html>
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Big Rivers</title>
     @Styles.Render("~/Content/css")
@@ -10,53 +14,69 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </head>
+    <body>
 
-<body>
-    
-    @*<div class="header">
-        <p class="header-p">test</p>
-        <br/>
-        <p class="header-p">test</p>
-    </div>*@
-<div class="navbar navbar-inverse">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <div class="home-link">
-                <a href="/Home/Index">
-                    <img class="menuimg" src="/Images/br15.jpg" alt="Terug naar Home" title="Terug naar Home"/>
-                </a>
+        @*<div class="header">
+                <p class="header-p">test</p>
+                <br/>
+                <p class="header-p">test</p>
+            </div>*@
+        <div class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="home-link">
+                        <a href="/Home/Index">
+                            <img class="menuimg" src="/Images/br15.jpg" alt="Terug naar Home" title="Terug naar Home" />
+                        </a>
+                    </div>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        @{
+                            int i = 1;
+                        }
+                        @foreach (MenuItem item in ViewBag.MenuItems)
+                        {
+                            if (item.IsParent == true)
+                            {
+                                <li id="menuitem-id-@i">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@item.DisplayName<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        @foreach (var child in childList.Where(m => m.Parent == item.Id))
+                                        {
+                                            <li><a class="menuitem-link" href="@LinkHelper.GetUrl(child.Target)">@child.DisplayName</a></li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                <li id="menuitem-id-@i">
+                                    <a class="menuitem-link" href="@LinkHelper.GetUrl(item.Target)">@item.DisplayName</a>
+                                </li>
+                            }
+                            i++;
+                        }
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                @{
-                    int i = 1;
-                }
-                @foreach (MenuItem item in ViewBag.MenuItems)
-                {
-                    <li id="menuitem-id-@i"><a class="menuitem-link" href="@LinkHelper.GetUrl(item.Target)">@item.DisplayName</a></li>
-                    i++;
-                }
-            </ul>
+
+        <div class="container body-content">
+            @RenderBody()
         </div>
-    </div>
-</div>
 
-<div class="container body-content">
-    @RenderBody()
-</div>
+        <div class="container footer-content">
 
-<div class="container footer-content">
-    
-    <div class="pseudo-align">Meld Je Aan Als Vrijwilleger</div>
-    <div class="pseudo-align">Foto's & Video's Aanleveren</div>
-    <div class="pseudo-align">Meld Je Band Aan Voor</div>
-        <p class="bottomyear">Copyright @DateTime.Now.Year - Big Rivers Festival</p>
-</div>
-</body>
+            @*<div class="pseudo-align">Meld Je Aan Als Vrijwilleger</div>
+                <div class="pseudo-align">Foto's & Video's Aanleveren</div>
+                <div class="pseudo-align">Meld Je Band Aan Voor</div>*@
+            <p class="bottomyear">Copyright @DateTime.Now.Year - Big Rivers Festival</p>
+        </div>
+    </body>
 </html>

@@ -1,6 +1,5 @@
 ﻿body {
     padding-top: 50px;
-    padding-bottom: 20px;
     background-image: url(../images/Designconcept/browntexture.jpg);
     background-size: 100%;
 }
@@ -49,10 +48,6 @@ input.input-validation-error {
 
 input[type="checkbox"].input-validation-error {
     border: 0 none;
-}
-
-p.bottomyear{
-    color: white;
 }
 
 .twitterfeed{
@@ -202,19 +197,19 @@ p.bottomyear{
 /* Footer*/
 .footer-content{
     background-color: rgba(98, 34, 13, 0.69);
-    padding-top: 20px;
-    padding-bottom: 20px;
 }
 
 p.bottomyear{
     float: right;
+    color: white;
 }
 
-.pseudo-align{
+/*.pseudo-align{
     display: inline;
     padding-right: 20px;
     color: white;   
 }
+*/
 
 .news-page{
     background-image:  url(../images/Designconcept/bg.png);
@@ -248,16 +243,26 @@ news-link{
     background-image:  url(../images/Designconcept/bg.png);
 }
 
-.lees-verder{
+.lees-verder-a{
      text-transform: none;
      float: right;
 }
 
-span{
+.lees-verder-span{
     float: right;
     margin-right: 20px;
     text-decoration: underline;
+}
 
+.news-item-image{
+    float: left;
+    height: 100px;
+    width: 100px;
+    outline: 1px solid red;
+}
+.news-content-test{
+    border-style: solid;
+    outline: 1px solid blue;
 }
 .table{
     outline: 2px solid red;
