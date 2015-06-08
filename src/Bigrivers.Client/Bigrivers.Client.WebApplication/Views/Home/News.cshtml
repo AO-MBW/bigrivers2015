@@ -7,23 +7,14 @@
     
     @foreach (NewsItem p in ViewBag.NewsItemsList)
     {
-        if (p.Image != null)
-        {
-            <div class="news-item">
-                <img class="news-item-image" src="@ImageHelper.GetImageUrl(p.Image)" />
-                <h3 class="news-item-title">@Html.ActionLink(p.Title, "News", new { Id = p.Id })</h3>
-                <p class="news-item-content">@p.Content</p>
-                <span class="lees-verder-span"><a class="lees-verder-a" href="/Home/news/@p.Id">>lees verder</a></span>
-            </div>
-        }
-
-        if (p.Image == null)
-        {
-            <div class="news-item">
-                <h3 class="news-item-title">@Html.ActionLink(p.Title, "News", new { Id = p.Id })</h3>
-                <p class="news-item-content">@p.Content</p>
-                <span class="lees-verder-span"><a class="lees-verder-a" href="/Home/news/@p.Id">>lees verder</a></span>
-            </div>
-        }
+        <div class="news-item">
+            @if (p.Image != null)
+            {
+                <img class="news-item-image" src="@ImageHelper.GetImageUrl(p.Image)"/>
+            }
+            <h3 class="news-item-title">@Html.ActionLink(p.Title, "News", new {Id = p.Id})</h3>
+            <p class="news-item-content">@p.Content</p>
+            <span class="lees-verder-span"><a class="lees-verder-a" href="/Home/news/@p.Id">>lees verder</a></span>
+        </div>
     }
 </div>
