@@ -7,14 +7,23 @@
     
         @foreach (NewsItem p in ViewBag.NewsItemsList)
         {
-            <div class="news-image">
-                <div>
-                    @Html.ActionLink(p.Title, "News", new { Id = p.Id })
-                    <br class="news-item-br"/>
+            if (p.Image != null)
+            {
+                @Html.ActionLink(p.Title, "News", new { Id = p.Id })
+                <div class="news-content-test">
+                    <img class="news-item-image" src="@ImageHelper.GetImageUrl(p.Image)">
+                    <br class="news-item-br" />
                     <p class="news-item-content">@p.Content <span><a class="lees-verder-a" href="/Home/news/@p.Id">>lees verder</a></span></p>
-                    <br class="news-item-br"/>
                 </div>
-            </div>
+                <br class="news-item-br" />
+            }
+            if (p.Image == null)
+            {
+                @Html.ActionLink(p.Title, "News", new { Id = p.Id })
+                <br class="news-item-br" />
+                <p class="news-item-content">@p.Content <span><a class="lees-verder-a" href="/Home/news/@p.Id">>lees verder</a></span></p>
+                <br class="news-item-br" />
+            }
         }
-    
+
 </div>

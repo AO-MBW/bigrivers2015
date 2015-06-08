@@ -215,7 +215,7 @@ p.bottomyear{
     padding-right: 20px;
     color: white;   
 }
-
+/*News*/
 .news-page{
     background-image:  url(../images/Designconcept/bg.png);
     padding-top: 18px;
@@ -251,6 +251,17 @@ news-link{
 .lees-verder{
      text-transform: none;
      float: right;
+}
+
+.news-item-image{
+    float: left;
+    height: 100px;
+    width: 100px;
+    outline: 1px solid red;
+}
+.news-content-test{
+    border-style: solid;
+    outline: 1px solid blue;
 }
 
 span{
