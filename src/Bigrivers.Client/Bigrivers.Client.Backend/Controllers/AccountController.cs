@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
@@ -62,10 +59,9 @@ namespace Bigrivers.Client.Backend.Controllers
         }
 
         #region User Editing
-        [AllowAnonymous]
         public ActionResult New()
         {
-            return Register();
+            return RedirectToAction("");
         }
 
         public ActionResult Register()
@@ -74,7 +70,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
             var model = new RegisterViewModel();
 
-            return View();
+            return View("Register", model);
         }
 
         [HttpPost]
@@ -281,7 +277,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
         private bool UserIsManager
         {
-            get { return User.IsInRole("developer") || User.IsInRole("Bigrivers Admin"); }
+            get { return User.IsInRole("developer") || User.IsInRole("Beheerder"); }
         }
 
         #endregion
