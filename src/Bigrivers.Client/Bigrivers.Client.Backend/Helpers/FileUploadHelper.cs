@@ -241,6 +241,7 @@ namespace Bigrivers.Client.Backend.Helpers
         public static string Event { get { return "event"; } }
         public static string Performance { get { return "performance"; } }
         public static string News { get { return "news"; } }
+        public static string NewsWidget { get { return "newswidget"; } }
         public static string ButtonLogo { get { return "buttonlogo"; } }
         public static string Sponsor { get { return "sponsor"; } }
         public static string LinkUpload { get { return "linkupload"; } }

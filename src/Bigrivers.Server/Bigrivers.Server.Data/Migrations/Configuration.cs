@@ -23,6 +23,9 @@ namespace Bigrivers.Server.Data.Migrations
             context.Performances.RemoveRange(context.Performances);
             context.MenuItems.RemoveRange(context.MenuItems);
             context.ButtonItems.RemoveRange(context.ButtonItems);
+            context.WidgetItems.RemoveRange(context.WidgetItems);
+            context.NewsItems.RemoveRange(context.NewsItems);
+            context.Sponsors.RemoveRange(context.Sponsors);
             context.Links.RemoveRange(context.Links);
             foreach (var r in context.Roles)
             {

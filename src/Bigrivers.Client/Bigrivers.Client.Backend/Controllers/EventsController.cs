@@ -41,6 +41,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 End = DateTime.Now.AddHours(1),
                 TicketRequired = false,
                 Price = 0.00m,
+                Location = null,
                 Status = true
             };
             ViewBag.Title = "Nieuw Evenement";
@@ -50,28 +51,29 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Events/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(EventViewModel viewModel)
+        public ActionResult New(EventViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 ViewBag.Title = "Nieuw Evenement";
-                return View("Edit", viewModel);
+                return View("Edit", model);
             }
 
             var singleEvent = new Event
             {
-                Title = viewModel.Title,
-                Description = viewModel.Description,
-                ShortDescription = viewModel.ShortDescription,
-                WebsiteStatus = viewModel.WebsiteStatus,
-                YoutubeChannelStatus = viewModel.YoutubeChannelStatus,
-                FacebookStatus = viewModel.FacebookStatus,
-                TwitterStatus = viewModel.TwitterStatus,
-                Start = viewModel.Start,
-                End = viewModel.End,
-                TicketRequired = viewModel.TicketRequired,
-                Price = viewModel.Price ?? 0.00m,
-                Status = viewModel.Status
+                Title = model.Title,
+                Description = model.Description,
+                ShortDescription = model.ShortDescription,
+                WebsiteStatus = model.WebsiteStatus,
+                YoutubeChannelStatus = model.YoutubeChannelStatus,
+                FacebookStatus = model.FacebookStatus,
+                TwitterStatus = model.TwitterStatus,
+                Start = model.Start,
+                End = model.End,
+                TicketRequired = model.TicketRequired,
+                Price = model.Price ?? 0.00m,
+                Location = Db.Locations.Single(m => m.Id == model.Location),
+                Status = model.Status
             };
             Db.Events.Add(singleEvent);
             Db.SaveChanges();
@@ -98,6 +100,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 End = singleEvent.End.DateTime,
                 TicketRequired = singleEvent.TicketRequired,
                 Price = singleEvent.Price,
+                Location = singleEvent.Location.Id,
                 Status = singleEvent.Status
             };
 
@@ -108,29 +111,30 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Events/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, EventViewModel viewModel)
+        public ActionResult Edit(int id, EventViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 ViewBag.Title = "Nieuw Evenement";
-                return View("Edit", viewModel);
+                return View("Edit", model);
             }
 
             if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleEvent = Db.Events.Find(id);
 
-            singleEvent.Title = viewModel.Title;
-            singleEvent.Description = viewModel.Description;
-            singleEvent.ShortDescription = viewModel.ShortDescription;
-            singleEvent.WebsiteStatus = viewModel.WebsiteStatus;
-            singleEvent.YoutubeChannelStatus = viewModel.YoutubeChannelStatus;
-            singleEvent.FacebookStatus = viewModel.FacebookStatus;
-            singleEvent.TwitterStatus = viewModel.TwitterStatus;
-            singleEvent.Start = viewModel.Start;
-            singleEvent.End = viewModel.End;
-            singleEvent.TicketRequired = viewModel.TicketRequired;
-            singleEvent.Price = viewModel.Price ?? singleEvent.Price;
-            singleEvent.Status = viewModel.Status;
+            singleEvent.Title = model.Title;
+            singleEvent.Description = model.Description;
+            singleEvent.ShortDescription = model.ShortDescription;
+            singleEvent.WebsiteStatus = model.WebsiteStatus;
+            singleEvent.YoutubeChannelStatus = model.YoutubeChannelStatus;
+            singleEvent.FacebookStatus = model.FacebookStatus;
+            singleEvent.TwitterStatus = model.TwitterStatus;
+            singleEvent.Start = model.Start;
+            singleEvent.End = model.End;
+            singleEvent.TicketRequired = model.TicketRequired;
+            singleEvent.Price = model.Price ?? singleEvent.Price;
+            singleEvent.Location = Db.Locations.Single(m => m.Id == model.Location);
+            singleEvent.Status = model.Status;
 
             Db.SaveChanges();
 
