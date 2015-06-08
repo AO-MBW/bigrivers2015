@@ -56,7 +56,9 @@ namespace Bigrivers.Client.Backend.Controllers
                 Stagename = model.Stagename,
                 City = model.City,
                 Street = model.Street,
-                Zipcode = model.Zipcode
+                Number = model.Number,
+                Zipcode = model.Zipcode,
+                Status = model.Status
             };
 
             Db.Locations.Add(singleLocation);
@@ -76,7 +78,9 @@ namespace Bigrivers.Client.Backend.Controllers
                 Stagename = singleLocation.Stagename,
                 City = singleLocation.City,
                 Street = singleLocation.Street,
-                Zipcode = singleLocation.Zipcode
+                Number = singleLocation.Number,
+                Zipcode = singleLocation.Zipcode,
+                Status = singleLocation.Status
             };
 
             // Set all active parents into new list first
@@ -102,7 +106,9 @@ namespace Bigrivers.Client.Backend.Controllers
             singleLocation.Stagename = model.Stagename;
             singleLocation.City = model.City;
             singleLocation.Street = model.Street;
+            singleLocation.Number = model.Number;
             singleLocation.Zipcode = model.Zipcode;
+            singleLocation.Status = model.Status;
             Db.SaveChanges();
 
             return RedirectToAction("Manage");
