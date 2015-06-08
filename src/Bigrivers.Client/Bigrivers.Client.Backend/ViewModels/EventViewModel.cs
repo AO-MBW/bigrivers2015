@@ -9,12 +9,11 @@ namespace Bigrivers.Client.Backend.ViewModels
 {
     public class EventViewModel
     {
-        private readonly BigriversDb _db = new BigriversDb(); 
-        [Required]
+        [Required(ErrorMessage = "Het veld Naam is verplicht")]
         [Display(Name = "Naam")]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Het veld Beschrijving is verplicht")]
         [Display(Name = "Beschrijving")]
         public string Description { get; set; }
 
@@ -22,12 +21,12 @@ namespace Bigrivers.Client.Backend.ViewModels
         public bool FacebookStatus { get; set; }
         public bool TwitterStatus { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Het veld Starttijd is verplicht")]
         [Display(Name = "Starttijd")]
         [DataType(DataType.DateTime)]
         public DateTime Start { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Het veld Eindtijd is verplicht")]
         [Display(Name = "Eindtijd")]
         [DataType(DataType.DateTime)]
         public DateTime End { get; set; }

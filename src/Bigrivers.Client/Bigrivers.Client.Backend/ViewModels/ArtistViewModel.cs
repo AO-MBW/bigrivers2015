@@ -5,7 +5,7 @@ namespace Bigrivers.Client.Backend.ViewModels
 {
     public class ArtistViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Het veld Gebruikersnaam is verplicht")]
         [Display(Name = "Naam")]
         public string Name { get; set; }
 

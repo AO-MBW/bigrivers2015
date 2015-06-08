@@ -52,6 +52,24 @@ namespace Bigrivers.Server.Data.Migrations
                 Name = "Medewerker"
             });
 
+            context.ButtonItems.Add(new ButtonItem
+            {
+                DisplayName = "SponsorWidget",
+                Deleted = false,
+                Status = true,
+                Order = 1,
+                Type = ButtonType.SponsorWidget
+            });
+
+            context.ButtonItems.Add(new ButtonItem
+            {
+                DisplayName = "NewsWidget",
+                Deleted = false,
+                Status = true,
+                Order = 2,
+                Type = ButtonType.NewsWidget
+            });
+
             //Create Menu Items
             context.MenuItems.Add(new MenuItem
             {

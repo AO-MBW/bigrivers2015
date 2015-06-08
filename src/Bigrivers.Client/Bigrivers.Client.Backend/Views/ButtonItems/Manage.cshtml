@@ -14,7 +14,11 @@
         {
             <div>
                 <h1>
-                    @Html.ShowImage(ImageHelper.GetImageUrl(m.Logo))
+                    @if (m.Type == ButtonType.Regular)
+                    {
+                        @Html.ShowImage(ImageHelper.GetImageUrl(m.Logo))
+                    }
+                    
                 </h1>
                 <p>@m.DisplayName - @Html.ActionLink("Actief", "SwitchStatus", "ButtonItems", new { m.Id }, null)</p>
                 <p>

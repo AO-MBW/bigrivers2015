@@ -154,6 +154,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 Target = Db.Links.SingleOrDefault(m => m.Id == link.Id),
                 DisplayName = model.DisplayName,
                 Order = order,
+                Type = ButtonType.Regular,
                 Status = model.Status,
                 Logo = photoEntity != null ? Db.Files.Single(m => m.Key == photoEntity.Key) : null
             };
