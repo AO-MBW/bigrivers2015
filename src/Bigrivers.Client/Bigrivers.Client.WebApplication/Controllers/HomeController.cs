@@ -31,6 +31,8 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
             ViewBag.WidgetItems = AccessLayer.WidgetItems.Where(m => m.Status).ToList();
 
+            ViewBag.Sponsors = AccessLayer.Sponsors.Where(m => m.Status).ToList();
+
             return View("Index");
         }
 

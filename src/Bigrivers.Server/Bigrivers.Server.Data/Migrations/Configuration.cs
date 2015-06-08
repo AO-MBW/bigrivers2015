@@ -170,15 +170,6 @@ namespace Bigrivers.Server.Data.Migrations
                 Status = true
             };
 
-            var dvc = new Sponsor
-            {
-                Name = "Da Vinci College",
-                Url = "http://davincicollege.nl",
-                Priority = 0,
-                Events = new List<Event>(),
-                Status = true
-            };
-
             var loc = new Location
             {
                 City = "Dordrecht",
@@ -191,15 +182,12 @@ namespace Bigrivers.Server.Data.Migrations
 
             brm.Performances.Add(bzbperf);
             bzbperf.Location = loc;
-            brm.Sponsors.Add(dvc);
             bzb.Performances.Add(bzbperf);
             loc.Events.Add(brm);
-            dvc.Events.Add(brm);
 
             context.Artists.Add(bzb);
             context.Events.Add(brm);
             context.Performances.Add(bzbperf);
-            context.Sponsors.Add(dvc);
             context.Locations.Add(loc);
 
             context.SaveChanges();

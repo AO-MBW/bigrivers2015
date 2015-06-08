@@ -201,10 +201,9 @@ p.bottomyear{
 
 /* Footer*/
 .footer-content{
-    background-image: url(../images/Designconcept/footer.png);
+    background-color: rgba(98, 34, 13, 0.69);
     padding-top: 20px;
     padding-bottom: 20px;
-    background-repeat: repeat-y;
 }
 
 p.bottomyear{
@@ -234,7 +233,7 @@ news-link{
       margin-top: 30px;
      
 }
-br{
+.news-item-br{
     line-height: 1500%;
 }
 
@@ -242,6 +241,11 @@ br{
     float: right;
     text-transform: none;
     padding-right: 10px;
+    margin-left: 10px;
+}
+
+.news-item-content-page{
+    background-image:  url(../images/Designconcept/bg.png);
 }
 
 .lees-verder{
@@ -254,4 +258,14 @@ span{
     margin-right: 20px;
     text-decoration: underline;
 
+}
+.table{
+    outline: 2px solid red;
+}
+
+.performances-page{
+    outline: 2px solid red;
+}
+br.contact{
+    line-height: 100%;
 }
