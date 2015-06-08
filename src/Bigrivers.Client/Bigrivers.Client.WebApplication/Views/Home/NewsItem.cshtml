@@ -1,10 +1,25 @@
 ﻿@{
     NewsItem currentNewsItem = ViewBag.CurrentNews;
 
-    ViewBag.Title = currentNewsItem;
-}
-<div class="news-item-content-page">
-    <h2>@currentNewsItem.Title</h2>
-    <p>@currentNewsItem.Content</p>
-</div>
+    ViewBag.Title = currentNewsItem.Title;
+    if (currentNewsItem.Image != null)
+    {
+        <div class="news-page">
+            <div class="news-item">
+                <img class="news-item-image" src="@ImageHelper.GetImageUrl(currentNewsItem.Image)" />
+                <h1 class="news-item-title">@currentNewsItem.Title</h1>
+                <p class="news-item-content">@currentNewsItem.Content</p>
+            </div>
+        </div>
+    }
 
+    if (currentNewsItem.Image == null)
+    {
+        <div class="news-page">
+            <div class="news-item">
+                <h1 class="news-item-title">@currentNewsItem.Title</h1>
+                <p class="news-item-content">@currentNewsItem.Content</p>
+            </div>
+        </div>
+    }
+}
