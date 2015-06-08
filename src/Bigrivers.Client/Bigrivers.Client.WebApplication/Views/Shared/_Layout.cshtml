@@ -57,7 +57,7 @@
                             else
                             {
                                 <li id="menuitem-id-@i">
-                                    <a class="menuitem-link" href="@LinkHelper.GetUrl(item.Target)">@item.DisplayName</a>
+                                    <a class="menuitem-link" href="@LinkHelper.GetUrl(item.Target)" target="@(item.Target.Type != "internal" ? "_blank" : "_self")">@item.DisplayName</a>
                                 </li>
                             }
                             i++;

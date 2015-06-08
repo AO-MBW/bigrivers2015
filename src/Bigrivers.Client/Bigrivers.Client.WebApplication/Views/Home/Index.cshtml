@@ -7,62 +7,56 @@
 
 @foreach (ButtonItem item in ViewBag.ButtonItems)
 {
-    switch (item.Type)
+    <div class="Button col-xs-6 col-sm-4 col-md-3">
+    @switch (item.Type)
     {
         case (ButtonType.Regular):
-            <div class="Button col-xs-6 col-sm-4 col-md-3">
-                <a href="@LinkHelper.GetUrl(item.Target)">
-                    <img class="ButtonImg" src="@ImageHelper.GetImageUrl(item.Logo)">
-                    <p class="ButtonTitle">@item.DisplayName</p>
-                </a>
-                <img class="ButtonBackground" src="../Images/Designconcept/polaroid.png">
-            </div>
-            break;
+        <a href="@LinkHelper.GetUrl(item.Target)" target="@(item.Target.Type != "internal" ? "_blank" : "_self")">
+            <img class="ButtonImg" src="@ImageHelper.GetImageUrl(item.Logo)">
+            <p class="ButtonTitle">@item.DisplayName</p>
+        </a>
+            
+        break;
         case (ButtonType.NewsWidget):
-            <!-- Nieuws Widget -->
-            <div class="Button col-xs-6 col-sm-4 col-md-3">
-                <div class="index-carousel">
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner" role="listbox">
-                            @foreach (var widgetItem in widgetItems)
-                            {
-                                <div class="@(widgetItem == widgetItems.First() ? " item active" : "item")">
-                                    <a href="@LinkHelper.GetUrl(widgetItem.Target)">
-                                        <img class="CarouselImg" src="@ImageHelper.GetImageUrl(widgetItem.Image)">
-                                        <p class="CarouselTitle">@widgetItem.DisplayName</p>
-                                    </a>
-                                </div>
-                            }
-                        </div>
+        <!-- Nieuws Widget -->
+            <div class="index-carousel">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+                        @foreach (var widgetItem in widgetItems)
+                        {
+                            <div class="@(widgetItem == widgetItems.First() ? " item active" : "item")">
+                                <a href="@LinkHelper.GetUrl(widgetItem.Target)" target="@(item.Target.Type != "internal" ? "_blank" : "_self")">
+                                    <img class="CarouselImg" src="@ImageHelper.GetImageUrl(widgetItem.Image)">
+                                    <p class="CarouselTitle">@widgetItem.DisplayName</p>
+                                </a>
+                            </div>
+                        }
                     </div>
                 </div>
-                <img class="ButtonBackground" src="../Images/Designconcept/polaroid.png">
             </div>
             break;
         case (ButtonType.SponsorWidget):
-            <!-- Sponsoren Widget -->
-            <div class="Button col-xs-6 col-sm-4 col-md-3">
-                <div class="index-carousel">
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner" role="listbox">
-                            @foreach (var sponsor in sponsors)
-                            {
-                                <div class="@(sponsor == sponsors.First() ? "item active" : "item")">
-                                    <a href="@sponsor.Url" target="_blank">
-                                        <img class="CarouselImg" src="@ImageHelper.GetImageUrl(sponsor.Image)">
-                                        <p class="CarouselTitle">@sponsor.Name</p>
-                                    </a>
-                                </div>
-                            }
-                        </div>
+        <!-- Sponsoren Widget -->
+            <div class="index-carousel">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+                        @foreach (var sponsor in sponsors)
+                        {
+                            <div class="@(sponsor == sponsors.First() ? "item active" : "item")">
+                                <a href="@sponsor.Url" target="_blank">
+                                    <img class="CarouselImg" src="@ImageHelper.GetImageUrl(sponsor.Image)">
+                                    <p class="CarouselTitle">@sponsor.Name</p>
+                                </a>
+                            </div>
+                        }
                     </div>
                 </div>
-                <img class="ButtonBackground" src="../Images/Designconcept/polaroid.png">
             </div>
             break;
     }
-
+    <img class="ButtonBackground" src="../Images/Designconcept/polaroid.png">
+    </div>
 }
 </div>
