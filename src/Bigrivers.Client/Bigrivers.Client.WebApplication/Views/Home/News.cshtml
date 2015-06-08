@@ -3,27 +3,27 @@
 }
 
 <div class="news-page">
-    <h1 class="head-h1">Nieuws</h1>
+    <h1 class="news-item-title">Nieuws</h1>
     
     @foreach (NewsItem p in ViewBag.NewsItemsList)
     {
         if (p.Image != null)
         {
-            @Html.ActionLink(p.Title, "News", new { Id = p.Id })
-            <div class="news-content-test">
-                <img class="news-item-image" src="@ImageHelper.GetImageUrl(p.Image)">
-                <br class="news-item-br" />
-                <p class="news-item-content">@p.Content <span><a class="lees-verder-a" href="/Home/news/@p.Id">>lees verder</a></span></p>
+            <div class="news-item">
+                <img class="news-item-image" src="@ImageHelper.GetImageUrl(p.Image)" />
+                <h3 class="news-item-title">@Html.ActionLink(p.Title, "News", new { Id = p.Id })</h3>
+                <p class="news-item-content">@p.Content</p>
+                <span class="lees-verder-span"><a class="lees-verder-a" href="/Home/news/@p.Id">>lees verder</a></span>
             </div>
-            <br class="news-item-br" />
         }
+
         if (p.Image == null)
         {
-            @Html.ActionLink(p.Title, "News", new { Id = p.Id })
-            <br class="news-item-br" />
-            <p class="news-item-content">@p.Content <span><a class="lees-verder-a" href="/Home/news/@p.Id">>lees verder</a></span></p>
-            <br class="news-item-br" />
+            <div class="news-item">
+                <h3 class="news-item-title">@Html.ActionLink(p.Title, "News", new { Id = p.Id })</h3>
+                <p class="news-item-content">@p.Content</p>
+                <span class="lees-verder-span"><a class="lees-verder-a" href="/Home/news/@p.Id">>lees verder</a></span>
+            </div>
         }
     }
-    
 </div>

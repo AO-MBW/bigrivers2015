@@ -214,33 +214,32 @@ p.bottomyear{
 .news-page{
     background-image:  url(../images/Designconcept/bg.png);
     padding-top: 18px;
-     height: 100%; 
+    padding-bottom: 18px;
+    height: 100%; 
 }
 
-news-link{
-    color: black;
-}
-    
-.news-page-ul{
-      list-style-type: none;
-      text-transform: uppercase;
-      font-size: 25px;
-      margin-top: 30px;
-     
-}
-.news-item-br{
-    line-height: 1500%;
+.news-item {
+    margin-bottom: 50px;
 }
 
-.news-item-content{
-    float: right;
-    text-transform: none;
-    padding-right: 10px;
+.news-item-title {
     margin-left: 10px;
 }
 
-.news-item-content-page{
-    background-image:  url(../images/Designconcept/bg.png);
+.news-item-content{
+    text-transform: none;
+    padding-right: 10px;
+    margin-left: 10px;
+    max-height: 125px;
+    overflow: hidden;
+}
+
+.news-item-image{
+    margin-top: 35px;
+    margin-right: 10px;
+    float: right;
+    height: 125px;
+    width: auto;
 }
 
 .lees-verder-a{
@@ -254,16 +253,6 @@ news-link{
     text-decoration: underline;
 }
 
-.news-item-image{
-    float: left;
-    height: 100px;
-    width: 100px;
-    outline: 1px solid red;
-}
-.news-content-test{
-    border-style: solid;
-    outline: 1px solid blue;
-}
 .table{
     outline: 2px solid red;
 }
@@ -271,6 +260,7 @@ news-link{
 .performances-page{
     outline: 2px solid red;
 }
+
 br.contact{
     line-height: 100%;
 }
