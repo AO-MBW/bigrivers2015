@@ -2,11 +2,13 @@
     ViewBag.Title = "Optredens";
 }
 <h1 class="head-h1">Optredens</h1>
-<ul>
-    @foreach (Performance p in ViewBag.PerformancesList)
-    {
-        <li>
-            @Html.ActionLink(p.Description, "Performance", new { Id = p.Id })
-        </li>
-    }
-</ul>
+<div class="performances-page">
+    <ul>
+        @foreach (Performance p in ViewBag.PerformancesList)
+        {
+            <li>
+                @Html.ActionLink(p.Description, "Performance", new { Id = p.Id })
+            </li>
+        }
+    </ul>
+</div>

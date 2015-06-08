@@ -4,16 +4,17 @@
 
 <div class="news-page">
     <h1 class="head-h1">Nieuws</h1>
-    <ul class="news-page-ul">
+    
         @foreach (NewsItem p in ViewBag.NewsItemsList)
         {
-            <li>
-                @Html.ActionLink(p.Title, "News", new { Id = p.Id })
-               <br/>
-                <p class="news-item-content">@p.Content <span><a class="lees-verder-a" href="/Home/news/@p.Id">>lees verder</a></span></p>
-
-            </li>
-                <br/>
+            <div class="news-image">
+                <div>
+                    @Html.ActionLink(p.Title, "News", new { Id = p.Id })
+                    <br class="news-item-br"/>
+                    <p class="news-item-content">@p.Content <span><a class="lees-verder-a" href="/Home/news/@p.Id">>lees verder</a></span></p>
+                    <br class="news-item-br"/>
+                </div>
+            </div>
         }
-    </ul>
+    
 </div>
