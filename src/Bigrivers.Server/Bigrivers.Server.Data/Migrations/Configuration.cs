@@ -45,11 +45,11 @@ namespace Bigrivers.Server.Data.Migrations
             });
             context.Roles.AddOrUpdate(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole()
             {
-                Name = "Bigrivers Admin"
+                Name = "Beheerder"
             });
             context.Roles.AddOrUpdate(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole()
             {
-                Name = "Bigrivers gebruiker"
+                Name = "Medewerker"
             });
 
             //Create Menu Items

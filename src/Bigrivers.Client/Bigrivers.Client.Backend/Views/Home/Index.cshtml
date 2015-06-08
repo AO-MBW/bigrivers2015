@@ -95,9 +95,13 @@
             <div class="item">
                 @Html.ActionLink("Logo en links", "Settings", "Home")
             </div>
-            <div class="item">
-                @Html.ActionLink("Beheer personeel", "Manage", "Account")
-            </div>
+            @if (User.IsInRole("developer") || User.IsInRole("Beheerder"))
+            {
+                <div class="item">
+                    @Html.ActionLink("Beheer personeel", "Manage", "Account")
+                </div>
+            }
+            
         </div>
     </div>
 </div>
