@@ -10,12 +10,9 @@
                 @Html.TextBoxFor(m => m.Title)
                 @Html.LabelFor(m => m.Description)
                 @Html.TextAreaFor(m => m.Description, new { @Id = "description" })
-                @Html.LabelFor(m => m.ShortDescription)
-                @Html.TextAreaFor(m => m.ShortDescription, new { @Id = "description" })
             </fieldset>
             <hr />
             <fieldset>
-                <label>@Html.CheckBoxFor(m => m.WebsiteStatus) Geef link naar website weer</label>
                 <label>@Html.CheckBoxFor(m => m.YoutubeChannelStatus) Geef link naar Youtubekanaal weer</label>
                 <label>@Html.CheckBoxFor(m => m.FacebookStatus) Geef link naar Facebookpagina weer</label>
                 <label>@Html.CheckBoxFor(m => m.TwitterStatus) Geef link naar Twitterpagina weer</label>
@@ -32,8 +29,6 @@
                 <label>@Html.CheckBoxFor(m => m.TicketRequired, new { id = "TicketRequired" }) Tickets Verplicht</label>
                 @Html.LabelFor(m => m.Price)
                 @Html.TextBoxFor(m => m.Price, new { id = "Price" })
-                @Html.LabelFor(m => m.Location)
-                @(Model.Location != null ? Html.DropDownListFor(m => m.Location, Model.Locations, new { data_selected = Model.Location }) : Html.DropDownListFor(m => m.Location, Model.Locations))
             </fieldset>
             <hr />
             <fieldset>

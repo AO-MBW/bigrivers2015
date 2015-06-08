@@ -201,9 +201,9 @@ p.bottomyear{
 
 /* Footer*/
 .footer-content{
-    background-image: url(../images/Designconcept/footer.png);
+    background-color: rgba(98, 34, 13, 0.69);
+    padding-top: 20px;
     padding-bottom: 20px;
-    background-repeat: repeat-x;
 }
 
 p.bottomyear{
@@ -219,13 +219,13 @@ p.bottomyear{
 .news-page{
     background-image:  url(../images/Designconcept/bg.png);
     padding-top: 18px;
-    height: 100%; 
-  }
+     height: 100%; 
+}
 
 news-link{
     color: black;
 }
-  
+    
 .news-page-ul{
       list-style-type: none;
       text-transform: uppercase;

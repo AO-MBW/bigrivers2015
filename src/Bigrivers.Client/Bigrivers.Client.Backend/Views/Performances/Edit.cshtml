@@ -11,6 +11,8 @@
                     @(Model.Event != null ? Html.DropDownListFor(m => m.Event, Model.Events, new { data_selected = Model.Event }) : Html.DropDownListFor(m => m.Event, Model.Events))
                     @Html.LabelFor(m => m.Artist)
                     @(Model.Artist != null ? Html.DropDownListFor(m => m.Artist, Model.Artists, new { data_selected = Model.Artist }) : Html.DropDownListFor(m => m.Artist, Model.Artists))
+                    @Html.LabelFor(m => m.Location)
+                    @(Model.Location != null ? Html.DropDownListFor(m => m.Location, Model.Locations, new { data_selected = Model.Location }) : Html.DropDownListFor(m => m.Location, Model.Locations))
                 </fieldset>
                 <hr />
                 <fieldset>

@@ -147,13 +147,11 @@ namespace Bigrivers.Server.Data.Migrations
             var brm = new Event
             {
                 Title = "Bigrivers Muziek",
-                ShortDescription = "Bigrivers Muziek!",
                 Description = "Het enige echte Bigrivers Muziek evenement!",
                 Start = new DateTime(2015, 6, 15, 12, 0, 0),
                 End = new DateTime(2015, 6, 15, 22, 0, 0),
                 Price = 0,
                 TicketRequired = false,
-                WebsiteStatus = true,
                 YoutubeChannelStatus = true,
                 FacebookStatus = true,
                 TwitterStatus = true,
@@ -192,7 +190,7 @@ namespace Bigrivers.Server.Data.Migrations
             };
 
             brm.Performances.Add(bzbperf);
-            brm.Location = loc;
+            bzbperf.Location = loc;
             brm.Sponsors.Add(dvc);
             bzb.Performances.Add(bzbperf);
             loc.Events.Add(brm);
