@@ -36,7 +36,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 {
                     Required = true,
                     MaxByteSize = 2000000,
-                    MimeTypes = new string[] {},
+                    MimeTypes = new string[] { },
                     ModelErrors = new FileUploadModelErrors
                     {
                         Required = "Er moet een bestand worden geupload",
@@ -59,22 +59,18 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Manage()
         {
             // All menu items to unsorted list
-            var buttonItems = GetButtonItems()
-                .ToList();
+            var buttonItems = GetButtonItems();
 
             // Set all active items into new list first
-            var listButtonItems = buttonItems
+            var model = buttonItems
                 .Where(m => m.Status)
                 .OrderBy(m => m.Order)
                 .ToList();
             // Finally, add all inactive items to the end of the list
-            listButtonItems
-                .AddRange(buttonItems.Where(m => !m.Status)
-                .ToList());
-
-            ViewBag.listButtonItems = listButtonItems;
+            model.AddRange(buttonItems
+                .Where(m => !m.Status));
             ViewBag.Title = "ButtonItems";
-            return View("Manage");
+            return View("Manage", model);
         }
 
         // GET: ButtonItems/Create
@@ -125,7 +121,7 @@ namespace Bigrivers.Client.Backend.Controllers
                     ModelState.AddModelError("", error);
                 }
             }
-            
+
             if (!ModelState.IsValid)
             {
                 ViewBag.Title = "Nieuw ButtonItem";
@@ -256,7 +252,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 link = LinkManageHelper.SetLink(model.LinkView);
             }
-                
+
             singleButtonItem.DisplayName = model.DisplayName;
             singleButtonItem.Status = model.Status;
             singleButtonItem.Target = Db.Links.Single(m => m.Id == link.Id);
@@ -314,32 +310,32 @@ namespace Bigrivers.Client.Backend.Controllers
             switch (param)
             {
                 case "up":
-                {
-                    // Go to Manage if singleButtonItem already is the first item
-                    if (Db.ButtonItems
-                        .OrderBy(m => m.Order)
-                        .First() == singleButtonItem) return RedirectToAction("Manage");
+                    {
+                        // Go to Manage if singleButtonItem already is the first item
+                        if (Db.ButtonItems
+                            .OrderBy(m => m.Order)
+                            .First() == singleButtonItem) return RedirectToAction("Manage");
 
-                    switchItem = Db.ButtonItems
-                        .Where(m => m.Order < singleButtonItem.Order && m.Status)
-                        .OrderByDescending(m => m.Order)
-                        .FirstOrDefault();
-                    break;
-                }
+                        switchItem = Db.ButtonItems
+                            .Where(m => m.Order < singleButtonItem.Order && m.Status)
+                            .OrderByDescending(m => m.Order)
+                            .FirstOrDefault();
+                        break;
+                    }
                 case "down":
-                {
-                    // Go to Manage if singleButtonItem already is the last item
-                    // OrderDescending.First() is used because of issues from SQL limitations with the Last() method being used in this scenario
-                    if (Db.ButtonItems
-                        .OrderByDescending(m => m.Order)
-                        .First() == singleButtonItem) return RedirectToAction("Manage");
+                    {
+                        // Go to Manage if singleButtonItem already is the last item
+                        // OrderDescending.First() is used because of issues from SQL limitations with the Last() method being used in this scenario
+                        if (Db.ButtonItems
+                            .OrderByDescending(m => m.Order)
+                            .First() == singleButtonItem) return RedirectToAction("Manage");
 
-                    switchItem = Db.ButtonItems
-                        .Where(m => m.Order > singleButtonItem.Order && m.Status)
-                        .OrderBy(m => m.Order)
-                        .FirstOrDefault();
-                    break;
-                }
+                        switchItem = Db.ButtonItems
+                            .Where(m => m.Order > singleButtonItem.Order && m.Status)
+                            .OrderBy(m => m.Order)
+                            .FirstOrDefault();
+                        break;
+                    }
             }
             if (switchItem == null || singleButtonItem.Deleted) return RedirectToAction("Manage");
 

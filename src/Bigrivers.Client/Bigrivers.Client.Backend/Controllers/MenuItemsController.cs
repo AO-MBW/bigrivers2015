@@ -38,41 +38,45 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: MenuItem/
         public ActionResult Manage()
         {
-            // All menu items to unsorted list
-            var menuItems = GetMenuItems().ToList();
+            // Place all menu items to unsorted list
+            var menuItems = GetMenuItems();
 
-            // Set all active parents into new list first
-            var listMenuItems = menuItems.Where(m => m.Status && m.Parent == null).OrderBy(m => m.Order).ToList();
+            // Set all parent items into the model first
+            var model = menuItems
+                .Where(m => m.Status && m.Parent == null)
+                .OrderBy(m => m.Order)
+                .ToList();
 
-            // Now all parents are selected, put them into a selectlist
-            ViewBag.menuParents = listMenuItems.Select(s => new SelectListItem
+            // Put all parents into a selectlist now the children aren't added yet
+            ViewBag.menuParents = model.Select(s => new SelectListItem
             {
                 Value = s.Id.ToString(),
                 Text = s.DisplayName
             }).ToList();
 
-            // After every parent p, insert all children into the list
-            foreach (var p in listMenuItems.ToList())
+            // After every parent p, insert all children into the model
+            foreach (var p in model.ToList())
             {
                 var list = menuItems
                     .Where(m => m.Parent == p.Id)
                     .OrderBy(m => m.Order)
                     .ToList();
-                listMenuItems
-                    .InsertRange(listMenuItems.FindLastIndex(m => m.Id == p.Id)+1, list);
+                model.InsertRange(model.FindLastIndex(m => m.Id == p.Id) + 1, list);
             }
-            // Finally, add all inactive parents to the end of the list
-            listMenuItems.AddRange(menuItems.Where(m => !m.Status).ToList());
+            // Finally, add all inactive parents to the end of the model
+            model.AddRange(menuItems
+                .Where(m => !m.Status));
 
-            // Add an option to the selectlist for no parent at top of list
-            ViewBag.menuParents.Insert(0, new SelectListItem
-            {
-                Value = "-1",
-                Text = "Geen"
-            });
-            ViewBag.listMenuItems = listMenuItems;
+            // Add an option to the selectlist for no parent at the top of the selectlist
+            ViewBag.menuParents
+                .Insert(0, new SelectListItem
+                {
+                    Value = "-1",
+                    Text = "Geen"
+                });
+
             ViewBag.Title = "MenuItems";
-            return View();
+            return View(model);
         }
 
         // GET: MenuItem/Create
@@ -119,7 +123,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 ViewBag.Title = "Nieuw MenuItem";
                 return View("Edit", model);
             }
-            
+
             // Set the new item as the last item in the root order
             var item = Db.MenuItems
                 .OrderByDescending(m => m.Order)
@@ -162,7 +166,7 @@ namespace Bigrivers.Client.Backend.Controllers
                     }
                 }),
             };
-            
+
             ViewBag.Title = "Bewerk MenuItem";
             return View(viewModel);
         }
@@ -285,32 +289,32 @@ namespace Bigrivers.Client.Backend.Controllers
             switch (param)
             {
                 case "up":
-                {
-                    // Go to Manage if singleMenuItem already is the first item
-                    if (Db.MenuItems
-                        .OrderBy(m => m.Order)
-                        .First() == singleMenuItem) return RedirectToAction("Manage");
+                    {
+                        // Go to Manage if singleMenuItem already is the first item
+                        if (Db.MenuItems
+                            .OrderBy(m => m.Order)
+                            .First() == singleMenuItem) return RedirectToAction("Manage");
 
-                    switchItem = Db.MenuItems
-                        .Where(m => m.Order < singleMenuItem.Order && m.Status && m.Parent == singleMenuItem.Parent)
-                        .OrderByDescending(m => m.Order)
-                        .FirstOrDefault();
-                    break;
-                }
+                        switchItem = Db.MenuItems
+                            .Where(m => m.Order < singleMenuItem.Order && m.Status && m.Parent == singleMenuItem.Parent)
+                            .OrderByDescending(m => m.Order)
+                            .FirstOrDefault();
+                        break;
+                    }
                 case "down":
-                {
-                    // Go to Manage if singleMenuItem already is the last item
-                    // OrderDescending.First() is used because of issues from SQL limitations with the Last() method being used in this scenario
-                    if (Db.MenuItems
-                        .OrderByDescending(m => m.Order)
-                        .First() == singleMenuItem) return RedirectToAction("Manage");
+                    {
+                        // Go to Manage if singleMenuItem already is the last item
+                        // OrderDescending.First() is used because of issues from SQL limitations with the Last() method being used in this scenario
+                        if (Db.MenuItems
+                            .OrderByDescending(m => m.Order)
+                            .First() == singleMenuItem) return RedirectToAction("Manage");
 
-                    switchItem = Db.MenuItems
-                        .Where(m => m.Order > singleMenuItem.Order && m.Status && m.Parent == singleMenuItem.Parent)
-                        .OrderBy(m => m.Order)
-                        .FirstOrDefault();
-                    break;
-                }
+                        switchItem = Db.MenuItems
+                            .Where(m => m.Order > singleMenuItem.Order && m.Status && m.Parent == singleMenuItem.Parent)
+                            .OrderBy(m => m.Order)
+                            .FirstOrDefault();
+                        break;
+                    }
             }
             if (switchItem == null || switchItem.Deleted) return RedirectToAction("Manage");
 
@@ -325,7 +329,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
         public ActionResult AddToParent(int? id, int? param)
         {
-            if(!VerifyId(id)) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             if (param == null) return RedirectToAction("Manage");
             var singleMenuItem = Db.MenuItems.Find(id);
             var oldParent = Db.MenuItems

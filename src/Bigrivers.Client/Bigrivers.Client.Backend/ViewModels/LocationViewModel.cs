@@ -10,6 +10,8 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Required]
         [Display(Name = "Straat")]
         public string Street { get; set; }
+        [Display(Name="Huisnummer")]
+        public string Number { get; set; }
         [Required]
         [Display(Name = "Postcode")]
         public string Zipcode { get; set; }

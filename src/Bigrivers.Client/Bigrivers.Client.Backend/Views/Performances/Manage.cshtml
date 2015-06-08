@@ -1,7 +1,5 @@
 ﻿@using Bigrivers.Server.Model
-@{
-    List<Performance> listPerformances = ViewBag.listPerformances;
-}
+@{ List<Performance> performances = Model; }
 
 <div id="actionbar">
     <div class="action-block">
@@ -11,16 +9,16 @@
 <div id="content">
     <table>
         <thead>
-        <tr>
-            <th>Optreden van... op...</th>
-            <th>Start</th>
-            <th>Eind</th>
-            <th>Status</th>
-            <th>Acties</th>
-        </tr>
+            <tr>
+                <th>Optreden van... op...</th>
+                <th>Start</th>
+                <th>Eind</th>
+                <th>Status</th>
+                <th>Acties</th>
+            </tr>
         </thead>
         <tbody>
-            @foreach (var m in listPerformances)
+            @foreach (var m in performances)
             {
                 if (!m.Status)
                 {
@@ -35,7 +33,7 @@
                 <td>@m.End.DateTime</td>
                 <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "Performances", new { m.Id }, null)</td>
                 <td>@Html.ActionLink("Wijzig", "Edit", "Performances", new { m.Id }, null)@Html.ActionLink("Verwijder", "Delete", "Performances", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om dit optreden te verwijderen. Weet je dit zeker?');" })</td>
-            @:</tr>
+                @:</tr>
             }
         </tbody>
     </table>

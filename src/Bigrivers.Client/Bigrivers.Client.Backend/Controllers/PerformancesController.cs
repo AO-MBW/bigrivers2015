@@ -17,15 +17,16 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Performances/
         public ActionResult Manage()
         {
-            var performances = GetPerformances().ToList();
-            var listPerformances = performances.Where(m => m.Status)
+            var performances = GetPerformances();
+            var model = performances
+                .Where(m => m.Status)
                 .ToList();
 
-            listPerformances.AddRange(performances.Where(m => !m.Status).ToList());
-            ViewBag.listPerformances = listPerformances;
+            model.AddRange(performances
+                .Where(m => !m.Status));
 
             ViewBag.Title = "Optredens";
-            return View("Manage");
+            return View(model);
         }
 
         // GET: Performances/Create

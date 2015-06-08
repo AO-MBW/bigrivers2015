@@ -2,31 +2,44 @@
 
 <div id="content">
     <div class="form-div">
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary()
-                <fieldset>
-                    @Html.LabelFor(m => m.Stagename)
-                    @Html.TextBoxFor(m => m.Stagename)
-                </fieldset>
-                <hr />
-                <fieldset>
-                    @Html.LabelFor(m => m.Street)
-                    @Html.TextBoxFor(m => m.Street)
-                    @Html.LabelFor(m => m.Zipcode)
-                    @Html.TextBoxFor(m => m.Zipcode)
-                    @Html.LabelFor(m => m.City)
-                    @Html.TextBoxFor(m => m.City)
-                </fieldset>
-                <hr />
-                <fieldset>
-                    <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
-                </fieldset>
-                <hr />
-                <fieldset>
-                    <input type="submit" name="save" value="Podium opslaan">
-                </fieldset>
-            }
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+            <fieldset>
+                @Html.LabelFor(m => m.Stagename)
+                @Html.TextBoxFor(m => m.Stagename)
+            </fieldset>
+            <hr/>
+            <fieldset>
+                @Html.LabelFor(m => m.Street)
+                @Html.TextBoxFor(m => m.Street)
+                @Html.LabelFor(m => m.Number)
+                @Html.TextBoxFor(m => m.Number, new {type = "number", min = "1"})
+                @Html.LabelFor(m => m.Zipcode)
+                @Html.TextBoxFor(m => m.Zipcode)
+                @Html.LabelFor(m => m.City)
+                @Html.TextBoxFor(m => m.City)
+            </fieldset>
+            <hr/>
+            <fieldset>
+                <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
+            </fieldset>
+            <hr/>
+            <fieldset>
+                <input type="submit" name="save" value="Podium opslaan">
+            </fieldset>
+        }
     </div>
 </div>
+@*<script>
+    $(
+        $("input[type=number]").change(function() {
+            if ($(this).val < $(this).min) {
+                $(this).css("border-color", "red");
+            } else {
+                $(this).css("border-color", "#c5c5c5");
+            }
+        })
+    );
+</script>*@

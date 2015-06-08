@@ -1,6 +1,6 @@
 ﻿@using Bigrivers.Server.Model
 @{
-    List<NewsItem> listNewsItems = ViewBag.ListNewsItems;
+    List<NewsItem> newsItems = Model;
 }
 
 <div id="actionbar">
@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var m in listNewsItems)
+            @foreach (var m in newsItems)
             {
                 if (!m.Status)
                 {
@@ -38,7 +38,7 @@
                     @Html.ActionLink("Wijzig", "Edit", "News", new { m.Id }, null)
                     @Html.ActionLink("Verwijder", "Delete", "News", new { m.Id }, new { @onclick = (string)String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Weet je dit zeker?');", m.Title) })
                 </td>
-            @:</tr>
+                @:</tr>
             }
         </tbody>
     </table>

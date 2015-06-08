@@ -17,23 +17,23 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Events/
         public ActionResult Manage()
         {
-            var events = GetEvents().ToList();
-            var listEvents = events.Where(m => m.Status)
+            var events = GetEvents();
+            var model = events
+                .Where(m => m.Status)
                 .ToList();
 
-            listEvents.AddRange(events.Where(m => !m.Status).ToList());
-            ViewBag.listEvents = listEvents;
+            model.AddRange(events
+                .Where(m => !m.Status));
 
             ViewBag.Title = "Evenementen";
-            return View("Manage");
+            return View("Manage", model);
         }
 
         // GET: Events/New
         public ActionResult New()
         {
-            var viewModel = new EventViewModel
+            var model = new EventViewModel
             {
-                WebsiteStatus = true,
                 YoutubeChannelStatus = true,
                 FacebookStatus = true,
                 TwitterStatus = true,
@@ -41,11 +41,10 @@ namespace Bigrivers.Client.Backend.Controllers
                 End = DateTime.Now.AddHours(1),
                 TicketRequired = false,
                 Price = 0.00m,
-                Location = null,
                 Status = true
             };
             ViewBag.Title = "Nieuw Evenement";
-            return View("Edit", viewModel);
+            return View("Edit", model);
         }
 
         // POST: Events/New
@@ -63,8 +62,6 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Title = model.Title,
                 Description = model.Description,
-                ShortDescription = model.ShortDescription,
-                WebsiteStatus = model.WebsiteStatus,
                 YoutubeChannelStatus = model.YoutubeChannelStatus,
                 FacebookStatus = model.FacebookStatus,
                 TwitterStatus = model.TwitterStatus,
@@ -72,7 +69,6 @@ namespace Bigrivers.Client.Backend.Controllers
                 End = model.End,
                 TicketRequired = model.TicketRequired,
                 Price = model.Price ?? 0.00m,
-                Location = Db.Locations.Single(m => m.Id == model.Location),
                 Status = model.Status
             };
             Db.Events.Add(singleEvent);
@@ -84,15 +80,13 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: Events/Edit/5
         public ActionResult Edit(int? id)
         {
-            if(!VerifyId(id)) return RedirectToAction("Manage");
+            if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleEvent = Db.Events.Find(id);
 
             var model = new EventViewModel
             {
                 Title = singleEvent.Title,
                 Description = singleEvent.Description,
-                ShortDescription = singleEvent.ShortDescription,
-                WebsiteStatus = singleEvent.WebsiteStatus,
                 YoutubeChannelStatus = singleEvent.YoutubeChannelStatus,
                 FacebookStatus = singleEvent.FacebookStatus,
                 TwitterStatus = singleEvent.TwitterStatus,
@@ -100,7 +94,6 @@ namespace Bigrivers.Client.Backend.Controllers
                 End = singleEvent.End.DateTime,
                 TicketRequired = singleEvent.TicketRequired,
                 Price = singleEvent.Price,
-                Location = singleEvent.Location.Id,
                 Status = singleEvent.Status
             };
 
@@ -124,8 +117,6 @@ namespace Bigrivers.Client.Backend.Controllers
 
             singleEvent.Title = model.Title;
             singleEvent.Description = model.Description;
-            singleEvent.ShortDescription = model.ShortDescription;
-            singleEvent.WebsiteStatus = model.WebsiteStatus;
             singleEvent.YoutubeChannelStatus = model.YoutubeChannelStatus;
             singleEvent.FacebookStatus = model.FacebookStatus;
             singleEvent.TwitterStatus = model.TwitterStatus;
@@ -133,7 +124,6 @@ namespace Bigrivers.Client.Backend.Controllers
             singleEvent.End = model.End;
             singleEvent.TicketRequired = model.TicketRequired;
             singleEvent.Price = model.Price ?? singleEvent.Price;
-            singleEvent.Location = Db.Locations.Single(m => m.Id == model.Location);
             singleEvent.Status = model.Status;
 
             Db.SaveChanges();

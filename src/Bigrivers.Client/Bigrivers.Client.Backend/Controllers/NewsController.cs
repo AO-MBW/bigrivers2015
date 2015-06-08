@@ -37,15 +37,16 @@ namespace Bigrivers.Client.Backend.Controllers
         // GET: News/
         public ActionResult Manage()
         {
-            var newsItems = GetNewsItems().ToList();
-            var listNewsItems = newsItems.Where(m => m.Status)
+            var newsItems = GetNewsItems();
+            var model = newsItems
+                .Where(m => m.Status)
                 .ToList();
 
-            listNewsItems.AddRange(newsItems.Where(m => !m.Status).ToList());
-            ViewBag.listNewsItems = listNewsItems;
+            model.AddRange(newsItems
+                .Where(m => !m.Status));
 
             ViewBag.Title = "Nieuws";
-            return View("Manage");
+            return View(model);
         }
 
         // GET: News/New
