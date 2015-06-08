@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home Page";
     List<WidgetItem> widgetItems = ViewBag.WidgetItems;
+    List<Sponsor> sponsors = ViewBag.Sponsors;
 }
 <div class="row">
 
@@ -31,9 +32,9 @@
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
-                    @foreach (Sponsor item in ViewBag.Sponsors)
+                    @foreach (var item in sponsors)
                     {
-                        <div class="@(item.first?"item active":"item")">
+                        <div class="@(item == sponsors.First()? "item active" : "item")">
                             <a href="@item.Url" target="_blank">
                                 <img class="CarouselImg" src="@ImageHelper.GetImageUrl(item.Image)">
                                 <p class="CarouselTitle">@item.Name</p>

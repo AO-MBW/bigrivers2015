@@ -18,7 +18,5 @@ namespace Bigrivers.Server.Model
 
         public virtual List<Event> Events { get; set; }
         public virtual File Image { get; set; }
-
-        public virtual bool first { get; set; }
     }
 }
