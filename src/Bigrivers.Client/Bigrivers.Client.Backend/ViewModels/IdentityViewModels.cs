@@ -9,7 +9,8 @@ namespace Bigrivers.Client.Backend.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Het veld Gebruikersnaam is verplicht")]
+        [Display(Name = "Gebruikersnaam")]
         public string LoginName { get; set; }
         [DataType(DataType.Password)]
         public string Password { get; set; }
@@ -35,11 +36,11 @@ namespace Bigrivers.Client.Backend.ViewModels
 
     public class LoginViewModel
     {
-        [Required]
-        [Display(Name = "Inlognaam")]
+        [Required(ErrorMessage = "Het veld Gebruikersnaam is verplicht")]
+        [Display(Name = "Gebruikersnaam")]
         public string LoginName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Het veld Wachtwoord is verplicht")]
         [Display(Name = "Wachtwoord")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
@@ -55,12 +56,12 @@ namespace Bigrivers.Client.Backend.ViewModels
 
     public class ChangePasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Het huidige wachtwoord is verplicht")]
         [DataType(DataType.Password)]
         [Display(Name = "Huidig wachtwoord")]
         public string OldPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Het nieuwe wachtwoord is verplicht")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Nieuw wachtwoord")]

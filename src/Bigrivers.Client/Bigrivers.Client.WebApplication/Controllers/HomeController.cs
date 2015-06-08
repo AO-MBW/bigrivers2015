@@ -27,9 +27,9 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.ButtonItems = AccessLayer.ButtonItems.Where(m => m.Status).ToList();
+            ViewBag.ButtonItems = AccessLayer.ButtonItems.Where(m => m.Status).OrderBy(m => m.Order).ToList();
 
-            ViewBag.WidgetItems = AccessLayer.WidgetItems.Where(m => m.Status).ToList();
+            ViewBag.WidgetItems = AccessLayer.WidgetItems.Where(m => m.Status).OrderBy(m => m.Order).ToList();
 
             ViewBag.Sponsors = AccessLayer.Sponsors.Where(m => m.Status).ToList();
 

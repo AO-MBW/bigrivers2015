@@ -5,7 +5,7 @@ namespace Bigrivers.Client.Backend.ViewModels
 {
     public class ButtonItemViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Het veld Weergavenaam is verplicht")]
         [Display(Name = "Weergavenaam")]
         public string DisplayName { get; set; }
         public LinkViewModel LinkView { get; set; }
