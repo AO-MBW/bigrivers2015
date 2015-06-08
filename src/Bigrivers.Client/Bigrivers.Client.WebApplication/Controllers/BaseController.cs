@@ -32,6 +32,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
             ViewBag.MenuItems = AccessLayer.MenuItems.Where(m => m.Status && !m.Deleted && m.Parent == null).OrderBy(m => m.Order).ToList();
             ViewBag.MenuItemsChild = AccessLayer.MenuItems.Where(m => m.Status && !m.Deleted && m.Parent != null).OrderBy(m => m.Order).ToList();
+            ViewBag.SiteInformation = AccessLayer.SiteInformation.FirstOrDefault();
         }
 
     }

@@ -237,6 +237,7 @@ namespace Bigrivers.Client.Backend.Helpers
 
     public static class FileUploadLocation
     {
+        public static string SiteLogo { get { return "sitelogo"; } }
         public static string Artist { get { return "artist"; } }
         public static string Event { get { return "event"; } }
         public static string Performance { get { return "performance"; } }

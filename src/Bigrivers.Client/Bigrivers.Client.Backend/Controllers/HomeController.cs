@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using Bigrivers.Client.Backend.Helpers;
 using Bigrivers.Client.Backend.ViewModels;
 using Bigrivers.Server.Model;
 
@@ -7,6 +8,26 @@ namespace Bigrivers.Client.Backend.Controllers
 {
     public class HomeController : BaseController
     {
+        private static FileUploadValidator FileValidator
+        {
+            get
+            {
+                return new FileUploadValidator
+                {
+                    Required = false,
+                    MaxByteSize = 2000000,
+                    MimeTypes = new[] { "image" },
+                    ModelErrors = new FileUploadModelErrors
+                    {
+                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
+                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
+                    }
+                };
+            }
+        }
+
+        private static string FileUploadLocation { get { return Helpers.FileUploadLocation.SiteLogo; } }
+
         public ActionResult Index()
         {
             ViewBag.Title = "Home";
@@ -16,21 +37,26 @@ namespace Bigrivers.Client.Backend.Controllers
         public ActionResult Settings()
         {
             // Find single artist
-            var settings = Db.SiteInformation.FirstOrDefault();
-
-            var model = new SettingsViewModel
+            var settings = Db.SiteInformation.FirstOrDefault() ?? new SiteInformation
             {
                 YoutubeChannel = "",
                 Facebook = "",
-                Twitter = ""
+                Twitter = "",
+                Image = null
             };
 
-            if (settings != null)
+            var model = new SettingsViewModel
             {
-                model.YoutubeChannel = settings.YoutubeChannel;
-                model.Facebook = settings.Facebook;
-                model.Twitter = settings.Twitter;
-            }
+                YoutubeChannel = settings.YoutubeChannel,
+                Facebook = settings.Facebook,
+                Twitter = settings.Twitter,
+                Image = new FileUploadViewModel
+                {
+                    NewUpload = true,
+                    ExistingFile = settings.Image,
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
+                }
+            };
 
             ViewBag.Title = "Site Instellingen";
             return View(model);
@@ -38,25 +64,62 @@ namespace Bigrivers.Client.Backend.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Settings(SettingsViewModel viewModel)
+        public ActionResult Settings(SettingsViewModel model)
         {
-            var settings = Db.SiteInformation.FirstOrDefault();
-            if (settings != null)
+            SiteInformation settings;
+            if (Db.SiteInformation.Any())
             {
-                settings.YoutubeChannel = viewModel.YoutubeChannel;
-                settings.Facebook = viewModel.Facebook;
-                settings.Twitter = viewModel.Twitter;
+                settings = Db.SiteInformation.First();
             }
             else
             {
-                var firstSettings = new SiteInformation
+                settings = new SiteInformation
                 {
-                    YoutubeChannel = viewModel.YoutubeChannel,
-                    Facebook = viewModel.Facebook,
-                    Twitter = viewModel.Twitter
+                    YoutubeChannel = "",
+                    Facebook = "",
+                    Twitter = "",
+                    Image = null
                 };
-                Db.SiteInformation.Add(firstSettings);
             }
+
+            model.Image.ExistingFile = settings.Image;
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
+
+            // Run over a validator to add custom model errors
+            foreach (var error in FileValidator.CheckFile(model.Image))
+            {
+                ModelState.AddModelError("", error);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Title = "Site Instellingen";
+                return View("Settings", model);
+            }
+
+            File photoEntity = null;
+            // Either upload file to AzureStorage or use file Key from explorer to get the file
+            if (model.Image.NewUpload)
+            {
+                if (model.Image.UploadFile != null)
+                {
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
+                }
+            }
+            else
+            {
+                if (model.Image.Key != "false")
+                {
+                    photoEntity = Db.Files.Single(m => m.Key == model.Image.Key);
+                }
+            }
+
+            settings.YoutubeChannel = model.YoutubeChannel;
+            settings.Facebook = model.Facebook;
+            settings.Twitter = model.Twitter;
+            settings.Image = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
+
+            if (!Db.SiteInformation.Any()) Db.SiteInformation.Add(settings);
             Db.SaveChanges();
 
             return RedirectToAction("Settings");

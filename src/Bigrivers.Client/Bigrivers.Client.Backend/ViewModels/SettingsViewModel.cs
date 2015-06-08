@@ -19,5 +19,7 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Display(Name = "Bigrivers Twitterpagina")]
         [DataType(DataType.Url)]
         public string Twitter { get; set; }
+
+        public FileUploadViewModel Image { get; set; }
     }
 }

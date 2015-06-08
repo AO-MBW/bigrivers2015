@@ -31,7 +31,7 @@
                     </button>
                     <div class="home-link">
                         <a href="/Home/Index">
-                            <img class="menuimg" src="/Images/br15.jpg" alt="Terug naar Home" title="Terug naar Home" />
+                            <img class="menuimg" src="@(ViewBag.SiteInformation.Image != null ? ImageHelper.GetImageUrl(ViewBag.SiteInformation.Image) : "/Images/br15.jpg")" alt="Terug naar Home" title="Terug naar Home" />
                         </a>
                     </div>
                 </div>

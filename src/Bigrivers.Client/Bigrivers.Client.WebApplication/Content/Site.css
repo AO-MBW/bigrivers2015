@@ -77,10 +77,8 @@ input[type="checkbox"].input-validation-error {
 
 @media(min-width: 768px ) {
     .menuimg {
-        height: 50%;
-        max-height: 50%;
-        width: 50%;
-        max-width: 50%;
+        height: 50px;
+        width: auto;
         margin-left: 0px;
     }
 
