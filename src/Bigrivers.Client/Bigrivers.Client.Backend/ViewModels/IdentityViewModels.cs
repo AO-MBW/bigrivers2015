@@ -11,11 +11,13 @@ namespace Bigrivers.Client.Backend.ViewModels
     {
         [Required]
         public string LoginName { get; set; }
-
-        [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
+        [DataType(DataType.Password)]
+        [Display(Name = "Herhaal wachtwoord")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Het nieuwe wachtwoord en herhaalde wachtwoord zijn niet gelijk")]
+        public string ConfirmPassword { get; set; }
+        [Display(Name = "Gebruikersgroep")]
         public string Role { get; set; }
 
         public IEnumerable<SelectListItem> Roles
