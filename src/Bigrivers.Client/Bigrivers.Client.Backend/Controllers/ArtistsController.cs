@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Bigrivers.Client.Backend.Helpers;
 using Bigrivers.Client.Backend.ViewModels;
@@ -109,6 +110,9 @@ namespace Bigrivers.Client.Backend.Controllers
                 YoutubeChannel = model.YoutubeChannel,
                 Facebook = model.Facebook,
                 Twitter = model.Twitter,
+                EditedBy = User.Identity.Name,
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
                 Status = model.Status
             };
 
@@ -191,6 +195,8 @@ namespace Bigrivers.Client.Backend.Controllers
             singleArtist.YoutubeChannel = model.YoutubeChannel;
             singleArtist.Facebook = model.Facebook;
             singleArtist.Twitter = model.Twitter;
+            singleArtist.EditedBy = User.Identity.Name;
+            singleArtist.Edited = DateTime.Now;
             singleArtist.Status = model.Status;
             if (photoEntity != null) singleArtist.Avatar = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
             Db.SaveChanges();

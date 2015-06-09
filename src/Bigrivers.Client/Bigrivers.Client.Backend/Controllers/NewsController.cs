@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Bigrivers.Client.Backend.Helpers;
 using Bigrivers.Client.Backend.ViewModels;
@@ -107,6 +108,9 @@ namespace Bigrivers.Client.Backend.Controllers
                 Title = model.Title,
                 Content = model.Content,
                 Image = photoEntity != null ? Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key) : null,
+                EditedBy = User.Identity.Name,
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
                 Status = model.Status
             };
 
@@ -182,6 +186,8 @@ namespace Bigrivers.Client.Backend.Controllers
             singleNewsItem.Title = model.Title;
             singleNewsItem.Content = model.Content;
             if (photoEntity != null) singleNewsItem.Image = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
+            singleNewsItem.EditedBy = User.Identity.Name;
+            singleNewsItem.Edited = DateTime.Now;
             singleNewsItem.Status = model.Status;
             Db.SaveChanges();
 

@@ -14,7 +14,7 @@
             <tr>
                 <th>Titel</th>
                 <th>Auteur</th>
-                <th>Updated</th>
+                <th>Gewijzigd op</th>
                 <th>Status</th>
                 <th>Acties</th>
             </tr>
@@ -31,8 +31,8 @@
                     @:<tr>
                 }
                 <td>@m.Title</td>
-                <td>Auteurnaam</td>
-                <td>Datum gewijzigd</td>
+                <td>@m.EditedBy</td>
+                <td>@m.Edited</td>
                 <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "News", new { m.Id }, null)</td>
                 <td>
                     @Html.ActionLink("Wijzig", "Edit", "News", new { m.Id }, null)

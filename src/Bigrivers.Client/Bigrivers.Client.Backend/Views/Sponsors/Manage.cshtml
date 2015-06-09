@@ -31,8 +31,8 @@
                 }
                 <td>@m.Name</td>
                 <td>@m.Url</td>
-                <td>Auteurnaam</td>
-                <td>Datum gewijzigd</td>
+                <td>@m.EditedBy</td>
+                <td>@m.Edited</td>
                 <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "Sponsors", new { m.Id }, null)</td>
                 <td>
                     @Html.ActionLink("Wijzig", "Edit", "Sponsors", new { m.Id }, null)

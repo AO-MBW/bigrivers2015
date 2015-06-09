@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Bigrivers.Client.Backend.Models;
 using Bigrivers.Server.Model;
@@ -149,13 +150,15 @@ namespace Bigrivers.Client.Backend.Controllers
 
             // Set item's order as last item in list
             var order = Db.ButtonItems.Count(m => m.Status) > 0 ? Db.ButtonItems.OrderByDescending(m => m.Order).First().Order + 1 : 1;
-
             var link = LinkManageHelper.SetLink(model.LinkView);
             var singleWidgetItem = new WidgetItem
             {
                 Target = Db.Links.SingleOrDefault(m => m.Id == link.Id),
                 DisplayName = model.DisplayName,
                 Order = order,
+                EditedBy = User.Identity.Name,
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
                 Status = model.Status,
                 Image = photoEntity != null ? Db.Files.Single(m => m.Key == photoEntity.Key) : null
             };
@@ -256,6 +259,8 @@ namespace Bigrivers.Client.Backend.Controllers
             }
 
             singleWidgetItem.DisplayName = model.DisplayName;
+            singleWidgetItem.EditedBy = User.Identity.Name;
+            singleWidgetItem.Edited = DateTime.Now;
             singleWidgetItem.Status = model.Status;
             singleWidgetItem.Target = Db.Links.Single(m => m.Id == link.Id);
             if (photoEntity != null) singleWidgetItem.Image = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);

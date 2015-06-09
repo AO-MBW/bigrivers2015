@@ -30,15 +30,14 @@
                     @:<tr data-id="@m.Id">
                 }
 
-                <td>@m.DisplayName</td>
-                <td>
-                    @* Only display URL if the MenuItem is not a parent *@
-                    @if (!m.IsParent)
-                    {
-                        @LinkHelper.GetUrl(m.Target, true)
-                    }
-                </td>
-
+                    <td>@m.DisplayName</td>
+                    <td>
+                        @* Only display URL if the MenuItem is not a parent *@
+                        @if (!m.IsParent)
+                        {
+                            @LinkHelper.GetUrl(m.Target, true)
+                        }
+                    </td>
                     // Status switcher links
                     if (m.Status)
                     {
@@ -90,7 +89,7 @@
                             }
                         }
                     </td>
-                    @:</tr>
+                @:</tr>
             }
         </tbody>
     </table>

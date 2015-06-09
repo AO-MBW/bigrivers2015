@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Bigrivers.Client.Backend.Helpers;
 using Bigrivers.Client.Backend.Models;
@@ -137,6 +138,9 @@ namespace Bigrivers.Client.Backend.Controllers
                 Target = Db.Links.SingleOrDefault(m => m.Id == link.Id),
                 DisplayName = model.DisplayName,
                 Order = order,
+                EditedBy = User.Identity.Name,
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
                 Status = model.Status
             };
 
@@ -207,6 +211,8 @@ namespace Bigrivers.Client.Backend.Controllers
             }
 
             singleMenuItem.DisplayName = model.DisplayName;
+            singleMenuItem.EditedBy = User.Identity.Name;
+            singleMenuItem.Edited = DateTime.Now;
             singleMenuItem.Status = model.Status;
             singleMenuItem.Target = Db.Links.Single(m => m.Id == link.Id);
 

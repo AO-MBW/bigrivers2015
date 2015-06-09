@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Bigrivers.Server.Model
@@ -8,7 +9,10 @@ namespace Bigrivers.Server.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public string Url { get; set; }
-        public int Priority { get; set; }
+
+        public string EditedBy { get; set; }
+        public DateTimeOffset Created { get; set; }
+        public DateTimeOffset Edited { get; set; }
 
         [DefaultValue(true)]
         public bool Status { get; set; }

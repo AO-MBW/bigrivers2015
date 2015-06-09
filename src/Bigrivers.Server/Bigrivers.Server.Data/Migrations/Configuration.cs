@@ -55,6 +55,9 @@ namespace Bigrivers.Server.Data.Migrations
             context.ButtonItems.Add(new ButtonItem
             {
                 DisplayName = "SponsorWidget",
+                EditedBy = "Automatic",
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
                 Deleted = false,
                 Status = true,
                 Order = 1,
@@ -64,6 +67,9 @@ namespace Bigrivers.Server.Data.Migrations
             context.ButtonItems.Add(new ButtonItem
             {
                 DisplayName = "NewsWidget",
+                EditedBy = "Automatic",
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
                 Deleted = false,
                 Status = true,
                 Order = 2,
@@ -159,6 +165,9 @@ namespace Bigrivers.Server.Data.Migrations
                 Facebook = "https://www.facebook.com/bandzonderbanaan",
                 Twitter = "https://www.twitter.com/bandzonderbanaan",
                 Performances = new List<Performance>(),
+                EditedBy = "Automatic",
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
                 Status = true
             };
 
@@ -175,6 +184,9 @@ namespace Bigrivers.Server.Data.Migrations
                 TwitterStatus = true,
                 Performances = new List<Performance>(),
                 Sponsors = new List<Sponsor>(),
+                EditedBy = "Automatic",
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
                 Status = true
             };
 
@@ -185,6 +197,9 @@ namespace Bigrivers.Server.Data.Migrations
                 End = new DateTime(2015, 6, 15, 22, 0, 0),
                 Artist = bzb,
                 Event = brm,
+                EditedBy = "Automatic",
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
                 Status = true
             };
 
@@ -195,6 +210,9 @@ namespace Bigrivers.Server.Data.Migrations
                 Zipcode = "3311 VT",
                 Stagename = "Bigrivers Kantoor",
                 Events = new List<Event>(),
+                EditedBy = "Automatic",
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
                 Status = true
             };
 

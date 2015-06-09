@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Security.Principal;
 
 namespace Bigrivers.Server.Model
 {
@@ -7,6 +9,10 @@ namespace Bigrivers.Server.Model
         public int Id { get; set; }
         public string DisplayName { get; set; }
         public int? Order { get; set; }
+
+        public string EditedBy { get; set; }
+        public DateTimeOffset Created { get; set; }
+        public DateTimeOffset Edited { get; set; }
 
         [DefaultValue(true)]
         public bool Status { get; set; }

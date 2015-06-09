@@ -10,6 +10,10 @@ namespace Bigrivers.Server.Model
         public DateTimeOffset Start { get; set; }
         public DateTimeOffset End { get; set; }
 
+        public string EditedBy { get; set; }
+        public DateTimeOffset Created { get; set; }
+        public DateTimeOffset Edited { get; set; }
+
         [DefaultValue(true)]
         public bool Status { get; set; }
 

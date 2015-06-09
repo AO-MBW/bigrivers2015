@@ -14,11 +14,11 @@
         <thead>
             <tr>
                 <th>Evenement</th>
-                <th>Auteur</th>
                 <th>Starttijd</th>
                 <th>Eindtijd</th>
-                <th>Updated</th>
                 <th>Social Media</th>
+                <th>Auteur</th>
+                <th>Gewijzigd op</th>
                 <th>Status</th>
                 <th>Acties</th>
             </tr>
@@ -35,10 +35,8 @@
                     @:<tr>
                 }
                 <td>@m.Title</td>
-                <td>Auteurnaam</td>
                 <td>@m.Start.DateTime</td>
                 <td>@m.End.DateTime</td>
-                <td>Datum gewijzigd</td>
                 <td>
                     @if (m.YoutubeChannelStatus)
                     {<span>Y</span>}
@@ -56,6 +54,8 @@
                     {<s>T</s>}
                     &nbsp;
                 </td>
+                <td>Auteurnaam</td>
+                <td>Datum gewijzigd</td>
                 <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "Events", new { m.Id }, null)</td>
                 <td>@Html.ActionLink("Wijzig", "Edit", "Events", new { m.Id }, null) @Html.ActionLink("Verwijder", "Delete", "Events", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om " + m.Title + " te verwijderen. Weet je dit zeker?');" })</td>
                 @:</tr>

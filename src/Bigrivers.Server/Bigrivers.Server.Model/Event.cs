@@ -22,6 +22,10 @@ namespace Bigrivers.Server.Model
         public decimal Price { get; set; }
         public bool TicketRequired { get; set; }
 
+        public string EditedBy { get; set; }
+        public DateTimeOffset Created { get; set; }
+        public DateTimeOffset Edited { get; set; }
+
         [DefaultValue(true)]
         public bool Status { get; set; }
 

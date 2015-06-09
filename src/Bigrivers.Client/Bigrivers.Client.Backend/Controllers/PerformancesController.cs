@@ -61,6 +61,9 @@ namespace Bigrivers.Client.Backend.Controllers
                 Description = viewModel.Description,
                 Start = viewModel.Start,
                 End = viewModel.End,
+                EditedBy = User.Identity.Name,
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
                 Status = viewModel.Status,
                 Event = Db.Events.Single(m => m.Id == viewModel.Event),
                 Artist = Db.Artists.Single(m => m.Id == viewModel.Artist),
@@ -111,6 +114,8 @@ namespace Bigrivers.Client.Backend.Controllers
             singlePerformance.Description = viewModel.Description;
             singlePerformance.Start = viewModel.Start;
             singlePerformance.End = viewModel.End;
+            singlePerformance.EditedBy = User.Identity.Name;
+            singlePerformance.Edited = DateTime.Now;
             singlePerformance.Status = viewModel.Status;
             singlePerformance.Event = Db.Events.Single(m => m.Id == viewModel.Event);
             singlePerformance.Artist = Db.Artists.Single(m => m.Id == viewModel.Artist);

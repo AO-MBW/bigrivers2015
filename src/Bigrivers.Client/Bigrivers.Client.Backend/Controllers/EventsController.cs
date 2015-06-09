@@ -69,6 +69,9 @@ namespace Bigrivers.Client.Backend.Controllers
                 End = model.End,
                 TicketRequired = model.TicketRequired,
                 Price = model.Price ?? 0.00m,
+                EditedBy = User.Identity.Name,
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
                 Status = model.Status
             };
             Db.Events.Add(singleEvent);
@@ -124,6 +127,8 @@ namespace Bigrivers.Client.Backend.Controllers
             singleEvent.End = model.End;
             singleEvent.TicketRequired = model.TicketRequired;
             singleEvent.Price = model.Price ?? singleEvent.Price;
+            singleEvent.EditedBy = User.Identity.Name;
+            singleEvent.Edited = DateTime.Now;
             singleEvent.Status = model.Status;
 
             Db.SaveChanges();

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Bigrivers.Server.Model;
 using Bigrivers.Client.Backend.ViewModels;
@@ -58,6 +59,9 @@ namespace Bigrivers.Client.Backend.Controllers
                 Street = model.Street,
                 Number = model.Number,
                 Zipcode = model.Zipcode,
+                EditedBy = User.Identity.Name,
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
                 Status = model.Status
             };
 
@@ -108,6 +112,8 @@ namespace Bigrivers.Client.Backend.Controllers
             singleLocation.Street = model.Street;
             singleLocation.Number = model.Number;
             singleLocation.Zipcode = model.Zipcode;
+            singleLocation.EditedBy = User.Identity.Name;
+            singleLocation.Edited = DateTime.Now;
             singleLocation.Status = model.Status;
             Db.SaveChanges();
 

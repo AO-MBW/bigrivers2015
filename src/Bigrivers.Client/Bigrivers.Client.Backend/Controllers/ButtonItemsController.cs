@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Bigrivers.Client.Backend.Models;
 using Bigrivers.Server.Model;
@@ -155,6 +156,9 @@ namespace Bigrivers.Client.Backend.Controllers
                 DisplayName = model.DisplayName,
                 Order = order,
                 Type = ButtonType.Regular,
+                EditedBy = User.Identity.Name,
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
                 Status = model.Status,
                 Logo = photoEntity != null ? Db.Files.Single(m => m.Key == photoEntity.Key) : null
             };
@@ -255,6 +259,8 @@ namespace Bigrivers.Client.Backend.Controllers
             }
 
             singleButtonItem.DisplayName = model.DisplayName;
+            singleButtonItem.EditedBy = User.Identity.Name;
+            singleButtonItem.Edited = DateTime.Now;
             singleButtonItem.Status = model.Status;
             singleButtonItem.Target = Db.Links.Single(m => m.Id == link.Id);
             if (photoEntity != null) singleButtonItem.Logo = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
