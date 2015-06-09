@@ -26,7 +26,7 @@
                         @foreach (var widgetItem in widgetItems)
                         {
                             <div class="@(widgetItem == widgetItems.First() ? " item active" : "item")">
-                                <a href="@LinkHelper.GetUrl(widgetItem.Target)" target="@(item.Target.Type != "internal" ? "_blank" : "_self")">
+                                <a href="@LinkHelper.GetUrl(widgetItem.Target)" target="@(widgetItem.Target.Type != "internal" ? "_blank" : "_self")">
                                     <img class="CarouselImg" src="@ImageHelper.GetImageUrl(widgetItem.Image)">
                                     <p class="CarouselTitle">@widgetItem.DisplayName</p>
                                 </a>
