@@ -4,6 +4,35 @@
     background-size: 100%;
 }
 
+.clear {
+    clear:both;
+}
+
+/* Content block for line-paper-background content */
+.content{
+    background-image:  url(../images/Designconcept/bg.png);
+    display: inline-block;
+    margin-bottom: 40px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    height: 100%;
+    width: 100%;
+}
+
+.content.partial-size {
+    margin-right: 0;
+    width: 75%;
+}
+
+.content.partial-size-sidebar {
+    float: right;
+    width: 20%;
+}
+
+h1.page-title {
+    color: #000000;
+}
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content, .footer-content {
@@ -26,29 +55,6 @@ address{
 div.location-canvas{
     padding-top: 200px;
 }
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-
-/* styles for validation helpers */
-.field-validation-error {
-    color: #b94a48;
-}
-
-.field-validation-valid {
-    display: none;
-}
-
-input.input-validation-error {
-    border: 1px solid #b94a48;
-}
-
-input[type="checkbox"].input-validation-error {
-    border: 0 none;
-}
 
 .twitterfeed{
     position: absolute;
@@ -58,17 +64,9 @@ input[type="checkbox"].input-validation-error {
 }
 
 .menuimg{
-      width: 100px;
-      height: 75px;
-      margin-left: 15px;
-}
-
-.validation-summary-errors {
-    color: #b94a48;
-}
-
-.validation-summary-valid {
-    display: none;
+    width: 100px;
+    height: 75px;
+    margin-left: 15px;
 }
 
 .social{
@@ -209,47 +207,81 @@ p.bottomyear{
 }
 */
 
-.news-page{
-    background-image:  url(../images/Designconcept/bg.png);
-    padding-top: 18px;
-    padding-bottom: 18px;
-    height: 100%; 
+/* Styling for the news overview */
+div.news-overview div.news-item,
+div.news-detail div.news-item {
+    height: auto;
+    margin: auto 15px;
 }
 
-.news-item {
-    margin-bottom: 50px;
+div.news-overview div.news-title h3,
+div.news-detail div.news-title h3
+ {
+    margin: 0 auto;
 }
 
-.news-item-title {
-    margin-left: 10px;
+div.news-overview div.news-title h5,
+div.news-detail div.news-title h5 {
+    margin-top: 0;
 }
 
-.news-item-content{
-    text-transform: none;
+div.news-overview div.news-text,
+div.news-detail div.news-text {
+    width: 75%;
+    margin-bottom: 5px;
     padding-right: 10px;
-    margin-left: 10px;
-    max-height: 125px;
+    line-height: 1em;
+}
+
+div.news-overview div.news-text.height-limited,
+div.news-detail div.news-text.height-limited {
+    height: 9em;
     overflow: hidden;
 }
 
-.news-item-image{
-    margin-top: 35px;
-    margin-right: 10px;
+div.news-overview div.news-image,
+div.news-detail div.news-image {
+    width: 25%;
     float: right;
-    height: 125px;
-    width: auto;
 }
 
-.lees-verder-a{
-     text-transform: none;
-     float: right;
+div.news-overview div.news-image img,
+div.news-detail div.news-image img {
+    height: 11em;
+    max-width: 100%;
 }
 
-.lees-verder-span{
-    float: right;
-    margin-right: 20px;
+div.news-overview div.news-footer,
+div.news-detail div.news-footer {
+    width: 90px;
+    float: left;
+    margin-left: calc(75% - 90px);
+}
+
+div.news-overview div.news-footer span,
+div.news-detail div.news-footer span {
     text-decoration: underline;
 }
+
+/* Styling for the News Archive */
+div.news-archive div.news-item {
+    height: auto;
+    margin: auto 15px;
+}
+
+div.news-archive h3 {
+    line-height: 1.5em;
+    margin-left: 15px;
+}
+
+div.news-archive p {
+    margin: 0 auto;
+}
+
+div.news-archive p a {
+    text-decoration: underline;
+}
+
 
 .table{
     outline: 2px solid red;
@@ -262,3 +294,4 @@ p.bottomyear{
 br.contact{
     line-height: 100%;
 }
+

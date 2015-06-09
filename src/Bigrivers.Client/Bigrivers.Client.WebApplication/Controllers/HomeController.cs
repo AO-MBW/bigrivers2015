@@ -164,13 +164,16 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
         private ActionResult News(int id)
         {
-            ViewBag.CurrentNews = AccessLayer.NewsItems
-                .Where(a => a.Id == id)
-                .SingleOrDefault();
+            var newsItemsList = AccessLayer.NewsItems
+                .Where(a => a.Status)
+                .ToList();
 
-            if (ViewBag.CurrentNews == null) return RedirectToAction("News");
+            var currentNews = newsItemsList
+                .SingleOrDefault(a => a.Id == id);
 
-            return View("NewsItem");
+            if (currentNews == null) return RedirectToAction("News");
+            ViewBag.NewsItemsList = newsItemsList;
+            return View("NewsItem", currentNews);
         }
 
     }

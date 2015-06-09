@@ -240,6 +240,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\News.cshtml" />
     <Content Include="Views\Home\NewsItem.cshtml" />
+    <Content Include="Views\Shared\_NewsArchive.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -277,7 +278,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>3196</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

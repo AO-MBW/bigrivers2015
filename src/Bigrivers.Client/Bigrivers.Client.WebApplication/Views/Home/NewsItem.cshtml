@@ -1,16 +1,26 @@
 ﻿@{
-    NewsItem currentNewsItem = ViewBag.CurrentNews;
+    List<NewsItem> newsItems = ViewBag.NewsItemsList;
+    NewsItem newsItem = Model;
 
-    ViewBag.Title = currentNewsItem.Title;
-    
-    <div class="news-page">
-        <div class="news-item">
-            @if (currentNewsItem.Image != null)
-            {
-                <img class="news-item-image" src="@ImageHelper.GetImageUrl(currentNewsItem.Image)"/>
-            }
-            <h1 class="news-item-title">@currentNewsItem.Title</h1>
-            <p class="news-item-content">@currentNewsItem.Content</p>
+    ViewBag.Title = newsItem.Title;
+}
+<div class="content partial-size news-detail">
+    <div class="news-item">
+        <div class="news-title">
+            <h3>@newsItem.Title</h3>
+            <h5>@newsItem.Created.DateTime.Day - @newsItem.Created.DateTime.Month - @newsItem.Created.DateTime.Year</h5>
+        </div>
+        @if (newsItem.Image != null)
+        {
+            <div class="news-image">
+                <img class="news-item" src="@ImageHelper.GetImageUrl(newsItem.Image)"/>
+            </div>
+        }
+        <div class="news-text">
+            <p>@newsItem.Content</p>
         </div>
     </div>
-}
+    <br class="clear"/>
+</div>
+
+@Html.Partial("_NewsArchive", newsItems)

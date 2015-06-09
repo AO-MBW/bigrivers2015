@@ -1,0 +1,14 @@
+﻿@{
+    List<NewsItem> newsItems = Model;
+}
+<div class="content partial-size-sidebar news-archive">
+    <h3>Nieuws archief</h3>
+    @foreach (var p in newsItems)
+    {
+        <div class="news-item">
+            <p>@Html.ActionLink(p.Title, "News", "Home", new { Id = p.Id }, null)</p>
+            <p>@Html.ActionLink(p.Created.DateTime.Day + "/" + p.Created.DateTime.Month + "/" + p.Created.DateTime.Year, "News", "Home", new { Id = p.Id }, null)</p>
+        </div>
+        <br class="clear" />
+    }
+</div>
