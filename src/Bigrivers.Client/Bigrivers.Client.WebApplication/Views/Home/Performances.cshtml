@@ -1,10 +1,10 @@
 ﻿@{
     ViewBag.Title = "Optredens";
 }
-<h1 class="head-h1">Optredens</h1>
-<div class="performances-page">
+<h1 class="page-title">Optredens</h1>
+<div class="content partial-size">
     <ul>
-        @foreach (Performance p in ViewBag.PerformancesList)
+        @foreach (Performance p in Model)
         {
             <li>
                 @Html.ActionLink(p.Description, "Performance", new { Id = p.Id })

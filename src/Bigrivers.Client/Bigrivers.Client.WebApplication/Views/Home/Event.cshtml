@@ -1,43 +1,45 @@
-﻿@using Bigrivers.Server.Model
-@{
-    Event currentEvent = ViewBag.CurrentEvent;
+﻿@{
+    Event currentEvent = Model;
     ViewBag.Title = currentEvent.Title;
 }
 
-<h2>@currentEvent.Title</h2>
-<p>@currentEvent.Description</p>
-<h3>Optredens</h3>
-<table class="table">
-    <thead>
+<h1 class="page-title">@currentEvent.Title</h1>
+<div class="content">
+    <p>@currentEvent.Description</p>
+    <h3>Optredens</h3>
+
+    <table class="table">
+        <thead>
         <tr>
-            <th >Optreden</th>
+            <th>Optreden</th>
             <th>Artiest</th>
             <th>Genre</th>
             <th>Datum</th>
         </tr>
-    </thead>
-    @foreach (Performance p in ViewBag.PerformancesList)
-    {
-        <tr>
-            <td>
-                @if (p.Description != null)
-                {
-                    @Html.ActionLink(p.Description, "Optredens", new {Id = p.Id})
-                }
-            </td>
-            <td>
-                @if (p.Artist != null)
-                {
-                    @Html.ActionLink(p.Artist.Name, "Artiest", new { Id = p.Id })
-                }
-            </td>
-            <td>
-                @Html.ActionLink("Not Implemented", "Genre", new { Id = p.Id })
-            </td>
-            <td>
-                @p.Start
-            </td>
+        </thead>
+        @foreach (Performance p in ViewBag.PerformancesList)
+        {
+            <tr>
+                <td>
+                    @if (p.Description != null)
+                    {
+                        @Html.ActionLink(p.Description, "Optredens", new {Id = p.Id})
+                    }
+                </td>
+                <td>
+                    @if (p.Artist != null)
+                    {
+                        @Html.ActionLink(p.Artist.Name, "Artiest", new {Id = p.Id})
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Not Implemented", "Genre", new {Id = p.Id})
+                </td>
+                <td>
+                    @p.Start
+                </td>
 
-        </tr>
-    }
-</table>
+            </tr>
+        }
+    </table>
+</div>

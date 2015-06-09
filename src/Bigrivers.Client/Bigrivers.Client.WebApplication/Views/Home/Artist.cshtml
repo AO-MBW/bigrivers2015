@@ -1,10 +1,10 @@
-﻿
-@{
-    Artist currentArtist = ViewBag.CurrentArtist;
-    
+﻿@{
+    Artist currentArtist = Model;
     ViewBag.Title = currentArtist.Name;
 }
 
-<h2>@currentArtist.Name</h2>
-<p>@currentArtist.Description</p>
+<h1 class="page-title">@currentArtist.Name</h1>
 
+<div class="content">
+    <p>@currentArtist.Description</p>
+</div>

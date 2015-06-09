@@ -1,16 +1,15 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Artiesten";
-    List<Artist> artistList = ViewBag.ArtistsList; 
+    List<Artist> artistList = Model; 
 }
 
-<h1 class="head-h1">Artiesten</h1>
-<div class="artists">
-    @foreach (Artist artist in artistList)
+<h1 class="page-title">Artiesten</h1>
+
+<div class="content partial-size">
+    @foreach (var artist in artistList)
     {
         <div class="col-xs-3">
             @Html.ActionLink(artist.Name, "Artist", new { Id = artist.Id })
         </div>
     }
 </div>
-
