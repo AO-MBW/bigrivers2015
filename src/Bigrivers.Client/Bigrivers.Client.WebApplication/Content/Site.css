@@ -34,7 +34,7 @@ h1.page-title {
 
 
 /* Set padding to keep content from hitting the edges */
-.body-content, .footer-content {
+.body-content {
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 20px;
@@ -181,20 +181,30 @@ div.news-archive p a {
 
 /* Footer*/
 .footer-content{
-    background-color: rgba(98, 34, 13, 0.69);
-}
-
-p.bottomyear{
-    float: right;
+    background-image: url(/Images/Designconcept/footer.png);
+    opacity: 0.8;
+    height: 8em;
     color: white;
 }
 
-/*.pseudo-align{
-    display: inline;
-    padding-right: 20px;
-    color: white;   
+.footer-content div {
+    opacity: 1;
+    height: 100%;
 }
-*/
+
+.pseudo-align{
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+    width: 0;
+}
+
+.footer-content div .footer-text span {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 20px;
+}
+
 
 /* Styling for the news overview */
 div.news-overview div.news-item,
