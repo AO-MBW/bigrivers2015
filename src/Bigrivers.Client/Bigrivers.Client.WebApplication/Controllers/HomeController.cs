@@ -155,7 +155,6 @@ namespace Bigrivers.Client.WebApplication.Controllers
                 model.YoutubeChannel = socialMedia.YoutubeChannel;
                 model.Facebook = socialMedia.Facebook;
                 model.Twitter = socialMedia.Twitter;
-                model.Hashtag = socialMedia.Twitter.Split(split).Last();
             }
 
             return View(model);

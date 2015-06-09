@@ -183,8 +183,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\background.jpg" />
     <Content Include="Images\br15.jpg" />
-    <Content Include="Images\Div_Background.png" />
-    <Content Include="Images\Event_logo.png" />
     <Content Include="Images\fb_icon.png" />
     <Content Include="Images\tw_icon.png" />
     <Content Include="Images\yt_icon.png" />
@@ -197,6 +195,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\GoogleMaps.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-2.1.3.min.map" />
