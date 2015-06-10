@@ -14,13 +14,12 @@
 
     <h3>Links:</h3>
     <ul>
-        @if (currentEvent.FacebookStatus == true){<li><a href="@Facebook" target="_blank">Facebook</a></li> }
-        @if (currentEvent.YoutubeChannelStatus != null){<li><a href="@Youtube" target="_blank">YoutubeChannel</a></li> }
-        @if (currentEvent.TwitterStatus != null){<li><a href="@Twitter" target="_blank">Twitter</a></li> }
+        @if (currentEvent.FacebookStatus){<li><a href="@Facebook" target="_blank">Facebook</a></li> }
+        @if (currentEvent.YoutubeChannelStatus){<li><a href="@Youtube" target="_blank">YoutubeChannel</a></li> }
+        @if (currentEvent.TwitterStatus){<li><a href="@Twitter" target="_blank">Twitter</a></li> }
     </ul>
 
-    <h3>Optredens</h3>
-    <table class="table">
+    <h3>Programma:</h3>
     <div class="day-btn-list">
         @foreach (var day in performancesByDate)
         {
@@ -41,11 +40,11 @@
         </thead>
             <tbody>
             @foreach (var p in day.Performances)
-        {
+            {
             <tr>
                     <td>@p.Start.ToString("dddd dd MMMM")</td>
-                    <td>@p.Location.Stagename</td>
-                    <td>@p.Artist.Name</td>
+                    <td>@Html.ActionLink(p.Location.Stagename, "Location", "Home", new { id = p.Location.Id })</td>
+                    <td>@Html.ActionLink(p.Artist.Name, "Artists", "Home", new { id = p.Artist.Id })</td>
                     <td>@p.Start.DateTime.ToString("HH:mm") - @p.End.DateTime.ToString("HH:mm")</td>
                 </tr>
             }
