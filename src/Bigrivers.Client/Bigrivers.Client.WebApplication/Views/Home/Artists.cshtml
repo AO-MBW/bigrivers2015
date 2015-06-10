@@ -3,12 +3,17 @@
     List<Artist> artistList = Model; 
 }
 
-<div class="content partial-size">
+<div class="content">
     <h1 class="page-title">Artiesten</h1>
     @foreach (var artist in artistList)
     {
-        <div class="col-xs-3">
-            @Html.ActionLink(artist.Name, "Artist", new {Id = artist.Id})
+        <div class="ArtistsDiv">
+            <h3 class="ArtistsName">@Html.ActionLink(artist.Name, "Artists", new { Id = artist.Id })</h3>
+            @if(artist.Avatar != null)
+            {
+                <img class="ArtistsAvatar" src="@ImageHelper.GetImageUrl(artist.Avatar)" />
+            }
         </div>
+        <br class="clear" />
     }
 </div>

@@ -13,7 +13,7 @@
         <tr>
             <th>Optreden</th>
             <th>Artiest</th>
-            <th>Genre</th>
+            <th>Locatie</th>
             <th>Datum</th>
         </tr>
         </thead>
@@ -23,20 +23,20 @@
                 <td>
                     @if (p.Description != null)
                     {
-                        @Html.ActionLink(p.Description, "Optredens", new {Id = p.Id})
+                        @Html.ActionLink(p.Description, "Performances", new { Id = p.Id })
                     }
                 </td>
                 <td>
                     @if (p.Artist != null)
                     {
-                        @Html.ActionLink(p.Artist.Name, "Artiest", new {Id = p.Id})
+                        @Html.ActionLink(p.Artist.Name, "Artists", new {Id = p.Id})
                     }
                 </td>
                 <td>
-                    @Html.ActionLink("Not Implemented", "Genre", new {Id = p.Id})
+                    @Html.ActionLink(p.Location.Stagename, "Location", new { Id = p.Id })
                 </td>
                 <td>
-                    @p.Start
+                    @p.Start.DateTime.Day - @p.Start.DateTime.Month - @p.Start.DateTime.Year
                 </td>
 
             </tr>
