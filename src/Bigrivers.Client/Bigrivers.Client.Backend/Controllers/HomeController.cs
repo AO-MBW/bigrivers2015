@@ -114,15 +114,19 @@ namespace Bigrivers.Client.Backend.Controllers
                 }
             }
 
+            
+            if (!model.YoutubeChannel.StartsWith("http")) model.YoutubeChannel = string.Format("http://{0}", model.YoutubeChannel);
+            if (!model.Facebook.StartsWith("http")) model.Facebook = string.Format("http://{0}", model.Facebook);
+            if (!model.Twitter.StartsWith("http")) model.Twitter = string.Format("http://{0}", model.Twitter);
             settings.YoutubeChannel = model.YoutubeChannel;
             settings.Facebook = model.Facebook;
             settings.Twitter = model.Twitter;
-            settings.Image = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
+            if (photoEntity != null) settings.Image = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
 
             if (!Db.SiteInformation.Any()) Db.SiteInformation.Add(settings);
             Db.SaveChanges();
 
-            return RedirectToAction("Settings");
+            return RedirectToAction("Index", "Home");
         }
 
     }

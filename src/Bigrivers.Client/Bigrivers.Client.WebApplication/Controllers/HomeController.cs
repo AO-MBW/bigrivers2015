@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using Bigrivers.Client.WebApplication.Models;
 using Bigrivers.Client.WebApplication.ViewModels;
@@ -171,6 +168,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
                 model.YoutubeChannel = socialMedia.YoutubeChannel;
                 model.Facebook = socialMedia.Facebook;
                 model.Twitter = socialMedia.Twitter;
+                model.Hashtag = socialMedia.Twitter.Split(split).Last();
             }
 
             return View(model);
