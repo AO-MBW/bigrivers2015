@@ -1,7 +1,11 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using Bigrivers.Client.WebApplication.Models;
 using Bigrivers.Client.WebApplication.ViewModels;
+using MoreLinq;
 
 namespace Bigrivers.Client.WebApplication.Controllers
 {
@@ -56,12 +60,24 @@ namespace Bigrivers.Client.WebApplication.Controllers
         {
             if (id != null) return Performance(id.Value);
 
-            var performancesList = AccessLayer.Performances
-                .Where(p => p.Status)
-                .OrderBy(p => p.Start)
+            var dates = new List<PerformanceListViewModel>();
+
+            foreach (var date in AccessLayer.Performances.Where(m => m.Status).DistinctBy(m => m.Start.Day))
+            {
+                dates.Add(new PerformanceListViewModel
+                {
+                    Date = date.Start.Date,
+                    Performances = AccessLayer.Performances.Where(m => m.Status && m.Start.Day == date.Start.Day).ToList()
+                });
+            }
+
+            var newsItemsList = AccessLayer.NewsItems
+                .Where(a => a.Status)
                 .ToList();
 
-            return View("Performances", performancesList);
+            ViewBag.NewsItemsList = newsItemsList;
+
+            return View("Performances", dates);
         }
 
         private ActionResult Performance(int id)
