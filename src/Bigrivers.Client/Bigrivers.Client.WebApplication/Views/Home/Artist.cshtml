@@ -10,5 +10,15 @@
         <img class="ArtistAvatar" src="@ImageHelper.GetImageUrl(currentArtist.Avatar)" />
         <br class="clear" />
     }
-    <p>@currentArtist.Description</p>
+    @if (currentArtist.Description != null)
+    {
+        <p>@currentArtist.Description</p>
+    }
+    <h3>Links:</h3>
+    <ul>
+        @if (currentArtist.Website != null){ <li><a href="@currentArtist.Website" target="_blank">Website</a></li> }
+        @if (currentArtist.Facebook != null){ <li><a href="@currentArtist.Facebook" target="_blank">Facebook</a></li> }       
+        @if (currentArtist.YoutubeChannel != null){ <li><a href="@currentArtist.YoutubeChannel" target="_blank">YoutubeChannel</a></li> }  
+        @if (currentArtist.Twitter != null){ <li><a href="@currentArtist.Twitter" target="_blank">Twitter</a></li> }  
+    </ul>
 </div>

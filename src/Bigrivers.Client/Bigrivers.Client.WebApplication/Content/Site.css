@@ -319,7 +319,7 @@ address{
     max-width: 80%;
 }
 
-/* Artiesten lijst*/
+/* Artiesten*/
 
 .ArtistsDiv {
     height: 100px;
@@ -341,4 +341,19 @@ address{
     width: auto;
     float: left;
     margin-right: 10px;
+}
+
+/* Evenementen */
+
+.EventsDescription {
+    max-height: 100px;
+    overflow: hidden;
+}
+
+.EventsDatum {
+    width: 100px;
+}
+
+.EventsPrice {
+    width: 100px;
 }
