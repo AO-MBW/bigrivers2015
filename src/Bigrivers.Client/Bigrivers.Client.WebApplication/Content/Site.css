@@ -261,6 +261,38 @@ div.news-detail div.news-footer span {
     text-decoration: underline;
 }
 
+/* styling for the schedule / performance overview */
+.day-btn-list {
+    margin-bottom: 30px;
+}
+
+.day-btn {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.day-btn.non-selected {
+    font-size: 1.5em;
+}
+
+.day-btn:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.day-table.non-selected {
+    
+    display: none;
+}
+
+.day-table {
+    width: 100%;
+}
+
+.day-table td {
+    width: 25%;
+}
+
 /* Contact page styling */
 address{
     color: #000000;
