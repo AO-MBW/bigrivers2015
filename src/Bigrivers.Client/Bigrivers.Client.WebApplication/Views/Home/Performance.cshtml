@@ -1,8 +1,17 @@
 ﻿@{
     Performance currentPerformance = Model;
-    ViewBag.Title = currentPerformance.Description;
+    ViewBag.Title = currentPerformance.Artist.Name + " op " + currentPerformance.Event.Title;
 }
 
 <div class="content">
-    
+    <div class="performance-item">
+        <div class="performance-title">
+            <h3>@currentPerformance.Artist.Name op @currentPerformance.Event.Title</h3>
+            <h5>@currentPerformance.Start.DateTime.Day - @currentPerformance.Start.DateTime.Month - @currentPerformance.Start.DateTime.Year</h5>
+        </div>
+        <div class="performance-text">
+            <p>@currentPerformance.Description</p>
+        </div>
+    </div>
+    <br class="clear"/>
 </div>

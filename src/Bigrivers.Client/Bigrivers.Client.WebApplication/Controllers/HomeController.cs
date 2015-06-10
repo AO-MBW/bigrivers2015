@@ -48,10 +48,19 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
             if (currentEvent == null) return RedirectToAction("Events");
 
-            ViewBag.PerformancesList = AccessLayer.Performances
-                .Include(p => p.Artist)
-                .Where(p => p.Event.Id == currentEvent.Id)
-                .ToList();
+            var performancesByDate = AccessLayer.Performances
+                .Where(m => m.Status 
+                && m.Event.Id == currentEvent.Id)
+                .DistinctBy(m => m.Start.Day)
+                .Select(date => new PerformanceListViewModel
+            {
+                Date = date.Start.Date,
+                Performances = AccessLayer.Performances
+                .Where(m => m.Status && m.Start.Day == date.Start.Day)
+                .ToList()
+            }).ToList();
+
+            ViewBag.PerformancesByDate = performancesByDate;
 
             return View("Event", currentEvent);
         }
@@ -60,16 +69,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
         {
             if (id != null) return Performance(id.Value);
 
-            var dates = new List<PerformanceListViewModel>();
-
-            foreach (var date in AccessLayer.Performances.Where(m => m.Status).DistinctBy(m => m.Start.Day))
-            {
-                dates.Add(new PerformanceListViewModel
-                {
-                    Date = date.Start.Date,
-                    Performances = AccessLayer.Performances.Where(m => m.Status && m.Start.Day == date.Start.Day).ToList()
-                });
-            }
+            
 
             var newsItemsList = AccessLayer.NewsItems
                 .Where(a => a.Status)
@@ -77,7 +77,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
             ViewBag.NewsItemsList = newsItemsList;
 
-            return View("Performances", dates);
+            return View("Performances");
         }
 
         private ActionResult Performance(int id)

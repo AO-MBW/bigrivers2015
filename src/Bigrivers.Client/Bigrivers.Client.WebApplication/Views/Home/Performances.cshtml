@@ -7,39 +7,10 @@
 
 <div class="content partial-size">
     <h1 class="page-title">Optredens</h1>
-    <div class="day-btn-list">
-        @foreach (var day in eventDates)
-        {
-            <h3 id="date-@day.Date.Day" class="day-btn @(day == eventDates.First() ? "selected" : "non-selected" )">@day.Date.ToString("dddd dd MMMM")</h3>
-        }
-    </div>
+    
     
 
-    @foreach (var day in eventDates)
-    {
-        <table id="date-@day.Date.Day" class="day-table @(day == eventDates.First() ? "selected" : "non-selected")">
-            <thead>
-                <tr>
-                    <th>Wanneer</th>
-                    <th>Waar</th>
-                    <th>Wie</th>
-                    <th>Tijd</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var p in day.Performances)
-                {
-                    <tr>
-                        <td>@p.Start.ToString("dddd dd MMMM")</td>
-                        <td>@p.Location.Stagename</td>
-                        <td>@p.Artist.Name</td>
-                        <td>@p.Start.DateTime.ToString("HH:mm")</td>
-                    </tr>
-                }
-            </tbody>
-            
-        </table>
-    }
+    
 </div>
 
 @Html.Partial("_NewsArchive", newsItemsList)

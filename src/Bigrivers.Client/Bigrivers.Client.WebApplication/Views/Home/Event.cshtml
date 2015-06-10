@@ -1,5 +1,7 @@
-﻿@{
+﻿@using Bigrivers.Client.WebApplication.Models
+@{
     Event currentEvent = Model;
+    List<PerformanceListViewModel> performancesByDate = ViewBag.PerformancesByDate;
     ViewBag.Title = currentEvent.Title;
 }
 
@@ -8,38 +10,38 @@
     <p>@currentEvent.Description</p>
     <h3>Optredens</h3>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Optreden</th>
-            <th>Artiest</th>
-            <th>Locatie</th>
-            <th>Datum</th>
-        </tr>
-        </thead>
-        @foreach (Performance p in ViewBag.PerformancesList)
+    <div class="day-btn-list">
+        @foreach (var day in performancesByDate)
         {
-            <tr>
-                <td>
-                    @if (p.Description != null)
-                    {
-                        @Html.ActionLink(p.Description, "Performances", new { Id = p.Id })
-                    }
-                </td>
-                <td>
-                    @if (p.Artist != null)
-                    {
-                        @Html.ActionLink(p.Artist.Name, "Artists", new {Id = p.Id})
-                    }
-                </td>
-                <td>
-                    @Html.ActionLink(p.Location.Stagename, "Location", new { Id = p.Id })
-                </td>
-                <td>
-                    @p.Start.DateTime.Day - @p.Start.DateTime.Month - @p.Start.DateTime.Year
-                </td>
-
-            </tr>
+            <h3 id="date-@day.Date.Day" class="day-btn @(day == performancesByDate.First() ? "selected" : "non-selected" )">@day.Date.ToString("dddd dd MMMM")</h3>
         }
-    </table>
+    </div>
+
+    @foreach (var day in performancesByDate)
+    {
+        <table id="date-@day.Date.Day" class="day-table @(day == performancesByDate.First() ? "selected" : "non-selected")">
+            <thead>
+            <tr>
+                <th>Wanneer</th>
+                <th>Waar</th>
+                <th>Wie</th>
+                <th>Tijd</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var p in day.Performances)
+            {
+                <tr>
+                    <td>@p.Start.ToString("dddd dd MMMM")</td>
+                    <td>@p.Location.Stagename</td>
+                    <td>@p.Artist.Name</td>
+                    <td>@p.Start.DateTime.ToString("HH:mm") - @p.End.DateTime.ToString("HH:mm")</td>
+                </tr>
+            }
+            </tbody>
+
+        </table>
+    }
 </div>
+
+<script src="/Scripts/performanceDaySelector.js"></script>
