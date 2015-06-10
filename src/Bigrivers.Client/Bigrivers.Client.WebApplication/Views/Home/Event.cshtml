@@ -1,6 +1,9 @@
 ﻿@{
     Event currentEvent = Model;
     ViewBag.Title = currentEvent.Title;
+    var Youtube = ViewBag.SiteInformation.YoutubeChannel;
+    var Facebook = ViewBag.SiteInformation.Facebook;
+    var Twitter = ViewBag.SiteInformation.Twitter;
 }
 
 <div class="content">
@@ -8,6 +11,12 @@
     <p>@currentEvent.Description</p>
     <h3>Optredens</h3>
 
+    <h3>Links:</h3>
+    <ul>
+        @if (currentEvent.FacebookStatus == true){<li><a href="@Facebook" target="_blank">Facebook</a></li> }
+        @if (currentEvent.YoutubeChannelStatus != null){<li><a href="@Youtube" target="_blank">YoutubeChannel</a></li> }
+        @if (currentEvent.TwitterStatus != null){<li><a href="@Twitter" target="_blank">Twitter</a></li> }
+    </ul>
     <table class="table">
         <thead>
         <tr>
@@ -38,7 +47,6 @@
                 <td>
                     @p.Start.DateTime.Day - @p.Start.DateTime.Month - @p.Start.DateTime.Year
                 </td>
-
             </tr>
         }
     </table>
