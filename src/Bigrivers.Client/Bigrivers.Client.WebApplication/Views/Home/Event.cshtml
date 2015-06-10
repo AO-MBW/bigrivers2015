@@ -9,7 +9,6 @@
 <div class="content">
     <h1 class="page-title">@currentEvent.Title</h1>
     <p>@currentEvent.Description</p>
-    <h3>Optredens</h3>
 
     <h3>Links:</h3>
     <ul>
@@ -17,35 +16,31 @@
         @if (currentEvent.YoutubeChannelStatus != null){<li><a href="@Youtube" target="_blank">YoutubeChannel</a></li> }
         @if (currentEvent.TwitterStatus != null){<li><a href="@Twitter" target="_blank">Twitter</a></li> }
     </ul>
+
+    <h3>Optredens</h3>
     <table class="table">
         <thead>
         <tr>
-            <th>Optreden</th>
             <th>Artiest</th>
             <th>Locatie</th>
-            <th>Datum</th>
+            <th>Begin Tijd</th>
+            <th>Eind Tijd</th>
         </tr>
         </thead>
         @foreach (Performance p in ViewBag.PerformancesList)
         {
             <tr>
                 <td>
-                    @if (p.Description != null)
-                    {
-                        @Html.ActionLink(p.Description, "Performances", new { Id = p.Id })
-                    }
-                </td>
-                <td>
-                    @if (p.Artist != null)
-                    {
-                        @Html.ActionLink(p.Artist.Name, "Artists", new {Id = p.Id})
-                    }
+                    @Html.ActionLink(p.Artist.Name, "Artists", new {Id = p.Id})
                 </td>
                 <td>
                     @Html.ActionLink(p.Location.Stagename, "Location", new { Id = p.Id })
                 </td>
                 <td>
-                    @p.Start.DateTime.Day - @p.Start.DateTime.Month - @p.Start.DateTime.Year
+                    @p.Start.DateTime.ToString("HH:mm")
+                </td>
+                <td>
+                    @p.End.DateTime.ToString("HH:mm")
                 </td>
             </tr>
         }
