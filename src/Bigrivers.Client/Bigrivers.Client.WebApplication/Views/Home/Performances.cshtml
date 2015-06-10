@@ -1,13 +1,14 @@
 ﻿@{
     ViewBag.Title = "Optredens";
 }
-<h1 class="page-title">Optredens</h1>
+
 <div class="content partial-size">
+    <h1 class="page-title">Optredens</h1>
     <ul>
         @foreach (Performance p in Model)
         {
             <li>
-                @Html.ActionLink(p.Description, "Performance", new { Id = p.Id })
+                @Html.ActionLink(p.Description, "Performance", new {Id = p.Id})
             </li>
         }
     </ul>

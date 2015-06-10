@@ -2,23 +2,22 @@
     ViewBag.Title = "Events";
 }
 
-<h1 class="page-title">Events</h1>
-
 <div class="content partial-size">
+    <h1 class="page-title">Events</h1>
     <table class="table">
         <thead>
-            <tr>
-                <th>Event</th>
-                <th>Locatie</th>
-                <th>Start datum</th>
-                <th>Eind Datum</th>
-            </tr>
+        <tr>
+            <th>Event</th>
+            <th>Locatie</th>
+            <th>Start datum</th>
+            <th>Eind Datum</th>
+        </tr>
         </thead>
         @foreach (Event e in Model)
         {
             <tr>
                 <td>
-                    @Html.ActionLink(e.Title, "Events", new { Id = e.Id })
+                    @Html.ActionLink(e.Title, "Events", new {Id = e.Id})
                 </td>
                 <td>
                     @e.Start

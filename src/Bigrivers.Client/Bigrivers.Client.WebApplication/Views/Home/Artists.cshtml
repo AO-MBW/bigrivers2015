@@ -3,13 +3,12 @@
     List<Artist> artistList = Model; 
 }
 
-<h1 class="page-title">Artiesten</h1>
-
 <div class="content partial-size">
+    <h1 class="page-title">Artiesten</h1>
     @foreach (var artist in artistList)
     {
         <div class="col-xs-3">
-            @Html.ActionLink(artist.Name, "Artist", new { Id = artist.Id })
+            @Html.ActionLink(artist.Name, "Artist", new {Id = artist.Id})
         </div>
     }
 </div>
