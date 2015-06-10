@@ -82,7 +82,7 @@ div.news-archive p a {
     }
 
     table.table {
-        color: white;
+        color: black;
     }
 
     .head-h1 {
@@ -183,7 +183,7 @@ div.news-archive p a {
 .footer-content{
     background-image: url(/Images/Designconcept/footer.png);
     opacity: 0.8;
-    height: 8em;
+    height: 3em;
     color: white;
 }
 
@@ -282,4 +282,28 @@ address{
 .twitterfeed{
     width: 100%;
     max-width: 80%;
+}
+
+/* Artiesten lijst*/
+
+.ArtistsDiv {
+    height: 100px;
+    margin-bottom: 15px;
+}
+
+.ArtistsName {
+    float: left;
+}
+
+.ArtistsAvatar {
+    height: 100px;
+    width: auto;
+    float: right;
+}
+
+.ArtistAvatar {
+    height: 100px;
+    width: auto;
+    float: left;
+    margin-right: 10px;
 }

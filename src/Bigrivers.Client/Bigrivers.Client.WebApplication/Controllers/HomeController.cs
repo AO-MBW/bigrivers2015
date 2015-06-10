@@ -159,5 +159,14 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
             return View(model);
         }
+
+        public ActionResult Location(int id)
+        {
+            var location = AccessLayer.Locations
+                .SingleOrDefault(a => a.Id == id);
+
+            if (location == null) return RedirectToAction("Index");
+            return View(location);
+        }
     }
 }
