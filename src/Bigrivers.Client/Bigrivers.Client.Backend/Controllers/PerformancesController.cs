@@ -48,25 +48,26 @@ namespace Bigrivers.Client.Backend.Controllers
         // POST: Performances/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(PerformanceViewModel viewModel)
+        public ActionResult New(PerformanceViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 ViewBag.Title = "Nieuw Optreden";
-                return View("Edit", viewModel);
+                return View("Edit", model);
             }
 
             var singlePerformance = new Performance
             {
-                Description = viewModel.Description,
-                Start = viewModel.Start,
-                End = viewModel.End,
+                Description = model.Description,
+                Start = model.Start,
+                End = model.End,
                 EditedBy = User.Identity.Name,
                 Created = DateTime.Now,
                 Edited = DateTime.Now,
-                Status = viewModel.Status,
-                Event = Db.Events.Single(m => m.Id == viewModel.Event),
-                Artist = Db.Artists.Single(m => m.Id == viewModel.Artist),
+                Status = model.Status,
+                Event = Db.Events.Single(m => m.Id == model.Event),
+                Artist = Db.Artists.Single(m => m.Id == model.Artist),
+                Location = Db.Locations.Single(m => m.Id == model.Location)
             };
 
             Db.Performances.Add(singlePerformance);
@@ -88,7 +89,8 @@ namespace Bigrivers.Client.Backend.Controllers
                 End = singlePerformance.End.DateTime,
                 Status = singlePerformance.Status,
                 Event = singlePerformance.Event.Id,
-                Artist = singlePerformance.Artist.Id
+                Artist = singlePerformance.Artist.Id,
+                Location = singlePerformance.Location.Id
             };
 
             // Set all active parents into new list first
@@ -119,6 +121,7 @@ namespace Bigrivers.Client.Backend.Controllers
             singlePerformance.Status = viewModel.Status;
             singlePerformance.Event = Db.Events.Single(m => m.Id == viewModel.Event);
             singlePerformance.Artist = Db.Artists.Single(m => m.Id == viewModel.Artist);
+            singlePerformance.Location = Db.Locations.Single(m => m.Id == viewModel.Location);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");
