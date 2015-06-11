@@ -15,6 +15,7 @@ namespace Bigrivers.Server.Data.Migrations
 
         protected override void Seed(BigriversDb context)
         {
+#if DEBUG
             // Remove all old data from database
             context.Genres.RemoveRange(context.Genres);
             context.Locations.RemoveRange(context.Locations);
@@ -22,11 +23,13 @@ namespace Bigrivers.Server.Data.Migrations
             context.Events.RemoveRange(context.Events);
             context.Performances.RemoveRange(context.Performances);
             context.MenuItems.RemoveRange(context.MenuItems);
-            context.ButtonItems.RemoveRange(context.ButtonItems);
+            
             context.WidgetItems.RemoveRange(context.WidgetItems);
             context.NewsItems.RemoveRange(context.NewsItems);
             context.Sponsors.RemoveRange(context.Sponsors);
             context.Links.RemoveRange(context.Links);
+
+#endif
             foreach (var r in context.Roles)
             {
                 context.Roles.Remove(r);
@@ -52,30 +55,31 @@ namespace Bigrivers.Server.Data.Migrations
                 Name = "Medewerker"
             });
 
-            context.ButtonItems.Add(new ButtonItem
+            context.ButtonItems.AddOrUpdate(new ButtonItem
             {
                 DisplayName = "SponsorWidget",
                 EditedBy = "Automatic",
-                Created = DateTime.Now,
-                Edited = DateTime.Now,
+                Created = new DateTime(2015, 6, 11),
+                Edited = new DateTime(2015, 6, 11),
                 Deleted = false,
                 Status = true,
                 Order = 1,
                 Type = ButtonType.SponsorWidget
             });
 
-            context.ButtonItems.Add(new ButtonItem
+            context.ButtonItems.AddOrUpdate(new ButtonItem
             {
                 DisplayName = "NewsWidget",
                 EditedBy = "Automatic",
-                Created = DateTime.Now,
-                Edited = DateTime.Now,
+                Created = new DateTime(2015, 6, 11),
+                Edited = new DateTime(2015, 6, 11),
                 Deleted = false,
                 Status = true,
                 Order = 2,
                 Type = ButtonType.NewsWidget
             });
 
+#if DEBUG
             //Create Menu Items
             context.MenuItems.Add(new MenuItem
             {
@@ -225,7 +229,7 @@ namespace Bigrivers.Server.Data.Migrations
             context.Events.Add(brm);
             context.Performances.Add(bzbperf);
             context.Locations.Add(loc);
-
+#endif
             context.SaveChanges();
         }
     }

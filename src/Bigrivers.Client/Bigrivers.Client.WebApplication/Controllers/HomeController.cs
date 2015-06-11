@@ -62,30 +62,30 @@ namespace Bigrivers.Client.WebApplication.Controllers
             return View("Event", currentEvent);
         }
 
-        public ActionResult Performances(int? id)
-        {
-            if (id != null) return Performance(id.Value);
+        //public ActionResult Performances(int? id)
+        //{
+        //    if (id != null) return Performance(id.Value);
 
             
 
-            var newsItemsList = AccessLayer.NewsItems
-                .Where(a => a.Status)
-                .ToList();
+        //    var newsItemsList = AccessLayer.NewsItems
+        //        .Where(a => a.Status)
+        //        .ToList();
 
-            ViewBag.NewsItemsList = newsItemsList;
+        //    ViewBag.NewsItemsList = newsItemsList;
 
-            return View("Performances");
-        }
+        //    return View("Performances");
+        //}
 
-        private ActionResult Performance(int id)
-        {
-            var currentPerformance = AccessLayer.Performances
-                .SingleOrDefault(p => p.Id == id && p.Status);
+        //private ActionResult Performance(int id)
+        //{
+        //    var currentPerformance = AccessLayer.Performances
+        //        .SingleOrDefault(p => p.Id == id && p.Status);
 
-            if (currentPerformance == null) return RedirectToAction("Performances");
+        //    if (currentPerformance == null) return RedirectToAction("Performances");
 
-            return View("Performance", currentPerformance);
-        }
+        //    return View("Performance", currentPerformance);
+        //}
 
         //public ActionResult Genres(int? id)
         //{
