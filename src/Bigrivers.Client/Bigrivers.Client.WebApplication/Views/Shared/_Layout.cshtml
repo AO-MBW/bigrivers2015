@@ -16,11 +16,9 @@
 </head>
     <body>
 
-        @*<div class="header">
-                <p class="header-p">test</p>
-                <br/>
-                <p class="header-p">test</p>
-            </div>*@
+        <div class="header">
+            <img class="header-image" src="~/Images/header.png" />
+        </div>
         <div class="navbar navbar-inverse">
             <div class="container">
                 <div class="navbar-header">
@@ -31,7 +29,7 @@
                     </button>
                     <div class="home-link">
                         <a href="/Home/Index">
-                            <img class="menuimg" src="@(ViewBag.SiteInformation.Image != null ? ImageHelper.GetImageUrl(ViewBag.SiteInformation.Image) : "/Images/br15.jpg")" alt="Terug naar Home" title="Terug naar Home" />
+                            @*<img class="menuimg" src="@(ViewBag.SiteInformation.Image != null ? ImageHelper.GetImageUrl(ViewBag.SiteInformation.Image) : "/Images/br15.jpg")" alt="Terug naar Home" title="Terug naar Home" />*@
                         </a>
                     </div>
                 </div>
