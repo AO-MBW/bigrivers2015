@@ -45,14 +45,13 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
             if (currentEvent == null) return RedirectToAction("Events");
 
-            var performancesByDate = AccessLayer.Performances
-                .Where(m => m.Status 
-                && m.Event.Id == currentEvent.Id)
+            var performancesByDate = currentEvent.Performances
+                .Where(m => m.Status)
                 .DistinctBy(m => m.Start.Day)
                 .Select(date => new PerformanceListViewModel
             {
                 Date = date.Start.Date,
-                Performances = AccessLayer.Performances
+                Performances = currentEvent.Performances
                 .Where(m => m.Status && m.Start.Day == date.Start.Day)
                 .ToList()
             }).ToList();
