@@ -184,5 +184,14 @@ namespace Bigrivers.Client.WebApplication.Controllers
             if (location == null) return RedirectToAction("Index");
             return View(location);
         }
+
+        public ActionResult Page(int id)
+        {
+            var page = AccessLayer.Pages
+                .SingleOrDefault(a => a.Id == id);
+
+            if (page == null) return RedirectToAction("Index");
+            return View(page);
+        }
     }
 }
