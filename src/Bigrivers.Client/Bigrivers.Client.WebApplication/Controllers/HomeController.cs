@@ -134,6 +134,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
             var newsItemsList = AccessLayer.NewsItems
                 .Where(a => a.Status && a.Publish < DateTime.Now)
+                .OrderBy(m => m.Publish)
                 .ToList();
 
             return View("News", newsItemsList);
