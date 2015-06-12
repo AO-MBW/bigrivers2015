@@ -21,7 +21,7 @@
                     @Html.ActionLink(e.Title, "Events", new {Id = e.Id})
                 </td>
                 <td>
-                    <p class="EventsDescription">@e.Description</p>
+                    <p class="EventsDescription">@Html.Raw(e.Description)</p>
                 </td>
                 <td class="EventsDatum">
                     @e.Start.DateTime.Day - @e.Start.DateTime.Month - @e.Start.DateTime.Year

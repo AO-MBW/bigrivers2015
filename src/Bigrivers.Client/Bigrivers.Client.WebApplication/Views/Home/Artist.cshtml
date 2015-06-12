@@ -12,7 +12,7 @@
     }
     @if (currentArtist.Description != null)
     {
-        <p>@currentArtist.Description</p>
+        @Html.Raw(currentArtist.Description)
     }
     <h3>Links:</h3>
     <ul>

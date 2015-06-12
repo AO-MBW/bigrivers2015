@@ -7,44 +7,51 @@
     <div id="location-canvas" style="width: 100%; height: 300px;"></div>
 
     <address>
-        <p><strong>(Postadres)</strong> Stichting Big Rivers<br class="contact">
-            Postbus 1060<br class="contact"/>
-            3300 BB Dordrecht<br class="contact"/>
-            <strong>(Bezoekadres)</strong> Festivalbureau Big Rivers<br class="contact"/>
-            Slikveld 1<br class="contact"/>
+        <p>
+            <strong>(Postadres)</strong> Stichting Big Rivers<br class="contact">
+            Postbus 1060<br class="contact" />
+            3300 BB Dordrecht<br class="contact" />
+            <strong>(Bezoekadres)</strong> Festivalbureau Big Rivers<br class="contact" />
+            Slikveld 1<br class="contact" />
             3311 VT Dordrecht
         </p>
         <p>
-            <strong>Tel:</strong> (078-) 614 41 82<br class="contact"/>
-            <strong>E-mail:</strong> <a href="mailto:info@bigrivers.nl">info@bigrivers.nl</a><br class="contact"/>
+            <strong>Tel:</strong> (078-) 614 41 82<br class="contact" />
+            <strong>E-mail:</strong> <a href="mailto:info@bigrivers.nl">info@bigrivers.nl</a><br class="contact" />
         </p>
     </address>
 
     <div>
         <ul class="social">
-            <li><a href="@Html.DisplayTextFor(m => m.Facebook)" target="_blank"><img src="/Images/fb_icon.png"></a></li>
-            <li><a href="@Html.DisplayTextFor(m => m.Twitter)" target="_blank"><img src="/Images/tw_icon.png"></a></li>
-            <li><a href="@Html.DisplayTextFor(m => m.YoutubeChannel)" target="_blank"><img src="/Images/yt_icon.png"></a></li>
+            @if (Model.Facebook != null) {
+            <li><a href="@Html.DisplayTextFor(m => m.Facebook)" target="_blank"><img src="/Images/fb_icon.png"></a></li>}
+            @if (Model.Facebook != null) {
+            <li><a href="@Html.DisplayTextFor(m => m.Twitter)" target="_blank"><img src="/Images/tw_icon.png"></a></li>}
+            @if (Model.Facebook != null) {
+            <li><a href="@Html.DisplayTextFor(m => m.YoutubeChannel)" target="_blank"><img src="/Images/yt_icon.png"></a></li>}
         </ul>
     </div>
 
-    <div class="twitterfeed">
-        <a class="twitter-timeline" href="@Html.DisplayTextFor(m => m.Twitter)" data-widget-id="594063302793244673" data-screen-name="@Html.DisplayTextFor(m => m.Hashtag)"> Tweets door @Html.DisplayTextFor(m => m.Hashtag)</a>
-        <script>
-            !function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-                if (!d.getElementById(id)) {
-                    js = d.createElement(s);
-                    js.id = id;
-                    js.src = p + "://platform.twitter.com/widgets.js";
-                    fjs.parentNode.insertBefore(js, fjs);
-                }
-            }(document, "script", "twitter-wjs");
-        </script>
+    @if (Model.Hashtag != null)
+    {
+        <div class="twitterfeed">
+            <a class="twitter-timeline" href="@Html.DisplayTextFor(m => m.Twitter)" data-widget-id="594063302793244673" data-screen-name="@Html.DisplayTextFor(m => m.Hashtag)"> Tweets door @Html.DisplayTextFor(m => m.Hashtag)</a>
+            <script>
+                !function(d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = p + "://platform.twitter.com/widgets.js";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, "script", "twitter-wjs");
+            </script>
+        </div>
+    }
     </div>
-</div>
 
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script src="/Scripts/GoogleMaps.js">
-    
-</script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script src="/Scripts/GoogleMaps.js">
+
+    </script>

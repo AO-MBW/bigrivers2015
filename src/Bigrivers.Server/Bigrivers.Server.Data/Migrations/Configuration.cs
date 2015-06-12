@@ -79,6 +79,13 @@ namespace Bigrivers.Server.Data.Migrations
                 Type = ButtonType.NewsWidget
             });
 
+            context.SiteInformation.AddOrUpdate(new SiteInformation
+                {
+                    YoutubeChannel = null,
+                    Facebook = null,
+                    Twitter = null,
+                    Image = null
+                });
 #if DEBUG
             //Create Menu Items
             context.MenuItems.Add(new MenuItem

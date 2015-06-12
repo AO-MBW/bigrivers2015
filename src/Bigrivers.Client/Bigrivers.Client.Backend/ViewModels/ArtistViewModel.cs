@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Bigrivers.Server.Model;
+using System.Web.Mvc;
 
 namespace Bigrivers.Client.Backend.ViewModels
 {
@@ -9,6 +9,7 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Display(Name = "Naam")]
         public string Name { get; set; }
 
+        [AllowHtml]
         [Display(Name = "Beschrijving")]
         public string Description { get; set; }
 

@@ -61,7 +61,7 @@ namespace Bigrivers.Client.Backend.Controllers
         #region User Editing
         public ActionResult New()
         {
-            return RedirectToAction("");
+            return RedirectToAction("Register");
         }
 
         public ActionResult Register()

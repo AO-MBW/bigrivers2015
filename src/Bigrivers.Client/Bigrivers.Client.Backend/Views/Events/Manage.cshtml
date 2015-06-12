@@ -35,8 +35,8 @@
                     @:<tr>
                 }
                 <td>@m.Title</td>
-                <td>@m.Start.DateTime</td>
-                <td>@m.End.DateTime</td>
+                <td>@m.Start.DateTime.ToString("dd-MM-yyyy HH:mm")</td>
+                <td>@m.End.DateTime.ToString("dd-MM-yyyy HH:mm")</td>
                 <td>
                     @if (m.YoutubeChannelStatus)
                     {<span>Y</span>}

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.Backend.ViewModels
@@ -10,6 +11,7 @@ namespace Bigrivers.Client.Backend.ViewModels
         public string Title { get; set; }
 
         [Required]
+        [AllowHtml]
         [Display(Name = "Inhoud")]
         public string Content { get; set; }
 
