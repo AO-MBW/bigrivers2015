@@ -12,18 +12,34 @@
     <div class="buttonItemContainer">
         @foreach (var m in buttonItems.Where(m => m.Status))
         {
+            MvcHtmlString editLink;
+            switch (m.Type)
+            {
+                
+                case ButtonType.NewsWidget:
+                    editLink = Html.ActionLink("Wijzig", "Manage", "Widget");
+                    break;
+                case ButtonType.SponsorWidget:
+                    editLink = Html.ActionLink("Wijzig", "Manage", "Sponsors");
+                    break;
+                case ButtonType.Regular:
+                default:
+                    editLink = Html.ActionLink("Wijzig", "Edit", "ButtonItems", new { m.Id }, null);
+                    break;
+            }
             <div>
                 <h1>
                     @if (m.Type == ButtonType.Regular)
                     {
                         @Html.ShowImage(ImageHelper.GetImageUrl(m.Logo))
                     }
-                    
+
                 </h1>
                 <p>@m.DisplayName - @Html.ActionLink("Actief", "SwitchStatus", "ButtonItems", new { m.Id }, null)</p>
                 <p>
-                    @Html.ActionLink("Wijzig", "Edit", "ButtonItems", new { m.Id }, null)
-                    @Html.ActionLink("Verwijder", "Delete", "ButtonItems", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');" })
+                    @editLink
+                    @if (m.Type == ButtonType.Regular)
+                    {@Html.ActionLink("Verwijder", "Delete", "ButtonItems", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');" })}
                     @Html.ActionLink("Up", "ShiftOrder", "ButtonItems", new { id = m.Id, param = "up" }, null)
                     @Html.ActionLink("Down", "ShiftOrder", "ButtonItems", new { id = m.Id, param = "down" }, null)
                 </p>
@@ -42,8 +58,10 @@
 
                 <p>@m.DisplayName - @Html.ActionLink("Inactief", "SwitchStatus", "ButtonItems", new { m.Id }, null)</p>
                 <p>
-                    @Html.ActionLink("Wijzig", "Edit", "ButtonItems", new { m.Id }, null)
-                    @Html.ActionLink("Verwijder", "Delete", "ButtonItems", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');" })
+                    @if (m.Type == ButtonType.Regular)
+                    {@Html.ActionLink("Wijzig", "Edit", "ButtonItems", new { m.Id }, null)}
+                    @if (m.Type == ButtonType.Regular)
+                    {@Html.ActionLink("Verwijder", "Delete", "ButtonItems", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om " + m.DisplayName + " te verwijderen. Weet je dit zeker?');" })}
                 </p>
             </div>
         }

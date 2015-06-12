@@ -1,0 +1,44 @@
+﻿@{
+    List<Bigrivers.Server.Model.Page> pages = Model;
+}
+
+<div id="actionbar">
+    <div class="action-block">
+        @Html.ActionLink("Pagina Toevoegen", "New", "Pages")
+    </div>
+</div>
+<div id="content">
+    <table>
+        <thead>
+            <tr>
+                <th>Titel</th>
+                <th>Auteur</th>
+                <th>Gewijzigd op</th>
+                <th>Status</th>
+                <th>Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in pages)
+            {
+                if (!m.Status)
+                {
+                    @:<tr class="inactive">
+                }
+                else
+                {
+                    @:<tr>
+                }
+                <td>@m.Title</td>
+                <td>@m.EditedBy</td>
+                <td>@m.Edited</td>
+                <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "Pages", new { m.Id }, null)</td>
+                <td>
+                    @Html.ActionLink("Wijzig", "Edit", "Pages", new { m.Id }, null)
+                    @Html.ActionLink("Verwijder", "Delete", "Pages", new { m.Id }, new { @onclick = (string)String.Format("return confirm('Je staat op het punt om {0} te verwijderen. Weet je dit zeker?');", m.Title) })
+                </td>
+                @:</tr>
+            }
+        </tbody>
+    </table>
+</div>
