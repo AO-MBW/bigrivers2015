@@ -66,6 +66,8 @@ div.news-archive p a {
 
 .header {
         margin-top: -50px;
+        width: 100%;
+        overflow: hidden;
     }
 
 @media(min-width: 768px ) {

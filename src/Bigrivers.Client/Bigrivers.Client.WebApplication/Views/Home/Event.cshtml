@@ -11,14 +11,16 @@
 <div class="content">
     <h1 class="page-title">@currentEvent.Title</h1>
     <p>@currentEvent.Description</p>
-
+    @if (currentEvent.FacebookStatus || currentEvent.YoutubeChannelStatus || currentEvent.TwitterStatus)
+    { 
     <h3>Links:</h3>
     <ul>
         @if (currentEvent.FacebookStatus){<li><a href="@Facebook" target="_blank">Facebook</a></li> }
         @if (currentEvent.YoutubeChannelStatus){<li><a href="@Youtube" target="_blank">YoutubeChannel</a></li> }
         @if (currentEvent.TwitterStatus){<li><a href="@Twitter" target="_blank">Twitter</a></li> }
     </ul>
-
+    }
+    @if (performancesByDate.Count != 0) { 
     <h3>Programma:</h3>
     <div class="day-btn-list">
         @foreach (var day in performancesByDate)
@@ -27,7 +29,7 @@
         }
     </div>
 
-    @foreach (var day in performancesByDate)
+    foreach (var day in performancesByDate)
     {
         <table id="date-@day.Date.Day" class="day-table @(day == performancesByDate.First() ? "selected" : "non-selected")">
         <thead>
@@ -52,6 +54,7 @@
 
         </table>
         }
+    }
 </div>
 
 <script src="/Scripts/performanceDaySelector.js"></script>

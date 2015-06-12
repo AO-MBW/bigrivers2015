@@ -14,6 +14,8 @@
     {
         <p>@currentArtist.Description</p>
     }
+    @if (currentArtist.Facebook != null || currentArtist.YoutubeChannel != null || currentArtist.Twitter != null || currentArtist.Website != null)
+    {
     <h3>Links:</h3>
     <ul>
         @if (currentArtist.Website != null){ <li><a href="@currentArtist.Website" target="_blank">Website</a></li> }
@@ -21,4 +23,30 @@
         @if (currentArtist.YoutubeChannel != null){ <li><a href="@currentArtist.YoutubeChannel" target="_blank">YoutubeChannel</a></li> }  
         @if (currentArtist.Twitter != null){ <li><a href="@currentArtist.Twitter" target="_blank">Twitter</a></li> }  
     </ul>
+    }
+    @if(currentArtist.Performances.Where(m => m.Status).Count() > 0){
+        <h3>Optredens:</h3>
+    <table class="day-table">
+        <thead>
+            <tr>
+                <th>Evenement</th>
+                <th>Locatie</th>
+                <th>Datum</th>
+                <th>Tijd</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in currentArtist.Performances.Where(m => m.Status))
+            {
+                <tr>
+                    <td>@Html.ActionLink(p.Event.Title, "Event", "Home", new {id = p.Event.Id})</td>
+                    <td>@Html.ActionLink(p.Location.Stagename, "Location", "Home", new { id = p.Location.Id })</td>
+                    <td>@p.Start.ToString("dddd dd MMMM")</td>
+                    <td>@p.Start.DateTime.ToString("HH:mm") - @p.End.DateTime.ToString("HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    }
 </div>

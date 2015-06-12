@@ -111,6 +111,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
             var artistsList = AccessLayer.Artists
                 .Where(a => a.Status)
+                .OrderBy(a => a.Name)
                 .ToList();
 
             return View("Artists", artistsList);
