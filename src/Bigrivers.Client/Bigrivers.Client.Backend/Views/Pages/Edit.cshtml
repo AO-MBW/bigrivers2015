@@ -10,6 +10,11 @@
                 @Html.TextBoxFor(m => m.Title)
                 @Html.LabelFor(m => m.Content)
                 @Html.TextAreaFor(m => m.Content, new { @Id = "ckeditor" })
+                <script>
+                    // Replace the <textarea id="ckeditor"> with a CKEditor
+                    // instance, using default configuration.
+                    CKEDITOR.replace("ckeditor");
+                </script>
             </fieldset>
             <hr />
             <fieldset>
