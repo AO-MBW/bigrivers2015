@@ -55,6 +55,7 @@ namespace Bigrivers.Client.Backend.Controllers
         {
             var model = new NewsItemViewModel
             {
+                Publish = DateTime.Now,
                 Image = new FileUploadViewModel
                 {
                     NewUpload = true,
@@ -107,11 +108,12 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Title = model.Title,
                 Content = model.Content,
-                Image = photoEntity != null ? Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key) : null,
+                Publish = model.Publish,
                 EditedBy = User.Identity.Name,
                 Created = DateTime.Now,
                 Edited = DateTime.Now,
-                Status = model.Status
+                Status = model.Status,
+                Image = photoEntity != null ? Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key) : null
             };
 
             Db.NewsItems.Add(singleNewsItem);
@@ -130,6 +132,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 Title = singleNewsItem.Title,
                 Content = singleNewsItem.Content,
+                Publish = singleNewsItem.Publish.DateTime,
                 Image = new FileUploadViewModel
                 {
                     NewUpload = true,
@@ -185,10 +188,11 @@ namespace Bigrivers.Client.Backend.Controllers
 
             singleNewsItem.Title = model.Title;
             singleNewsItem.Content = model.Content;
-            if (photoEntity != null) singleNewsItem.Image = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
+            singleNewsItem.Publish = model.Publish;
             singleNewsItem.EditedBy = User.Identity.Name;
             singleNewsItem.Edited = DateTime.Now;
             singleNewsItem.Status = model.Status;
+            if (photoEntity != null) singleNewsItem.Image = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
             Db.SaveChanges();
 
             return RedirectToAction("Manage");

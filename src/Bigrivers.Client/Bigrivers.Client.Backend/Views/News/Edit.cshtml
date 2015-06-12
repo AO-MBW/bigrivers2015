@@ -68,6 +68,11 @@
             </fieldset>
             <br class="clear" />
             @* File Upload Block End *@
+            <hr/>
+            <fieldset>
+                @Html.LabelFor(m => m.Publish)
+                @Html.TextBoxFor(m => m.Publish, new { @id = "datepicker" })
+            </fieldset>
             <hr />
             <fieldset>
                 <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
@@ -80,3 +85,9 @@
     </div>
 </div>
 <script src="/Scripts/ViewScripts/FileExplorer.js"></script>
+<script>
+    $("#datepicker").datetimepicker({
+        dateFormat: "d-m-yy",
+        timeFormat: "H:mm:ss"
+    });
+</script>
