@@ -64,21 +64,15 @@ div.news-archive p a {
     text-decoration: underline;
 }
 
+.header {
+        margin-top: -50px;
+    }
 
 @media(min-width: 768px ) {
     .menuimg {
         height: 50px;
         width: auto;
         margin-left: 0;
-    }
-
-    .header {
-        border: 5px solid red;
-        margin-top: -50px;
-    }
-
-    .header-p {
-        color: yellow;
     }
 
     table.table {
