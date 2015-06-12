@@ -9,12 +9,7 @@
                 @Html.LabelFor(m => m.Title)
                 @Html.TextBoxFor(m => m.Title)
                 @Html.LabelFor(m => m.Content)
-                @Html.TextAreaFor(m => m.Content, new { @Id = "content" })
-                @*<script>
-                    // Replace the <textarea id="content"> with a CKEditor
-                    // instance, using default configuration.
-                    CKEDITOR.replace("content");
-                </script>*@
+                @Html.TextAreaFor(m => m.Content, new { @Id = "ckeditor" })
             </fieldset>
             <hr />
             @* File Upload Block Start *@

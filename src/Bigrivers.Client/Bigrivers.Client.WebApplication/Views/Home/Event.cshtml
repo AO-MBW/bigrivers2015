@@ -10,7 +10,8 @@
 
 <div class="content">
     <h1 class="page-title">@currentEvent.Title</h1>
-    <p>@currentEvent.Description</p>
+    @Html.Raw(currentEvent.Description)
+
     @if (currentEvent.FacebookStatus || currentEvent.YoutubeChannelStatus || currentEvent.TwitterStatus)
     { 
     <h3>Links:</h3>

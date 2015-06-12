@@ -192,6 +192,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuItemsController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="Controllers\PerformancesController.cs" />
     <Compile Include="Controllers\SponsorsController.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="ViewModels\LocationViewModel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="ViewModels\NewsItemViewModel.cs" />
+    <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\PerformanceViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\SponsorViewModel.cs" />
@@ -272,8 +274,6 @@
     <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
     <Content Include="Scripts\ckeditor\skins\moonocolor\readme.md" />
     <Content Include="Scripts\ckeditor\skins\moono\readme.md" />
-    <None Include="Properties\PublishProfiles\brmanage %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\brmanage %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\brmanage.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
@@ -479,8 +479,8 @@
     <Content Include="Views\Performances\Edit.cshtml" />
     <Content Include="Views\ButtonItems\Edit.cshtml" />
     <Content Include="Views\ButtonItems\Manage.cshtml" />
-    <Content Include="Views\News\Edit.cshtml" />
-    <Content Include="Views\News\Manage.cshtml" />
+    <Content Include="Views\Pages\Edit.cshtml" />
+    <Content Include="Views\Pages\Manage.cshtml" />
     <Content Include="Views\Sponsors\Edit.cshtml" />
     <Content Include="Views\Sponsors\Manage.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -493,6 +493,8 @@
     <Content Include="Views\Locations\Manage.cshtml" />
     <Content Include="Views\Widget\Edit.cshtml" />
     <Content Include="Views\Widget\Manage.cshtml" />
+    <Content Include="Views\News\Manage.cshtml" />
+    <Content Include="Views\News\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

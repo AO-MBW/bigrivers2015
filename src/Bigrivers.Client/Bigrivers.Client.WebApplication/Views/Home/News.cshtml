@@ -20,7 +20,7 @@
                 </div>
             }
             <div class="news-text height-limited">
-                <p>@p.Content</p>
+                <p>@Html.Raw(p.Content)</p>
             </div>
             <div class="news-footer">
                 <span>@Html.ActionLink("Lees Verder", "News", new {Id = p.Id})</span>

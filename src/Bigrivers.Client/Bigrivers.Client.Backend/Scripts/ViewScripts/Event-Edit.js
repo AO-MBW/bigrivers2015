@@ -11,7 +11,7 @@ var toggleInput = function() {
 
 $("#datepicker1").datetimepicker({
     dateFormat: "d-m-yy",
-    timeFormat: "h:mm:s"
+    timeFormat: "H:mm:ss"
 });
 $("#datepicker2").datetimepicker({
     dateFormat: "d-m-yy",

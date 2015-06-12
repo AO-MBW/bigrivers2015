@@ -47,7 +47,7 @@ namespace Bigrivers.Client.Backend.Models
         ///<summary>
         /// Internal*Id is the Id of the object being linked to when linking to an internal page 
         /// </summary>
-        public string InternalPerformanceId { get; set; }
+        public string InternalPageId { get; set; }
         ///<summary>
         /// Internal*Id is the Id of the object being linked to when linking to an internal page 
         /// </summary>
@@ -101,8 +101,8 @@ namespace Bigrivers.Client.Backend.Models
                     },
                     new SelectListItem()
                     {
-                        Text = "Optredens",
-                        Value = "Performances"
+                        Text = "Pagina's",
+                        Value = "Pages"
                     },
                     new SelectListItem()
                     {
@@ -165,22 +165,17 @@ namespace Bigrivers.Client.Backend.Models
             }
         }
 
-        public List<SelectListItem> Performances
+        public List<SelectListItem> Pages
         {
             get
             {
-                var l = _db.Performances
+                var l = _db.Pages
                 .Where(m => !m.Deleted)
                 .Select(s => new SelectListItem
                 {
                     Value = s.Id.ToString(),
-                    Text = s.Artist.Name
+                    Text = s.Title
                 }).ToList();
-                l.Insert(0, new SelectListItem
-                {
-                    Value = "",
-                    Text = ""
-                });
                 return l;
             }
         }

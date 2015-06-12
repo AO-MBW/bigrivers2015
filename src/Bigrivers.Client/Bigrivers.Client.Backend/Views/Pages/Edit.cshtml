@@ -1,0 +1,24 @@
+﻿@model Bigrivers.Client.Backend.ViewModels.PageViewModel
+
+<div id="content">
+    <div class="form-div">
+        <form method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+            <fieldset>
+                @Html.LabelFor(m => m.Title)
+                @Html.TextBoxFor(m => m.Title)
+                @Html.LabelFor(m => m.Content)
+                @Html.TextAreaFor(m => m.Content, new { @Id = "ckeditor" })
+            </fieldset>
+            <hr />
+            <fieldset>
+                <label class="label label-selectable">@Html.CheckBoxFor(m => m.Status) Actief</label>
+            </fieldset>
+            <hr />
+            <fieldset>
+                <input type="submit" name="save" value="Pagina opslaan">
+            </fieldset>
+        </form>
+    </div>
+</div>

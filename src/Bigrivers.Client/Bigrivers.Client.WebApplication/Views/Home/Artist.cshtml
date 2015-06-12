@@ -12,7 +12,7 @@
     }
     @if (currentArtist.Description != null)
     {
-        <p>@currentArtist.Description</p>
+        @Html.Raw(currentArtist.Description)
     }
     @if (currentArtist.Facebook != null || currentArtist.YoutubeChannel != null || currentArtist.Twitter != null || currentArtist.Website != null)
     {

@@ -11,6 +11,7 @@ namespace Bigrivers.Client.Backend.ViewModels
     {
         private readonly BigriversDb _db = new BigriversDb();
 
+        [AllowHtml]
         [Display(Name = "Beschrijving")]
         public string Description { get; set; }
         [Display(Name = "Starttijd")]

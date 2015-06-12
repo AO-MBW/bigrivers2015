@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Web.Mvc;
-using Bigrivers.Server.Data;
 
 namespace Bigrivers.Client.Backend.ViewModels
 {
@@ -13,6 +10,7 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Display(Name = "Naam")]
         public string Title { get; set; }
 
+        [AllowHtml]
         [Required(ErrorMessage = "Het veld Beschrijving is verplicht")]
         [Display(Name = "Beschrijving")]
         public string Description { get; set; }
