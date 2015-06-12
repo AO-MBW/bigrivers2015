@@ -52,10 +52,6 @@ namespace Bigrivers.Client.Backend.Models
         /// Internal*Id is the Id of the object being linked to when linking to an internal page 
         /// </summary>
         public string InternalNewsId { get; set; }
-        ///<summary>
-        /// Internal*Id is the Id of the object being linked to when linking to an internal page 
-        /// </summary>
-        public string InternalSponsorId { get; set; }
 
         public IEnumerable<SelectListItem> LinkTypes
         {
@@ -108,12 +104,6 @@ namespace Bigrivers.Client.Backend.Models
                     {
                         Text = "Nieuwsberichten",
                         Value = "News"
-                    },
-                    new SelectListItem()
-                    {
-                        Text = "Sponsoren",
-                        Value = "Sponsors"
-
                     },
                     new SelectListItem()
                     {
@@ -190,26 +180,6 @@ namespace Bigrivers.Client.Backend.Models
                 {
                     Value = s.Id.ToString(),
                     Text = s.Title
-                }).ToList();
-                l.Insert(0, new SelectListItem
-                {
-                    Value = "",
-                    Text = ""
-                });
-                return l;
-            }
-        }
-
-        public List<SelectListItem> Sponsors
-        {
-            get
-            {
-                var l = _db.Sponsors
-                .Where(m => !m.Deleted)
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Name
                 }).ToList();
                 l.Insert(0, new SelectListItem
                 {

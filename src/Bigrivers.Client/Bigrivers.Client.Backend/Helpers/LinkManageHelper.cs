@@ -1,5 +1,4 @@
-﻿using System.Data.Entity.Migrations;
-using System.Linq;
+﻿using System.Linq;
 using Bigrivers.Client.Backend.Models;
 using Bigrivers.Server.Data;
 using Bigrivers.Server.Model;
@@ -36,9 +35,6 @@ namespace Bigrivers.Client.Backend.Helpers
                             break;
                         case "News":
                             link.InternalId = model.InternalNewsId;
-                            break;
-                        case "Sponsors":
-                            link.InternalId = model.InternalSponsorId;
                             break;
                         case "Contact":
                             break;
@@ -98,9 +94,6 @@ namespace Bigrivers.Client.Backend.Helpers
                     break;
                 case "News":
                     viewModel.InternalNewsId = link.InternalId;
-                    break;
-                case "Sponsors":
-                    viewModel.InternalSponsorId = link.InternalId;
                     break;
             }
 

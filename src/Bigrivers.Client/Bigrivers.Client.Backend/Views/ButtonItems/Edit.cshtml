@@ -28,7 +28,6 @@
                 @Html.DropDownListFor(m => m.LinkView.InternalArtistId, Model.LinkView.Artists, new { id = "Artists", @class = "InternalType" })
                 @Html.DropDownListFor(m => m.LinkView.InternalPageId, Model.LinkView.Pages, new { id = "Pages", @class = "InternalType" })
                 @Html.DropDownListFor(m => m.LinkView.InternalNewsId, Model.LinkView.NewsItems, new { id = "News", @class = "InternalType" })
-                @Html.DropDownListFor(m => m.LinkView.InternalSponsorId, Model.LinkView.Sponsors, new { id = "Sponsors", @class = "InternalType" })
             </fieldset>
             <fieldset class="linkType" id="file">
                 @* Link File Upload Block Start *@
@@ -164,7 +163,6 @@
     $("#Artists").val("@Model.LinkView.InternalArtistId");
     $("#Pages").val("@Model.LinkView.InternalPageId");
     $("#News").val("@Model.LinkView.InternalNewsId");
-    $("#Sponsors").val("@Model.LinkView.InternalSponsorId");
 </script>
 <script src="/Scripts/ViewScripts/LinkEditor.js"></script>
 <script src="/Scripts/ViewScripts/FileExplorer.js"></script>
