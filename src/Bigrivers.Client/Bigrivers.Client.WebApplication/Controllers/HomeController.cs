@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Bigrivers.Client.WebApplication.Models;
 using Bigrivers.Client.WebApplication.ViewModels;
@@ -132,7 +133,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
             if (id != null) return News(id.Value);
 
             var newsItemsList = AccessLayer.NewsItems
-                .Where(a => a.Status)
+                .Where(a => a.Status && a.Publish < DateTime.Now)
                 .ToList();
 
             return View("News", newsItemsList);
@@ -141,7 +142,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
         private ActionResult News(int id)
         {
             var newsItemsList = AccessLayer.NewsItems
-                .Where(a => a.Status)
+                .Where(a => a.Status && a.Publish < DateTime.Now)
                 .ToList();
 
             var currentNews = newsItemsList
