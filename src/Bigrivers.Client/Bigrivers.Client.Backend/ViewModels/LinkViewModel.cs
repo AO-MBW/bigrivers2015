@@ -102,7 +102,7 @@ namespace Bigrivers.Client.Backend.Models
                     new SelectListItem()
                     {
                         Text = "Pagina's",
-                        Value = "Pages"
+                        Value = "Page"
                     },
                     new SelectListItem()
                     {

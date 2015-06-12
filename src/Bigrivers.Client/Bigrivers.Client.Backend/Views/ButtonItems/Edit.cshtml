@@ -26,7 +26,7 @@
                 <span style="font-size: 22px; font-weight: bold;">></span>
                 @Html.DropDownListFor(m => m.LinkView.InternalEventId, Model.LinkView.Events, new { id = "Events", @class = "InternalType" })
                 @Html.DropDownListFor(m => m.LinkView.InternalArtistId, Model.LinkView.Artists, new { id = "Artists", @class = "InternalType" })
-                @Html.DropDownListFor(m => m.LinkView.InternalPageId, Model.LinkView.Pages, new { id = "Pages", @class = "InternalType" })
+                @Html.DropDownListFor(m => m.LinkView.InternalPageId, Model.LinkView.Pages, new { id = "Page", @class = "InternalType" })
                 @Html.DropDownListFor(m => m.LinkView.InternalNewsId, Model.LinkView.NewsItems, new { id = "News", @class = "InternalType" })
                 @Html.DropDownListFor(m => m.LinkView.InternalSponsorId, Model.LinkView.Sponsors, new { id = "Sponsors", @class = "InternalType" })
             </fieldset>
@@ -162,7 +162,7 @@
     $("#SelectInternalType").val("@Model.LinkView.InternalType");
     $("#Events").val("@Model.LinkView.InternalEventId");
     $("#Artists").val("@Model.LinkView.InternalArtistId");
-    $("#Pages").val("@Model.LinkView.InternalPageId");
+    $("#Page").val("@Model.LinkView.InternalPageId");
     $("#News").val("@Model.LinkView.InternalNewsId");
     $("#Sponsors").val("@Model.LinkView.InternalSponsorId");
 </script>

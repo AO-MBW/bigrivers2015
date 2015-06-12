@@ -31,7 +31,7 @@ namespace Bigrivers.Client.Backend.Helpers
                         case "Artists":
                             link.InternalId = model.InternalArtistId;
                             break;
-                        case "Pages":
+                        case "Page":
                             link.InternalId = model.InternalPageId;
                             break;
                         case "News":
@@ -93,7 +93,7 @@ namespace Bigrivers.Client.Backend.Helpers
                 case "Artists":
                     viewModel.InternalArtistId = link.InternalId;
                     break;
-                case "Performances":
+                case "Page":
                     viewModel.InternalPageId = link.InternalId;
                     break;
                 case "News":
