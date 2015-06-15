@@ -274,6 +274,7 @@
     <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
     <Content Include="Scripts\ckeditor\skins\moonocolor\readme.md" />
     <Content Include="Scripts\ckeditor\skins\moono\readme.md" />
+    <None Include="Properties\PublishProfiles\br-manage.pubxml" />
     <None Include="Properties\PublishProfiles\brmanage.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
