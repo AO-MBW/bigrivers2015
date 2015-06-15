@@ -201,6 +201,8 @@
     </Content>
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <None Include="Properties\PublishProfiles\bigrivers-site - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\bigrivers-site - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\bigrivers.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
