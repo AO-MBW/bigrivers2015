@@ -1,6 +1,6 @@
 ﻿body {
     padding-top: 50px;
-    background-image: url(/Images/Designconcept/browntexture.jpg);
+    background-image: url(/Images/browntexture.jpg);
     background-size: 100%;
 }
 
@@ -10,7 +10,7 @@
 
 /* Content block for line-paper-background content */
 .content{
-    background-image:  url(/Images/Designconcept/bg.png);
+    background-image:  url(/Images/bg.png);
     display: inline-block;
     margin-bottom: 40px;
     padding: 20px;
@@ -46,9 +46,11 @@ h1.page-title {
     margin-left: 15px;
 }
 
-@media(max-width: 1600px ) {
-    .navbar-nav {
-        margin-left: 200px;
+@media(max-width: 1600px) {
+    @media(min-width: 768px) {
+        .navbar-nav {
+            margin-left: 220px;
+        }
     }
 }
 
@@ -71,18 +73,86 @@ div.news-archive p a {
 }
 
 .header {
+    background-image: url(/Images/header.png);
+    background-repeat: no-repeat;
+    height: 194px;
+    width: auto;
     position: relative;
     margin-top: -50px;
     width: 100%;
     overflow: hidden;
-    margin-bottom: -49px;
-    z-index: 1100;
-    pointer-events: none;
+    margin-bottom: -10px;
+}
+
+.header-coaster {
+    background-image: url(/Images/coaster.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    top: -80px;
+    left: -10px;
+    height: 300px;
+    width: 300px;
+    z-index: 1200;
+    text-align: center;
+}
+
+.header-logo {
+    width: 200px;
+    max-height: 200px;
+    border-radius: 30px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.header-buttons {
+    position: absolute;
+    left: 530px;
+    top: 123px;
+    width: 225px;
+    height: 75px;
+}
+
+.header-yt {
+    position: absolute;
+    bottom: 0px;
+}
+
+.header-fb {
+    position: absolute;
+    bottom: 0px;
+    left: 75px;
+}
+
+.header-tw {
+    position: absolute;
+    bottom: 0px;
+    left: 150px;
+}
+
+
+@media(min-width: 768px){
+    .navbar {
+        background-color: transparent;
+        background-image: url(/Images/ductape.png);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        border: none;
+        min-height: 120px;
+    }
+
+    .navbar-nav {
+        margin-top: 20px;
+    }
+
+    .menuitem-link {
+        color: black !important;
+        margin-bottom: -20px;
+    }
 }
 
 .menuitem-link {
     position: relative;
-    z-index: 1200;
 }
 
 @media(min-width: 768px ) {
@@ -199,7 +269,7 @@ div.news-archive p a {
 
 /* Footer*/
 .footer-content{
-    background-image: url(/Images/Designconcept/footer.png);
+    background-image: url(/Images/footer.png);
     opacity: 0.8;
     height: 3em;
     color: white;
