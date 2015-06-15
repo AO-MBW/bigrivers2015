@@ -194,6 +194,7 @@
     <Content Include="Images\Designconcept\polaroid.png" />
     <Content Include="Images\fb_icon.png" />
     <Content Include="Images\header.png" />
+    <Content Include="Images\kraaltjes.png" />
     <Content Include="Images\tw_icon.png" />
     <Content Include="Images\yt_icon.png" />
     <Content Include="packages.config">

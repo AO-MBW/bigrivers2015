@@ -46,6 +46,12 @@ h1.page-title {
     margin-left: 15px;
 }
 
+@media(max-width: 1600px ) {
+    .navbar-nav {
+        margin-left: 200px;
+    }
+}
+
 /* Styling for the News Archive */
 div.news-archive div.news-item {
     height: auto;
@@ -65,10 +71,19 @@ div.news-archive p a {
 }
 
 .header {
-        margin-top: -50px;
-        width: 100%;
-        overflow: hidden;
-    }
+    position: relative;
+    margin-top: -50px;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: -49px;
+    z-index: 1100;
+    pointer-events: none;
+}
+
+.menuitem-link {
+    position: relative;
+    z-index: 1200;
+}
 
 @media(min-width: 768px ) {
     .menuimg {
@@ -85,6 +100,13 @@ div.news-archive p a {
         color: black;
     }
 }
+
+.beads-left {
+    position: absolute;
+    float: left;
+    margin-top: -15px;
+}
+
 /* Frontpage Buttons*/
 /* sm-md size screen*/
 @media (min-width: 768px) {
