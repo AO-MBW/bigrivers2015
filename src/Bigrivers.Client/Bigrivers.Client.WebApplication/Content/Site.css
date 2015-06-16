@@ -39,6 +39,10 @@ h1.page-title {
     color: #000000;
 }
 
+h3.page-title {
+    font-family: "mari&david";
+}
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -365,6 +369,7 @@ div.news-detail div.news-footer span {
 }
 
 .day-btn {
+    font-family: "mari&david";
     display: inline-block;
     margin-right: 10px;
 }
@@ -373,24 +378,26 @@ div.news-detail div.news-footer span {
     font-size: 1.5em;
 }
 
-.day-btn:hover {
+.daybtn:hover {
     text-decoration: underline;
     cursor: pointer;
 }
 
-.day-table.non-selected {
+.daytable.non-selected {
     display: none;
 }
 
-.day-table {
+.daytable {
     width: 100%;
 }
 
-.day-table th {
-    font-size: 1.2em;
+.daytable tr th {
+    font-family: "mari&david";
+    font-weight: normal;
+    font-size: 1.7em;
 }
 
-.day-table td {
+.daytable td {
     width: 25%;
 }
 
