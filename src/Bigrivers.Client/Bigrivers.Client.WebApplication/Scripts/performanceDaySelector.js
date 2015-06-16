@@ -5,7 +5,7 @@
     });
     $(this).removeClass("non-selected").addClass("selected");
 
-    var tables = $(".day-table");
+    var tables = $(".daytable");
     $.each(tables, function () {
         $(this).removeClass("selected").addClass("non-selected");
     });
