@@ -187,12 +187,15 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\background.jpg" />
+    <Content Include="Images\beer.png" />
     <Content Include="Images\br15.jpg" />
     <Content Include="Images\coaster.png" />
     <Content Include="Images\bg.png" />
     <Content Include="Images\browntexture.jpg" />
     <Content Include="Images\default_logo.jpg" />
     <Content Include="Images\footer.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\peanuts.png" />
     <Content Include="Images\polaroid.png" />
     <Content Include="Images\ductape.png" />
     <Content Include="Images\fb_bottlecap.png" />
