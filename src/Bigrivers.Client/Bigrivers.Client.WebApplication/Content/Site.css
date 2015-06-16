@@ -130,7 +130,9 @@ div.news-archive p a {
 }
 
 .header-buttons {
-    float: right;
+    position: absolute;
+    right: 0px;
+    top: 0px;
     width: 120px;
     margin-right: 20px;
     margin-top: 18px;
@@ -174,6 +176,26 @@ div.news-archive p a {
     .menuitem-link {
         color: black !important;
         margin-bottom: -20px;
+        margin-top: 5px;
+        font-family: "mari&david";
+        font-size: 36px;
+    }
+
+    .dropdown-toggle {
+        background-color: transparent !important;
+    }
+
+    .dropdown-menu {
+        margin-top: 15px !important;
+    }
+
+    .dropdown-menuitem {
+        margin-top: -10px;
+        margin-bottom: -10px;
+    }
+
+    .dropdown-menuitem-link {
+        color: black !important;
         margin-top: 5px;
         font-family: "mari&david";
         font-size: 36px;

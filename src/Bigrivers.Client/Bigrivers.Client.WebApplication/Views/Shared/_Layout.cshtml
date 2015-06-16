@@ -15,17 +15,16 @@
     @RenderSection("scripts", required: false)
 </head>
     <body>
-
         <div class="header">
             <div class="header-items hidden-xs">
                 <img class="header-beer" src="~/Images/beer.png" />
                 <img class="header-peanuts" src="~/Images/peanuts.png" />
             </div>
-            <div class="header-buttons hidden-xs">
-                <a href="@ViewBag.SiteInformation.YoutubeChannel" target="_blank"><img class="header-yt img-circle" src="~/Images/yt_bottlecap.png" /></a>
-                <a href="@ViewBag.SiteInformation.Facebook" target="_blank"><img class="header-fb img-circle" src="~/Images/fb_bottlecap.png" /></a>
-                <a href="@ViewBag.SiteInformation.Twitter" target="_blank"><img class="header-tw img-circle" src="~/Images/tw_bottlecap.png" /></a>
-            </div>
+        </div>
+        <div class="header-buttons hidden-xs">
+            <a href="@ViewBag.SiteInformation.YoutubeChannel" target="_blank"><img class="header-yt img-circle" src="~/Images/yt_bottlecap.png" /></a>
+            <a href="@ViewBag.SiteInformation.Facebook" target="_blank"><img class="header-fb img-circle" src="~/Images/fb_bottlecap.png" /></a>
+            <a href="@ViewBag.SiteInformation.Twitter" target="_blank"><img class="header-tw img-circle" src="~/Images/tw_bottlecap.png" /></a>
         </div>
         <div class="header-coaster img-circle">
             <div class="pseudo-align"></div>
@@ -54,7 +53,7 @@
                                     <ul class="dropdown-menu" role="menu">
                                         @foreach (var child in childList.Where(m => m.Parent == item.Id))
                                         {
-                                            <li><a class="menuitem-link" href="@LinkHelper.GetUrl(child.Target)">@child.DisplayName</a></li>
+                                            <li class="dropdown-menuitem"><a class="dropdown-menuitem-link" href="@LinkHelper.GetUrl(child.Target)">@child.DisplayName</a></li>
                                         }
                                     </ul>
                                 </li>
