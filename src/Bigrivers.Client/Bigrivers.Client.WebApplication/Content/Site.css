@@ -255,7 +255,7 @@ div.news-archive p a {
 }
 
 /* xs size screens*/
-@media (max-width: 768px) {
+@media (max-width: 400px) {
     .ButtonTitle, .CarouselTitle {
         font-size: 6pt;
     }
@@ -274,6 +274,31 @@ div.news-archive p a {
         left: 10.5%;
         width: 59%;
         height: 85%;
+    }
+}
+
+/* xxs size screens*/
+@media (max-width: 768px) {
+    @media (min-width: 400px){
+        .ButtonTitle, .CarouselTitle {
+            font-size: 12pt;
+        }
+
+        .ButtonImg {
+            position: absolute;
+            top: 10.1%;
+            left: 15.5%;
+            width: 68.7%;
+            height: 63%;
+        }
+
+        .carousel-inner{
+            position: absolute;
+            top: 10%;
+            left: 11.5%;
+            width: 68.7%;
+            height: 85%;
+        }
     }
 }
 
