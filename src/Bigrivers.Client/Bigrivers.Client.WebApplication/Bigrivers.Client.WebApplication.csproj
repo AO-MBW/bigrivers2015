@@ -187,11 +187,15 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\background.jpg" />
+    <Content Include="Images\beer.png" />
     <Content Include="Images\br15.jpg" />
     <Content Include="Images\coaster.png" />
     <Content Include="Images\bg.png" />
     <Content Include="Images\browntexture.jpg" />
+    <Content Include="Images\default_logo.jpg" />
     <Content Include="Images\footer.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\peanuts.png" />
     <Content Include="Images\polaroid.png" />
     <Content Include="Images\ductape.png" />
     <Content Include="Images\fb_bottlecap.png" />
@@ -207,6 +211,7 @@
     </Content>
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="fonts\MARI&amp;DAVID.ttf" />
     <None Include="Properties\PublishProfiles\bigrivers-site - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\bigrivers-site - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\bigrivers.pubxml" />
@@ -264,7 +269,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="fonts\" />
     <Folder Include="Images\Designconcept\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>

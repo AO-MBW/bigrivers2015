@@ -1,7 +1,13 @@
-﻿body {
+﻿@font-face {
+    font-family: 'mari&david';
+    src: url('/fonts/MARI&DAVID.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+       url('MARI&DAVID.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+
+body {
     padding-top: 50px;
     background-image: url(/Images/browntexture.jpg);
-    background-size: 100%;
+    background-size: cover;
 }
 
 .clear {
@@ -9,7 +15,7 @@
 }
 
 /* Content block for line-paper-background content */
-.content{
+.content {
     background-image:  url(/Images/bg.png);
     display: inline-block;
     margin-bottom: 40px;
@@ -29,7 +35,12 @@
 }
 
 h1.page-title {
+    font-family: "mari&david";
     color: #000000;
+}
+
+h3.page-title {
+    font-family: "mari&david";
 }
 
 
@@ -44,14 +55,6 @@ h1.page-title {
     width: 100px;
     height: 75px;
     margin-left: 15px;
-}
-
-@media(max-width: 1600px) {
-    @media(min-width: 768px) {
-        .navbar-nav {
-            margin-left: 220px;
-        }
-    }
 }
 
 /* Styling for the News Archive */
@@ -105,29 +108,52 @@ div.news-archive p a {
     vertical-align: middle;
 }
 
-.header-buttons {
-    position: absolute;
-    left: 530px;
-    top: 123px;
-    width: 225px;
-    height: 75px;
+.header-items {
+    margin-left: auto;
+    margin-right: auto;
+    width: 510px;
+    margin-top: -60px;
 }
 
-.header-yt {
-    position: absolute;
-    bottom: 0px;
+.header-beer {
+    float: left;
+    height: 150px;
+    width: 150px;
+    margin-top: 35px;
+    margin-left: 160px;
+}
+
+.header-peanuts {
+    float: left;
+    height: 180px;
+    width: 180px;
+}
+
+.header-buttons {
+    float: right;
+    width: 120px;
+    margin-right: 20px;
+    margin-top: 18px;
+}
+
+.header-yt{
+    width: 60px;
+    height: 60px;
+    float: left;
 }
 
 .header-fb {
-    position: absolute;
-    bottom: 0px;
-    left: 75px;
+    width: 60px;
+    height: 60px;
+    float: left;
+    margin-top: 15px;
 }
 
 .header-tw {
-    position: absolute;
-    bottom: 0px;
-    left: 150px;
+    width: 60px;
+    height: 60px;
+    margin-left: 15px;
+    margin-top: -10px;
 }
 
 
@@ -148,6 +174,9 @@ div.news-archive p a {
     .menuitem-link {
         color: black !important;
         margin-bottom: -20px;
+        margin-top: 5px;
+        font-family: "mari&david";
+        font-size: 36px;
     }
 }
 
@@ -175,13 +204,15 @@ div.news-archive p a {
     position: absolute;
     float: left;
     margin-top: -15px;
+    z-index: -1;
 }
 
 /* Frontpage Buttons*/
 /* sm-md size screen*/
 @media (min-width: 768px) {
     .ButtonTitle, .CarouselTitle {
-        font-size: 12pt;
+        font-family: "mari&david";
+        font-size: 20pt;
     }
 
     .ButtonImg{ 
@@ -355,6 +386,7 @@ div.news-detail div.news-footer span {
 }
 
 .day-btn {
+    font-family: "mari&david";
     display: inline-block;
     margin-right: 10px;
 }
@@ -363,24 +395,26 @@ div.news-detail div.news-footer span {
     font-size: 1.5em;
 }
 
-.day-btn:hover {
+.daybtn:hover {
     text-decoration: underline;
     cursor: pointer;
 }
 
-.day-table.non-selected {
+.daytable.non-selected {
     display: none;
 }
 
-.day-table {
+.daytable {
     width: 100%;
 }
 
-.day-table th {
-    font-size: 1.2em;
+.daytable tr th {
+    font-family: "mari&david";
+    font-weight: normal;
+    font-size: 1.7em;
 }
 
-.day-table td {
+.daytable td {
     width: 25%;
 }
 
