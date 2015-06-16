@@ -208,6 +208,7 @@
     </Content>
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="fonts\MARI&amp;DAVID.ttf" />
     <None Include="Properties\PublishProfiles\bigrivers-site - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\bigrivers-site - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\bigrivers.pubxml" />
@@ -265,7 +266,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="fonts\" />
     <Folder Include="Images\Designconcept\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
