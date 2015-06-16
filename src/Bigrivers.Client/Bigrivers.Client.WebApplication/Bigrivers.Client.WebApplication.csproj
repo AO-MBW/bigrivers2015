@@ -188,14 +188,19 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\background.jpg" />
     <Content Include="Images\br15.jpg" />
-    <Content Include="Images\Designconcept\bg.png" />
-    <Content Include="Images\Designconcept\browntexture.jpg" />
-    <Content Include="Images\Designconcept\footer.png" />
-    <Content Include="Images\Designconcept\polaroid.png" />
+    <Content Include="Images\coaster.png" />
+    <Content Include="Images\bg.png" />
+    <Content Include="Images\browntexture.jpg" />
+    <Content Include="Images\footer.png" />
+    <Content Include="Images\polaroid.png" />
+    <Content Include="Images\ductape.png" />
+    <Content Include="Images\fb_bottlecap.png" />
     <Content Include="Images\fb_icon.png" />
     <Content Include="Images\header.png" />
     <Content Include="Images\kraaltjes.png" />
+    <Content Include="Images\tw_bottlecap.png" />
     <Content Include="Images\tw_icon.png" />
+    <Content Include="Images\yt_bottlecap.png" />
     <Content Include="Images\yt_icon.png" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
@@ -260,6 +265,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="fonts\" />
+    <Folder Include="Images\Designconcept\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
