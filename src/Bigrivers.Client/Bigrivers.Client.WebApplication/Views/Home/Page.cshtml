@@ -5,9 +5,18 @@
 
 <div class="content">
     <h1 class="page-title">@page.Title</h1>
-    @Html.Raw(page.EditorContent)
-    <br class="clear" />
-    <iframe src="@page.IFrame"></iframe>
-    <br class="clear" />
-    @Html.Raw(page.HtmlContent)
+    
+    @if (page.EditorContent != null) { 
+        @Html.Raw(page.EditorContent);
+        <br class="clear" />
+    }
+    
+    @if (page.IFrame != null) {
+        <iframe src="@page.IFrame"></iframe>
+        <br class="clear" />
+    }
+    
+    @if (page.HtmlContent != null) {
+        @Html.Raw(page.HtmlContent)
+    }
 </div>
