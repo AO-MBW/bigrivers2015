@@ -9,10 +9,16 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Display(Name = "Naam")]
         public string Title { get; set; }
 
-        [Required]
         [AllowHtml]
         [Display(Name = "Inhoud")]
-        public string Content { get; set; }
+        public string EditorContent { get; set; }
+
+        [Display(Name = "Inhoud")]
+        public string IFrame { get; set; }
+
+        [AllowHtml]
+        [Display(Name = "Inhoud")]
+        public string HtmlContent { get; set; }
 
         public bool Status { get; set; }
     }

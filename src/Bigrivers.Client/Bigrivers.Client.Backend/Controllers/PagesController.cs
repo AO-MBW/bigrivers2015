@@ -55,7 +55,9 @@ namespace Bigrivers.Client.Backend.Controllers
             var singlePage = new Page
             {
                 Title = model.Title,
-                Content = model.Content,
+                EditorContent = model.EditorContent,
+                HtmlContent = model.HtmlContent,
+                IFrame = model.IFrame,
                 EditedBy = User.Identity.Name,
                 Created = DateTime.Now,
                 Edited = DateTime.Now,
@@ -77,7 +79,9 @@ namespace Bigrivers.Client.Backend.Controllers
             var model = new PageViewModel
             {
                 Title = singlePage.Title,
-                Content = singlePage.Content,
+                EditorContent = singlePage.EditorContent,
+                HtmlContent = singlePage.HtmlContent,
+                IFrame = singlePage.IFrame,
                 Status = singlePage.Status
             };
 
@@ -100,7 +104,9 @@ namespace Bigrivers.Client.Backend.Controllers
             }
 
             singlePage.Title = model.Title;
-            singlePage.Content = model.Content;
+            singlePage.EditorContent = model.EditorContent;
+            singlePage.HtmlContent = model.HtmlContent;
+            singlePage.IFrame = model.IFrame;
             singlePage.EditedBy = User.Identity.Name;
             singlePage.Edited = DateTime.Now;
             singlePage.Status = model.Status;
