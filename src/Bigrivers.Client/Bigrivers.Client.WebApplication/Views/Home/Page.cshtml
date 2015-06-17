@@ -6,17 +6,20 @@
 <div class="content">
     <h1 class="page-title">@page.Title</h1>
     
-    @if (page.EditorContent != null) { 
-        @Html.Raw(page.EditorContent);
+    @if (page.Content != null)
+    { 
+        @Html.Raw(page.Content);
         <br class="clear" />
     }
     
-        @if (page.IFrameLink != null) {
-            <iframe class="page-iframe" src="@page.IFrameLink" scrolling="no" style="height: @(page.IFrameHeight != null ? page.IFrameHeight.ToString() : "500")px "></iframe>
-        <br class="clear" />
+    @if (page.IFrameLink != null)
+    {
+        <iframe class="page-iframe" src="@page.IFrameLink" scrolling="no" style="height: @(page.IFrameHeight != null ? page.IFrameHeight.ToString() : "500")px "></iframe>
+    <br class="clear" />
     }
     
-    @if (page.HtmlContent != null) {
+    @if (page.HtmlContent != null)
+    {
         @Html.Raw(page.HtmlContent)
     }
 </div>

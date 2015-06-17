@@ -55,7 +55,7 @@ namespace Bigrivers.Client.Backend.Controllers
             var singlePage = new Page
             {
                 Title = model.Title,
-                EditorContent = model.EditorContent,
+                Content = model.Content,
                 HtmlContent = model.HtmlContent,
                 IFrameLink = model.IFrameLink,
                 IFrameHeight = model.IFrameHeight,
@@ -80,7 +80,7 @@ namespace Bigrivers.Client.Backend.Controllers
             var model = new PageViewModel
             {
                 Title = singlePage.Title,
-                EditorContent = singlePage.EditorContent,
+                Content = singlePage.Content,
                 HtmlContent = singlePage.HtmlContent,
                 IFrameLink = singlePage.IFrameLink,
                 IFrameHeight = singlePage.IFrameHeight,
@@ -106,7 +106,7 @@ namespace Bigrivers.Client.Backend.Controllers
             }
 
             singlePage.Title = model.Title;
-            singlePage.EditorContent = model.EditorContent;
+            singlePage.Content = model.Content;
             singlePage.HtmlContent = model.HtmlContent;
             singlePage.IFrameLink = model.IFrameLink;
             singlePage.IFrameHeight = model.IFrameHeight;

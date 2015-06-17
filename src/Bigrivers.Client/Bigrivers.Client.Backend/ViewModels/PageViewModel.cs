@@ -11,7 +11,7 @@ namespace Bigrivers.Client.Backend.ViewModels
 
         [AllowHtml]
         [Display(Name = "Inhoud")]
-        public string EditorContent { get; set; }
+        public string Content { get; set; }
 
         [Display(Name = "IFrame URL")]
         public string IFrameLink { get; set; }
