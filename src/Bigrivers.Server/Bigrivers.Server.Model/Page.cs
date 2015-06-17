@@ -7,7 +7,10 @@ namespace Bigrivers.Server.Model
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Content { get; set; }
+        public string EditorContent { get; set; }
+        public string IFrameLink { get; set; }
+        public int IFrameHeight { get; set; }
+        public string HtmlContent { get; set; }
 
         [DefaultValue(true)]
         public bool Status { get; set; }

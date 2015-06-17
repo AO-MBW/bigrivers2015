@@ -23,7 +23,7 @@ namespace Bigrivers.Server.Data.Migrations
             context.Events.RemoveRange(context.Events);
             context.Performances.RemoveRange(context.Performances);
             context.MenuItems.RemoveRange(context.MenuItems);
-            
+            context.ButtonItems.RemoveRange(context.ButtonItems);
             context.WidgetItems.RemoveRange(context.WidgetItems);
             context.NewsItems.RemoveRange(context.NewsItems);
             context.Sponsors.RemoveRange(context.Sponsors);

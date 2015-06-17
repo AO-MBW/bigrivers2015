@@ -103,7 +103,6 @@ div.news-archive p a {
 .header-logo {
     width: 200px;
     max-height: 200px;
-    border-radius: 30px;
     display: inline-block;
     vertical-align: middle;
 }
@@ -171,6 +170,7 @@ div.news-archive p a {
 
     .navbar-nav {
         margin-top: 20px;
+        margin-left: 20px;
     }
 
     .menuitem-link {
@@ -225,7 +225,7 @@ div.news-archive p a {
 .beads-left {
     position: absolute;
     float: left;
-    margin-top: -15px;
+    margin-top: -25px;
     z-index: -1;
 }
 
@@ -234,7 +234,7 @@ div.news-archive p a {
 @media (min-width: 768px) {
     .ButtonTitle, .CarouselTitle {
         font-family: "mari&david";
-        font-size: 20pt;
+        font-size: 15pt;
     }
 
     .ButtonImg{ 
@@ -523,4 +523,10 @@ address{
 
 .EventsPrice {
     width: 100px;
+}
+
+/* Content Pages*/
+
+.page-iframe {
+    width: 100%;
 }

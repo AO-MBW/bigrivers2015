@@ -8,8 +8,16 @@
             <fieldset>
                 @Html.LabelFor(m => m.Title)
                 @Html.TextBoxFor(m => m.Title)
-                @Html.LabelFor(m => m.Content)
-                @Html.TextAreaFor(m => m.Content, new { @Id = "ckeditor" })
+            </fieldset>
+            <fieldset>
+                @Html.LabelFor(m => m.EditorContent)
+                @Html.TextAreaFor(m => m.EditorContent, new { @Id = "ckeditor" })
+                @Html.LabelFor(m => m.HtmlContent)
+                @Html.TextAreaFor(m => m.HtmlContent)
+                @Html.LabelFor(m => m.IFrameLink)
+                @Html.TextBoxFor(m => m.IFrameLink)
+                @Html.LabelFor(m => m.IFrameHeight)
+                @Html.TextBoxFor(m => m.IFrameHeight)
                 <script>
                     // Replace the <textarea id="ckeditor"> with a CKEditor
                     // instance, using default configuration.
