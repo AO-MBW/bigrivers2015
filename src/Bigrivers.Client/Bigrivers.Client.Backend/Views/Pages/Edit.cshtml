@@ -14,8 +14,10 @@
                 @Html.TextAreaFor(m => m.EditorContent, new { @Id = "ckeditor" })
                 @Html.LabelFor(m => m.HtmlContent)
                 @Html.TextAreaFor(m => m.HtmlContent)
-                @Html.LabelFor(m => m.IFrame)
-                @Html.TextBoxFor(m => m.IFrame)
+                @Html.LabelFor(m => m.IFrameLink)
+                @Html.TextBoxFor(m => m.IFrameLink)
+                @Html.LabelFor(m => m.IFrameHeight)
+                @Html.TextBoxFor(m => m.IFrameHeight)
                 <script>
                     // Replace the <textarea id="ckeditor"> with a CKEditor
                     // instance, using default configuration.

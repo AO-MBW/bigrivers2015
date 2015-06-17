@@ -57,7 +57,8 @@ namespace Bigrivers.Client.Backend.Controllers
                 Title = model.Title,
                 EditorContent = model.EditorContent,
                 HtmlContent = model.HtmlContent,
-                IFrame = model.IFrame,
+                IFrameLink = model.IFrameLink,
+                IFrameHeight = model.IFrameHeight,
                 EditedBy = User.Identity.Name,
                 Created = DateTime.Now,
                 Edited = DateTime.Now,
@@ -81,7 +82,8 @@ namespace Bigrivers.Client.Backend.Controllers
                 Title = singlePage.Title,
                 EditorContent = singlePage.EditorContent,
                 HtmlContent = singlePage.HtmlContent,
-                IFrame = singlePage.IFrame,
+                IFrameLink = singlePage.IFrameLink,
+                IFrameHeight = singlePage.IFrameHeight,
                 Status = singlePage.Status
             };
 
@@ -106,7 +108,8 @@ namespace Bigrivers.Client.Backend.Controllers
             singlePage.Title = model.Title;
             singlePage.EditorContent = model.EditorContent;
             singlePage.HtmlContent = model.HtmlContent;
-            singlePage.IFrame = model.IFrame;
+            singlePage.IFrameLink = model.IFrameLink;
+            singlePage.IFrameHeight = model.IFrameHeight;
             singlePage.EditedBy = User.Identity.Name;
             singlePage.Edited = DateTime.Now;
             singlePage.Status = model.Status;

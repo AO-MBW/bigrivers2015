@@ -11,8 +11,8 @@
         <br class="clear" />
     }
     
-    @if (page.IFrame != null) {
-        <iframe src="@page.IFrame"></iframe>
+        @if (page.IFrameLink != null) {
+            <iframe class="page-iframe" src="@page.IFrameLink" scrolling="no" style="height: @(page.IFrameHeight != null ? page.IFrameHeight.ToString() : "500")px "></iframe>
         <br class="clear" />
     }
     

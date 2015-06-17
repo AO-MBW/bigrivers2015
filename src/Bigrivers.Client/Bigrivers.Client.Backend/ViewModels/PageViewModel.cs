@@ -13,11 +13,14 @@ namespace Bigrivers.Client.Backend.ViewModels
         [Display(Name = "Inhoud")]
         public string EditorContent { get; set; }
 
-        [Display(Name = "Inhoud")]
-        public string IFrame { get; set; }
+        [Display(Name = "IFrame URL")]
+        public string IFrameLink { get; set; }
+
+        [Display(Name = "IFrame Hoogte")]
+        public int IFrameHeight { get; set; }
 
         [AllowHtml]
-        [Display(Name = "Inhoud")]
+        [Display(Name = "HTML Content")]
         public string HtmlContent { get; set; }
 
         public bool Status { get; set; }
