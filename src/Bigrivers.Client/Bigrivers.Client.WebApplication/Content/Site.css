@@ -1,13 +1,13 @@
 ﻿@font-face {
     font-family: 'mari&david';
     src: url('/fonts/MARI&DAVID.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-       url('MARI&DAVID.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+       url('/fonts/MARI&DAVID.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
 }
 
 body {
     padding-top: 50px;
     background-image: url(/Images/browntexture.jpg);
-    background-size: 100%;
+    background-size: cover;
 }
 
 .clear {
@@ -55,14 +55,6 @@ h3.page-title {
     width: 100px;
     height: 75px;
     margin-left: 15px;
-}
-
-@media(max-width: 1600px) {
-    @media(min-width: 768px) {
-        .navbar-nav {
-            margin-left: 220px;
-        }
-    }
 }
 
 /* Styling for the News Archive */
@@ -116,29 +108,54 @@ div.news-archive p a {
     vertical-align: middle;
 }
 
-.header-buttons {
-    position: absolute;
-    left: 530px;
-    top: 123px;
-    width: 225px;
-    height: 75px;
+.header-items {
+    margin-left: auto;
+    margin-right: auto;
+    width: 510px;
+    margin-top: -60px;
 }
 
-.header-yt {
+.header-beer {
+    float: left;
+    height: 150px;
+    width: 150px;
+    margin-top: 35px;
+    margin-left: 160px;
+}
+
+.header-peanuts {
+    float: left;
+    height: 180px;
+    width: 180px;
+}
+
+.header-buttons {
     position: absolute;
-    bottom: 0px;
+    right: 0px;
+    top: 0px;
+    width: 120px;
+    margin-right: 20px;
+    margin-top: 18px;
+}
+
+.header-yt{
+    width: 60px;
+    height: 60px;
+    float: left;
 }
 
 .header-fb {
-    position: absolute;
-    bottom: 0px;
-    left: 75px;
+    width: 60px;
+    height: 60px;
+    float: left;
+    margin-top: 15px;
 }
 
 .header-tw {
-    position: absolute;
-    bottom: 0px;
-    left: 150px;
+    width: 60px;
+    height: 60px;
+    margin-left: 15px;
+    margin-top: -10px;
 }
 
 
@@ -159,8 +176,29 @@ div.news-archive p a {
     .menuitem-link {
         color: black !important;
         margin-bottom: -20px;
+        margin-top: 5px;
         font-family: "mari&david";
-        font-size: 25px;
+        font-size: 36px;
+    }
+
+    .dropdown-toggle {
+        background-color: transparent !important;
+    }
+
+    .dropdown-menu {
+        margin-top: 15px !important;
+    }
+
+    .dropdown-menuitem {
+        margin-top: -10px;
+        margin-bottom: -10px;
+    }
+
+    .dropdown-menuitem-link {
+        color: black !important;
+        margin-top: 5px;
+        font-family: "mari&david";
+        font-size: 36px;
     }
 }
 
@@ -188,6 +226,7 @@ div.news-archive p a {
     position: absolute;
     float: left;
     margin-top: -15px;
+    z-index: -1;
 }
 
 /* Frontpage Buttons*/
@@ -216,7 +255,7 @@ div.news-archive p a {
 }
 
 /* xs size screens*/
-@media (max-width: 768px) {
+@media (max-width: 400px) {
     .ButtonTitle, .CarouselTitle {
         font-size: 6pt;
     }
@@ -234,6 +273,29 @@ div.news-archive p a {
         top: 10%;
         left: 10.5%;
         width: 59%;
+        height: 85%;
+    }
+}
+
+/* xxs size screens*/
+@media (max-width: 768px) and (min-width: 401px) {
+    .ButtonTitle, .CarouselTitle {
+        font-size: 12pt;
+    }
+
+    .ButtonImg {
+        position: absolute;
+        top: 10.1%;
+        left: 15.5%;
+        width: 68.7%;
+        height: 63%;
+    }
+
+    .carousel-inner{
+        position: absolute;
+        top: 10%;
+        left: 11.5%;
+        width: 68.7%;
         height: 85%;
     }
 }
