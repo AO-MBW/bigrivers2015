@@ -14,6 +14,7 @@ namespace Bigrivers.Client.WebApplication.ViewModels
             get { return Twitter.Split('/').Last(); }
         }
 
+        public string Date { get; set; }
         public File Image { get; set; }
     }
 }

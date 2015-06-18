@@ -28,7 +28,7 @@
             <a href="@ViewBag.SiteInformation.Twitter" target="_blank"><img class="header-tw img-circle" src="~/Images/tw_bottlecap.png" /></a>
         </div>
         <div class="header-coaster img-circle">
-            <div class="header-date-div"><h3 class="header-date">@ViewBag.SiteInformation.Date</h3></div>
+            <div class="header-date-div"><h3 class="header-date">@(ViewBag.SiteInformation.Date ?? "")</h3></div>
             <div class="pseudo-align"></div>
             <a href="/Home/Index"><img class="header-logo" src="@(ViewBag.SiteInformation.Image != null ? ImageHelper.GetImageUrl(ViewBag.SiteInformation.Image) : "/Images/default_logo.jpg")" /></a>
         </div>
