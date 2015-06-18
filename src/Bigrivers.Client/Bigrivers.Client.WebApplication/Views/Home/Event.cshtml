@@ -26,33 +26,33 @@
     <div class="day-btn-list">
         @foreach (var day in performancesByDate)
         {
-            <h3 id="date-@day.Date.Day" class="day-btn @(day == performancesByDate.First() ? "selected" : "non-selected" )">@day.Date.ToString("dddd dd MMMM")</h3>
+            <h3 id="date-@day.Date.Day@day.Date.Month@day.Date.Year" class="day-btn @(day == performancesByDate.First() ? "selected" : "non-selected" )">@day.Date.ToString("dddd dd MMMM")</h3>
         }
     </div>
 
-    foreach (var day in performancesByDate)
-    {
-        <table id="date-@day.Date.Day" class="daytable @(day == performancesByDate.First() ? "selected" : "non-selected")">
-        
-            @foreach (var stage in day.Stages)
-            {
-                <thead>
-                    <tr>
-                        <th>@Html.ActionLink(stage.Stage.Stagename, "Location", "Home", new { id = stage.Stage.Id }, null)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var p in stage.Performances)
-                    {
+        foreach (var day in performancesByDate)
+        {
+            <table id="date-@day.Date.Day@day.Date.Month@day.Date.Year" class="daytable @(day == performancesByDate.First() ? "selected" : "non-selected")">
+
+                @foreach (var stage in day.Stages)
+                {
+                    <thead>
                         <tr>
-                            <td>@p.Start.DateTime.ToString("HH:mm") - @p.End.DateTime.ToString("HH:mm")</td>
-                            <td>@Html.ActionLink(p.Artist.Name, "Artists", "Home", new {id = p.Artist.Id}, null)</td>
+                            <th>@Html.ActionLink(stage.Stage.Stagename, "Location", "Home", new { id = stage.Stage.Id }, null)</th>
                         </tr>
-                    }
-                </tbody>
-            }
-                
-        </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in stage.Performances)
+                        {
+                            <tr>
+                                <td>@p.Start.DateTime.ToString("HH:mm") - @p.End.DateTime.ToString("HH:mm")</td>
+                                <td>@Html.ActionLink(p.Artist.Name, "Artists", "Home", new { id = p.Artist.Id }, null)</td>
+                            </tr>
+                        }
+                    </tbody>
+                }
+
+            </table>
         }
     }
 </div>
