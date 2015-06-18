@@ -107,6 +107,20 @@ div.news-archive p a {
     vertical-align: middle;
 }
 
+.header-date-div {
+    position: absolute;
+    left: 75px;
+    top: 205px;
+    color: white;
+    text-align: center;
+    width: 160px;
+}
+
+.header-date {
+    font-family: "mari&david";
+    font-size: 25pt;
+}
+
 .header-items {
     margin-left: auto;
     margin-right: auto;
