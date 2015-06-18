@@ -39,7 +39,8 @@ namespace Bigrivers.Client.WebApplication.Controllers
                 YoutubeChannel = null,
                 Facebook = null,
                 Twitter = null,
-                Image = null
+                Image = null,
+                Date = null
             };
             
             ViewBag.SiteInformation = new SettingsViewModel
@@ -47,7 +48,8 @@ namespace Bigrivers.Client.WebApplication.Controllers
                 YoutubeChannel = siteInformation.YoutubeChannel,
                 Facebook = siteInformation.Facebook,
                 Twitter = siteInformation.Twitter,
-                Image = siteInformation.Image
+                Image = siteInformation.Image,
+                Date = siteInformation.Date
             };
         }
 
