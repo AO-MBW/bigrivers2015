@@ -42,19 +42,28 @@ namespace Bigrivers.Client.WebApplication.Controllers
         private ActionResult Event(int id)
         {
             var currentEvent = AccessLayer.Events
+                .Where(m => m.Status)
                 .SingleOrDefault(e => e.Id == id);
 
             if (currentEvent == null) return RedirectToAction("Events");
 
             var performancesByDate = currentEvent.Performances
-                .Where(m => m.Status)
-                .DistinctBy(m => m.Start.Day)
-                .Select(date => new PerformanceListViewModel
+                .DistinctBy(m => m.Start.Date)
+                .OrderBy(m => m.Start.Date)
+                .Select(date => new StagesViewModel
             {
                 Date = date.Start.Date,
-                Performances = currentEvent.Performances
-                .Where(m => m.Status && m.Start.Day == date.Start.Day)
-                .ToList()
+                Stages = currentEvent.Performances
+                .Where(m => m.Start.Date == date.Start.Date)
+                .DistinctBy(m => m.Location)
+                .Select(stage => new PerformancesByLocationViewModel
+                {
+                    Stage = stage.Location,
+                    Performances = currentEvent.Performances
+                    .Where(m => m.Location == stage.Location && m.Start.Date == date.Start.Date)
+                    .OrderBy(m => m.Start.DateTime)
+                    .ToList()
+                }).ToList()
             }).ToList();
 
             ViewBag.PerformancesByDate = performancesByDate;

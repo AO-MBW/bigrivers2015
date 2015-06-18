@@ -442,19 +442,26 @@ div.news-detail div.news-footer span {
 /* styling for the schedule / performance overview */
 .day-btn-list {
     margin-bottom: 30px;
+    height: auto;
 }
 
 .day-btn {
     font-family: "mari&david";
     display: inline-block;
     margin-right: 10px;
+    margin: 0 15px 0 0;
 }
 
 .day-btn.non-selected {
     font-size: 1.5em;
 }
 
-.daybtn:hover {
+.day-btn.selected {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.day-btn:hover {
     text-decoration: underline;
     cursor: pointer;
 }
@@ -464,17 +471,13 @@ div.news-detail div.news-footer span {
 }
 
 .daytable {
-    width: 100%;
+    width: 40%;
 }
 
 .daytable tr th {
     font-family: "mari&david";
     font-weight: normal;
     font-size: 1.7em;
-}
-
-.daytable td {
-    width: 25%;
 }
 
 /* Contact page styling */
