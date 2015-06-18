@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using Bigrivers.Client.WebApplication.ViewModels;
 using Bigrivers.Server.Data;
+using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.WebApplication.Controllers
 {
@@ -32,7 +34,21 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
             ViewBag.MenuItems = AccessLayer.MenuItems.Where(m => m.Status && !m.Deleted && m.Parent == null).OrderBy(m => m.Order).ToList();
             ViewBag.MenuItemsChild = AccessLayer.MenuItems.Where(m => m.Status && !m.Deleted && m.Parent != null).OrderBy(m => m.Order).ToList();
-            ViewBag.SiteInformation = AccessLayer.SiteInformation.FirstOrDefault();
+            var siteInformation = AccessLayer.SiteInformation.FirstOrDefault() ?? new SiteInformation
+            {
+                YoutubeChannel = null,
+                Facebook = null,
+                Twitter = null,
+                Image = null
+            };
+            
+            ViewBag.SiteInformation = new SettingsViewModel
+            {
+                YoutubeChannel = siteInformation.YoutubeChannel,
+                Facebook = siteInformation.Facebook,
+                Twitter = siteInformation.Twitter,
+                Image = siteInformation.Image
+            };
         }
 
     }

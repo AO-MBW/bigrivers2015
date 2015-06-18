@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
+using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.WebApplication.ViewModels
 {
@@ -11,6 +8,12 @@ namespace Bigrivers.Client.WebApplication.ViewModels
         public string YoutubeChannel { get; set; }
         public string Facebook { get; set; }
         public string Twitter { get; set; }
-        public string Hashtag { get; set; }
+
+        public string Hashtag
+        {
+            get { return Twitter.Split('/').Last(); }
+        }
+
+        public File Image { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace Bigrivers.Client.Backend.Controllers
             var performances = GetPerformances();
             var model = performances
                 .Where(m => m.Status)
+                .OrderBy(m => m.Start)
                 .ToList();
 
             model.AddRange(performances

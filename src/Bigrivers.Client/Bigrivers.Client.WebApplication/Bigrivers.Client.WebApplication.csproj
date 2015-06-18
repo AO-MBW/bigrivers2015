@@ -173,7 +173,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\PerformanceListViewModel.cs" />
+    <Compile Include="Models\StagesViewModel.cs" />
+    <Compile Include="Models\PerformancesByLocationViewModel.cs" />
     <Compile Include="Models\SettingsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -193,6 +194,7 @@
     <Content Include="Images\bg.png" />
     <Content Include="Images\browntexture.jpg" />
     <Content Include="Images\default_logo.jpg" />
+    <Content Include="Images\favicon.ico" />
     <Content Include="Images\footer.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\peanuts.png" />

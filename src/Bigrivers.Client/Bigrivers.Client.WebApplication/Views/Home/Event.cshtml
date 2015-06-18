@@ -1,7 +1,7 @@
 ﻿@using Bigrivers.Client.WebApplication.Models
 @{
     Event currentEvent = Model;
-    List<PerformanceListViewModel> performancesByDate = ViewBag.PerformancesByDate;
+    List<StagesViewModel> performancesByDate = ViewBag.PerformancesByDate;
     ViewBag.Title = currentEvent.Title;
     var Youtube = ViewBag.SiteInformation.YoutubeChannel;
     var Facebook = ViewBag.SiteInformation.Facebook;
@@ -26,34 +26,33 @@
     <div class="day-btn-list">
         @foreach (var day in performancesByDate)
         {
-            <h3 id="date-@day.Date.Day" class="day-btn @(day == performancesByDate.First() ? "selected" : "non-selected" )">@day.Date.ToString("dddd dd MMMM")</h3>
+            <h3 id="date-@day.Date.Day@day.Date.Month@day.Date.Year" class="day-btn @(day == performancesByDate.First() ? "selected" : "non-selected" )">@day.Date.ToString("dddd dd MMMM")</h3>
         }
     </div>
 
-    foreach (var day in performancesByDate)
-    {
-        <table id="date-@day.Date.Day" class="daytable @(day == performancesByDate.First() ? "selected" : "non-selected")">
-        <thead>
-        <tr>
-            <th>Wanneer</th>
-            <th>Waar</th>
-            <th>Wie</th>
-            <th>Tijd</th>
-        </tr>
-        </thead>
-            <tbody>
-            @foreach (var p in day.Performances)
-            {
-            <tr>
-                    <td>@p.Start.ToString("dddd dd MMMM")</td>
-                    <td>@Html.ActionLink(p.Location.Stagename, "Location", "Home", new { id = p.Location.Id }, null)</td>
-                    <td>@Html.ActionLink(p.Artist.Name, "Artists", "Home", new { id = p.Artist.Id }, null)</td>
-                    <td>@p.Start.DateTime.ToString("HH:mm") - @p.End.DateTime.ToString("HH:mm")</td>
-                </tr>
-            }
-            </tbody>
+        foreach (var day in performancesByDate)
+        {
+            <table id="date-@day.Date.Day@day.Date.Month@day.Date.Year" class="daytable @(day == performancesByDate.First() ? "selected" : "non-selected")">
 
-        </table>
+                @foreach (var stage in day.Stages)
+                {
+                    <thead>
+                        <tr>
+                            <th>@Html.ActionLink(stage.Stage.Stagename, "Location", "Home", new { id = stage.Stage.Id }, null)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in stage.Performances)
+                        {
+                            <tr>
+                                <td>@p.Start.DateTime.ToString("HH:mm") - @p.End.DateTime.ToString("HH:mm")</td>
+                                <td>@Html.ActionLink(p.Artist.Name, "Artists", "Home", new { id = p.Artist.Id }, null)</td>
+                            </tr>
+                        }
+                    </tbody>
+                }
+
+            </table>
         }
     }
 </div>
