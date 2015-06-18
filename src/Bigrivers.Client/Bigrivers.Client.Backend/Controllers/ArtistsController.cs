@@ -42,6 +42,7 @@ namespace Bigrivers.Client.Backend.Controllers
 
             var model = artists
                 .Where(m => m.Status)
+                .OrderBy(m => m.Name)
                 .ToList();
             model.AddRange(artists.Where(m => !m.Status));
 

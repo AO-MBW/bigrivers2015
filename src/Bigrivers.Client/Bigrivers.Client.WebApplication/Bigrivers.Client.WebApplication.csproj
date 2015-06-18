@@ -194,6 +194,7 @@
     <Content Include="Images\bg.png" />
     <Content Include="Images\browntexture.jpg" />
     <Content Include="Images\default_logo.jpg" />
+    <Content Include="Images\favicon.ico" />
     <Content Include="Images\footer.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\peanuts.png" />
