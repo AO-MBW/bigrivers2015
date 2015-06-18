@@ -173,7 +173,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\PerformanceListViewModel.cs" />
+    <Compile Include="Models\StagesViewModel.cs" />
+    <Compile Include="Models\PerformancesByLocationViewModel.cs" />
     <Compile Include="Models\SettingsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -187,21 +188,32 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\background.jpg" />
+    <Content Include="Images\beer.png" />
     <Content Include="Images\br15.jpg" />
-    <Content Include="Images\Designconcept\bg.png" />
-    <Content Include="Images\Designconcept\browntexture.jpg" />
-    <Content Include="Images\Designconcept\footer.png" />
-    <Content Include="Images\Designconcept\polaroid.png" />
+    <Content Include="Images\coaster.png" />
+    <Content Include="Images\bg.png" />
+    <Content Include="Images\browntexture.jpg" />
+    <Content Include="Images\default_logo.jpg" />
+    <Content Include="Images\footer.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\peanuts.png" />
+    <Content Include="Images\polaroid.png" />
+    <Content Include="Images\ductape.png" />
+    <Content Include="Images\fb_bottlecap.png" />
     <Content Include="Images\fb_icon.png" />
     <Content Include="Images\header.png" />
     <Content Include="Images\kraaltjes.png" />
+    <Content Include="Images\tw_bottlecap.png" />
     <Content Include="Images\tw_icon.png" />
+    <Content Include="Images\yt_bottlecap.png" />
     <Content Include="Images\yt_icon.png" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="fonts\maridavid.ttf" />
+    <Content Include="fonts\maridavid.woff" />
     <None Include="Properties\PublishProfiles\bigrivers-site - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\bigrivers-site - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\bigrivers.pubxml" />
@@ -256,10 +268,31 @@
     <Content Include="Views\Shared\_NewsArchive.cshtml" />
     <Content Include="Views\Home\Location.cshtml" />
     <Content Include="Views\Home\Page.cshtml" />
+    <Content Include="Songteksten\Doe_dan_gewoon_-_Rene_Froger.pdf" />
+    <Content Include="Songteksten\Dromendans_-_Vinzzent.pdf" />
+    <Content Include="Songteksten\heb_je_even_voor_mij_-_frans_bauer.pdf" />
+    <Content Include="Songteksten\heerlijke_walsmedley_-_various.pdf" />
+    <Content Include="Songteksten\hello_mary_lou_-_bye_bye_love_-_the_everly_brothers.pdf" />
+    <Content Include="Songteksten\hemel_en_aarde_-_edsilia_rombley.pdf" />
+    <Content Include="Songteksten\hey_jude_-_the_beatles.pdf" />
+    <Content Include="Songteksten\Ik_ben_je_prooi_-_Wolter_Kroes.pdf" />
+    <Content Include="Songteksten\laat_de_zon_in_je_hart_-_rene_schuurmans.pdf" />
+    <Content Include="Songteksten\land_of_hope_and_glory_-_vera_lynn.pdf" />
+    <Content Include="Songteksten\Maak_me_gek_-_Gerard_Joling.pdf" />
+    <Content Include="Songteksten\magic_fortuna_-_carmina_burana.pdf" />
+    <Content Include="Songteksten\mamma_mia_-_abba.pdf" />
+    <Content Include="Songteksten\My_way_A_Mi_Manera_-_Iglesias_Anka.pdf" />
+    <Content Include="Songteksten\ome_jan_-_willeke_alberti.pdf" />
+    <Content Include="Songteksten\pump_and_circumstance_-_edward_elgar.pdf" />
+    <Content Include="Songteksten\que_sera_-_doris_day.pdf" />
+    <Content Include="Songteksten\rivers_of_babylon_-_boney_m.pdf" />
+    <Content Include="Songteksten\Songfestival_Medley_-_De_Toppers.pdf" />
+    <Content Include="Songteksten\we_are_the_champions_-_queen.pdf" />
+    <Content Include="Songteksten\Zij_gelooft_in_mij_-_Andre_Hazes.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="fonts\" />
+    <Folder Include="Images\Designconcept\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
