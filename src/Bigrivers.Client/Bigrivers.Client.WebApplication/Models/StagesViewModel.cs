@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.WebApplication.Models
 {
-    public class PerformanceListViewModel
+    public class StagesViewModel
     {
         public DateTime Date { get; set; }
-        public virtual List<Performance> Performances { get; set; } 
+        public List<PerformancesByLocationViewModel> Stages { get; set; } 
     }
 }
