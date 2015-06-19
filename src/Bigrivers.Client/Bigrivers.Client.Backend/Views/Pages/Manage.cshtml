@@ -31,7 +31,7 @@
                 }
                 <td>@m.Title</td>
                 <td>@m.EditedBy</td>
-                <td>@m.Edited</td>
+                <td>@m.Edited.DateTime.ToString("dd-MM-yyyy HH:mm")</td>
                 <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "Pages", new { m.Id }, null)</td>
                 <td>
                     @Html.ActionLink("Wijzig", "Edit", "Pages", new { m.Id }, null)
