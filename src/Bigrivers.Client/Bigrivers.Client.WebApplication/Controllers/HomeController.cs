@@ -49,7 +49,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
             var performancesByDate = currentEvent.Performances
                 .Where(m => m.Status)
-                .DistinctBy(m => m.Start.Date)
+                .DistinctBy(m => m.Start.AddHours(-6).Date)
                 .OrderBy(m => m.Start.Date)
                 .Select(date => new StagesViewModel
             {
@@ -61,7 +61,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
                 {
                     Stage = stage.Location,
                     Performances = currentEvent.Performances
-                    .Where(m => m.Location == stage.Location && m.Start.Date == date.Start.Date && m.Status)
+                    .Where(m => m.Location == stage.Location && m.Start.AddHours(-6).Date == date.Start.Date && m.Status)
                     .OrderBy(m => m.Start.DateTime)
                     .ToList()
                 }).ToList()

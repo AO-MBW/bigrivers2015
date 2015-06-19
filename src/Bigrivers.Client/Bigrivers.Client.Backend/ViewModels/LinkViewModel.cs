@@ -86,6 +86,11 @@ namespace Bigrivers.Client.Backend.Models
                 {
                     new SelectListItem()
                     {
+                        Text = "Homepage",
+                        Value = "Index"
+                    },
+                    new SelectListItem()
+                    {
                         Text = "Evenementen",
                         Value = "Events"
                     },
