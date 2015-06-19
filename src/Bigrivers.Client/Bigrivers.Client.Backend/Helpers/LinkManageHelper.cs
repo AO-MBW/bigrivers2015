@@ -36,8 +36,6 @@ namespace Bigrivers.Client.Backend.Helpers
                         case "News":
                             link.InternalId = model.InternalNewsId;
                             break;
-                        case "Contact":
-                            break;
                     }
                     break;
                 case "external":
