@@ -21,5 +21,6 @@ namespace Bigrivers.Server.Model
 
         [DefaultValue(false)]
         public bool Deleted { get; set; }
+        public bool IsContactPage { get; set; }
     }
 }

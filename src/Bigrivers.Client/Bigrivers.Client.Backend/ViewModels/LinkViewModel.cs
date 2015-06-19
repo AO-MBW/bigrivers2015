@@ -104,12 +104,6 @@ namespace Bigrivers.Client.Backend.Models
                     {
                         Text = "Nieuwsberichten",
                         Value = "News"
-                    },
-                    new SelectListItem()
-                    {
-                        Text = "Contact",
-                        Value = "Contact"
-
                     }
                 };
             }

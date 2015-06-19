@@ -11,7 +11,7 @@
         <div class="news-item">
             <div class="news-title">
                 <h3>@Html.ActionLink(p.Title, "News", new {Id = p.Id})</h3>
-                <h5>@p.Created.DateTime.Day - @p.Created.DateTime.Month - @p.Created.DateTime.Year</h5>
+                <h5>@p.Publish.DateTime.ToString("dd-MM-yyyy")</h5>
             </div>
             @if (p.Image != null)
             {

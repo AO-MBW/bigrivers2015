@@ -48,19 +48,20 @@ namespace Bigrivers.Client.WebApplication.Controllers
             if (currentEvent == null) return RedirectToAction("Events");
 
             var performancesByDate = currentEvent.Performances
+                .Where(m => m.Status)
                 .DistinctBy(m => m.Start.Date)
                 .OrderBy(m => m.Start.Date)
                 .Select(date => new StagesViewModel
             {
                 Date = date.Start.Date,
                 Stages = currentEvent.Performances
-                .Where(m => m.Start.Date == date.Start.Date)
+                .Where(m => m.Start.Date == date.Start.Date && m.Status)
                 .DistinctBy(m => m.Location)
                 .Select(stage => new PerformancesByLocationViewModel
                 {
                     Stage = stage.Location,
                     Performances = currentEvent.Performances
-                    .Where(m => m.Location == stage.Location && m.Start.Date == date.Start.Date)
+                    .Where(m => m.Location == stage.Location && m.Start.Date == date.Start.Date && m.Status)
                     .OrderBy(m => m.Start.DateTime)
                     .ToList()
                 }).ToList()
@@ -143,7 +144,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
 
             var newsItemsList = AccessLayer.NewsItems
                 .Where(a => a.Status && a.Publish < DateTime.Now)
-                .OrderBy(m => m.Publish)
+                .OrderByDescending(m => m.Publish)
                 .ToList();
 
             return View("News", newsItemsList);
@@ -173,20 +174,21 @@ namespace Bigrivers.Client.WebApplication.Controllers
                 Facebook = "#",
                 Twitter = "#"
             };
-            char[] split = {'/'};
+
             if (socialMedia != null)
             {
                 model.YoutubeChannel = socialMedia.YoutubeChannel;
                 model.Facebook = socialMedia.Facebook;
                 model.Twitter = socialMedia.Twitter;
-                model.Hashtag = socialMedia.Twitter.Split(split).Last();
             }
 
             return View(model);
         }
 
-        public ActionResult Location(int id)
+        public ActionResult Location(int? id)
         {
+            if (id == null) return RedirectToAction("Index");
+
             var location = AccessLayer.Locations
                 .SingleOrDefault(a => a.Id == id);
 
@@ -194,8 +196,10 @@ namespace Bigrivers.Client.WebApplication.Controllers
             return View(location);
         }
 
-        public ActionResult Page(int id)
+        public ActionResult Page(int? id)
         {
+            if (id == null) return RedirectToAction("Index");
+
             var page = AccessLayer.Pages
                 .SingleOrDefault(a => a.Id == id);
 

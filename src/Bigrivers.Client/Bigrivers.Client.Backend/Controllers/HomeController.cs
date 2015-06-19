@@ -42,6 +42,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 YoutubeChannel = "",
                 Facebook = "",
                 Twitter = "",
+                Date = "",
                 Image = null
             };
 
@@ -50,6 +51,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 YoutubeChannel = settings.YoutubeChannel,
                 Facebook = settings.Facebook,
                 Twitter = settings.Twitter,
+                Date = settings.Date,
                 Image = new FileUploadViewModel
                 {
                     NewUpload = true,
@@ -78,6 +80,7 @@ namespace Bigrivers.Client.Backend.Controllers
                     YoutubeChannel = "",
                     Facebook = "",
                     Twitter = "",
+                    Date = "",
                     Image = null
                 };
             }
@@ -114,13 +117,16 @@ namespace Bigrivers.Client.Backend.Controllers
                 }
             }
 
-            
+            // Social media links checked for http protocol
             if (!model.YoutubeChannel.StartsWith("http")) model.YoutubeChannel = string.Format("http://{0}", model.YoutubeChannel);
             if (!model.Facebook.StartsWith("http")) model.Facebook = string.Format("http://{0}", model.Facebook);
             if (!model.Twitter.StartsWith("http")) model.Twitter = string.Format("http://{0}", model.Twitter);
             settings.YoutubeChannel = model.YoutubeChannel;
             settings.Facebook = model.Facebook;
             settings.Twitter = model.Twitter;
+
+            settings.Date = model.Date;
+
             if (photoEntity != null) settings.Image = Db.Files.SingleOrDefault(m => m.Key == photoEntity.Key);
 
             if (!Db.SiteInformation.Any()) Db.SiteInformation.Add(settings);
