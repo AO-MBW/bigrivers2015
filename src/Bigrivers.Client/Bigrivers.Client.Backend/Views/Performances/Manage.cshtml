@@ -34,7 +34,7 @@
                 <td>@m.Start.DateTime</td>
                 <td>@m.End.DateTime</td>
                 <td>@m.EditedBy</td>
-                <td>@m.Edited</td>
+                <td>@m.Edited.DateTime</td>
                 <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "Performances", new { m.Id }, null)</td>
                 <td>@Html.ActionLink("Wijzig", "Edit", "Performances", new { m.Id }, null)@Html.ActionLink("Verwijder", "Delete", "Performances", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om dit optreden te verwijderen. Weet je dit zeker?');" })</td>
                 @:</tr>

@@ -20,6 +20,10 @@ namespace Bigrivers.Client.Backend.ViewModels
         [DataType(DataType.Url)]
         public string Twitter { get; set; }
 
+        [Display(Name = "Datum in Logo")]
+        public string Date { get; set; }
+
         public FileUploadViewModel Image { get; set; }
+
     }
 }

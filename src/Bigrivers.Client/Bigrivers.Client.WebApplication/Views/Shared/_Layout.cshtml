@@ -5,6 +5,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+    <link rel="shortcut icon" href="~/Images/favicon.ico" type="image/x-icon" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Big Rivers</title>
@@ -15,13 +16,24 @@
     @RenderSection("scripts", required: false)
 </head>
     <body>
-
         <div class="header">
-            <img class="header-image" src="~/Images/header.png" />
+            <div class="header-items hidden-xs">
+                <img class="header-beer" src="~/Images/beer.png" />
+                <img class="header-peanuts" src="~/Images/peanuts.png" />
+            </div>
+        </div>
+        <div class="header-buttons hidden-xs">
+            <a href="@ViewBag.SiteInformation.YoutubeChannel" target="_blank"><img class="header-yt img-circle" src="~/Images/yt_bottlecap.png" /></a>
+            <a href="@ViewBag.SiteInformation.Facebook" target="_blank"><img class="header-fb img-circle" src="~/Images/fb_bottlecap.png" /></a>
+            <a href="@ViewBag.SiteInformation.Twitter" target="_blank"><img class="header-tw img-circle" src="~/Images/tw_bottlecap.png" /></a>
+        </div>
+        <div class="header-coaster img-circle">
+            <div class="header-date-div"><h3 class="header-date">@(ViewBag.SiteInformation.Date ?? "")</h3></div>
+            <div class="pseudo-align"></div>
+            <a href="/Home/Index"><img class="header-logo" src="@(ViewBag.SiteInformation.Image != null ? ImageHelper.GetImageUrl(ViewBag.SiteInformation.Image) : "/Images/default_logo.jpg")" /></a>
         </div>
         <div class="navbar navbar-inverse">
             <div class="container">
-                <div class=" navbar-brand"></div>
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
@@ -39,11 +51,11 @@
                             if (item.IsParent == true)
                             {
                                 <li id="menuitem-id-@i">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@item.DisplayName<span class="caret"></span></a>
+                                    <a href="#" class="dropdown-toggle menuitem-link" data-toggle="dropdown" role="button" aria-expanded="false">@item.DisplayName<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                         @foreach (var child in childList.Where(m => m.Parent == item.Id))
                                         {
-                                            <li><a class="menuitem-link" href="@LinkHelper.GetUrl(child.Target)">@child.DisplayName</a></li>
+                                            <li class="dropdown-menuitem"><a class="dropdown-menuitem-link" href="@LinkHelper.GetUrl(child.Target)">@child.DisplayName</a></li>
                                         }
                                     </ul>
                                 </li>
