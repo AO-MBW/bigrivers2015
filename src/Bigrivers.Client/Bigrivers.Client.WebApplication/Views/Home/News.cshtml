@@ -3,9 +3,10 @@
     List<NewsItem> newsItems = Model;
 }
 
-<h1 class="page-title">Nieuws</h1>
+
 
 <div class="content partial-size news-overview">
+    <h1 class="page-title">Nieuws</h1>
     @foreach (var p in newsItems.Take(5))
     {
         <div class="news-item">
