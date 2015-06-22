@@ -131,7 +131,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
         private ActionResult Artist(int id)
         {
             var currentArtist = AccessLayer.Artists
-                .SingleOrDefault(a => a.Id == id);
+                .SingleOrDefault(a => a.Status && a.Id == id);
 
             if (currentArtist == null) return RedirectToAction("Artists");
 
@@ -157,7 +157,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
                 .ToList();
 
             var currentNews = newsItemsList
-                .SingleOrDefault(a => a.Id == id);
+                .SingleOrDefault(a => a.Status && a.Id == id);
 
             if (currentNews == null) return RedirectToAction("News");
             ViewBag.NewsItemsList = newsItemsList;
@@ -190,7 +190,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
             if (id == null) return RedirectToAction("Index");
 
             var location = AccessLayer.Locations
-                .SingleOrDefault(a => a.Id == id);
+                .SingleOrDefault(a => a.Status && a.Id == id);
 
             if (location == null) return RedirectToAction("Index");
             return View(location);
@@ -201,7 +201,7 @@ namespace Bigrivers.Client.WebApplication.Controllers
             if (id == null) return RedirectToAction("Index");
 
             var page = AccessLayer.Pages
-                .SingleOrDefault(a => a.Id == id);
+                .SingleOrDefault(a => a.Status && a.Id == id);
 
             if (page == null) return RedirectToAction("Index");
             return View(page);

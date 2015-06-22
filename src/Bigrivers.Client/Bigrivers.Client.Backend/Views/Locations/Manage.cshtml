@@ -30,7 +30,7 @@
                 <td>@m.Stagename</td>
                 <td>@m.Street@(m.Number != null ? " " + m.Number + "," : ",") @m.Zipcode, @m.City</td>
                 <td>@m.EditedBy</td>
-                <td>@m.Edited</td>
+                <td>@m.Edited.DateTime</td>
                 <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "Locations", new { m.Id }, null)</td>
                 <td>@Html.ActionLink("Wijzig", "Edit", "Locations", new { m.Id }, null) @Html.ActionLink("Verwijder", "Delete", "Locations", new { m.Id }, new { @onclick = "return confirm('Je staat op het punt om dit optreden te verwijderen. Weet je dit zeker?');" })</td>
                 @:</tr>

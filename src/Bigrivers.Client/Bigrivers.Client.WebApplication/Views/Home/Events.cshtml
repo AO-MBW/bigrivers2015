@@ -24,10 +24,10 @@
                     <p class="EventsDescription">@Html.Raw(e.Description)</p>
                 </td>
                 <td class="EventsDatum">
-                    @e.Start.DateTime.Day - @e.Start.DateTime.Month - @e.Start.DateTime.Year
+                    @e.Start.DateTime.ToString("dd-MM-yyyy")
                 </td>
                 <td class="EventsDatum">
-                    @e.End.DateTime.Day - @e.End.DateTime.Month - @e.End.DateTime.Year
+                    @e.End.DateTime.ToString("dd-MM-yyyy")
                 </td>
                 <td class="EventsPrice">
                     € @e.Price

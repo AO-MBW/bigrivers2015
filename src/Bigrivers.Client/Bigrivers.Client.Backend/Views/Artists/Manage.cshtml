@@ -21,7 +21,7 @@
                 <th>Artiest</th>
                 <th>Weblinks</th>
                 <th>Auteur</th>
-                <th>Updated</th>
+                <th>Gewijzigd op</th>
                 <th>Status</th>
                 <th>Acties</th>
             </tr>
@@ -45,7 +45,7 @@
                     @Html.HyperLink("T", m.Twitter, true)
                 </td>
                 <td>@m.EditedBy</td>
-                <td>@m.Edited.DateTime</td>
+                <td>@m.Edited.DateTime.ToString("dd-MM-yyyy HH:mm")</td>
                 <td>@Html.ActionLink((m.Status ? "Actief" : "Inactief"), "SwitchStatus", "Artists", new { m.Id }, null)</td>
                 <td>
                     @Html.ActionLink("Wijzig", "Edit", "Artists", new { m.Id }, null)

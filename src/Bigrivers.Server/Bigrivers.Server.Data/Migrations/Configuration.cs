@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.AccessControl;
 using Bigrivers.Server.Model;
 
 namespace Bigrivers.Server.Data.Migrations
@@ -28,7 +30,7 @@ namespace Bigrivers.Server.Data.Migrations
             context.NewsItems.RemoveRange(context.NewsItems);
             context.Sponsors.RemoveRange(context.Sponsors);
             context.Links.RemoveRange(context.Links);
-
+            context.Files.RemoveRange(context.Files);
 #endif
             foreach (var r in context.Roles)
             {
@@ -55,187 +57,107 @@ namespace Bigrivers.Server.Data.Migrations
                 Name = "Medewerker"
             });
 
-            context.ButtonItems.AddOrUpdate(new ButtonItem
+            if (!context.ButtonItems.Any(m => m.Type == ButtonType.NewsWidget))
             {
-                DisplayName = "SponsorWidget",
-                EditedBy = "Automatic",
-                Created = new DateTime(2015, 6, 11),
-                Edited = new DateTime(2015, 6, 11),
-                Deleted = false,
-                Status = true,
-                Order = 1,
-                Type = ButtonType.SponsorWidget
-            });
-
-            context.ButtonItems.AddOrUpdate(new ButtonItem
-            {
-                DisplayName = "NewsWidget",
-                EditedBy = "Automatic",
-                Created = new DateTime(2015, 6, 11),
-                Edited = new DateTime(2015, 6, 11),
-                Deleted = false,
-                Status = true,
-                Order = 2,
-                Type = ButtonType.NewsWidget
-            });
-
-            context.SiteInformation.AddOrUpdate(new SiteInformation
+                context.ButtonItems.Add(new ButtonItem
                 {
-                    YoutubeChannel = null,
-                    Facebook = null,
-                    Twitter = null,
+                    Type = ButtonType.NewsWidget,
+                    DisplayName = "NewsWidget",
+                    Order = 1,
+                    Created = DateTime.Now,
+                    Edited = DateTime.Now,
+                    EditedBy = "automatic",
+                    Deleted = false,
+                    Status = false
+                });
+            }
+
+            if (!context.ButtonItems.Any(m => m.Type == ButtonType.SponsorWidget))
+            {
+                context.ButtonItems.Add(new ButtonItem
+                {
+                    Type = ButtonType.SponsorWidget,
+                    DisplayName = "SponsorWidget",
+                    Order = 2,
+                    Created = DateTime.Now,
+                    Edited = DateTime.Now,
+                    EditedBy = "automatic",
+                    Deleted = false,
+                    Status = false
+                });
+            }
+
+            if (!context.Pages.Any(m => m.IsContactPage))
+            {
+                context.Pages.Add(new Page
+                {
+                    IsContactPage = true,
+                    Title = "Contact",
+                    IFrameHeight = 0,
+                    Created = DateTime.Now,
+                    Edited = DateTime.Now,
+                    EditedBy = "automatic",
+                    Deleted = false,
+                    Status = false
+                });
+            }
+
+            if (!context.SiteInformation.Any())
+            {
+                context.SiteInformation.Add(new SiteInformation
+                {
+                    YoutubeChannel = "https://www.youtube.com/bigriversdordrecht",
+                    Facebook = "https://www.facebook.com/bigriversdordrecht",
+                    Twitter = "https://www.twitter.com/bigrivers15",
+                    Date = null,
                     Image = null
                 });
+            }
 #if DEBUG
-            //Create Menu Items
             context.MenuItems.Add(new MenuItem
             {
+                DisplayName = "Home",
                 Target = new Link
                 {
-                    Type = "external",
-                    ExternalUrl = "http://www.crowdfunding.nl/"
+                    Type = "internal",
+                    InternalType = "Index"
                 },
-                DisplayName = "Crowdfunding",
-                Order = 1,
-                Parent = null,
-                IsParent = false,
-                Status = true
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
+                EditedBy = "automatic",
+                Status = true,
+                Deleted = false
             });
+
             context.MenuItems.Add(new MenuItem
             {
+                DisplayName = "Evenementen",
                 Target = new Link
                 {
                     Type = "internal",
                     InternalType = "Events"
                 },
-                DisplayName = "Evenementen",
-                Order = 2,
-                Parent = null,
-                IsParent = false,
-                Status = true
+                Created = DateTime.Now,
+                Edited = DateTime.Now,
+                EditedBy = "automatic",
+                Status = true,
+                Deleted = false
             });
+
             context.MenuItems.Add(new MenuItem
             {
+                DisplayName = "Artiesten",
                 Target = new Link
                 {
                     Type = "internal",
                     InternalType = "Artists"
                 },
-                DisplayName = "Artiesten",
-                Order = 3,
-                Parent = null,
-                IsParent = false,
-                Status = true
-            });
-            context.MenuItems.Add(new MenuItem
-            {
-                Target = new Link
-                {
-                    Type = "internal",
-                    InternalType = "Performances"
-                },
-                DisplayName = "Optredens",
-                Order = 4,
-                Parent = null,
-                IsParent = false,
-                Status = true
-            });
-            context.MenuItems.Add(new MenuItem
-            {
-                Target = new Link
-                {
-                    Type = "internal",
-                    InternalType = "Contact"
-                },
-                DisplayName = "Contact",
-                Order = 5,
-                Parent = null,
-                IsParent = false,
-                Status = true
-            });
-            context.MenuItems.Add(new MenuItem
-            {
-                Target = new Link
-                {
-                    Type = "external",
-                    ExternalUrl = "/Images/br15.jpg"
-                },
-                DisplayName = "Logo",
-                Order = 6,
-                Parent = null,
-                IsParent = false,
-                Status = true
-            });
-
-            var bzb = new Artist
-            {
-                Name = "Band zonder Banaan",
-                Description = "De beschrijving van de Band zonder Banaan",
-                Website = "http://bandzonderbanaan.nl",
-                YoutubeChannel = "https://youtube.com/user/bandzonderbanaan",
-                Facebook = "https://www.facebook.com/bandzonderbanaan",
-                Twitter = "https://www.twitter.com/bandzonderbanaan",
-                Performances = new List<Performance>(),
-                EditedBy = "Automatic",
                 Created = DateTime.Now,
                 Edited = DateTime.Now,
-                Status = true
-            };
-
-            var brm = new Event
-            {
-                Title = "Bigrivers Muziek",
-                Description = "Het enige echte Bigrivers Muziek evenement!",
-                Start = new DateTime(2015, 6, 15, 12, 0, 0),
-                End = new DateTime(2015, 6, 15, 22, 0, 0),
-                Price = 0,
-                TicketRequired = false,
-                YoutubeChannelStatus = true,
-                FacebookStatus = true,
-                TwitterStatus = true,
-                Performances = new List<Performance>(),
-                Sponsors = new List<Sponsor>(),
-                EditedBy = "Automatic",
-                Created = DateTime.Now,
-                Edited = DateTime.Now,
-                Status = true
-            };
-
-            var bzbperf = new Performance
-            {
-                Description = "De Band zonder Banaan op Bigrivers Muziek!",
-                Start = new DateTime(2015, 6, 15, 12, 0, 0),
-                End = new DateTime(2015, 6, 15, 22, 0, 0),
-                Artist = bzb,
-                Event = brm,
-                EditedBy = "Automatic",
-                Created = DateTime.Now,
-                Edited = DateTime.Now,
-                Status = true
-            };
-
-            var loc = new Location
-            {
-                City = "Dordrecht",
-                Street = "Slikveld",
-                Zipcode = "3311 VT",
-                Stagename = "Bigrivers Kantoor",
-                Events = new List<Event>(),
-                EditedBy = "Automatic",
-                Created = DateTime.Now,
-                Edited = DateTime.Now,
-                Status = true
-            };
-
-            brm.Performances.Add(bzbperf);
-            bzbperf.Location = loc;
-            bzb.Performances.Add(bzbperf);
-            loc.Events.Add(brm);
-
-            context.Artists.Add(bzb);
-            context.Events.Add(brm);
-            context.Performances.Add(bzbperf);
-            context.Locations.Add(loc);
+                EditedBy = "automatic",
+                Status = true,
+                Deleted = false
+            });
 #endif
             context.SaveChanges();
         }
