@@ -21,13 +21,10 @@ namespace Bigrivers.Client.Helpers
             {
                 case "internal":
                     return string.Format("/Home/{0}/{1}", link.InternalType, link.InternalId);
-                    break;
                 case "external":
                     return link.ExternalUrl;
-                    break;
                 case "file":
                     return readableUrl ? "Bestand: " + link.File.Name : ImageHelper.GetImageUrl(link.File);
-                    break;
             }
             return "";
         }
