@@ -3,11 +3,9 @@
     List<NewsItem> newsItems = Model;
 }
 
-
-
-<div class="content partial-size news-overview">
+<div class="content news-overview">
     <h1 class="page-title">Nieuws</h1>
-    @foreach (var p in newsItems.Take(5))
+    @foreach (var p in newsItems)
     {
         <div class="news-item">
             <div class="news-title">
@@ -31,5 +29,3 @@
         <br class="clear"/>
     }
 </div>
-
-@Html.Partial("_NewsArchive", newsItems)
