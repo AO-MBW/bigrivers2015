@@ -275,6 +275,8 @@ namespace Bigrivers.Client.Backend.Controllers
             if (!VerifyId(id)) return RedirectToAction("Manage");
             var singleButtonItem = Db.ButtonItems.Find(id);
 
+            if (singleButtonItem.Type != ButtonType.Regular) return RedirectToAction("Manage");
+
             singleButtonItem.Order = null;
             singleButtonItem.Status = false;
             singleButtonItem.Deleted = true;
