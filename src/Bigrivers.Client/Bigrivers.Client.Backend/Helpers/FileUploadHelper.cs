@@ -176,6 +176,98 @@ namespace Bigrivers.Client.Backend.Helpers
         public int? MinWidth { get; set; }
         public string[] MimeTypes { get; set; }
 
+        public static FileUploadValidator Artist
+        {
+            get
+            {
+                return new FileUploadValidator
+                {
+                    Required = false,
+                    MaxByteSize = 2000000,
+                    MimeTypes = new[] { "image" },
+                    ModelErrors = new FileUploadModelErrors
+                    {
+                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
+                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
+                    }
+                };
+            }
+        }
+
+        public static FileUploadValidator ButtonItem
+        {
+            get
+            {
+                return new FileUploadValidator
+                {
+                    Required = true,
+                    MaxByteSize = 2000000,
+                    MimeTypes = new[] { "image" },
+                    ModelErrors = new FileUploadModelErrors
+                    {
+                        Required = "Er moet een afbeelding worden geupload",
+                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
+                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
+                    }
+                };
+            }
+        }
+
+        public static FileUploadValidator News
+        {
+            get
+            {
+                return new FileUploadValidator
+                {
+                    Required = false,
+                    MaxByteSize = 2000000,
+                    MimeTypes = new[] { "image" },
+                    ModelErrors = new FileUploadModelErrors
+                    {
+                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
+                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
+                    }
+                };
+            }
+        }
+
+        public static FileUploadValidator Sponsor
+        {
+            get
+            {
+                return new FileUploadValidator
+                {
+                    Required = true,
+                    MaxByteSize = 2000000,
+                    MimeTypes = new[] { "image" },
+                    ModelErrors = new FileUploadModelErrors
+                    {
+                        Required = "Er moet een afbeelding worden geupload",
+                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
+                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
+                    }
+                };
+            }
+        }
+
+        public static FileUploadValidator LinkFile
+        {
+            get
+            {
+                return new FileUploadValidator
+                {
+                    Required = true,
+                    MaxByteSize = 2000000,
+                    MimeTypes = new string[] { },
+                    ModelErrors = new FileUploadModelErrors
+                    {
+                        Required = "Er moet een bestand worden geupload",
+                        ExceedsMaxByteSize = "Het bestand mag niet groter zijn dan 2 MB",
+                    }
+                };
+            }
+        }
+        
         public List<string> CheckFile(FileUploadViewModel file)
         {
             FileObject = file;

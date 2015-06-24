@@ -10,46 +10,6 @@ namespace Bigrivers.Client.Backend.Controllers
 {
     public class ButtonItemsController : BaseController
     {
-        private static FileUploadValidator FileValidator
-        {
-            get
-            {
-                return new FileUploadValidator
-                {
-                    Required = true,
-                    MaxByteSize = 2000000,
-                    MimeTypes = new[] { "image" },
-                    ModelErrors = new FileUploadModelErrors
-                    {
-                        Required = "Er moet een afbeelding worden geupload",
-                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
-                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
-                    }
-                };
-            }
-        }
-
-        private static FileUploadValidator LinkFileValidator
-        {
-            get
-            {
-                return new FileUploadValidator
-                {
-                    Required = true,
-                    MaxByteSize = 2000000,
-                    MimeTypes = new string[] { },
-                    ModelErrors = new FileUploadModelErrors
-                    {
-                        Required = "Er moet een bestand worden geupload",
-                        ExceedsMaxByteSize = "Het bestand mag niet groter zijn dan 2 MB",
-                    }
-                };
-            }
-        }
-
-        private static string FileUploadLocation { get { return Helpers.FileUploadLocation.ButtonLogo; } }
-        private static string FileLinkUploadLocation { get { return Helpers.FileUploadLocation.LinkUpload; } }
-
         // GET: ButtonItems/Index
         public ActionResult Index()
         {
@@ -86,13 +46,13 @@ namespace Bigrivers.Client.Backend.Controllers
                     File = new FileUploadViewModel
                     {
                         NewUpload = true,
-                        FileBase = Db.Files.Where(m => m.Container == FileLinkUploadLocation).ToList()
+                        FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.LinkUpload).ToList()
                     }
                 },
                 Image = new FileUploadViewModel
                 {
                     NewUpload = true,
-                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.ButtonLogo).ToList()
                 },
                 Status = true
             };
@@ -106,18 +66,18 @@ namespace Bigrivers.Client.Backend.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult New(ButtonItemViewModel model)
         {
-            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
-            model.LinkView.File.FileBase = Db.Files.Where(m => m.Container == FileLinkUploadLocation).ToList();
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.ButtonLogo).ToList();
+            model.LinkView.File.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.LinkUpload).ToList();
 
             // Run over a validator to add custom model errors
-            foreach (var error in FileValidator.CheckFile(model.Image))
+            foreach (var error in FileUploadValidator.ButtonItem.CheckFile(model.Image))
             {
                 ModelState.AddModelError("", error);
             }
             if (model.LinkView.LinkType == "file")
             {
                 // Run over a validator to add custom model errors
-                foreach (var error in LinkFileValidator.CheckFile(model.LinkView.File))
+                foreach (var error in FileUploadValidator.LinkFile.CheckFile(model.LinkView.File))
                 {
                     ModelState.AddModelError("", error);
                 }
@@ -135,7 +95,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 if (model.Image.UploadFile != null)
                 {
-                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation.ButtonLogo);
                 }
             }
             else
@@ -184,14 +144,14 @@ namespace Bigrivers.Client.Backend.Controllers
                     {
                         NewUpload = true,
                         ExistingFile = singleButtonItem.Target.File,
-                        FileBase = Db.Files.Where(m => m.Container == FileLinkUploadLocation).ToList()
+                        FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.LinkUpload).ToList()
                     }
                 }),
                 Image = new FileUploadViewModel
                 {
                     NewUpload = true,
                     ExistingFile = singleButtonItem.Logo,
-                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.ButtonLogo).ToList()
                 }
             };
             ViewBag.Title = "Bewerk ButtonItem";
@@ -207,19 +167,19 @@ namespace Bigrivers.Client.Backend.Controllers
             var singleButtonItem = Db.ButtonItems.Find(id);
 
             model.Image.ExistingFile = singleButtonItem.Logo;
-            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.ButtonLogo).ToList();
             model.LinkView.File.ExistingFile = singleButtonItem.Target.File;
-            model.LinkView.File.FileBase = Db.Files.Where(m => m.Container == FileLinkUploadLocation).ToList();
+            model.LinkView.File.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.LinkUpload).ToList();
 
             // Run over a validator to add custom model errors
-            foreach (var error in FileValidator.CheckFile(model.Image))
+            foreach (var error in FileUploadValidator.ButtonItem.CheckFile(model.Image))
             {
                 ModelState.AddModelError("", error);
             }
             if (model.LinkView.LinkType == "file")
             {
                 // Run over a validator to add custom model errors
-                foreach (var error in LinkFileValidator.CheckFile(model.LinkView.File))
+                foreach (var error in FileUploadValidator.LinkFile.CheckFile(model.LinkView.File))
                 {
                     ModelState.AddModelError("", error);
                 }
@@ -237,7 +197,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 if (model.Image.UploadFile != null)
                 {
-                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation.ButtonLogo);
                 }
             }
             else
