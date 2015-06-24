@@ -5,7 +5,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <link rel="shortcut icon" href="~/Images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="http://az774063.vo.msecnd.net/files/favicon.ico" type="image/x-icon" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Big Rivers</title>
@@ -18,19 +18,19 @@
     <body>
         <div class="header">
             <div class="header-items hidden-xs">
-                <img class="header-beer" src="~/Images/beer.png" />
-                <img class="header-peanuts" src="~/Images/peanuts.png" />
+                <img class="header-beer" src="http://az774063.vo.msecnd.net/files/beer.png" />
+                <img class="header-peanuts" src="http://az774063.vo.msecnd.net/files/peanuts.png" />
             </div>
         </div>
         <div class="header-buttons hidden-xs">
-            <a href="@ViewBag.SiteInformation.YoutubeChannel" target="_blank"><img class="header-yt img-circle" src="~/Images/yt_bottlecap.png" /></a>
-            <a href="@ViewBag.SiteInformation.Facebook" target="_blank"><img class="header-fb img-circle" src="~/Images/fb_bottlecap.png" /></a>
-            <a href="@ViewBag.SiteInformation.Twitter" target="_blank"><img class="header-tw img-circle" src="~/Images/tw_bottlecap.png" /></a>
+            <a href="@ViewBag.SiteInformation.YoutubeChannel" target="_blank"><img class="header-yt img-circle" src="http://az774063.vo.msecnd.net/files/yt_bottlecap.png" /></a>
+            <a href="@ViewBag.SiteInformation.Facebook" target="_blank"><img class="header-fb img-circle" src="http://az774063.vo.msecnd.net/files/fb_bottlecap.png" /></a>
+            <a href="@ViewBag.SiteInformation.Twitter" target="_blank"><img class="header-tw img-circle" src="http://az774063.vo.msecnd.net/files/tw_bottlecap.png" /></a>
         </div>
         <div class="header-coaster img-circle">
             <div class="header-date-div"><h3 class="header-date">@(ViewBag.SiteInformation.Date ?? "")</h3></div>
             <div class="pseudo-align"></div>
-            <a href="/Home/Index"><img class="header-logo" src="@(ViewBag.SiteInformation.Image != null ? ImageHelper.GetImageUrl(ViewBag.SiteInformation.Image) : "/Images/default_logo.jpg")" /></a>
+            <a href="/Home/Index"><img class="header-logo" src="@(ViewBag.SiteInformation.Image != null ? ImageHelper.GetImageUrl(ViewBag.SiteInformation.Image) : "http://az774063.vo.msecnd.net/files/default_logo.jpg")" /></a>
         </div>
         <div class="navbar navbar-inverse">
             <div class="container">
@@ -73,7 +73,7 @@
             </div>
         </div>
 
-        <img class="beads-left hidden-xs" src="~/Images/kraaltjes.png" />
+        <img class="beads-left hidden-xs" src="http://az774063.vo.msecnd.net/files/kraaltjes.png" />
         <div class="container body-content">
             @RenderBody()
         </div>

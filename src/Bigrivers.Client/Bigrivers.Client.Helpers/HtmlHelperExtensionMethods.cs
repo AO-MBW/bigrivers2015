@@ -48,20 +48,18 @@ namespace Bigrivers.Client.Helpers
             return MvcHtmlString.Create(builder.ToString(TagRenderMode.Normal));
         }
 
-        public static MvcHtmlString ShowImage(this HtmlHelper helper, string url)
+        public static MvcHtmlString Image(this HtmlHelper helper, string url)
         {
-            return ShowImage(helper, url, null, null);
+            return Image(helper, url, null, null);
         }
 
-        public static MvcHtmlString ShowImage(this HtmlHelper helper, string url, object htmlAttributes)
+        public static MvcHtmlString Image(this HtmlHelper helper, string url, object htmlAttributes)
         {
-            return ShowImage(helper, url, htmlAttributes, null);
+            return Image(helper, url, htmlAttributes, null);
         }
 
-        public static MvcHtmlString ShowImage(this HtmlHelper helper, string url, object htmlAttributes, object dataAttributes)
+        public static MvcHtmlString Image(this HtmlHelper helper, string url, object htmlAttributes, object dataAttributes)
         {
-            var validUrl = false;
-
             var builder = new TagBuilder("img");
             builder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
 
@@ -69,9 +67,7 @@ namespace Bigrivers.Client.Helpers
             // I don't know of a better way of rendering them using the RouteValueDictionary however.
             if (dataAttributes != null)
             {
-                var values = new RouteValueDictionary(dataAttributes);
-
-                foreach (var value in values)
+                foreach (var value in new RouteValueDictionary(dataAttributes))
                 {
                     builder.MergeAttribute("data-" + value.Key, value.Value.ToString());
                 }
@@ -79,17 +75,9 @@ namespace Bigrivers.Client.Helpers
 
             builder.MergeAttribute("src", url);
 
-            try
-            {
-                new Uri(url);
-                validUrl = true;
-            }
-            catch { }
+            // Ensure an exception will be thrown against an invalid URL
+            new Uri(url);
 
-            if (!validUrl)
-            {
-                return new MvcHtmlString("<span class='error'>Make sure the string is an available URL</span>");
-            }
             return MvcHtmlString.Create(builder.ToString(TagRenderMode.SelfClosing));
         }
     }

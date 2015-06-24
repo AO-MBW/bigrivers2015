@@ -30,7 +30,6 @@ namespace Bigrivers.Client.Helpers
                 {
                     PublicAccess = BlobContainerPublicAccessType.Blob
                 });
-
             return _container.GetBlockBlobReference(file.Key).Uri.ToString();
         }
     }

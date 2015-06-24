@@ -24,7 +24,7 @@
         @if (currentArtist.Twitter != null){ <li><a href="@currentArtist.Twitter" target="_blank">Twitter</a></li> }  
     </ul>
     }
-    @if(currentArtist.Performances.Where(m => m.Status).Count() > 0){
+    @if(currentArtist.Performances.Any(m => m.Status)){
         <h3>Optredens:</h3>
     <table class="day-table">
         <thead>
@@ -39,7 +39,7 @@
             @foreach (var p in currentArtist.Performances.Where(m => m.Status))
             {
                 <tr>
-                    <td>@Html.ActionLink(p.Event.Title, "Event", "Home", new {id = p.Event.Id})</td>
+                    <td>@Html.ActionLink(p.Event.Title, "Events", "Home", new {id = p.Event.Id})</td>
                     <td>@Html.ActionLink(p.Location.Stagename, "Location", "Home", new { id = p.Location.Id })</td>
                     <td>@p.Start.ToString("dddd dd MMMM")</td>
                     <td>@p.Start.DateTime.ToString("HH:mm") - @p.End.DateTime.ToString("HH:mm")</td>
