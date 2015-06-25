@@ -310,7 +310,7 @@ div.news-archive p a {
         position: absolute;
         top: 80%;
         left: 5%;
-    }
+}
 
     .carousel-button-right {
         position: absolute;
@@ -345,7 +345,7 @@ div.news-archive p a {
         position: absolute;
         top: 80%;
         left: 5%;
-    }
+}
 
     .carousel-button-right {
         position: absolute;
@@ -573,12 +573,13 @@ address{
     padding-top: 200px;
     margin-bottom: 1em;
 }
-
-.twitterfeed{
-    width: 100%;
+@media (min-width: 1200px) {
+    .twitterfeed {
+        width: 520px;
     max-width: 80%;
+        float: right;
+    }
 }
-
 /* Artiesten*/
 
 .ArtistsName {
@@ -597,13 +598,8 @@ address{
 /* Evenementen */
 
 .EventsDescription {
-    max-height: 8.7em;
+    max-height: 120px;
     overflow: hidden;
-    text-align: justify;
-}
-
-.EventDescription {
-    text-align: justify;
 }
 
 .EventsDatum {
