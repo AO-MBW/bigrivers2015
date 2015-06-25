@@ -9,34 +9,13 @@ namespace Bigrivers.Client.Backend.Controllers
 {
     public class SponsorsController : BaseController
     {
-        private static FileUploadValidator FileValidator
-        {
-            get
-            {
-                return new FileUploadValidator
-                {
-                    Required = true,
-                    MaxByteSize = 2000000,
-                    MimeTypes = new[] { "image" },
-                    ModelErrors = new FileUploadModelErrors
-                    {
-                        Required = "Er moet een afbeelding worden geupload",
-                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
-                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
-                    }
-                };
-            }
-        }
-
-        private static string FileUploadLocation { get { return Helpers.FileUploadLocation.Sponsor; } }
-
-        // GET: Artist/Index
+        // GET: Sponsors/Index
         public ActionResult Index()
         {
             return RedirectToAction("Manage");
         }
 
-        // GET: Artist/
+        // GET: Sponsors/
         public ActionResult Manage()
         {
             var sponsors = GetSponsors();
@@ -51,7 +30,7 @@ namespace Bigrivers.Client.Backend.Controllers
             return View(model);
         }
 
-        // GET: Artist/New
+        // GET: Sponsors/New
         public ActionResult New()
         {
             var model = new SponsorViewModel
@@ -59,7 +38,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 Image = new FileUploadViewModel
                 {
                     NewUpload = true,
-                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.Sponsor).ToList()
                 },
                 Status = true
             };
@@ -73,9 +52,9 @@ namespace Bigrivers.Client.Backend.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult New(SponsorViewModel model)
         {
-            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.Sponsor).ToList();
             // Run over a validator to add custom model errors
-            foreach (var error in FileValidator.CheckFile(model.Image))
+            foreach (var error in FileUploadValidator.Sponsor.CheckFile(model.Image))
             {
                 ModelState.AddModelError("", error);
             }
@@ -92,7 +71,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 if (model.Image.UploadFile != null)
                 {
-                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation.Sponsor);
                 }
             }
             else
@@ -134,7 +113,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 {
                     NewUpload = true,
                     ExistingFile = singleSponsor.Image,
-                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.Sponsor).ToList()
                 },
                 Status = singleSponsor.Status
             };
@@ -152,10 +131,10 @@ namespace Bigrivers.Client.Backend.Controllers
             var singleSponsor = Db.Sponsors.Find(id);
 
             model.Image.ExistingFile = singleSponsor.Image;
-            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.Sponsor).ToList();
 
             // Run over a validator to add custom model errors
-            foreach (var error in FileValidator.CheckFile(model.Image))
+            foreach (var error in FileUploadValidator.Sponsor.CheckFile(model.Image))
             {
                 ModelState.AddModelError("", error);
             }
@@ -172,7 +151,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 if (model.Image.UploadFile != null)
                 {
-                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation.Sponsor);
                 }
             }
             else

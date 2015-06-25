@@ -9,26 +9,6 @@ namespace Bigrivers.Client.Backend.Controllers
 {
     public class ArtistsController : BaseController
     {
-        private static FileUploadValidator FileValidator
-        {
-            get
-            {
-                return new FileUploadValidator
-                {
-                    Required = false,
-                    MaxByteSize = 2000000,
-                    MimeTypes = new[] { "image" },
-                    ModelErrors = new FileUploadModelErrors
-                    {
-                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
-                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
-                    }
-                };
-            }
-        }
-
-        private static string FileUploadLocation { get { return Helpers.FileUploadLocation.Artist; } }
-
         // GET: Artist/Index
         public ActionResult Index()
         {
@@ -58,7 +38,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 Image = new FileUploadViewModel
                 {
                     NewUpload = true,
-                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.Artist).ToList()
                 },
                 Status = true
             };
@@ -72,9 +52,9 @@ namespace Bigrivers.Client.Backend.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult New(ArtistViewModel model)
         {
-            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.Artist).ToList();
             // Run over a validator to add custom model errors
-            foreach (var error in FileValidator.CheckFile(model.Image))
+            foreach (var error in FileUploadValidator.Artist.CheckFile(model.Image))
             {
                 ModelState.AddModelError("", error);
             }
@@ -91,7 +71,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 if (model.Image.UploadFile != null)
                 {
-                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation.Artist);
                 }
             }
             else
@@ -137,7 +117,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 {
                     NewUpload = true,
                     ExistingFile = singleArtist.Avatar,
-                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.Artist).ToList()
                 },
                 Website = singleArtist.Website,
                 YoutubeChannel = singleArtist.YoutubeChannel,
@@ -159,10 +139,10 @@ namespace Bigrivers.Client.Backend.Controllers
             var singleArtist = Db.Artists.Find(id);
 
             model.Image.ExistingFile = singleArtist.Avatar;
-            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.Artist).ToList();
 
             // Run over a validator to add custom model errors
-            foreach (var error in FileValidator.CheckFile(model.Image))
+            foreach (var error in FileUploadValidator.Artist.CheckFile(model.Image))
             {
                 ModelState.AddModelError("", error);
             }
@@ -179,7 +159,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 if (model.Image.UploadFile != null)
                 {
-                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation.Artist);
                 }
             }
             else

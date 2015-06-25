@@ -8,7 +8,6 @@ namespace Bigrivers.Client.Backend.Helpers
     public class LinkManageHelper
     {
         private static readonly BigriversDb Db = new BigriversDb();
-        private static string FileUploadLocation { get { return Helpers.FileUploadLocation.LinkUpload; } }
 
         public static Link SetLink(LinkViewModel model)
         {
@@ -52,7 +51,7 @@ namespace Bigrivers.Client.Backend.Helpers
                         {
                             if (model.File.UploadFile != null)
                             {
-                                fileEntity = FileUploadHelper.UploadFile(model.File.UploadFile, FileUploadLocation);
+                                fileEntity = FileUploadHelper.UploadFile(model.File.UploadFile, FileUploadLocation.LinkUpload);
                             }
                         }
                         else
