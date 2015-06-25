@@ -495,6 +495,7 @@
     <Content Include="Views\Widget\Manage.cshtml" />
     <Content Include="Views\News\Manage.cshtml" />
     <Content Include="Views\News\Edit.cshtml" />
+    <Content Include="Views\Home\Files.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

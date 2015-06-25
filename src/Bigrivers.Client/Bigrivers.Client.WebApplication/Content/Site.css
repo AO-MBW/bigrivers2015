@@ -267,9 +267,56 @@ div.news-archive p a {
         width: 69.1%;
         height: 85%;
     }
+
+    .carousel-button-left {
+        position: absolute;
+        top: 80%;
+        left: 5%;
+}
+
+    .carousel-button-right {
+        position: absolute;
+        top: 80%;
+        right: 20%;
+    }
 }
 
 /* xs size screens*/
+@media (max-width: 768px) and (min-width: 401px) {
+    .ButtonTitle, .CarouselTitle {
+        font-size: 12pt;
+    }
+
+    .ButtonImg {
+        position: absolute;
+        top: 10.1%;
+        left: 15.5%;
+        width: 68.7%;
+        height: 63%;
+    }
+
+    .carousel-inner{
+        position: absolute;
+        top: 10%;
+        left: 11.5%;
+        width: 68.7%;
+        height: 85%;
+    }
+
+    .carousel-button-left {
+        position: absolute;
+        top: 80%;
+        left: 5%;
+}
+
+    .carousel-button-right {
+        position: absolute;
+        top: 80%;
+        right: 20%;
+    }
+}
+
+/* xxs size screens*/
 @media (max-width: 400px) {
     .ButtonTitle, .CarouselTitle {
         font-size: 6pt;
@@ -290,28 +337,17 @@ div.news-archive p a {
         width: 59%;
         height: 85%;
     }
-}
 
-/* xxs size screens*/
-@media (max-width: 768px) and (min-width: 401px) {
-    .ButtonTitle, .CarouselTitle {
-        font-size: 12pt;
+    .carousel-button-left {
+        position: absolute;
+        top: 80%;
+        left: 5%;
     }
 
-    .ButtonImg {
+    .carousel-button-right {
         position: absolute;
-        top: 10.1%;
-        left: 15.5%;
-        width: 68.7%;
-        height: 63%;
-    }
-
-    .carousel-inner{
-        position: absolute;
-        top: 10%;
-        left: 11.5%;
-        width: 68.7%;
-        height: 85%;
+        top: 80%;
+        right: 25%;
     }
 }
 
@@ -404,22 +440,23 @@ div.news-detail div.news-title h5 {
 
 div.news-overview div.news-text,
 div.news-detail div.news-text {
-    width: 75%;
     margin-bottom: 5px;
     padding-right: 10px;
     line-height: 1em;
+    text-align: justify;
 }
 
 div.news-overview div.news-text.height-limited,
 div.news-detail div.news-text.height-limited {
     height: 8.7em;
     overflow: hidden;
+    text-align: justify;
 }
 
 div.news-overview div.news-image,
 div.news-detail div.news-image {
-    width: 25%;
-    float: right;
+    width: 100%;
+    height: auto;
 }
 
 div.news-overview div.news-image img,
@@ -501,32 +538,23 @@ address{
 @media (min-width: 1200px) {
     .twitterfeed {
         width: 520px;
-        max-width: 80%;
+    max-width: 80%;
         float: right;
     }
 }
 /* Artiesten*/
 
-.ArtistsDiv {
-    height: 100px;
-    margin-bottom: 15px;
-}
-
 .ArtistsName {
     float: left;
 }
 
-.ArtistsAvatar {
-    height: 100px;
-    width: auto;
-    float: right;
+.ArtistsDescription {
+    text-align: justify;
 }
 
 .ArtistAvatar {
-    height: 100px;
-    width: auto;
-    float: left;
-    margin-right: 10px;
+    width: 100%;
+    height: auto;
 }
 
 /* Evenementen */
@@ -534,8 +562,6 @@ address{
 .EventsDescription {
     max-height: 120px;
     overflow: hidden;
-    position: relative;
-    display: block;
 }
 
 .EventsDatum {
@@ -548,6 +574,10 @@ address{
 
 /* Content Pages*/
 
-.page-iframe {
+.page-iframe{
     width: 100%;
+}
+
+.PageDescription {
+    text-align: justify;
 }
