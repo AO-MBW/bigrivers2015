@@ -13,7 +13,9 @@
 
     @if (page.Content != null)
     {
-        @Html.Raw(page.Content)
+        <div class="PageDescription">
+            @Html.Raw(page.Content)
+        </div>
         <br class="clear"/>
     }
 

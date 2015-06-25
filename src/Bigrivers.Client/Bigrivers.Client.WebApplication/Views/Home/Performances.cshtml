@@ -1,8 +1,7 @@
 ﻿@using Bigrivers.Client.WebApplication.Models
 @{
     ViewBag.Title = "Programma";
-    List<NewsItem> newsItemsList = ViewBag.NewsItemsList;
-    List<PerformanceListViewModel> eventDates = Model;
+    List<PerformancesByLocationViewModel> eventDates = Model;
 }
 
 <div class="content partial-size">
@@ -12,7 +11,3 @@
 
     
 </div>
-
-@Html.Partial("_NewsArchive", newsItemsList)
-
-<script src="/Scripts/performanceDaySelector.js"></script>
