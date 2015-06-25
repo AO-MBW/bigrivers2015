@@ -7,12 +7,12 @@
     <h1 class="page-title">@currentArtist.Name</h1>
     @if (currentArtist.Avatar != null)
     {
-        <img class="ArtistAvatar" src="@ImageHelper.GetImageUrl(currentArtist.Avatar)" />
+        <img class="ArtistAvatar hidden-xs" src="@ImageHelper.GetImageUrl(currentArtist.Avatar)" />
         <br class="clear" />
     }
     @if (currentArtist.Description != null)
     {
-        @Html.Raw(currentArtist.Description)
+        <div class="ArtistsDescription">@Html.Raw(currentArtist.Description)</div>
     }
     @if (currentArtist.Facebook != null || currentArtist.YoutubeChannel != null || currentArtist.Twitter != null || currentArtist.Website != null)
     {

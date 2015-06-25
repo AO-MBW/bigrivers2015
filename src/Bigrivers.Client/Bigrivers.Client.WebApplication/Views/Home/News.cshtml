@@ -2,8 +2,9 @@
     ViewBag.Title = "Nieuws";
     List<NewsItem> newsItems = Model;
 }
-
 <div class="content news-overview">
+    <img class="content-pin-left" src="~/Images/Pin Left.png" />
+    <img class="content-pin-right" src="~/Images/Pin Right.png" />
     <h1 class="page-title">Nieuws</h1>
     @foreach (var p in newsItems)
     {
