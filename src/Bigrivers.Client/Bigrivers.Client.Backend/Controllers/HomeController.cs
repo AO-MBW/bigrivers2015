@@ -8,26 +8,6 @@ namespace Bigrivers.Client.Backend.Controllers
 {
     public class HomeController : BaseController
     {
-        private static FileUploadValidator FileValidator
-        {
-            get
-            {
-                return new FileUploadValidator
-                {
-                    Required = false,
-                    MaxByteSize = 2000000,
-                    MimeTypes = new[] { "image" },
-                    ModelErrors = new FileUploadModelErrors
-                    {
-                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
-                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
-                    }
-                };
-            }
-        }
-
-        private static string FileUploadLocation { get { return Helpers.FileUploadLocation.SiteLogo; } }
-
         public ActionResult Index()
         {
             ViewBag.Title = "Home";
@@ -56,7 +36,7 @@ namespace Bigrivers.Client.Backend.Controllers
                 {
                     NewUpload = true,
                     ExistingFile = settings.Image,
-                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList()
+                    FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.SiteLogo).ToList()
                 }
             };
 
@@ -86,10 +66,10 @@ namespace Bigrivers.Client.Backend.Controllers
             }
 
             model.Image.ExistingFile = settings.Image;
-            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation).ToList();
+            model.Image.FileBase = Db.Files.Where(m => m.Container == FileUploadLocation.SiteLogo).ToList();
 
             // Run over a validator to add custom model errors
-            foreach (var error in FileValidator.CheckFile(model.Image))
+            foreach (var error in FileUploadValidator.BigriversLogo.CheckFile(model.Image))
             {
                 ModelState.AddModelError("", error);
             }
@@ -106,7 +86,7 @@ namespace Bigrivers.Client.Backend.Controllers
             {
                 if (model.Image.UploadFile != null)
                 {
-                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation);
+                    photoEntity = FileUploadHelper.UploadFile(model.Image.UploadFile, FileUploadLocation.SiteLogo);
                 }
             }
             else
@@ -135,5 +115,38 @@ namespace Bigrivers.Client.Backend.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult Files()
+        {
+            ViewBag.Model = Db.Files.Where(m => m.Container == FileUploadLocation.GenericUpload).ToList();
+
+            ViewBag.Title = "Bestanden";
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Upload(FileUploadViewModel model)
+        {
+            model.NewUpload = true;
+            // Run over a validator to add custom model errors
+            foreach (var error in FileUploadValidator.UserUpload.CheckFile(model))
+            {
+                ModelState.AddModelError("", error);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Title = "Site Instellingen";
+                ViewBag.Model = Db.Files.Where(m => m.Container == FileUploadLocation.GenericUpload).ToList();
+                return View("Files", model);
+            }
+
+            if (model.UploadFile != null)
+            {
+                var photoEntity = FileUploadHelper.UploadFile(model.UploadFile, FileUploadLocation.GenericUpload);
+            }
+            
+            return RedirectToAction("Files");
+        }
     }
 }

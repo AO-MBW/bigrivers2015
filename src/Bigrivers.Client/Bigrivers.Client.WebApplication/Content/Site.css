@@ -131,8 +131,8 @@ div.news-archive p a {
 
 .header-beer {
     float: left;
-    height: 150px;
-    width: 150px;
+    height: 120px;
+    width: 120px;
     margin-top: 35px;
     margin-left: 160px;
 }
@@ -412,7 +412,7 @@ div.news-detail div.news-text {
 
 div.news-overview div.news-text.height-limited,
 div.news-detail div.news-text.height-limited {
-    height: 9em;
+    height: 8.7em;
     overflow: hidden;
 }
 
@@ -531,7 +531,7 @@ address{
 /* Evenementen */
 
 .EventsDescription {
-    max-height: 100px;
+    max-height: 8.7em;
     overflow: hidden;
 }
 
