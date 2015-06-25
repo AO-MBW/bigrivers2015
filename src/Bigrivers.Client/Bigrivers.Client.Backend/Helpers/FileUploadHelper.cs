@@ -267,7 +267,43 @@ namespace Bigrivers.Client.Backend.Helpers
                 };
             }
         }
-        
+
+        public static FileUploadValidator BigriversLogo
+        {
+            get
+            {
+                return new FileUploadValidator
+                {
+                    Required = false,
+                    MaxByteSize = 2000000,
+                    MimeTypes = new[] { "image" },
+                    ModelErrors = new FileUploadModelErrors
+                    {
+                        ExceedsMaxByteSize = "De afbeelding mag niet groter zijn dan 2 MB",
+                        ForbiddenMime = "Het bestand moet een afbeelding zijn"
+                    }
+                };
+            }
+        }
+
+        public static FileUploadValidator UserUpload
+        {
+            get
+            {
+                return new FileUploadValidator
+                {
+                    Required = true,
+                    MaxByteSize = 2000000,
+                    MimeTypes = new string[] { },
+                    ModelErrors = new FileUploadModelErrors
+                    {
+                        Required = "Er moet een bestand worden geupload",
+                        ExceedsMaxByteSize = "Het bestand mag niet groter zijn dan 2 MB"
+                    }
+                };
+            }
+        }
+
         public List<string> CheckFile(FileUploadViewModel file)
         {
             FileObject = file;
@@ -338,5 +374,6 @@ namespace Bigrivers.Client.Backend.Helpers
         public static string ButtonLogo { get { return "buttonlogo"; } }
         public static string Sponsor { get { return "sponsor"; } }
         public static string LinkUpload { get { return "linkupload"; } }
+        public static string GenericUpload { get { return "userupload"; } }
     }
 }
