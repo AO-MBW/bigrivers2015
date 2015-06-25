@@ -20,8 +20,10 @@
                 <td>
                     @Html.ActionLink(e.Title, "Events", new {Id = e.Id})
                 </td>
-                <td>
-                    <p class="EventsDescription">@Html.Raw(e.Description)</p>
+                <td class="EventsDescription-td">
+                    <div class="EventsDescription">
+                        @Html.Raw(e.Description)
+                    </div>
                 </td>
                 <td class="EventsDatum">
                     @e.Start.DateTime.ToString("dd-MM-yyyy")

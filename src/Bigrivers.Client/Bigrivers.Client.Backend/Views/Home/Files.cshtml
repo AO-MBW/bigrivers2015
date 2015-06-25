@@ -1,0 +1,52 @@
+﻿@using System.Data.Entity.Core.Common
+@using File = Bigrivers.Server.Model.File
+@model Bigrivers.Client.Backend.ViewModels.FileUploadViewModel
+
+<div id="content">
+    <div class="form-div">
+        @using (Html.BeginForm("Upload", "Home", null, FormMethod.Post, new {enctype = "multipart/form-data"}))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+            <fieldset>
+                @Html.TextBoxFor(m => m.UploadFile, new {type = "file"})
+            </fieldset>
+            <fieldset>
+                <input type="submit" name="save" value="Bestand versturen">
+            </fieldset>
+
+        }
+    </div>
+    <br class="clear"/>
+    <div class="file-gallery-container">
+        <h2>Bestanden</h2>
+        <div id="file-gallery" style="display: block;">
+            @foreach (File f in ViewBag.Model)
+            {
+                <div class="file-gallery-item-container">
+                    <div class="file-block">
+                        <div class="pseudo-align"></div>
+                        <div class="file-container">
+                            @if (f.ContentType.Contains("image"))
+                            {
+                                <img src="@ImageHelper.GetImageUrl(f)"/>
+                            }
+                            else
+                            {
+                                <img src="/Images/thumbnail_unknown.png" />
+                            }
+                        </div>
+                    </div>
+                    <div class="text-block">
+                        <div class="text-container">
+                            <p>@f.Name</p>
+                            <input type="text" class="" value="@ImageHelper.GetImageUrl(f)" readonly="readonly" onfocus="this.select();" onmouseup="return false;">
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <br class="clear"/>
+    </div>
+    
+</div>
