@@ -498,12 +498,13 @@ address{
     padding-top: 200px;
     margin-bottom: 1em;
 }
-
-.twitterfeed{
-    width: 100%;
-    max-width: 80%;
+@media (min-width: 1200px) {
+    .twitterfeed {
+        width: 520px;
+        max-width: 80%;
+        float: right;
+    }
 }
-
 /* Artiesten*/
 
 .ArtistsDiv {
@@ -531,8 +532,10 @@ address{
 /* Evenementen */
 
 .EventsDescription {
-    max-height: 8.7em;
+    max-height: 120px;
     overflow: hidden;
+    position: relative;
+    display: block;
 }
 
 .EventsDatum {
