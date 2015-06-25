@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Bigrivers.Server.Model;
 
 namespace Bigrivers.Client.Helpers
 {
@@ -74,9 +77,30 @@ namespace Bigrivers.Client.Helpers
             }
 
             builder.MergeAttribute("src", url);
-
             // Ensure an exception will be thrown against an invalid URL
             new Uri(url);
+
+            return MvcHtmlString.Create(builder.ToString(TagRenderMode.SelfClosing));
+        }
+
+        public static MvcHtmlString ImageFromCdn(this HtmlHelper helper, File file, object htmlAttributes, object dataAttributes)
+        {
+            var builder = new TagBuilder("img");
+            builder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+            builder.MergeAttribute("class", "async-load-image");
+            // Data attributes are definitely a nice to have.
+            // I don't know of a better way of rendering them using the RouteValueDictionary however.
+            if (dataAttributes != null)
+            {
+                foreach (var value in new RouteValueDictionary(dataAttributes))
+                {
+                    builder.MergeAttribute("data-" + value.Key, value.Value.ToString());
+                }
+            }
+
+            builder.MergeAttribute("src", "/Images/loading.gif");
+            builder.MergeAttribute("data-azureurl", ImageHelper.GetImageUrl(file));
+            builder.MergeAttribute("data-cdnurl", string.Format("{0}/{1}/{2}", WebConfigurationManager.AppSettings["CdnUrl"], file.Container, file.Key));
 
             return MvcHtmlString.Create(builder.ToString(TagRenderMode.SelfClosing));
         }

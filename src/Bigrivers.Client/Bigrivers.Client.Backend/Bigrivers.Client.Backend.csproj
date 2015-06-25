@@ -412,6 +412,7 @@
     <Content Include="Scripts\ckeditor\skins\moono\images\refresh.png" />
     <Content Include="Scripts\ckeditor\styles.js" />
     <Content Include="Scripts\Admin\functions.js" />
+    <Content Include="Scripts\ImageLoad.js" />
     <Content Include="Scripts\ViewScripts\Artist-Manage.js" />
     <Content Include="Scripts\ViewScripts\Event-Edit.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

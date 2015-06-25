@@ -29,7 +29,7 @@
                         <div class="file-container">
                             @if (f.ContentType.Contains("image"))
                             {
-                                <img src="@ImageHelper.GetImageUrl(f)"/>
+                                @Html.ImageFromCdn(f, null, null)
                             }
                             else
                             {
