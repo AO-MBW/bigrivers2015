@@ -198,12 +198,16 @@
     <Content Include="Images\footer.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\peanuts.png" />
+    <Content Include="Images\Pin Left.png" />
+    <Content Include="Images\Pin Right.png" />
     <Content Include="Images\polaroid.png" />
     <Content Include="Images\ductape.png" />
     <Content Include="Images\fb_bottlecap.png" />
     <Content Include="Images\fb_icon.png" />
     <Content Include="Images\header.png" />
     <Content Include="Images\kraaltjes.png" />
+    <Content Include="Images\Tape Left.png" />
+    <Content Include="Images\Tape Right.png" />
     <Content Include="Images\tw_bottlecap.png" />
     <Content Include="Images\tw_icon.png" />
     <Content Include="Images\yt_bottlecap.png" />
