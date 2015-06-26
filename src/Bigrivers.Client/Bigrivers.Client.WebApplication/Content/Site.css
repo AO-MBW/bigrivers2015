@@ -549,6 +549,7 @@ div.news-detail div.news-footer span {
 }
 
 /* styling for the schedule / performance overview */
+/* date buttons */
 .day-btn-list {
     margin-bottom: 30px;
     height: auto;
@@ -575,18 +576,23 @@ div.news-detail div.news-footer span {
     cursor: pointer;
 }
 
+/* Performance list tale*/
 .daytable.non-selected {
     display: none;
 }
 
 .daytable {
-    width: 40%;
+    width: 100%;
 }
 
 .daytable tr th {
     font-family: "mari&david";
     font-weight: normal;
     font-size: 1.7em;
+}
+
+.performance-date {
+    width: 100px;
 }
 
 /* Contact page styling */
@@ -630,7 +636,7 @@ address{
 
     .ArtistAvatar {
         width: 50%;
-        float: left;
+        float: right;
         height: auto;
     }
 }

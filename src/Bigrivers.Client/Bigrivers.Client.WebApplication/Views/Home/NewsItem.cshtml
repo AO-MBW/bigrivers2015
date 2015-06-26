@@ -11,12 +11,18 @@
             <h3>@newsItem.Title</h3>
             <h5>@newsItem.Publish.DateTime.ToString("dd-MM-yyyy")</h5>
         </div>
+        @if (newsItem.Image != null)
+        {
+            <div class="news-image visible-xs">
+                <img class="news-item" src="@ImageHelper.GetImageUrl(newsItem.Image)" />
+            </div>
+        }
         <div class="news-text">
             @Html.Raw(newsItem.Content)
         </div>
         @if (newsItem.Image != null)
         {
-            <div class="news-image">
+            <div class="news-image hidden-xs">
                 <img class="news-item" src="@ImageHelper.GetImageUrl(newsItem.Image)"/>
             </div>
         }
