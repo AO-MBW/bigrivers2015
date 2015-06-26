@@ -4,10 +4,15 @@
     ViewBag.Title = newsItem.Title;
 }
 <div class="content news-detail">
+    <img class="content-pin-left" src="~/Images/Pin Left.png" />
+    <img class="content-pin-right" src="~/Images/Pin Right.png" />
     <div class="news-item">
         <div class="news-title">
             <h3>@newsItem.Title</h3>
             <h5>@newsItem.Publish.DateTime.ToString("dd-MM-yyyy")</h5>
+        </div>
+        <div class="news-text">
+            @Html.Raw(newsItem.Content)
         </div>
         @if (newsItem.Image != null)
         {
@@ -15,9 +20,6 @@
                 <img class="news-item" src="@ImageHelper.GetImageUrl(newsItem.Image)"/>
             </div>
         }
-        <div class="news-text">
-            @Html.Raw(newsItem.Content)
-        </div>
     </div>
     <br class="clear"/>
 </div>

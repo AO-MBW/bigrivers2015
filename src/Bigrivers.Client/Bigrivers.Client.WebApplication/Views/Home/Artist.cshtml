@@ -4,15 +4,17 @@
 }
 
 <div class="content">
+    <img class="content-pin-left" src="~/Images/Pin Left.png" />
+    <img class="content-pin-right" src="~/Images/Pin Right.png" />
     <h1 class="page-title">@currentArtist.Name</h1>
-    @if (currentArtist.Avatar != null)
-    {
-        <img class="ArtistAvatar hidden-xs" src="@ImageHelper.GetImageUrl(currentArtist.Avatar)" />
-        <br class="clear" />
-    }
     @if (currentArtist.Description != null)
     {
         <div class="ArtistsDescription">@Html.Raw(currentArtist.Description)</div>
+    }
+    @if (currentArtist.Avatar != null)
+    {
+        <img class="ArtistAvatar" src="@ImageHelper.GetImageUrl(currentArtist.Avatar)" />
+        <br class="clear" />
     }
     @if (currentArtist.Facebook != null || currentArtist.YoutubeChannel != null || currentArtist.Twitter != null || currentArtist.Website != null)
     {

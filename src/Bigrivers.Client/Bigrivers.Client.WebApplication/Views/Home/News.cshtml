@@ -13,15 +13,15 @@
                 <h3>@Html.ActionLink(p.Title, "News", new {Id = p.Id})</h3>
                 <h5>@p.Publish.DateTime.ToString("dd-MM-yyyy")</h5>
             </div>
-            @if (p.Image != null)
-            {
-                <div class="news-image">
-                    <img src="@ImageHelper.GetImageUrl(p.Image)"/>
-                </div>
-            }
             <div class="news-text height-limited">
                 <p>@Html.Raw(p.Content)</p>
             </div>
+            @if (p.Image != null)
+            {
+                <div class="news-image">
+                    <img src="@ImageHelper.GetImageUrl(p.Image)" />
+                </div>
+            }
             <div class="news-footer">
                 <span>@Html.ActionLink("Lees Verder", "News", new {Id = p.Id})</span>
             </div>

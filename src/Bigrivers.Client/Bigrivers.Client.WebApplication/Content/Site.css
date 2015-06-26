@@ -476,31 +476,64 @@ div.news-detail div.news-title h5 {
     margin-top: 0;
 }
 
-div.news-overview div.news-text,
-div.news-detail div.news-text {
-    margin-bottom: 5px;
-    padding-right: 10px;
-    line-height: 1em;
-    text-align: justify;
-}
-
 div.news-overview div.news-text.height-limited,
 div.news-detail div.news-text.height-limited {
     height: 8.7em;
     overflow: hidden;
     text-align: justify;
 }
+/*sm-md+ Size*/
+@media(min-width: 768px){
+    div.news-overview div.news-text,
+    div.news-detail div.news-text {
+        margin-bottom: 5px;
+        padding-right: 10px;
+        line-height: 1em;
+        width: 75%;
+        float: left;
+        text-align: justify;
+    }
 
-div.news-overview div.news-image,
-div.news-detail div.news-image {
-    width: 100%;
-    height: auto;
+    div.news-overview div.news-image,
+    div.news-detail div.news-image {
+        width: 25%;
+        height: auto;
+        float: left;
+    }
+
+    div.news-overview div.news-image img,
+    div.news-detail div.news-image img {
+        height: auto;
+        width: 100%;
+    }
+
 }
 
-div.news-overview div.news-image img,
-div.news-detail div.news-image img {
-    height: 11em;
-    max-width: 100%;
+/*xs Size*/
+@media(max-width: 768px){
+    div.news-overview div.news-text,
+    div.news-detail div.news-text {
+        margin-bottom: 5px;
+        padding-right: 10px;
+        line-height: 1em;
+        width: 100%;
+        float: left;
+        text-align: justify;
+    }
+
+    div.news-overview div.news-image,
+    div.news-detail div.news-image {
+        width: 100%;
+        height: auto;
+        float: left;
+    }
+
+    div.news-overview div.news-image img,
+    div.news-detail div.news-image img {
+        height: auto;
+        width: 100%;
+    }
+
 }
 
 div.news-overview div.news-footer,
@@ -576,7 +609,7 @@ address{
 @media (min-width: 1200px) {
     .twitterfeed {
         width: 520px;
-    max-width: 80%;
+        max-width: 80%;
         float: right;
     }
 }
@@ -586,13 +619,36 @@ address{
     float: left;
 }
 
-.ArtistsDescription {
-    text-align: justify;
+/*sm-md+ size*/
+@media(min-width: 768px){
+    .ArtistsDescription {
+        width: 50%;
+        float: left;
+        text-align: justify;
+        padding-right: 10px;
+    }
+
+    .ArtistAvatar {
+        width: 50%;
+        float: left;
+        height: auto;
+    }
 }
 
-.ArtistAvatar {
-    width: 100%;
-    height: auto;
+/*xs size*/
+@media(max-width: 768px){
+    .ArtistsDescription {
+        width: 100%;
+        float: left;
+        text-align: justify;
+        padding-right: 10px;
+    }
+
+    .ArtistAvatar {
+        width: 100%;
+        float: left;
+        height: auto;
+    }
 }
 
 /* Evenementen */
