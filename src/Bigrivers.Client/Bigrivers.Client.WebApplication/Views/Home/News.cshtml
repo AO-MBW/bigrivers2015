@@ -15,13 +15,19 @@
             </div>
             @if (p.Image != null)
             {
-                <div class="news-image">
-                    <img src="@ImageHelper.GetImageUrl(p.Image)"/>
+                <div class="news-image visible-xs">
+                    <img src="@ImageHelper.GetImageUrl(p.Image)" />
                 </div>
             }
             <div class="news-text height-limited">
                 <p>@Html.Raw(p.Content)</p>
             </div>
+            @if (p.Image != null)
+            {
+                <div class="news-image hidden-xs">
+                    <img src="@ImageHelper.GetImageUrl(p.Image)" />
+                </div>
+            }
             <div class="news-footer">
                 <span>@Html.ActionLink("Lees Verder", "News", new {Id = p.Id})</span>
             </div>

@@ -9,6 +9,8 @@
 }
 
 <div class="content">
+    <img class="content-pin-left" src="~/Images/Pin Left.png" />
+    <img class="content-pin-right" src="~/Images/Pin Right.png" />
     <h1 class="page-title">@currentEvent.Title</h1>
     <div class="EventDescription">
         @Html.Raw(currentEvent.Description)
@@ -40,17 +42,20 @@
                 {
                     <thead>
                         <tr>
-                            <th>@Html.ActionLink(stage.Stage.Stagename, "Location", "Home", new { id = stage.Stage.Id }, null)</th>
+                            <th colspan="2">@Html.ActionLink(stage.Stage.Stagename, "Location", "Home", new { id = stage.Stage.Id }, null)</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var p in stage.Performances)
                         {
                             <tr>
-                                <td>@p.Start.DateTime.ToString("HH:mm") - @p.End.DateTime.ToString("HH:mm")</td>
+                                <td class="performance-date">@p.Start.DateTime.ToString("HH:mm") - @p.End.DateTime.ToString("HH:mm")</td>
                                 <td>@Html.ActionLink(p.Artist.Name, "Artists", "Home", new { id = p.Artist.Id }, null)</td>
                             </tr>
                         }
+                            <tr>
+                                <td><br /></td>
+                            </tr>
                     </tbody>
                 }
 

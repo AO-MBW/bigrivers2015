@@ -185,6 +185,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\beer.png" />
@@ -205,8 +206,6 @@
     <Content Include="Images\fb_icon.png" />
     <Content Include="Images\header.png" />
     <Content Include="Images\kraaltjes.png" />
-    <Content Include="Images\Tape Left.png" />
-    <Content Include="Images\Tape Right.png" />
     <Content Include="Images\tw_bottlecap.png" />
     <Content Include="Images\tw_icon.png" />
     <Content Include="Images\yt_bottlecap.png" />
@@ -218,6 +217,10 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="fonts\maridavid.ttf" />
     <Content Include="fonts\maridavid.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\bigrivers-site - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\bigrivers-site - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\bigrivers.pubxml" />
