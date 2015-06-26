@@ -100,7 +100,7 @@ namespace Bigrivers.Client.Helpers
 
             builder.MergeAttribute("src", "/Images/loading.gif");
             builder.MergeAttribute("data-azureurl", ImageHelper.GetImageUrl(file));
-            builder.MergeAttribute("data-cdnurl", string.Format("{0}/{1}/{2}", WebConfigurationManager.AppSettings["CdnUrl"], file.Container, file.Key));
+            builder.MergeAttribute("data-cdnurl", string.Format("{0}{1}/{2}", WebConfigurationManager.AppSettings["CdnUrl"], file.Container, file.Key));
 
             return MvcHtmlString.Create(builder.ToString(TagRenderMode.SelfClosing));
         }

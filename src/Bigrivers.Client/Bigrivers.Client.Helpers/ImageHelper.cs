@@ -2,6 +2,7 @@
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 using File = Bigrivers.Server.Model.File;
 
 namespace Bigrivers.Client.Helpers
@@ -16,6 +17,19 @@ namespace Bigrivers.Client.Helpers
         {
             var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
             BlobClient = storageAccount.CreateCloudBlobClient();
+
+            var serviceProperties = BlobClient.GetServiceProperties();
+
+            var cors = new CorsRule();
+
+            cors.AllowedOrigins.Add("*");
+            //cors.AllowedOrigins.Add("mysite.com"); // more restrictive may be preferable
+            cors.AllowedMethods = CorsHttpMethods.Get | CorsHttpMethods.Head;
+            cors.MaxAgeInSeconds = 3600;
+
+            serviceProperties.Cors.CorsRules.Add(cors);
+
+            BlobClient.SetServiceProperties(serviceProperties);
         }
 
         /// <summary>
