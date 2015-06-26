@@ -8,14 +8,17 @@ namespace Bigrivers.Client.Backend.ViewModels
 {
     public class SettingsViewModel
     {
+        [Required]
         [Display(Name = "Bigrivers Youtubekanaal")]
         [DataType(DataType.Url)]
         public string YoutubeChannel { get; set; }
 
+        [Required]
         [Display(Name = "Bigrivers Facebookpagina")]
         [DataType(DataType.Url)]
         public string Facebook { get; set; }
 
+        [Required]
         [Display(Name = "Bigrivers Twitterpagina")]
         [DataType(DataType.Url)]
         public string Twitter { get; set; }
