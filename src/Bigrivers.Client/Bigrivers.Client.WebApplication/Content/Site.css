@@ -44,25 +44,6 @@ body {
     height: auto;
 }
 
-/*.content-tape-left {
-    position: relative;
-    left: -110px;
-    top: -50px;
-    float: left;
-    width: 100px;
-    height: auto;
-    margin-right: -110px;
-}
-
-.content-tape-right {
-    position: relative;
-    right: -50px;
-    top: -50px;
-    float: right;
-    width: 100px;
-    height: auto;
-}*/
-
 .content.partial-size {
     margin-right: 0;
     width: 75%;
