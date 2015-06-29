@@ -4,16 +4,52 @@
 }
 
 <div class="content">
+    <img class="content-pin-left" src="~/Images/Pin Left.png" />
+    <img class="content-pin-right" src="~/Images/Pin Right.png" />
     <h1 class="page-title">@page.Title</h1>
 
     @if (page.IsContactPage)
     {
         <div id="location-canvas" style="width: 100%; height: 300px;"></div>
+    <div>
+        <ul class="social">
+            @if (ViewBag.SiteInformation.Facebook != null)
+            {
+                <li><a href="@ViewBag.SiteInformation.Facebook" target="_blank"><img src="/Images/fb_icon.png"></a></li>}
+            @if (ViewBag.SiteInformation.Twitter != null)
+            {
+                <li><a href="@ViewBag.SiteInformation.Twitter" target="_blank"><img src="/Images/tw_icon.png"></a></li>}
+            @if (ViewBag.SiteInformation.YoutubeChannel != null)
+            {
+                <li><a href="@ViewBag.SiteInformation.YoutubeChannel" target="_blank"><img src="/Images/yt_icon.png"></a></li>}
+        </ul>
+    </div>
+
+    }
+    
+    @if (page.IsContactPage && ViewBag.SiteInformation.Hashtag != null)
+    {
+        <div class="twitterfeed">
+            <a class="twitter-timeline" href="@Html.DisplayText((string)ViewBag.SiteInformation.Twitter)" data-widget-id="594063302793244673" data-screen-name="@Html.DisplayText((string)ViewBag.SiteInformation.Hashtag)"> Tweets door @Html.DisplayText((string)ViewBag.SiteInformation.Hashtag)</a>
+            <script>
+                !function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = p + "://platform.twitter.com/widgets.js";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, "script", "twitter-wjs");
+            </script>
+        </div>
     }
 
     @if (page.Content != null)
     {
-        @Html.Raw(page.Content)
+        <div class="PageDescription">
+            @Html.Raw(page.Content)
+        </div>
         <br class="clear"/>
     }
 
@@ -28,23 +64,7 @@
         @Html.Raw(page.HtmlContent)
     }
 
-    @if (page.IsContactPage && ViewBag.SiteInformation.Hashtag != null)
-    {
-        <div class="twitterfeed">
-            <a class="twitter-timeline" href="@Html.DisplayText((string)ViewBag.SiteInformation.Twitter)" data-widget-id="594063302793244673" data-screen-name="@Html.DisplayText((string)ViewBag.SiteInformation.Hashtag)"> Tweets door @Html.DisplayText((string)ViewBag.SiteInformation.Hashtag)</a>
-            <script>
-                !function(d, s, id) {
-                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-                    if (!d.getElementById(id)) {
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = p + "://platform.twitter.com/widgets.js";
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }
-                }(document, "script", "twitter-wjs");
-            </script>
-        </div>
-    }
+    
 </div>
 @if (page.IsContactPage)
 {

@@ -2,8 +2,9 @@
     ViewBag.Title = "Nieuws";
     List<NewsItem> newsItems = Model;
 }
-
 <div class="content news-overview">
+    <img class="content-pin-left" src="~/Images/Pin Left.png" />
+    <img class="content-pin-right" src="~/Images/Pin Right.png" />
     <h1 class="page-title">Nieuws</h1>
     @foreach (var p in newsItems)
     {
@@ -14,13 +15,19 @@
             </div>
             @if (p.Image != null)
             {
-                <div class="news-image">
-                    <img src="@ImageHelper.GetImageUrl(p.Image)"/>
+                <div class="news-image visible-xs">
+                    <img src="@ImageHelper.GetImageUrl(p.Image)" />
                 </div>
             }
             <div class="news-text height-limited">
                 <p>@Html.Raw(p.Content)</p>
             </div>
+            @if (p.Image != null)
+            {
+                <div class="news-image hidden-xs">
+                    <img src="@ImageHelper.GetImageUrl(p.Image)" />
+                </div>
+            }
             <div class="news-footer">
                 <span>@Html.ActionLink("Lees Verder", "News", new {Id = p.Id})</span>
             </div>

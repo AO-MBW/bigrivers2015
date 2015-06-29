@@ -72,48 +72,48 @@ namespace Bigrivers.Client.WebApplication.Controllers
             return View("Event", currentEvent);
         }
 
-        //public ActionResult Performances(int? id)
+        //public actionresult performances(int? id)
         //{
-        //    if (id != null) return Performance(id.Value);
+        //    if (id != null) return performance(id.value);
 
             
 
-        //    var newsItemsList = AccessLayer.NewsItems
-        //        .Where(a => a.Status)
-        //        .ToList();
+        //    var newsitemslist = accesslayer.newsitems
+        //        .where(a => a.status)
+        //        .tolist();
 
-        //    ViewBag.NewsItemsList = newsItemsList;
+        //    viewbag.newsitemslist = newsitemslist;
 
-        //    return View("Performances");
+        //    return view("performances");
         //}
 
-        //private ActionResult Performance(int id)
+        //private actionresult performance(int id)
         //{
-        //    var currentPerformance = AccessLayer.Performances
-        //        .SingleOrDefault(p => p.Id == id && p.Status);
+        //    var currentperformance = accesslayer.performances
+        //        .singleordefault(p => p.id == id && p.status);
 
-        //    if (currentPerformance == null) return RedirectToAction("Performances");
+        //    if (currentperformance == null) return redirecttoaction("performances");
 
-        //    return View("Performance", currentPerformance);
+        //    return view("performance", currentperformance);
         //}
 
-        //public ActionResult Genres(int? id)
+        //public actionresult genres(int? id)
         //{
-        //    if (id != null) return Genre(id.Value);
+        //    if (id != null) return genre(id.value);
 
-        //    ViewBag.GenresList = AccessLayer.Genres.ToList();
+        //    viewbag.genreslist = accesslayer.genres.tolist();
 
-        //    return View("Genres");
+        //    return view("genres");
         //}
-        //private ActionResult Genre(int id)
+        //private actionresult genre(int id)
         //{
-        //    ViewBag.CurrentGenre = AccessLayer.Genres
-        //        .Where(g => g.Id == id)
-        //        .SingleOrDefault();
+        //    viewbag.currentgenre = accesslayer.genres
+        //        .where(g => g.id == id)
+        //        .singleordefault();
 
-        //    if (ViewBag.CurrentGenre == null) return RedirectToAction("Genres");
+        //    if (viewbag.currentgenre == null) return redirecttoaction("genres");
 
-        //    return View("Genre");
+        //    return view("genre");
         //}
 
         public ActionResult Artists(int? id)

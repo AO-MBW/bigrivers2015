@@ -1,18 +1,15 @@
 ﻿@using Bigrivers.Client.WebApplication.Models
 @{
     ViewBag.Title = "Programma";
-    List<NewsItem> newsItemsList = ViewBag.NewsItemsList;
-    List<PerformanceListViewModel> eventDates = Model;
+    List<PerformancesByLocationViewModel> eventDates = Model;
 }
 
 <div class="content partial-size">
+    <img class="content-pin-left" src="~/Images/Pin Left.png" />
+    <img class="content-pin-right" src="~/Images/Pin Right.png" />
     <h1 class="page-title">Optredens</h1>
     
     
 
     
 </div>
-
-@Html.Partial("_NewsArchive", newsItemsList)
-
-<script src="/Scripts/performanceDaySelector.js"></script>
