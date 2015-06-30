@@ -48,7 +48,7 @@
                         }
                         @foreach (MenuItem item in ViewBag.MenuItems)
                         {
-                            if (item.IsParent == true)
+                            if (item.IsParent)
                             {
                                 <li id="menuitem-id-@i">
                                     <a href="#" class="dropdown-toggle menuitem-link" data-toggle="dropdown" role="button" aria-expanded="false">@item.DisplayName<span class="caret"></span></a>
@@ -87,8 +87,9 @@
                 <span>Meld Je Band Aan Voor</span>*@
                 <span>Copyright @DateTime.Now.Year - Big Rivers Festival</span>
             </div>
-            
+
         </div>
     </div>
+    <script src="/Scripts/ImageLoad.js"></script>
     </body>
 </html>

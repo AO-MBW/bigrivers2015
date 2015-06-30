@@ -12,7 +12,7 @@
     {
         case (ButtonType.Regular):
         <a href="@LinkHelper.GetUrl(item.Target)" target="@(item.Target.Type != "internal" ? "_blank" : "_self")">
-            <img class="ButtonImg" src="@ImageHelper.GetImageUrl(item.Logo)">
+            @Html.ImageFromCdn(item.Logo, new { @class = "ButtonImg" })
             <p class="ButtonTitle">@item.DisplayName</p>
         </a>
             
@@ -27,7 +27,7 @@
                         {
                             <div class="@(widgetItem == widgetItems.First() ? " item active" : "item")">
                                 <a href="@LinkHelper.GetUrl(widgetItem.Target)" target="@(widgetItem.Target.Type != "internal" ? "_blank" : "_self")">
-                                    <img class="CarouselImg" src="@ImageHelper.GetImageUrl(widgetItem.Image)">
+                                    @Html.ImageFromCdn(widgetItem.Image, new { @class = "CarouselImg" })
                                     <p class="CarouselTitle">@widgetItem.DisplayName</p>
                                 </a>
                             </div>
@@ -55,7 +55,7 @@
                         {
                             <div class="@(sponsor == sponsors.First() ? "item active" : "item")">
                                 <a href="@sponsor.Url" target="_blank">
-                                    <img class="CarouselImg" src="@ImageHelper.GetImageUrl(sponsor.Image)">
+                                    @Html.ImageFromCdn(sponsor.Image, new { @class = "CarouselImg" })
                                     <p class="CarouselTitle">@sponsor.Name</p>
                                 </a>
                             </div>

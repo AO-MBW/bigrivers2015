@@ -83,11 +83,30 @@ namespace Bigrivers.Client.Helpers
             return MvcHtmlString.Create(builder.ToString(TagRenderMode.SelfClosing));
         }
 
+        public static MvcHtmlString ImageFromCdn(this HtmlHelper helper, File file)
+        {
+            return ImageFromCdn(helper, file, null, null);
+        }
+
+        public static MvcHtmlString ImageFromCdn(this HtmlHelper helper, File file, object htmlAttributes)
+        {
+            return ImageFromCdn(helper, file, htmlAttributes, null);
+        }
+
         public static MvcHtmlString ImageFromCdn(this HtmlHelper helper, File file, object htmlAttributes, object dataAttributes)
         {
             var builder = new TagBuilder("img");
-            builder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
-            builder.MergeAttribute("class", "async-load-image");
+            builder.MergeAttribute("src", "/Images/loading.gif");
+
+            // Add async load class to image classes
+            var htmlAttributesDictionary = new RouteValueDictionary(htmlAttributes);
+            htmlAttributesDictionary["class"] = string.Format("{0} {1}", htmlAttributesDictionary["class"], "async-load-image");
+            builder.MergeAttributes(htmlAttributesDictionary);
+
+            // Add some data attributes the image needs
+            builder.MergeAttribute("data-azureurl", ImageHelper.GetImageUrl(file));
+            builder.MergeAttribute("data-cdnurl", string.Format("{0}{1}/{2}", WebConfigurationManager.AppSettings["CdnUrl"], file.Container, file.Key));
+
             // Data attributes are definitely a nice to have.
             // I don't know of a better way of rendering them using the RouteValueDictionary however.
             if (dataAttributes != null)
@@ -97,10 +116,6 @@ namespace Bigrivers.Client.Helpers
                     builder.MergeAttribute("data-" + value.Key, value.Value.ToString());
                 }
             }
-
-            builder.MergeAttribute("src", "/Images/loading.gif");
-            builder.MergeAttribute("data-azureurl", ImageHelper.GetImageUrl(file));
-            builder.MergeAttribute("data-cdnurl", string.Format("{0}{1}/{2}", WebConfigurationManager.AppSettings["CdnUrl"], file.Container, file.Key));
 
             return MvcHtmlString.Create(builder.ToString(TagRenderMode.SelfClosing));
         }
