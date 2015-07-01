@@ -557,7 +557,7 @@ div.news-detail div.news-footer span {
     cursor: pointer;
 }
 
-/* Performance list tale*/
+/* Performance list table*/
 .daytable.non-selected {
     display: none;
 }
@@ -566,14 +566,45 @@ div.news-detail div.news-footer span {
     width: 100%;
 }
 
-.daytable tr th {
-    font-family: "mari&david";
-    font-weight: normal;
-    font-size: 1.7em;
+.daytable tr td hr {
+    outline: 1px solid black;
+    height: 0px;
+}
+
+.daytableData td {
+    height: 50px;
+    min-width: 180px;
 }
 
 .performance-date {
     width: 100px;
+}
+
+/* Performance slider*/
+.sliderHeader {
+    margin-top: 26px;
+    margin-bottom: -26px;
+    width: 100%;
+    text-align: center;
+}
+
+.sliderHeader .left {
+    width: 15px;
+    float: left;
+    display: inline;
+}
+
+.sliderHeader .center {
+    width: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sliderHeader .right {
+    width: 15px;
+    float: right;
+    display: inline;
+    margin-top: -20px;
 }
 
 /* Contact page styling */

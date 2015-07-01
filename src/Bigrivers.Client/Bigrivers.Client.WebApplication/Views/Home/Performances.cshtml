@@ -1,15 +1,86 @@
 ﻿@using Bigrivers.Client.WebApplication.Models
 @{
-    ViewBag.Title = "Programma";
-    List<PerformancesByLocationViewModel> eventDates = Model;
+    Event currentEvent = Model;
+    List<StagesViewModel> performancesByDate = ViewBag.PerformancesByDate;
+    ViewBag.Title = "Programma van " + currentEvent.Title;
 }
 
-<div class="content partial-size">
+<div class="content">
     <img class="content-pin-left" src="~/Images/Pin Left.png" />
     <img class="content-pin-right" src="~/Images/Pin Right.png" />
-    <h1 class="page-title">Optredens</h1>
-    
-    
+    @if (performancesByDate.Count != 0)
+    {
+        <div class ="sliderHeader">
+            <div class="left">6</div>
+            <div class="center">18</div>
+            <div class="right">6</div>
+        </div>
+    <div class="sliderHeader">
+        <div class="left">|</div>
+        <div class="center">|</div>
+        <div class="right">|</div>
+    </div>
+        <input id="slider" type="range" min="0" max="1440" value="0" step="5" oninput="showAmount(this.value)" style="width: 100%" />
+        <p>
+            Tijd
+            <span id="slider-hour"></span>
+            <span> : </span>
+            <span id="slider-minute"></span>
+        </p>
 
-    
+        <h3 class="page-title">@ViewBag.Title</h3>
+        <div class="day-btn-list">
+            @foreach (var day in performancesByDate)
+            {
+                <h3 id="date-@day.Date.Day@day.Date.Month@day.Date.Year" class="day-btn @(day == performancesByDate.First() ? "selected" : "non-selected" )">@day.Date.ToString("dddd dd MMMM")</h3>
+            }
+        </div>
+            foreach (var day in performancesByDate)
+            {
+                <table id="date-@day.Date.Day@day.Date.Month@day.Date.Year" class="daytable @(day == performancesByDate.First() ? "selected" : "non-selected")">
+                    <thead>
+                        <tr>
+                            <th>
+                                Locatie
+                            </th>
+                            <th>
+                                Optreden
+                            </th>
+                        </tr>
+                    </thead>
+                    @foreach (var stage in day.Stages)
+                    {
+                        <tbody>
+                            <tr class ="daytableData">
+                                <td>@Html.ActionLink(stage.Stage.Stagename, "Location", "Home", new { id = stage.Stage.Id }, null)</td>
+                                <td>
+                                    @foreach (var p in stage.Performances)
+                                    {
+                                        //sets starting and ending time to minutes
+                                        var startingTime = (p.Start.DateTime.Hour * 60) + p.Start.DateTime.Minute - 360;
+                                        var endingTime = (p.End.DateTime.Hour * 60) + p.End.DateTime.Minute - 360;
+
+                                        //adds 24 hours for time after midnight
+                                        if (startingTime < 0) { startingTime = startingTime + 1440; }
+                                        if (endingTime < 0) { endingTime = endingTime + 1440; }
+                                        <div class="performance" starttime="@startingTime" endtime="@endingTime">
+                                            @p.Start.DateTime.ToString("HH:mm") - @p.End.DateTime.ToString("HH:mm")
+                                            @Html.ActionLink(p.Artist.Name, "Artists", "Home", new { id = p.Artist.Id }, null)
+                                        </div>
+                                    }
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="2"><hr /></td>
+                            </tr>
+                        </tbody>
+                    }
+
+                </table>
+            }
+    }
 </div>
+
+<script src="/Scripts/performanceDaySelector.js"></script>
+<script src="~/Scripts/performanceSliderCalculator.js"></script>
