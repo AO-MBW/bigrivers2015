@@ -566,14 +566,27 @@ div.news-detail div.news-footer span {
     width: 100%;
 }
 
-.daytable tr td hr {
+.daytable div hr {
     outline: 1px solid black;
     height: 0px;
 }
 
-.daytableData td {
-    height: 50px;
-    min-width: 180px;
+.performanceRow {
+    margin-bottom: -15px;
+}
+
+.performanceLocation {
+    min-height: 25px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.performanceData {
+    min-height: 50px;
+}
+
+.performanceData p {
+    margin-bottom: 10px;
 }
 
 .performance-date {

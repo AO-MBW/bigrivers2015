@@ -55,7 +55,7 @@
                                     <ul class="dropdown-menu" role="menu">
                                         @foreach (var child in childList.Where(m => m.Parent == item.Id))
                                         {
-                                            <li class="dropdown-menuitem"><a class="dropdown-menuitem-link" href="@LinkHelper.GetUrl(child.Target)" target="@(child.Target.Type != "internal" ? "_blank" : "_self") ">@child.DisplayName</a></li>
+                                            <li class="dropdown-menuitem"><a class="dropdown-menuitem-link" href="@LinkHelper.GetUrl(child.Target)" target="@(child.Target.Type != "internal" ? "_blank" : "_self")">@child.DisplayName</a></li>
                                         }
                                     </ul>
                                 </li>

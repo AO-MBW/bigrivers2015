@@ -26,6 +26,9 @@ namespace Bigrivers.Client.Backend.Helpers
                         case "Events":
                             link.InternalId = model.InternalEventId;
                             break;
+                        case "Performances":
+                            link.InternalId = model.InternalPerformanceId;
+                            break;
                         case "Artists":
                             link.InternalId = model.InternalArtistId;
                             break;
@@ -82,6 +85,9 @@ namespace Bigrivers.Client.Backend.Helpers
             {
                 case "Events":
                     viewModel.InternalEventId = link.InternalId;
+                    break;
+                case "Performances":
+                    viewModel.InternalPerformanceId = link.InternalId;
                     break;
                 case "Artists":
                     viewModel.InternalArtistId = link.InternalId;

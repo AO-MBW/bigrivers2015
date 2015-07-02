@@ -35,50 +35,37 @@
                 <h3 id="date-@day.Date.Day@day.Date.Month@day.Date.Year" class="day-btn @(day == performancesByDate.First() ? "selected" : "non-selected" )">@day.Date.ToString("dddd dd MMMM")</h3>
             }
         </div>
-            foreach (var day in performancesByDate)
-            {
-                <table id="date-@day.Date.Day@day.Date.Month@day.Date.Year" class="daytable @(day == performancesByDate.First() ? "selected" : "non-selected")">
-                    <thead>
-                        <tr>
-                            <th>
-                                Locatie
-                            </th>
-                            <th>
-                                Optreden
-                            </th>
-                        </tr>
-                    </thead>
-                    @foreach (var stage in day.Stages)
-                    {
-                        <tbody>
-                            <tr class ="daytableData">
-                                <td>@Html.ActionLink(stage.Stage.Stagename, "Location", "Home", new { id = stage.Stage.Id }, null)</td>
-                                <td>
-                                    @foreach (var p in stage.Performances)
-                                    {
-                                        //sets starting and ending time to minutes
-                                        var startingTime = (p.Start.DateTime.Hour * 60) + p.Start.DateTime.Minute - 360;
-                                        var endingTime = (p.End.DateTime.Hour * 60) + p.End.DateTime.Minute - 360;
+        foreach (var day in performancesByDate)
+        {
+            <div id="date-@day.Date.Day@day.Date.Month@day.Date.Year" class="daytable @(day == performancesByDate.First() ? "selected" : "non-selected")">
+                @foreach (var stage in day.Stages)
+                {
+                    <div class="row performanceRow">
+                        <div class="performanceLocation col-sm-6">@Html.ActionLink(stage.Stage.Stagename, "Location", "Home", new { id = stage.Stage.Id }, null)</div>
+                        <div class="performanceData col-sm-6">
+                            @foreach (var p in stage.Performances)
+                            {
+                                //sets starting and ending time to minutes
+                                var startingTime = (p.Start.DateTime.Hour * 60) + p.Start.DateTime.Minute - 360;
+                                var endingTime = (p.End.DateTime.Hour * 60) + p.End.DateTime.Minute - 360;
 
-                                        //adds 24 hours for time after midnight
-                                        if (startingTime < 0) { startingTime = startingTime + 1440; }
-                                        if (endingTime < 0) { endingTime = endingTime + 1440; }
-                                        <div class="performance" starttime="@startingTime" endtime="@endingTime">
-                                            @p.Start.DateTime.ToString("HH:mm") - @p.End.DateTime.ToString("HH:mm")
-                                            @Html.ActionLink(p.Artist.Name, "Artists", "Home", new { id = p.Artist.Id }, null)
-                                        </div>
-                                    }
-                                </td>
+                                //adds 24 hours for time after midnight
+                                if (startingTime < 0) { startingTime = startingTime + 1440; }
+                                if (endingTime < 0) { endingTime = endingTime + 1440; }
+                                <p class="performance" starttime="@startingTime" endtime="@endingTime">
+                                    @p.Start.DateTime.ToString("HH:mm") - @p.End.DateTime.ToString("HH:mm")
+                                    @Html.ActionLink(p.Artist.Name, "Artists", "Home", new { id = p.Artist.Id }, null)
+                                </p>
+                            }
+                        </div>
 
-                            </tr>
-                            <tr>
-                                <td colspan="2"><hr /></td>
-                            </tr>
-                        </tbody>
-                    }
-
-                </table>
-            }
+                    </div>
+                    <div>
+                        <hr />
+                    </div>
+                }
+            </div>
+        }
     }
 </div>
 

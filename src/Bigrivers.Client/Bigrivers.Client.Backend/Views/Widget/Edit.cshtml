@@ -25,6 +25,7 @@
                 @Html.DropDownListFor(m => m.LinkView.InternalType, Model.LinkView.Types, new { id = "SelectInternalType" })
                 <span style="font-size: 22px; font-weight: bold;">></span>
                 @Html.DropDownListFor(m => m.LinkView.InternalEventId, Model.LinkView.Events, new { id = "Events", @class = "InternalType" })
+                @Html.DropDownListFor(m => m.LinkView.InternalPerformanceId, Model.LinkView.Performances, new { id = "Performances", @class = "InternalType" })
                 @Html.DropDownListFor(m => m.LinkView.InternalArtistId, Model.LinkView.Artists, new { id = "Artists", @class = "InternalType" })
                 @Html.DropDownListFor(m => m.LinkView.InternalPageId, Model.LinkView.Pages, new { id = "Page", @class = "InternalType" })
                 @Html.DropDownListFor(m => m.LinkView.InternalNewsId, Model.LinkView.NewsItems, new { id = "News", @class = "InternalType" })
@@ -160,6 +161,7 @@
     $("#SelectLinkType").val("@Model.LinkView.LinkType");
     $("#SelectInternalType").val("@Model.LinkView.InternalType");
     $("#Events").val("@Model.LinkView.InternalEventId");
+    $("#Performances").val("@Model.LinkView.InternalPerformanceId");
     $("#Artists").val("@Model.LinkView.InternalArtistId");
     $("#Page").val("@Model.LinkView.InternalPageId");
     $("#News").val("@Model.LinkView.InternalNewsId");
