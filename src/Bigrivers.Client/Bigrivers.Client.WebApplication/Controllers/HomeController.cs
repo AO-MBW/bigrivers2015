@@ -72,20 +72,38 @@ namespace Bigrivers.Client.WebApplication.Controllers
             return View("Event", currentEvent);
         }
 
-        //public actionresult performances(int? id)
-        //{
-        //    if (id != null) return performance(id.value);
+        public ActionResult performances(int? id)
+        {
+            var currentEvent = AccessLayer.Events
+                .Where(m => m.Status)
+                .SingleOrDefault(e => e.Id == id);
 
-            
+            if (currentEvent == null) return RedirectToAction("Events");
 
-        //    var newsitemslist = accesslayer.newsitems
-        //        .where(a => a.status)
-        //        .tolist();
+            var performancesByDate = currentEvent.Performances
+                .Where(m => m.Status)
+                .DistinctBy(m => m.Start.AddHours(-6).Date)
+                .OrderBy(m => m.Start.Date)
+                .Select(date => new StagesViewModel
+                {
+                    Date = date.Start.Date,
+                    Stages = currentEvent.Performances
+                    .Where(m => m.Start.Date == date.Start.Date && m.Status)
+                    .DistinctBy(m => m.Location)
+                    .Select(stage => new PerformancesByLocationViewModel
+                    {
+                        Stage = stage.Location,
+                        Performances = currentEvent.Performances
+                        .Where(m => m.Location == stage.Location && m.Start.AddHours(-6).Date == date.Start.Date && m.Status)
+                        .OrderBy(m => m.Start.DateTime)
+                        .ToList()
+                    }).ToList()
+                }).ToList();
 
-        //    viewbag.newsitemslist = newsitemslist;
+            ViewBag.PerformancesByDate = performancesByDate;
 
-        //    return view("performances");
-        //}
+            return View("Performances", currentEvent);
+        }
 
         //private actionresult performance(int id)
         //{

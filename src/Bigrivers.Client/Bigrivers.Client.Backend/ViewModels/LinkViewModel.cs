@@ -43,6 +43,10 @@ namespace Bigrivers.Client.Backend.Models
         ///<summary>
         /// Internal*Id is the Id of the object being linked to when linking to an internal page 
         /// </summary>
+        public string InternalPerformanceId { get; set; }
+        ///<summary>
+        /// Internal*Id is the Id of the object being linked to when linking to an internal page 
+        /// </summary>
         public string InternalArtistId { get; set; }
         ///<summary>
         /// Internal*Id is the Id of the object being linked to when linking to an internal page 
@@ -96,6 +100,11 @@ namespace Bigrivers.Client.Backend.Models
                     },
                     new SelectListItem()
                     {
+                        Text = "Programma voor Evenement",
+                        Value = "Performances"
+                    },
+                    new SelectListItem()
+                    {
                         Text = "Artiesten",
                         Value = "Artists"
 
@@ -115,6 +124,26 @@ namespace Bigrivers.Client.Backend.Models
         }
 
         public List<SelectListItem> Events
+        {
+            get
+            {
+                var l = _db.Events
+                .Where(m => !m.Deleted)
+                .Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Title
+                }).ToList();
+                l.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = ""
+                });
+                return l;
+            }
+        }
+
+        public List<SelectListItem> Performances
         {
             get
             {

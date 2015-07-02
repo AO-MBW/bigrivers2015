@@ -9,6 +9,6 @@
     $.each(tables, function () {
         $(this).removeClass("selected").addClass("non-selected");
     });
-    $("div#" + $(this).attr("id")).removeClass("non-selected").addClass("selected");
+    $("table#" + $(this).attr("id")).removeClass("non-selected").addClass("selected");
     console.log("#" + $(this).attr("id"));
 });

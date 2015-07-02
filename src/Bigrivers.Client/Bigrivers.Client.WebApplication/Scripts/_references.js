@@ -11,3 +11,5 @@
 /// <reference path="respond.matchmedia.addlistener.js" />
 /// <reference path="googlemaps.js" />
 /// <reference path="performancedayselector.js" />
+/// <reference path="performanceslidercalculator.js" />
+/// <reference path="performancedayselectorevents.js" />
